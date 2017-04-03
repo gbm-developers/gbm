@@ -25,7 +25,7 @@
 #' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
 #' @seealso \code{\link{gbm}}, \code{\link{gbm.object}}
 #' @keywords print
-#' @export
+#' @export pretty.gbm.tree
 pretty.gbm.tree <- function(object,i.tree=1)
 {
    if((i.tree<1) || (i.tree>length(object$trees)))

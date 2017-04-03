@@ -10,7 +10,7 @@
 #' @seealso \code{\link[graphics]{plot}}, \code{\link[stats]{quantile}},
 #' \code{\link[base]{jitter}}, \code{\link[graphics]{rug}}.
 #' @keywords aplot
-#' @export
+#' @export quantile.rug
 #' @examples
 #' 
 #' x <- rnorm(100)

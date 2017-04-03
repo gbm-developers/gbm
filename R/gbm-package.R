@@ -35,7 +35,7 @@
 #' @importFrom stats reformulate reorder rexp rnorm runif sd supsmu terms var
 #' @importFrom stats weighted.mean
 #' @importFrom survival Surv
-#' @useDynLib gbm, .registration = TRUE
+#' @useDynLib gbm
 #' 
 #' @name gbm-package
 #' 
