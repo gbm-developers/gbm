@@ -1,10 +1,11 @@
+#' @rdname gbm
+#' @export
 gbm.more <- function(object,
                      n.new.trees = 100,
                      data = NULL,
                      weights = NULL,
                      offset = NULL,
-                     verbose = NULL)
-{
+                     verbose = NULL) {
    theCall <- match.call()
    nTrain  <- object$nTrain
 

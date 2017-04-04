@@ -1,3 +1,5 @@
+#' @rdname gbm
+#' @export
 gbm.fit <- function(x,y,
                     offset = NULL,
                     misc = NULL,
