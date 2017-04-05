@@ -1,0 +1,13 @@
+language: r
+cache: packages
+sudo: false
+warnings_are_errors: true
+
+r:
+  - oldrel
+  - release
+  - devel
+
+env:
+  global:
+    - _R_CHECK_FORCE_SUGGESTS_=FALSE
