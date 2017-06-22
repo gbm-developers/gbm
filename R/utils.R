@@ -1,7 +1,7 @@
 #' @keywords internal
 .onAttach <- function(lib, pkg) {
   vers <- utils::packageVersion("gbm")
-  packageStartupMessage(paste("Loaded gbm", vers, "(legacy version)"))
+  packageStartupMessage(paste("Loaded gbm", vers))
 }
 
 
