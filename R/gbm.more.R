@@ -182,7 +182,7 @@ gbm.more <- function(object,
    }
    x <- as.vector(x)
 
-   gbm.obj <- .Call("gbm",
+   gbm.obj <- .Call("gbm_fit",
                     Y = as.double(y),
                     Offset = as.double(offset),
                     X = as.double(x),

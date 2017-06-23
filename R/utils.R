@@ -1,27 +1,8 @@
-#' #' @keywords internal
-#' getAvailableDistributions <- function() {
-#'   c("gaussian", "laplace", "tdist", "bernoulli", "huberized", "multinomial", 
-#'     "adaboost", "poisson", "coxph", "quantile", "pairwise")
-#' }
-#' 
-#' 
-#' #' @keywords internal
-#' checkDistribution <- function(distribution) {
-#'   if (!is.element(distribution$name, getAvailableDistributions())) {
-#'     stop("Distribution ", distribution$name, " is not supported.")
-#'   }
-#' }
-#' 
-#' 
-#' #' @keywords internal
-#' checkResponseValues <- function(y, distribution) {
-#'   
-#'   # Bernoulli distribution
-#'   if((distribution$name == "bernoulli") && !all(is.element(y, 0:1))) {
-#'     stop("Bernoulli requires the response to be in {0, 1}.")
-#'   }
-#'   
-#' }
+#' @keywords internal
+getAvailableDistributions <- function() {
+  c("adaboost", "bernoulli", "coxph", "gaussian", "huberized", "laplace", 
+    "multinomial", "pairwise", "poisson", "quantile", "tdist")
+}
 
 
 #' @keywords internal
