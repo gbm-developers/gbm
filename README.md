@@ -1,4 +1,4 @@
-# gbm <img src="tools/logo.png" align="right" width="120" height="139">
+# gbm <img src="tools/logo.png" align="right" width="120" height="139" />
 
 [![Build Status](https://travis-ci.org/gbm-developers/gbm.svg?branch=master)](https://travis-ci.org/gbm-developers/gbm)
 
