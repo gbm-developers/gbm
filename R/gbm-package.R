@@ -25,6 +25,7 @@
 #' (source, pdf)\cr}
 #' 
 #' @import lattice
+#' 
 #' @importFrom grDevices rainbow
 #' @importFrom graphics abline axis barplot lines mtext par plot polygon rug 
 #' @importFrom graphics segments title
@@ -35,7 +36,8 @@
 #' @importFrom stats reformulate reorder rexp rnorm runif sd supsmu terms var
 #' @importFrom stats weighted.mean
 #' @importFrom survival Surv
-#' @useDynLib gbm
+#' 
+#' @useDynLib gbm, .registration = TRUE
 #' 
 #' @name gbm-package
 #' 

@@ -1,8 +1,8 @@
 Package: gbm
-Version: 2.1
+Version: 2.1.3.9000
 Title: Generalized Boosted Regression Models
 Author: Greg Ridgeway <gregridgeway@gmail.com> with contributions from others
-Maintainer: Harry Southworth <harry.southworth@gmail.com>
+Maintainer: Brandon Greenwell <greenwell.brandon@gmail.com>
 Depends: R (>= 2.9.0)
 Imports:
   lattice,
@@ -11,14 +11,12 @@ Imports:
   survival,
 Suggests:
   RUnit
-Description: This package implements extensions
-  to Freund and Schapire's AdaBoost algorithm and Friedman's
-  gradient boosting machine. Includes regression methods for least
-  squares, absolute loss, t-distribution loss,
-  quantile regression, logistic, multinomial logistic, Poisson,
-  Cox proportional hazards partial likelihood, AdaBoost
-  exponential loss, Huberized hinge loss,
-  and Learning to Rank measures (LambdaMart).
+Description: This package implements extension to Freund and Schapire's AdaBoost 
+  algorithm and Friedman's gradient boosting machine. Includes regression 
+  methods for least squares, absolute loss, t-distribution loss, quantile 
+  regression, logistic, multinomial logistic, Poisson, Cox proportional hazards 
+  partial likelihood, AdaBoost exponential loss, Huberized hinge loss, and 
+  Learning to Rank measures (LambdaMart).
 License: GPL (>= 2) | file LICENSE
 URL: https://github.com/gbm-developers/gbm
 RoxygenNote: 6.0.1

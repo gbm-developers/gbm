@@ -71,15 +71,16 @@ gbmCrossVal <- function(cv.folds, nTrain, n.cores,
                                      n.minobsinnode, shrinkage,
                                      bag.fraction, var.names,
                                      response.name, group)
+
   ## get the errors
   cv.error  <- gbmCrossValErr(cv.models, cv.folds, cv.group, nTrain, n.trees)
   best.iter.cv <- which.min(cv.error)
+
   ## get the predictions
   predictions <- gbmCrossValPredictions(cv.models, cv.folds, cv.group,
                                         best.iter.cv, distribution,
-                                        data[i.train,], y)
-  list(error=cv.error,
-       predictions=predictions)
+                                        data[i.train, ], y)
+  list(error = cv.error, predictions = predictions)
 }
 
 
@@ -100,42 +101,53 @@ gbmCrossValErr <- function(cv.models, cv.folds, cv.group, nTrain, n.trees) {
 }
 
 
-# Get the predictions for GBM cross validation
-#
-# This function is not as nice as it could be (leakage of y)
 #' @rdname gbmCrossVal
 #' @export
 gbmCrossValPredictions <- function(cv.models, cv.folds, cv.group,
                                    best.iter.cv, distribution, data, y) {
-  ## test cv.group and data match
+  
+  # Get the predictions for GBM cross validation. This function is not as nice 
+  # as it could be (i.e., leakage of y)
+  
+  # Test that cv.group and data match
   if (nrow(data) != length(cv.group)) {
-    stop("mismatch between data and cv.group")
+    stop("Mismatch between `data` and `cv.group`.")
   }
-  ## this is a little complicated due to multinomial distribution
+  
+  # This is a little complicated due to multinomial distribution
   num.cols <- if (distribution$name == "multinomial") {
     nlevels(factor(y))
   } else {
     1
   }
-  result <- matrix(nrow=nrow(data), ncol=num.cols)
-  ## there's no real reason to do this as other than a for loop
-  data.names <- names(data)
+  
+  # Initialize results matrix
+  res <- matrix(nrow = nrow(data), ncol = num.cols)
+  
+  # There's no real reason to do this as other than a for loop
+  data.names <- names(data)  # column names
   for (ind in 1:cv.folds) {
-    ## these are the particular elements
+    
+    # These are the particular elements
     flag <- cv.group == ind
     model <- cv.models[[ind]]
-    ## the %in% here is to handle coxph
+    
+    # The %in% here is to handle coxph
     my.data  <- data[flag, !(data.names %in% model$response.name)]
-    predictions <- predict(model, newdata=my.data, n.trees=best.iter.cv)
-    predictions <- matrix(predictions, ncol=num.cols)
-    result[flag,] <- predictions
+    predictions <- predict(model, newdata = my.data, n.trees = best.iter.cv)  # FIXME
+    predictions <- matrix(predictions, ncol = num.cols)
+    res[flag, ] <- predictions
+    
   }
   
+  # Handle multinomial case
   if (distribution$name != "multinomial") {
-    result <- as.numeric(result)
+    res <- as.numeric(res)
   }
   
-  result
+  # Return the result
+  res
+  
 }
 
 
@@ -144,60 +156,64 @@ gbmCrossValPredictions <- function(cv.models, cv.folds, cv.group,
 # This function has far too many arguments.
 #' @rdname gbmCrossVal
 #' @export
-gbmCrossValModelBuild <- function(cv.folds, cv.group, n.cores, i.train,
-                                  x, y, offset, distribution,
-                                  w, var.monotone, n.trees,
-                                  interaction.depth, n.minobsinnode,
-                                  shrinkage, bag.fraction,
-                                  var.names, response.name,
-                                  group) {
-  ## set up the cluster and add a finalizer
+gbmCrossValModelBuild <- function(cv.folds, cv.group, n.cores, i.train, x, y, 
+                                  offset, distribution, w, var.monotone, 
+                                  n.trees, interaction.depth, n.minobsinnode,
+                                  shrinkage, bag.fraction, var.names, 
+                                  response.name, group) {
+  
+  # Set up cluster and add finalizer
   cluster <- gbmCluster(n.cores)
   on.exit(parallel::stopCluster(cluster))
   
-  ## get ourselves some random seeds
+  # Set random seeds
   seeds <- as.integer(runif(cv.folds, -(2^31 - 1), 2^31))
   
-  ## now do the cross-validation model builds
-  parallel::parLapply(cl=cluster, X=1:cv.folds,
-                      gbmDoFold, i.train, x, y, offset, distribution,
-                      w, var.monotone, n.trees,
-                      interaction.depth, n.minobsinnode, shrinkage,
-                      bag.fraction,
-                      cv.group, var.names, response.name, group, seeds)
+  # Perform cross-validation model builds
+  parallel::parLapply(cl = cluster, X = 1:cv.folds, fun = gbmDoFold, i.train, x, 
+                      y, offset, distribution, w, var.monotone, n.trees,
+                      interaction.depth, n.minobsinnode, shrinkage, 
+                      bag.fraction, cv.group, var.names, response.name, group, 
+                      seeds)
+  
 }
 
 
 #' @rdname gbmCrossVal
 #' @export
-gbmDoFold <-
-  # Do specified cross-validation fold - a self-contained function for
-  # passing to individual cores.
-  function(X,
-           i.train, x, y, offset, distribution, w, var.monotone, n.trees,
-           interaction.depth, n.minobsinnode, shrinkage, bag.fraction,
-           cv.group, var.names, response.name, group, s){
-    library(gbm, quietly=TRUE)
-    cat("CV:", X, "\n")
-    
-    set.seed(s[[X]])
-    
-    i <- order(cv.group == X)
-    x <- x[i.train,,drop=TRUE][i,,drop=FALSE]
-    y <- y[i.train][i]
-    offset <- offset[i.train][i]
-    nTrain <- length(which(cv.group != X))
-    group <- group[i.train][i]
-    
-    res <- gbm.fit(x, y,
-                   offset=offset, distribution=distribution,
-                   w=w, var.monotone=var.monotone, n.trees=n.trees,
-                   interaction.depth=interaction.depth,
-                   n.minobsinnode=n.minobsinnode,
-                   shrinkage=shrinkage,
-                   bag.fraction=bag.fraction,
-                   nTrain=nTrain, keep.data=FALSE,
-                   verbose=FALSE, response.name=response.name,
-                   group=group)
-    res
-  }
+gbmDoFold <- function(X, i.train, x, y, offset, distribution, w, var.monotone, 
+                      n.trees, interaction.depth, n.minobsinnode, shrinkage, 
+                      bag.fraction, cv.group, var.names, response.name, group, 
+                      s) {
+  
+  # Do specified cross-validation fold - a self-contained function for passing 
+  # to individual cores.
+  
+  # Load required packages for core
+  library(gbm, quietly=TRUE)
+  
+  # Print CV information
+  cat("CV:", X, "\n")
+  
+  # Setup
+  set.seed(s[[X]])
+  i <- order(cv.group == X)
+  x <- x[i.train,,drop=TRUE][i,,drop=FALSE]
+  y <- y[i.train][i]
+  offset <- offset[i.train][i]
+  nTrain <- length(which(cv.group != X))
+  group <- group[i.train][i]
+  
+  # Fit a GBM
+  res <- gbm.fit(x = x, y = y, offset = offset, distribution = distribution,
+                 w = w, var.monotone = var.monotone, n.trees = n.trees,
+                 interaction.depth = interaction.depth,
+                 n.minobsinnode = n.minobsinnode,
+                 shrinkage = shrinkage, bag.fraction = bag.fraction,
+                 nTrain = nTrain, keep.data = FALSE, verbose = FALSE, 
+                 response.name = response.name, group = group)
+  
+  # Return the result
+  res
+  
+}

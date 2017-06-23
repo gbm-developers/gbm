@@ -7,7 +7,7 @@ extern "C" {
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP gbm
+SEXP gbm_fit
 (
     SEXP radY,       // outcome or response
     SEXP radOffset,  // offset for f(x), NA for no offset
