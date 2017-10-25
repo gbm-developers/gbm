@@ -13,4 +13,4 @@ vignettes/*.gz
 vignettes/*.log
 vignettes/*.R
 vignettes/*.tex
-vignettes/*.pdf
+vignettes/gbm.pdf
