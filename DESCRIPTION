@@ -15,10 +15,10 @@ Depends: R (>= 2.9.0)
 Imports:
   lattice,
   parallel,
-  splines,
   survival,
 Suggests:
-  RUnit
+  RUnit,
+  splines,
 Description: This package implements extension to Freund and Schapire's AdaBoost 
   algorithm and Friedman's gradient boosting machine. Includes regression 
   methods for least squares, absolute loss, t-distribution loss, quantile 

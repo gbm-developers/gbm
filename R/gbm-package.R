@@ -29,7 +29,6 @@
 #' @importFrom grDevices rainbow
 #' @importFrom graphics abline axis barplot lines mtext par plot polygon rug 
 #' @importFrom graphics segments title
-#' @importFrom splines ns splineDesign
 #' @importFrom stats approx binomial delete.response gaussian glm loess 
 #' @importFrom stats model.extract model.frame model.offset model.response 
 #' @importFrom stats model.weights na.pass poisson predict quantile rbinom 

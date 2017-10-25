@@ -4,14 +4,15 @@
 \alias{quantile.rug}
 \title{Quantile rug plot}
 \usage{
-\method{quantile}{rug}(x, prob = (0:10)/10, ...)
+\method{quantile}{rug}(x, prob = 0:10/10, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}
 
 \item{prob}{The quantiles of x to mark on the x-axis.}
 
-\item{...}{Additional graphics parameters (currently ignored).}
+\item{...}{Additional optional arguments to be passed onto 
+\code{\link[graphics]{rug}}}
 }
 \value{
 No return values.
@@ -20,7 +21,6 @@ No return values.
 Marks the quantiles on the axes of the current plot.
 }
 \examples{
-
 x <- rnorm(100)
 y <- rnorm(100)
 plot(x, y)
@@ -31,6 +31,6 @@ quantile.rug(x)
 \code{\link[base]{jitter}}, \code{\link[graphics]{rug}}.
 }
 \author{
-Greg Ridgeway \email{gregridgeway@gmail.com}
+Greg Ridgeway \email{gregridgeway@gmail.com}.
 }
 \keyword{aplot}

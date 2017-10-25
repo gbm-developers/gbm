@@ -43,22 +43,22 @@ select limits.}
 \code{\link[splines]{ns}} for constructing a natural spline smoother for the
 calibration curve.}
 
-\item{...}{Other graphics parameters passed on to the plot function.}
+\item{...}{Additional optional arguments to be passed onto 
+\code{\link[graphics]{plot}}}
 }
 \value{
 No return values.
 }
 \description{
 An experimental diagnostic tool that plots the fitted values versus the
-actual average values. Currently developed for only
-\code{distribution="bernoulli"}.
+actual average values. Currently only available when
+\code{distribution = "bernoulli"}.
 }
 \details{
 Uses natural splines to estimate E(y|p). Well-calibrated predictions imply
 that E(y|p) = p. The plot also includes a pointwise 95% confidence band.
 }
 \examples{
-
 # Don't want R CMD check to think there is a dependency on rpart
 # so comment out the example
 #library(rpart)
