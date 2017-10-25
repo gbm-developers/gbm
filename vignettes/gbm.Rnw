@@ -1,14 +1,14 @@
-% setwd("c:/dev/gbm/inst/doc") % Sweave("gbm.rnw"); system("texify gbm.tex"); system("c:\\MiKTeX\\texmf\\miktex\\bin\\yap.exe gbm.dvi",wait=FALSE)
-
 \documentclass{article}
+
 \bibliographystyle{plain}
-\usepackage[active]{srcltx}
+
 \newcommand{\EV}{\mathrm{E}}
 \newcommand{\Var}{\mathrm{Var}}
 \newcommand{\aRule}{\begin{center} \rule{5in}{1mm} \end{center}}
 
 \title{Generalized Boosted Models:\\A guide to the gbm package} \author{Greg Ridgeway}
 
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{Generalized Boosted Models: A guide to the gbm package}
 
 \newcommand{\mathgbf}[1]{{\mbox{\boldmath$#1$\unboldmath}}}
@@ -368,24 +368,6 @@ random noise.
 
 
 
-\begin{thebibliography}{77}     % start the bibliography
-
-\small                          % put the bibliography in a small font
-
-\bibitem{FreundSchapire:1997} Y. Freund and R.E. Schapire (1997). ``A decision-theoretic generalization of on-line learning and an application to boosting,'' \textit{Journal of Computer and System Sciences}, 55(1):119-139.
-
-\bibitem{Friedman:2001} J.H. Friedman (2001). ``Greedy Function Approximation: A Gradient Boosting Machine,'' \textit{Annals of Statistics} 29(5):1189-1232.
-
-\bibitem{Friedman:2002} J.H. Friedman (2002). ``Stochastic Gradient Boosting,'' \textit{Computational Statistics and Data Analysis} 38(4):367-378.
-
-\bibitem{FHT:2000} J.H. Friedman, T. Hastie, R. Tibshirani (2000). ``Additive Logistic Regression: a Statistical View of Boosting,'' \textit{Annals of Statistics} 28(2):337-374.
-    
-\bibitem{Kriegler:2010} B. Kriegler and R. Berk (2010). ``Small Area Estimation of the Homeless in Los Angeles, An Application of Cost-Sensitive Stochastic Gradient Boosting,'' \textit{Annals of Applied Statistics} 4(3):1234-1255.
-
-\bibitem{Ridgeway:1999} G. Ridgeway (1999). ``The state of boosting,'' \textit{Computing Science and Statistics} 31:172-181.
-
-\bibitem{Burges:2010} C. Burges (2010). ``From RankNet to LambdaRank to LambdaMART: An Overview'', \textit{Microsoft Research Technical Report MSR-TR-2010-82}
-
-\end{thebibliography}           % end the bibliography
+\bibliography{gbm}
 
 \end{document} 

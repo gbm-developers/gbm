@@ -1,7 +1,7 @@
 #' Generalized Boosted Regression Modeling (GBM)
 #' 
-#' Fits generalized boosted regression models. See the 
-#' \url{../doc/gbm.pdfgbm vignette} for technical details.
+#' Fits generalized boosted regression models. For technical details, see the 
+#' vignette: \code{utils::browseVignettes("gbm")}.
 #' 
 #' \code{gbm.fit} provides the link between R and the C++ gbm engine.
 #' \code{gbm} is a front-end to \code{gbm.fit} that uses the familiar R

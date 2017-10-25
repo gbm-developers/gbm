@@ -15,10 +15,11 @@ Depends: R (>= 2.9.0)
 Imports:
   lattice,
   parallel,
-  survival,
+  survival
 Suggests:
   RUnit,
   splines,
+  knitr
 Description: This package implements extension to Freund and Schapire's AdaBoost 
   algorithm and Friedman's gradient boosting machine. Includes regression 
   methods for least squares, absolute loss, t-distribution loss, quantile 
@@ -29,3 +30,4 @@ License: GPL (>= 2) | file LICENSE
 URL: https://github.com/gbm-developers/gbm
 BugReports: https://github.com/gbm-developers/gbm/issues
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr

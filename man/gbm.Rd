@@ -204,8 +204,8 @@ response variable.}
 \code{\link{gbm.object}}.
 }
 \description{
-Fits generalized boosted regression models. See the 
-\url{../doc/gbm.pdfgbm vignette} for technical details.
+Fits generalized boosted regression models. For technical details, see the 
+vignette: \code{utils::browseVignettes("gbm")}.
 }
 \details{
 \code{gbm.fit} provides the link between R and the C++ gbm engine.

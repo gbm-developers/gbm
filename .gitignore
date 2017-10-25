@@ -5,3 +5,12 @@
 src/*.o
 src/*.so
 src/*.dll
+inst/doc
+vignettes/*.bbl
+vignettes/*.brf
+vignettes/*.eps
+vignettes/*.gz
+vignettes/*.log
+vignettes/*.R
+vignettes/*.tex
+vignettes/*.pdf
