@@ -48,19 +48,23 @@
 #' indicate the group an instance belongs to (typically a query in Information
 #' Retrieval applications). For training, only pairs of instances from the same
 #' group and with different target labels can be considered. \code{metric} is
-#' the IR measure to use, one of \describe{ \item{list("conc")}{Fraction of
-#' concordant pairs; for binary labels, this is equivalent to the Area under
-#' the ROC Curve}\item{:}{Fraction of concordant pairs; for binary labels, this
-#' is equivalent to the Area under the ROC Curve} \item{list("mrr")}{Mean
-#' reciprocal rank of the highest-ranked positive instance}\item{:}{Mean
-#' reciprocal rank of the highest-ranked positive instance}
-#' \item{list("map")}{Mean average precision, a generalization of \code{mrr} to
-#' multiple positive instances}\item{:}{Mean average precision, a
-#' generalization of \code{mrr} to multiple positive instances}
-#' \item{list("ndcg:")}{Normalized discounted cumulative gain. The score is the
-#' weighted sum (DCG) of the user-supplied target values, weighted by
-#' log(rank+1), and normalized to the maximum achievable value. This is the
-#' default if the user did not specify a metric.} }
+#' the IR measure to use, one of 
+#' \describe{ 
+#'   \item{list("conc")}{Fraction of concordant pairs; for binary labels, this 
+#'         is equivalent to the Area under the ROC Curve}
+#'   \item{:}{Fraction of concordant pairs; for binary labels, this is 
+#'            equivalent to the Area under the ROC Curve} 
+#'   \item{list("mrr")}{Mean reciprocal rank of the highest-ranked positive 
+#'         instance}
+#'   \item{:}{Mean reciprocal rank of the highest-ranked positive instance}
+#'   \item{list("map")}{Mean average precision, a generalization of \code{mrr} 
+#'         to multiple positive instances}\item{:}{Mean average precision, a
+#'         generalization of \code{mrr} to multiple positive instances}
+#'   \item{list("ndcg:")}{Normalized discounted cumulative gain. The score is 
+#'         the weighted sum (DCG) of the user-supplied target values, weighted 
+#'         by log(rank+1), and normalized to the maximum achievable value. This 
+#'         is the default if the user did not specify a metric.} 
+#' }
 #' 
 #' \code{ndcg} and \code{conc} allow arbitrary target values, while binary
 #' targets {0,1} are expected for \code{map} and \code{mrr}. For \code{ndcg}
@@ -213,8 +217,8 @@
 #' Pairwise code developed by Stefan Schroedl \email{schroedl@@a9.com}
 #' 
 #' @seealso \code{\link{gbm.object}}, \code{\link{gbm.perf}}, 
-#'   \code{\link{plot.gbm}}, \code{\link{predict.gbm}},
-#'   \code{\link{summary.gbm}}, \code{\link{pretty.gbm.tree}}.
+#' \code{\link{plot.gbm}}, \code{\link{predict.gbm}}, \code{\link{summary.gbm}}, 
+#' and \code{\link{pretty.gbm.tree}}.
 #' 
 #' @references 
 #' Y. Freund and R.E. Schapire (1997) \dQuote{A decision-theoretic
@@ -242,136 +246,114 @@
 #' C. Burges (2010). \dQuote{From RankNet to LambdaRank to LambdaMART: An
 #' Overview,} Microsoft Research Technical Report MSR-TR-2010-82.
 #' 
-#' \url{http://sites.google.com/site/gregridgewayGreg Ridgeway's site}.
-#' 
-#' The \url{http://www-stat.stanford.edu/~jhf/R-MART.htmlMART} website.
-#' 
 #' @aliases gbm, gbm.fit, gbm.more
 #' 
-#' @keywords models nonlinear survival nonparametric tree
-#' 
 #' @rdname gbm
+#' 
 #' @export
 #' 
 #' @examples
+#' #
 #' # A least squares regression example 
+#' #
 #' 
-#' # create some data
+#' # Simulate data
+#' set.seed(101)  # for reproducibility
 #' N <- 1000
 #' X1 <- runif(N)
-#' X2 <- 2*runif(N)
-#' X3 <- ordered(sample(letters[1:4],N,replace=TRUE),levels=letters[4:1])
-#' X4 <- factor(sample(letters[1:6],N,replace=TRUE))
-#' X5 <- factor(sample(letters[1:3],N,replace=TRUE))
-#' X6 <- 3*runif(N) 
-#' mu <- c(-1,0,1,2)[as.numeric(X3)]
+#' X2 <- 2 * runif(N)
+#' X3 <- ordered(sample(letters[1:4], N, replace = TRUE), levels = letters[4:1])
+#' X4 <- factor(sample(letters[1:6], N, replace = TRUE))
+#' X5 <- factor(sample(letters[1:3], N, replace = TRUE))
+#' X6 <- 3 * runif(N) 
+#' mu <- c(-1, 0, 1, 2)[as.numeric(X3)]
+#' SNR <- 10  # signal-to-noise ratio
+#' Y <- X1 ^ 1.5 + 2 * (X2 ^ 0.5) + mu
+#' sigma <- sqrt(var(Y) / SNR)
+#' Y <- Y + rnorm(N, 0, sigma)
+#' X1[sample(1:N,size=500)] <- NA  # introduce some missing values
+#' X4[sample(1:N,size=300)] <- NA  # introduce some missing values
+#' data <- data.frame(Y, X1, X2, X3, X4, X5, X6)
 #' 
-#' SNR <- 10 # signal-to-noise ratio
-#' Y <- X1**1.5 + 2 * (X2**.5) + mu
-#' sigma <- sqrt(var(Y)/SNR)
-#' Y <- Y + rnorm(N,0,sigma)
+#' # Fit a GBM
+#' set.seed(102)  # for reproducibility
+#' gbm1 <- gbm(Y ~ ., data = data, var.monotone = c(0, 0, 0, 0, 0, 0),
+#'             distribution = "gaussian", n.trees = 1000, shrinkage = 0.05,             
+#'             interaction.depth = 3, bag.fraction = 0.5, train.fraction = 0.5,  
+#'             n.minobsinnode = 10, cv.folds = 5, keep.data = TRUE, 
+#'             verbose = FALSE, n.cores = 1)  
 #' 
-#' # introduce some missing values
-#' X1[sample(1:N,size=500)] <- NA
-#' X4[sample(1:N,size=300)] <- NA
-#' 
-#' data <- data.frame(Y=Y,X1=X1,X2=X2,X3=X3,X4=X4,X5=X5,X6=X6)
-#' 
-#' # fit initial model
-#' gbm1 <-
-#' gbm(Y~X1+X2+X3+X4+X5+X6,         # formula
-#'     data=data,                   # dataset
-#'     var.monotone=c(0,0,0,0,0,0), # -1: monotone decrease,
-#'                                  # +1: monotone increase,
-#'                                  #  0: no monotone restrictions
-#'     distribution="gaussian",     # see the help for other choices
-#'     n.trees=1000,                # number of trees
-#'     shrinkage=0.05,              # shrinkage or learning rate,
-#'                                  # 0.001 to 0.1 usually work
-#'     interaction.depth=3,         # 1: additive model, 2: two-way interactions, etc.
-#'     bag.fraction = 0.5,          # subsampling fraction, 0.5 is probably best
-#'     train.fraction = 0.5,        # fraction of data for training,
-#'                                  # first train.fraction*N used for training
-#'     n.minobsinnode = 10,         # minimum total weight needed in each node
-#'     cv.folds = 3,                # do 3-fold cross-validation
-#'     keep.data=TRUE,              # keep a copy of the dataset with the object
-#'     verbose=FALSE,               # don't print out progress
-#'     n.cores=1)                   # use only a single core (detecting #cores is
-#'                                  # error-prone, so avoided here)
-#' 
-#' # check performance using an out-of-bag estimator
-#' # OOB underestimates the optimal number of iterations
-#' best.iter <- gbm.perf(gbm1,method="OOB")
+#' # Check performance using the out-of-bag (OOB) error; the OOB error typically
+#' # underestimates the optimal number of iterations
+#' best.iter <- gbm.perf(gbm1, method = "OOB")
 #' print(best.iter)
 #' 
-#' # check performance using a 50% heldout test set
-#' best.iter <- gbm.perf(gbm1,method="test")
+#' # Check performance using the 50% heldout test set
+#' best.iter <- gbm.perf(gbm1, method = "test")
 #' print(best.iter)
 #' 
-#' # check performance using 5-fold cross-validation
-#' best.iter <- gbm.perf(gbm1,method="cv")
+#' # Check performance using 5-fold cross-validation
+#' best.iter <- gbm.perf(gbm1, method = "cv")
 #' print(best.iter)
 #' 
-#' # plot the performance # plot variable influence
-#' summary(gbm1,n.trees=1)         # based on the first tree
-#' summary(gbm1,n.trees=best.iter) # based on the estimated best number of trees
+#' # Plot relative influence of each variable
+#' par(mfrow = c(1, 2))
+#' summary(gbm1, n.trees = 1)          # using first tree
+#' summary(gbm1, n.trees = best.iter)  # using estimated best number of trees
 #' 
-#' # compactly print the first and last trees for curiosity
-#' print(pretty.gbm.tree(gbm1,1))
-#' print(pretty.gbm.tree(gbm1,gbm1$n.trees))
+#' # Compactly print the first and last trees for curiosity
+#' print(pretty.gbm.tree(gbm1, i.tree = 1))
+#' print(pretty.gbm.tree(gbm1, i.tree = gbm1$n.trees))
 #' 
-#' # make some new data
+#' # Simulate new data
+#' set.seed(103)  # for reproducibility
 #' N <- 1000
 #' X1 <- runif(N)
-#' X2 <- 2*runif(N)
-#' X3 <- ordered(sample(letters[1:4],N,replace=TRUE))
-#' X4 <- factor(sample(letters[1:6],N,replace=TRUE))
-#' X5 <- factor(sample(letters[1:3],N,replace=TRUE))
-#' X6 <- 3*runif(N) 
-#' mu <- c(-1,0,1,2)[as.numeric(X3)]
+#' X2 <- 2 * runif(N)
+#' X3 <- ordered(sample(letters[1:4], N, replace = TRUE))
+#' X4 <- factor(sample(letters[1:6], N, replace = TRUE))
+#' X5 <- factor(sample(letters[1:3], N, replace = TRUE))
+#' X6 <- 3 * runif(N) 
+#' mu <- c(-1, 0, 1, 2)[as.numeric(X3)]
+#' Y <- X1 ^ 1.5 + 2 * (X2 ^ 0.5) + mu + rnorm(N, 0, sigma)
+#' data2 <- data.frame(Y, X1, X2, X3, X4, X5, X6)
 #' 
-#' Y <- X1**1.5 + 2 * (X2**.5) + mu + rnorm(N,0,sigma)
-#' 
-#' data2 <- data.frame(Y=Y,X1=X1,X2=X2,X3=X3,X4=X4,X5=X5,X6=X6)
-#' 
-#' # predict on the new data using "best" number of trees
-#' # f.predict generally will be on the canonical scale (logit,log,etc.)
-#' f.predict <- predict(gbm1,data2,best.iter)
+#' # Predict on the new data using the "best" number of trees; by default,
+#' # predictions will be on the link scale
+#' Yhat <- predict(gbm1, newdata = data2, n.trees = best.iter, type = "link")
 #' 
 #' # least squares error
-#' print(sum((data2$Y-f.predict)^2))
+#' print(sum((data2$Y - Yhat)^2))
 #' 
-#' # create marginal plots
-#' # plot variable X1,X2,X3 after "best" iterations
-#' par(mfrow=c(1,3))
-#' plot(gbm1,1,best.iter)
-#' plot(gbm1,2,best.iter)
-#' plot(gbm1,3,best.iter)
-#' par(mfrow=c(1,1))
-#' # contour plot of variables 1 and 2 after "best" iterations
-#' plot(gbm1,1:2,best.iter)
-#' # lattice plot of variables 2 and 3
-#' plot(gbm1,2:3,best.iter)
-#' # lattice plot of variables 3 and 4
-#' plot(gbm1,3:4,best.iter)
+#' # Construct univariate partial dependence plots
+#' par(mfrow = c(1, 3))
+#' plot(gbm1, i.var = 1, n.trees = best.iter)
+#' plot(gbm1, i.var = 2, n.trees = best.iter)
+#' plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
+#' par(mfrow = c(1, 1))
 #' 
-#' # 3-way plots
-#' plot(gbm1,c(1,2,6),best.iter,cont=20)
-#' plot(gbm1,1:3,best.iter)
-#' plot(gbm1,2:4,best.iter)
-#' plot(gbm1,3:5,best.iter)
+#' # Construct bivariate partial dependence plots
+#' plot(gbm1, i.var = 1:2, n.trees = best.iter)
+#' plot(gbm1, i.var = c("X2", "X3"), n.trees = best.iter)
+#' plot(gbm1, i.var = 3:4, n.trees = best.iter)
 #' 
-#' # do another 100 iterations
-#' gbm2 <- gbm.more(gbm1, 100, verbose = FALSE)  # stop printing detailed progress
+#' # Construct trivariate partial dependence plots
+#' plot(gbm1, i.var = c(1, 2, 6), n.trees = best.iter, cont = 20)
+#' plot(gbm1, i.var = 1:3, n.trees = best.iter)
+#' plot(gbm1, i.var = 2:4, n.trees = best.iter)
+#' plot(gbm1, i.var = 3:5, n.trees = best.iter)
+#' 
+#' # Add more (i.e., 100) boosting iterations to the ensemble
+#' gbm2 <- gbm.more(gbm1, n.new.trees = 100, verbose = FALSE)
 gbm <- function(formula = formula(data), distribution = "bernoulli", 
                 data = list(), weights, var.monotone = NULL, n.trees = 100,
                 interaction.depth = 1, n.minobsinnode = 10, shrinkage = 0.001,
                 bag.fraction = 0.5, train.fraction = 1.0, cv.folds = 0,
-                keep.data = TRUE, verbose = 'CV', class.stratify.cv = NULL,
+                keep.data = TRUE, verbose = "CV", class.stratify.cv = NULL,
                 n.cores = NULL) {
   
   # Match the call to gbm
-  theCall <- match.call()
+  mcall <- match.call()
   
   # Verbose output?
   lVerbose <- if (!is.logical(verbose)) { 
@@ -380,7 +362,7 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
     verbose 
   }
   
-  # Construct model frame
+  # Construct model frame, terms object, weights, and offset
   mf <- match.call(expand.dots = FALSE)
   m <- match(c("formula", "data", "weights", "offset"), names(mf), 0)
   mf <- mf[c(1, m)]
@@ -390,7 +372,6 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
   m <- mf
   mf <- eval(mf, parent.frame())
   Terms <- attr(mf, "terms")
-  
   w <- model.weights(mf)
   offset <- model.offset(mf)
   
@@ -413,15 +394,16 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
                    na.action = na.pass)
   
   # Extract response name as a character string
-  response.name <- as.character(formula[[2L]])  # FIXME: Use deparse instead?
+  response.name <- as.character(formula[[2L]])
   
+  # Stratify cross-validation by class (only for bernoulli and multinomial)
   class.stratify.cv <- getStratify(class.stratify.cv, d = distribution)
   
-  # groups (for pairwise distribution only)
+  # Groups (for pairwise distribution only)
   group <- NULL
   num.groups <- 0
   
-  # determine number of training instances
+  # Determine number of training instances
   if (distribution$name != "pairwise"){
     
     # Number of training instances
@@ -445,8 +427,9 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
     }
     
     # Construct group index
-    group <- factor(do.call(paste, c(data[, distribution.group, drop = FALSE], 
-                                     sep = ":")))
+    group <- factor(
+      do.call(paste, c(data[, distribution.group, drop = FALSE], sep = ":"))
+    )
     
     # Check that weights are constant across groups
     if ((!missing(weights)) && (!is.null(weights))) {
@@ -515,21 +498,19 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
   gbm.obj$Terms <- Terms
   gbm.obj$cv.error <- cv.error
   gbm.obj$cv.folds <- cv.folds
-  gbm.obj$call <- theCall
+  gbm.obj$call <- mcall
   gbm.obj$m <- m
   if (cv.folds > 0) { 
     gbm.obj$cv.fitted <- p 
   }
-  
   if (distribution$name == "pairwise") {
-    # Data has been reordered according to queries.
-    # We need to permute the fitted values to correspond
-    # to the original order.
+    # Data has been reordered according to queries. We need to permute the 
+    # fitted values so that they correspond to the original order.
     gbm.obj$ord.group <- ord.group
     gbm.obj$fit <- gbm.obj$fit[order(ord.group)]
   }
   
   # Return "gbm" object
-  return(gbm.obj)
+  gbm.obj
   
 }

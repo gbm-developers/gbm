@@ -38,7 +38,11 @@ bernoulli is assumed; otherwise, if the response is a factor, multinomial is
 assumed; otherwise, if the response has class \code{"Surv"}, coxph is 
 assumed; otherwise, gaussian is assumed.
 
-Currently available options are \code{"gaussian"} (squared error), 
+Currently available options are 
+\describe{
+  \item{"gaussian"}{Squared error loss.}
+}
+\code{"gaussian"} (squared error), 
 \code{"laplace"} (absolute loss), \code{"tdist"} (t-distribution loss), 
 \code{"bernoulli"} (logistic regression for 0-1 outcomes), 
 \code{"huberized"} (huberized hinge loss for 0-1 outcomes), classes), 
@@ -64,19 +68,23 @@ a character vector with the column names of \code{data} that jointly
 indicate the group an instance belongs to (typically a query in Information
 Retrieval applications). For training, only pairs of instances from the same
 group and with different target labels can be considered. \code{metric} is
-the IR measure to use, one of \describe{ \item{list("conc")}{Fraction of
-concordant pairs; for binary labels, this is equivalent to the Area under
-the ROC Curve}\item{:}{Fraction of concordant pairs; for binary labels, this
-is equivalent to the Area under the ROC Curve} \item{list("mrr")}{Mean
-reciprocal rank of the highest-ranked positive instance}\item{:}{Mean
-reciprocal rank of the highest-ranked positive instance}
-\item{list("map")}{Mean average precision, a generalization of \code{mrr} to
-multiple positive instances}\item{:}{Mean average precision, a
-generalization of \code{mrr} to multiple positive instances}
-\item{list("ndcg:")}{Normalized discounted cumulative gain. The score is the
-weighted sum (DCG) of the user-supplied target values, weighted by
-log(rank+1), and normalized to the maximum achievable value. This is the
-default if the user did not specify a metric.} }
+the IR measure to use, one of 
+\describe{ 
+  \item{list("conc")}{Fraction of concordant pairs; for binary labels, this 
+        is equivalent to the Area under the ROC Curve}
+  \item{:}{Fraction of concordant pairs; for binary labels, this is 
+           equivalent to the Area under the ROC Curve} 
+  \item{list("mrr")}{Mean reciprocal rank of the highest-ranked positive 
+        instance}
+  \item{:}{Mean reciprocal rank of the highest-ranked positive instance}
+  \item{list("map")}{Mean average precision, a generalization of \code{mrr} 
+        to multiple positive instances}\item{:}{Mean average precision, a
+        generalization of \code{mrr} to multiple positive instances}
+  \item{list("ndcg:")}{Normalized discounted cumulative gain. The score is 
+        the weighted sum (DCG) of the user-supplied target values, weighted 
+        by log(rank+1), and normalized to the maximum achievable value. This 
+        is the default if the user did not specify a metric.} 
+ }
 
 \code{ndcg} and \code{conc} allow arbitrary target values, while binary
 targets {0,1} are expected for \code{map} and \code{mrr}. For \code{ndcg}
