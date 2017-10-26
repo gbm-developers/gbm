@@ -11,8 +11,8 @@
 \usage{
 gbm(formula = formula(data), distribution = "bernoulli", data = list(),
   weights, var.monotone = NULL, n.trees = 100, interaction.depth = 1,
-  n.minobsinnode = 10, shrinkage = 0.001, bag.fraction = 0.5,
-  train.fraction = 1, cv.folds = 0, keep.data = TRUE, verbose = "CV",
+  n.minobsinnode = 10, shrinkage = 0.1, bag.fraction = 0.5,
+  train.fraction = 1, cv.folds = 0, keep.data = TRUE, verbose = FALSE,
   class.stratify.cv = NULL, n.cores = NULL)
 
 gbm.fit(x, y, offset = NULL, misc = NULL, distribution = "bernoulli",
@@ -38,11 +38,7 @@ bernoulli is assumed; otherwise, if the response is a factor, multinomial is
 assumed; otherwise, if the response has class \code{"Surv"}, coxph is 
 assumed; otherwise, gaussian is assumed.
 
-Currently available options are 
-\describe{
-  \item{"gaussian"}{Squared error loss.}
-}
-\code{"gaussian"} (squared error), 
+Currently available options are \code{"gaussian"} (squared error), 
 \code{"laplace"} (absolute loss), \code{"tdist"} (t-distribution loss), 
 \code{"bernoulli"} (logistic regression for 0-1 outcomes), 
 \code{"huberized"} (huberized hinge loss for 0-1 outcomes), classes), 
@@ -84,7 +80,7 @@ the IR measure to use, one of
         the weighted sum (DCG) of the user-supplied target values, weighted 
         by log(rank+1), and normalized to the maximum achievable value. This 
         is the default if the user did not specify a metric.} 
- }
+}
 
 \code{ndcg} and \code{conc} allow arbitrary target values, while binary
 targets {0,1} are expected for \code{map} and \code{mrr}. For \code{ndcg}
@@ -122,24 +118,26 @@ decreasing (-1), or arbitrary (0) relationship with the outcome.}
 number of iterations and the number of basis functions in the additive
 expansion.}
 
-\item{interaction.depth}{The maximum depth of variable interactions. 1
-implies an additive model, 2 implies a model with up to 2-way interactions,
-etc.}
+\item{interaction.depth}{The maximum depth of variable interactions. A value
+of 1 implies an additive model, a value of 2 implies a model with up to 2-way 
+interactions, etc. Default is \code{1}.}
 
 \item{n.minobsinnode}{minimum number of observations in the trees terminal
 nodes. Note that this is the actual number of observations not the total
 weight.}
 
 \item{shrinkage}{a shrinkage parameter applied to each tree in the
-expansion. Also known as the learning rate or step-size reduction.}
+expansion. Also known as the learning rate or step-size reduction; 0.001 to 
+0.1 usually work, but a smaller learning rate typically requires more trees.
+Default is \code{0.1}.}
 
 \item{bag.fraction}{the fraction of the training set observations randomly
 selected to propose the next tree in the expansion. This introduces
-randomnesses into the model fit. If \code{bag.fraction}<1 then running the
+randomnesses into the model fit. If \code{bag.fraction} < 1 then running the
 same model twice will result in similar but different fits. \code{gbm} uses
 the R random number generator so \code{set.seed} can ensure that the model
 can be reconstructed. Preferably, the user can save the returned
-\code{\link{gbm.object}} using \code{\link{save}}.}
+\code{\link{gbm.object}} using \code{\link{save}}. Default is \code{0.5}.}
 
 \item{train.fraction}{The first \code{train.fraction * nrows(data)}
 observations are used to fit the \code{gbm} and the remainder are used for
@@ -155,14 +153,15 @@ an index of the data stored with the object. Keeping the data and index
 makes subsequent calls to \code{\link{gbm.more}} faster at the cost of
 storing an extra copy of the dataset.}
 
-\item{verbose}{If TRUE, gbm will print out progress and performance
-indicators. If this option is left unspecified for gbm.more then it uses
-\code{verbose} from \code{object}.}
+\item{verbose}{Logical indicating whether or not to print out progress and 
+performance indicators (\code{TRUE}). If this option is left unspecified for 
+\code{gbm.more}, then it uses \code{verbose} from \code{object}. Default is
+\code{FALSE}.}
 
-\item{class.stratify.cv}{whether or not the cross-validation should be
-stratified by class. Defaults to \code{TRUE} for
-\code{distribution="multinomial"} and is only implementated for
-\code{multinomial} and \code{bernoulli}. The purpose of stratifying the
+\item{class.stratify.cv}{Logical indicating whether or not the 
+cross-validation should be stratified by class. Defaults to \code{TRUE} for
+\code{distribution = "multinomial"} and is only implementated for
+\code{"multinomial"} and \code{"bernoulli"}. The purpose of stratifying the
 cross-validation is to help avoiding situations in which training sets do
 not contain all classes.}
 
@@ -173,19 +172,20 @@ will attempt to send different CV folds off to different cores. If
 documentation for \code{detectCores} makes clear that it is not failsave and
 could return a spurious number of available cores.}
 
-\item{x, y}{For \code{gbm.fit}: \code{x} is a data frame or data matrix
-containing the predictor variables and \code{y} is the vector of outcomes.
-The number of rows in \code{x} must be the same as the length of \code{y}.}
+\item{x, y}{\code{x} is a data frame or data matrix containing the predictor 
+variables and \code{y} is the vector of outcomes. The number of rows in 
+\code{x} must be the same as the length of \code{y}. (Used by 
+\code{gbm.fit}.)}
 
-\item{offset}{a vector of values for the offset.}
+\item{offset}{Vector offset values.}
 
-\item{misc}{For \code{gbm.fit}: \code{misc} is an R object that is simply
-passed on to the gbm engine. It can be used for additional data for the
-specific distribution. Currently it is only used for passing the censoring
-indicator for the Cox proportional hazards model.}
+\item{misc}{An R object that is simply passed on to the gbm engine (through 
+\code{gbm.fit}). It can be used for additional data for the specific 
+distribution. Currently it is only used for passing the censoring indicator 
+for the Cox proportional hazards model.}
 
-\item{w}{For \code{gbm.fit}: \code{w} is a vector of weights of the same
-length as the \code{y}.}
+\item{w}{Vector of weights of the same length as the \code{y}. (Used by
+\code{gbm.fit}.)}
 
 \item{nTrain}{An integer representing the number of cases on which to train.
 This is the preferred way of specification for \code{gbm.fit}; The option
@@ -193,12 +193,12 @@ This is the preferred way of specification for \code{gbm.fit}; The option
 for backward compatibility. These two parameters are mutually exclusive. If
 both are unspecified, all data is used for training.}
 
-\item{var.names}{For \code{gbm.fit}: A vector of strings of length equal to
-the number of columns of \code{x} containing the names of the predictor
-variables.}
+\item{var.names}{Vector of strings of length equal to the number of columns 
+of \code{x} containing the names of the predictor variables. (Used by
+\code{gbm.fit}.)}
 
-\item{response.name}{For \code{gbm.fit}: A character string label for the
-response variable.}
+\item{response.name}{Character string label for the response variable. (Used
+by \code{gbm.fit}.)}
 
 \item{group}{\code{group} used when \code{distribution = "pairwise"}.}
 
@@ -239,115 +239,98 @@ likelihood for count outcomes, and a gradient boosting implementation to
 minimize the AdaBoost exponential loss function.
 }
 \examples{
+#
 # A least squares regression example 
+#
 
-# create some data
+# Simulate data
+set.seed(101)  # for reproducibility
 N <- 1000
 X1 <- runif(N)
-X2 <- 2*runif(N)
-X3 <- ordered(sample(letters[1:4],N,replace=TRUE),levels=letters[4:1])
-X4 <- factor(sample(letters[1:6],N,replace=TRUE))
-X5 <- factor(sample(letters[1:3],N,replace=TRUE))
-X6 <- 3*runif(N) 
-mu <- c(-1,0,1,2)[as.numeric(X3)]
+X2 <- 2 * runif(N)
+X3 <- ordered(sample(letters[1:4], N, replace = TRUE), levels = letters[4:1])
+X4 <- factor(sample(letters[1:6], N, replace = TRUE))
+X5 <- factor(sample(letters[1:3], N, replace = TRUE))
+X6 <- 3 * runif(N) 
+mu <- c(-1, 0, 1, 2)[as.numeric(X3)]
+SNR <- 10  # signal-to-noise ratio
+Y <- X1 ^ 1.5 + 2 * (X2 ^ 0.5) + mu
+sigma <- sqrt(var(Y) / SNR)
+Y <- Y + rnorm(N, 0, sigma)
+X1[sample(1:N,size=500)] <- NA  # introduce some missing values
+X4[sample(1:N,size=300)] <- NA  # introduce some missing values
+data <- data.frame(Y, X1, X2, X3, X4, X5, X6)
 
-SNR <- 10 # signal-to-noise ratio
-Y <- X1**1.5 + 2 * (X2**.5) + mu
-sigma <- sqrt(var(Y)/SNR)
-Y <- Y + rnorm(N,0,sigma)
+# Fit a GBM
+set.seed(102)  # for reproducibility
+gbm1 <- gbm(Y ~ ., data = data, var.monotone = c(0, 0, 0, 0, 0, 0),
+            distribution = "gaussian", n.trees = 1000, shrinkage = 0.05,             
+            interaction.depth = 3, bag.fraction = 0.5, train.fraction = 0.5,  
+            n.minobsinnode = 10, cv.folds = 5, keep.data = TRUE, 
+            verbose = FALSE, n.cores = 1)  
 
-# introduce some missing values
-X1[sample(1:N,size=500)] <- NA
-X4[sample(1:N,size=300)] <- NA
-
-data <- data.frame(Y=Y,X1=X1,X2=X2,X3=X3,X4=X4,X5=X5,X6=X6)
-
-# fit initial model
-gbm1 <-
-gbm(Y~X1+X2+X3+X4+X5+X6,         # formula
-    data=data,                   # dataset
-    var.monotone=c(0,0,0,0,0,0), # -1: monotone decrease,
-                                 # +1: monotone increase,
-                                 #  0: no monotone restrictions
-    distribution="gaussian",     # see the help for other choices
-    n.trees=1000,                # number of trees
-    shrinkage=0.05,              # shrinkage or learning rate,
-                                 # 0.001 to 0.1 usually work
-    interaction.depth=3,         # 1: additive model, 2: two-way interactions, etc.
-    bag.fraction = 0.5,          # subsampling fraction, 0.5 is probably best
-    train.fraction = 0.5,        # fraction of data for training,
-                                 # first train.fraction*N used for training
-    n.minobsinnode = 10,         # minimum total weight needed in each node
-    cv.folds = 3,                # do 3-fold cross-validation
-    keep.data=TRUE,              # keep a copy of the dataset with the object
-    verbose=FALSE,               # don't print out progress
-    n.cores=1)                   # use only a single core (detecting #cores is
-                                 # error-prone, so avoided here)
-
-# check performance using an out-of-bag estimator
-# OOB underestimates the optimal number of iterations
-best.iter <- gbm.perf(gbm1,method="OOB")
+# Check performance using the out-of-bag (OOB) error; the OOB error typically
+# underestimates the optimal number of iterations
+best.iter <- gbm.perf(gbm1, method = "OOB")
 print(best.iter)
 
-# check performance using a 50\% heldout test set
-best.iter <- gbm.perf(gbm1,method="test")
+# Check performance using the 50\% heldout test set
+best.iter <- gbm.perf(gbm1, method = "test")
 print(best.iter)
 
-# check performance using 5-fold cross-validation
-best.iter <- gbm.perf(gbm1,method="cv")
+# Check performance using 5-fold cross-validation
+best.iter <- gbm.perf(gbm1, method = "cv")
 print(best.iter)
 
-# plot the performance # plot variable influence
-summary(gbm1,n.trees=1)         # based on the first tree
-summary(gbm1,n.trees=best.iter) # based on the estimated best number of trees
+# Plot relative influence of each variable
+par(mfrow = c(1, 2))
+summary(gbm1, n.trees = 1)          # using first tree
+summary(gbm1, n.trees = best.iter)  # using estimated best number of trees
 
-# compactly print the first and last trees for curiosity
-print(pretty.gbm.tree(gbm1,1))
-print(pretty.gbm.tree(gbm1,gbm1$n.trees))
+# Compactly print the first and last trees for curiosity
+print(pretty.gbm.tree(gbm1, i.tree = 1))
+print(pretty.gbm.tree(gbm1, i.tree = gbm1$n.trees))
 
-# make some new data
+# Simulate new data
+set.seed(103)  # for reproducibility
 N <- 1000
 X1 <- runif(N)
-X2 <- 2*runif(N)
-X3 <- ordered(sample(letters[1:4],N,replace=TRUE))
-X4 <- factor(sample(letters[1:6],N,replace=TRUE))
-X5 <- factor(sample(letters[1:3],N,replace=TRUE))
-X6 <- 3*runif(N) 
-mu <- c(-1,0,1,2)[as.numeric(X3)]
+X2 <- 2 * runif(N)
+X3 <- ordered(sample(letters[1:4], N, replace = TRUE))
+X4 <- factor(sample(letters[1:6], N, replace = TRUE))
+X5 <- factor(sample(letters[1:3], N, replace = TRUE))
+X6 <- 3 * runif(N) 
+mu <- c(-1, 0, 1, 2)[as.numeric(X3)]
+Y <- X1 ^ 1.5 + 2 * (X2 ^ 0.5) + mu + rnorm(N, 0, sigma)
+data2 <- data.frame(Y, X1, X2, X3, X4, X5, X6)
 
-Y <- X1**1.5 + 2 * (X2**.5) + mu + rnorm(N,0,sigma)
-
-data2 <- data.frame(Y=Y,X1=X1,X2=X2,X3=X3,X4=X4,X5=X5,X6=X6)
-
-# predict on the new data using "best" number of trees
-# f.predict generally will be on the canonical scale (logit,log,etc.)
-f.predict <- predict(gbm1,data2,best.iter)
+# Predict on the new data using the "best" number of trees; by default,
+# predictions will be on the link scale
+Yhat <- predict(gbm1, newdata = data2, n.trees = best.iter, type = "link")
 
 # least squares error
-print(sum((data2$Y-f.predict)^2))
+print(sum((data2$Y - Yhat)^2))
 
-# create marginal plots
-# plot variable X1,X2,X3 after "best" iterations
-par(mfrow=c(1,3))
-plot(gbm1,1,best.iter)
-plot(gbm1,2,best.iter)
-plot(gbm1,3,best.iter)
-par(mfrow=c(1,1))
-# contour plot of variables 1 and 2 after "best" iterations
-plot(gbm1,1:2,best.iter)
-# lattice plot of variables 2 and 3
-plot(gbm1,2:3,best.iter)
-# lattice plot of variables 3 and 4
-plot(gbm1,3:4,best.iter)
+# Construct univariate partial dependence plots
+par(mfrow = c(1, 3))
+plot(gbm1, i.var = 1, n.trees = best.iter)
+plot(gbm1, i.var = 2, n.trees = best.iter)
+plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
+par(mfrow = c(1, 1))
 
-# 3-way plots
-plot(gbm1,c(1,2,6),best.iter,cont=20)
-plot(gbm1,1:3,best.iter)
-plot(gbm1,2:4,best.iter)
-plot(gbm1,3:5,best.iter)
+# Construct bivariate partial dependence plots
+plot(gbm1, i.var = 1:2, n.trees = best.iter)
+plot(gbm1, i.var = c("X2", "X3"), n.trees = best.iter)
+plot(gbm1, i.var = 3:4, n.trees = best.iter)
 
-# do another 100 iterations
-gbm2 <- gbm.more(gbm1, 100, verbose = FALSE)  # stop printing detailed progress
+# Construct trivariate partial dependence plots
+plot(gbm1, i.var = c(1, 2, 6), n.trees = best.iter, cont = 20)
+plot(gbm1, i.var = 1:3, n.trees = best.iter)
+plot(gbm1, i.var = 2:4, n.trees = best.iter)
+plot(gbm1, i.var = 3:5, n.trees = best.iter)
+
+# Add more (i.e., 100) boosting iterations to the ensemble
+gbm2 <- gbm.more(gbm1, n.new.trees = 100, verbose = FALSE)
 }
 \references{
 Y. Freund and R.E. Schapire (1997) \dQuote{A decision-theoretic
@@ -374,15 +357,11 @@ PhD dissertation, UCLA Statistics.
 
 C. Burges (2010). \dQuote{From RankNet to LambdaRank to LambdaMART: An
 Overview,} Microsoft Research Technical Report MSR-TR-2010-82.
-
-\url{http://sites.google.com/site/gregridgewayGreg Ridgeway's site}.
-
-The \url{http://www-stat.stanford.edu/~jhf/R-MART.htmlMART} website.
 }
 \seealso{
 \code{\link{gbm.object}}, \code{\link{gbm.perf}}, 
-  \code{\link{plot.gbm}}, \code{\link{predict.gbm}},
-  \code{\link{summary.gbm}}, \code{\link{pretty.gbm.tree}}.
+\code{\link{plot.gbm}}, \code{\link{predict.gbm}}, \code{\link{summary.gbm}}, 
+and \code{\link{pretty.gbm.tree}}.
 }
 \author{
 Greg Ridgeway \email{gregridgeway@gmail.com}
@@ -395,8 +374,3 @@ Daniel Edwards
 
 Pairwise code developed by Stefan Schroedl \email{schroedl@a9.com}
 }
-\keyword{models}
-\keyword{nonlinear}
-\keyword{nonparametric}
-\keyword{survival}
-\keyword{tree}

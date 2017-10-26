@@ -17,6 +17,7 @@ Imports:
   parallel,
   survival
 Suggests:
+  pdp,
   RUnit,
   splines,
   knitr

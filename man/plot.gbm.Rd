@@ -5,37 +5,40 @@
 \title{Marginal plots of fitted gbm objects}
 \usage{
 \method{plot}{gbm}(x, i.var = 1, n.trees = x$n.trees,
-  continuous.resolution = 100, return.grid = FALSE, type = "link", ...)
+  continuous.resolution = 100, return.grid = FALSE, type = c("link",
+  "response"), ...)
 }
 \arguments{
-\item{x}{a \code{\link{gbm.object}} fitted using a call to \code{\link{gbm}}}
+\item{x}{A \code{\link{gbm.object}} that was fit using a call to 
+\code{\link{gbm}}.}
 
-\item{i.var}{a vector of indices or the names of the variables to plot. If
+\item{i.var}{Vector of indices or the names of the variables to plot. If
 using indices, the variables are indexed in the same order that they appear
 in the initial \code{gbm} formula.  If \code{length(i.var)} is between 1 and
 3 then \code{plot.gbm} produces the plots. Otherwise, \code{plot.gbm}
 returns only the grid of evaluation points and their average predictions}
 
-\item{n.trees}{the number of trees used to generate the plot. Only the first
-\code{n.trees} trees will be used}
+\item{n.trees}{Integer specifying the number of trees to use to generate the 
+plot. Default is to use \code{x$n.trees} (i.e., the entire ensemble).}
 
-\item{continuous.resolution}{The number of equally space points at which to
-evaluate continuous predictors}
+\item{continuous.resolution}{Integer specifying the number of equally space 
+points at which to evaluate continuous predictors.}
 
-\item{return.grid}{if \code{TRUE} then \code{plot.gbm} produces no graphics
-and only returns the grid of evaluation points and their average
-predictions. This is useful for customizing the graphics for special
-variable types or for dimensions greater than 3}
+\item{return.grid}{Logical indicating whether or not to produce graphics 
+\code{FALSE} or only return the grid of evaluation points and their average
+predictions \code{TRUE}. This is useful for customizing the graphics for 
+special variable types, or for higher dimensional graphs.}
 
-\item{type}{the type of prediction to plot on the vertical axis. See
-\code{predict.gbm}}
+\item{type}{Character string specifying the type of prediction to plot on the 
+vertical axis. See \code{\link{predict.gbm}} for details
+.}
 
-\item{\dots}{other arguments passed to the plot function}
+\item{...}{Additional optional arguments to be passed onto 
+\code{\link[graphics]{plot}}.}
 }
 \value{
-Nothing unless \code{return.grid} is true then \code{plot.gbm}
-produces no graphics and only returns the grid of evaluation points and
-their average predictions.
+If \code{return.grid = TRUE}, a grid of evaluation points and their 
+average predictions. Otherwise, a plot is returned.
 }
 \description{
 Plots the marginal effect of the selected variables by "integrating" out the
@@ -53,15 +56,22 @@ graphics are not sufficient the user may set \code{return.grid=TRUE}, store
 the result of the function, and develop another graphic display more
 appropriate to the particular example.
 }
+\note{
+More flexible plotting is avialble using the \code{\link[pdp]{partial}} 
+and \code{\link[pdp]{plotPartial}} functions.
+}
 \references{
-J.H. Friedman (2001). "Greedy Function Approximation: A Gradient
+J. H. Friedman (2001). "Greedy Function Approximation: A Gradient
 Boosting Machine," Annals of Statistics 29(4).
+
+B. M. Greenwell (2017). "pdp: An R Package for Constructing 
+Partial Dependence Plots," The R Journal 9(1), 421--436. 
+\url{https://journal.r-project.org/archive/2017/RJ-2017-016/index.html}.
 }
 \seealso{
-\code{\link{gbm}}, \code{\link{gbm.object}},
-\code{\link[graphics]{plot}}
+\code{\link[pdp]{partial}}, \code{\link[pdp]{plotPartial}}, 
+\code{\link{gbm}}, and \code{\link{gbm.object}}.
 }
 \author{
 Greg Ridgeway \email{gregridgeway@gmail.com}
 }
-\keyword{hplot}

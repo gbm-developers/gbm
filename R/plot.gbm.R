@@ -35,143 +35,135 @@
 #' special variable types, or for higher dimensional graphs.
 #' 
 #' @param type Character string specifying the type of prediction to plot on the 
-#' vertical axis. See \link{\code{predict.gbm}} for details.
+#' vertical axis. See \code{\link{predict.gbm}} for details
+#' .
 #' @param ... Additional optional arguments to be passed onto 
-#' \link[graphics]{\code{plot}}.
+#' \code{\link[graphics]{plot}}.
 #' 
 #' @return If \code{return.grid = TRUE}, a grid of evaluation points and their 
 #' average predictions. Otherwise, a plot is returned.
 #' 
+#' @note More flexible plotting is avialble using the \code{\link[pdp]{partial}} 
+#' and \code{\link[pdp]{plotPartial}} functions.
+#' 
 #' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
 #' 
-#' @seealso \code{\link{gbm}} and \code{\link{gbm.object}}.
+#' @seealso \code{\link[pdp]{partial}}, \code{\link[pdp]{plotPartial}}, 
+#' \code{\link{gbm}}, and \code{\link{gbm.object}}.
 #'
-#' @references J.H. Friedman (2001). "Greedy Function Approximation: A Gradient
+#' @references J. H. Friedman (2001). "Greedy Function Approximation: A Gradient
 #' Boosting Machine," Annals of Statistics 29(4).
+#' 
+#' @references B. M. Greenwell (2017). "pdp: An R Package for Constructing 
+#' Partial Dependence Plots," The R Journal 9(1), 421--436. 
+#' \url{https://journal.r-project.org/archive/2017/RJ-2017-016/index.html}.
 #' 
 #' @export
 plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees, 
                      continuous.resolution = 100, return.grid = FALSE, 
-                     type = "link", ...) {
+                     type = c("link", "response"), ...) {
   
-   if (!is.element(type, c("link", "response"))){
-      stop( "type must be either 'link' or 'response'")
-   }
+   # Match type argument
+   type <- match.arg(type)
 
-   if(all(is.character(i.var)))
-   {
-      i <- match(i.var,x$var.names)
-      if(any(is.na(i)))
-      {
-         stop("Plot variables not used in gbm model fit: ",i.var[is.na(i)])
-      } else
-      {
-         i.var <- i
-      }
+   # Sanity checks
+   if(all(is.character(i.var))) {
+     i <- match(i.var, x$var.names)
+     if(any(is.na(i))) {
+       stop("Requested variables not found in ", deparse(substitute(x)), ": ", 
+            i.var[is.na(i)])
+     } else {
+       i.var <- i
+     }
    }
-
-   if((min(i.var)<1) || (max(i.var)>length(x$var.names)))
-   {
-      warning("i.var must be between 1 and ",length(x$var.names))
+   if((min(i.var) < 1) || (max(i.var) > length(x$var.names))) {
+     warning("i.var must be between 1 and ", length(x$var.names))
    }
-   if(n.trees > x$n.trees)
-   {
-      warning(paste("n.trees exceeds the number of trees in the model, ",x$n.trees,
-                    ". Plotting using ",x$n.trees," trees.",sep=""))
+   if(n.trees > x$n.trees) {
+     warning(paste("n.trees exceeds the number of tree(s) in the model: ",
+                   x$n.trees, ". Using ", x$n.trees, 
+                   " tree(s) instead.", sep = ""))
       n.trees <- x$n.trees
    }
 
-   if(length(i.var) > 3)
-   {
-      warning("gbm.int.plot creates up to 3-way interaction plots.\nplot.gbm will only return the plotting data structure.")
+   if(length(i.var) > 3) {
+     warning("plot.gbm() will only create up to (and including) 3-way ", 
+             "interaction plots.\nBeyond that, plot.gbm() will only return ",
+             "the plotting data structure.")
       return.grid = TRUE
    }
 
-   # generate grid to evaluate gbm model
-   grid.levels <- vector("list",length(i.var))
-   for(i in 1:length(i.var))
-   {
-      # continuous
-      if(is.numeric(x$var.levels[[i.var[i]]]))
-      {
-         grid.levels[[i]] <- seq(min(x$var.levels[[i.var[i]]]),
-                                 max(x$var.levels[[i.var[i]]]),
-                                 length=continuous.resolution)
-      }
-      # categorical or ordered
-      else
-      {
-         grid.levels[[i]] <- as.numeric(factor(x$var.levels[[i.var[i]]],
-                                               levels=x$var.levels[[i.var[i]]]))-1
+   # Generate grid of predictor values on which to compute the partial 
+   # dependence values
+   grid.levels <- vector("list", length(i.var))
+   for(i in 1:length(i.var)) {
+     if(is.numeric(x$var.levels[[i.var[i]]])) {  # continuous
+       grid.levels[[i]] <- seq(from = min(x$var.levels[[i.var[i]]]), 
+                               to = max(x$var.levels[[i.var[i]]]),
+                               length = continuous.resolution)
+      } else {  # categorical
+        grid.levels[[i]] <- 
+          as.numeric(factor(x$var.levels[[i.var[i]]], 
+                            levels = x$var.levels[[i.var[i]]])) - 1
       }
    }
-
    X <- expand.grid(grid.levels)
-   names(X) <- paste("X",1:length(i.var),sep="")
+   names(X) <- paste("X", 1:length(i.var), sep = "")
 
-   # Next if block for compatibility with objects created with 1.6
-   if (is.null(x$num.classes)){
-       x$num.classes <- 1
+   # For compatibility with gbm version 1.6
+   if (is.null(x$num.classes)) {
+     x$num.classes <- 1
    }
 
-   # evaluate at each data point
-   y <- .Call("gbm_plot",
-              X = as.double(data.matrix(X)),
-              cRows = as.integer(nrow(X)),
-              cCols = as.integer(ncol(X)),
-              n.class = as.integer(x$num.classes),
-              i.var = as.integer(i.var-1),
-              n.trees = as.integer(n.trees) ,
-              initF = as.double(x$initF),
-              trees = x$trees,
-              c.splits = x$c.splits,
-              var.type = as.integer(x$var.type),
+   # Compute partial dependence values
+   y <- .Call("gbm_plot", X = as.double(data.matrix(X)), 
+              cRows = as.integer(nrow(X)), cCols = as.integer(ncol(X)),
+              n.class = as.integer(x$num.classes), 
+              i.var = as.integer(i.var - 1), n.trees = as.integer(n.trees),
+              initF = as.double(x$initF), trees = x$trees, 
+              c.splits = x$c.splits, var.type = as.integer(x$var.type),
               PACKAGE = "gbm")
 
-   if (x$distribution$name=="multinomial")
-   {
-      ## Put result into matrix form
-      X$y <- matrix(y, ncol = x$num.classes)
-      colnames(X$y) <- x$classes
+   if (x$distribution$name == "multinomial") {  # reshape into matrix
+     X$y <- matrix(y, ncol = x$num.classes)
+     colnames(X$y) <- x$classes
 
-      ## Use class probabilities
-      if (type=="response"){
-         X$y <- exp(X$y)
-         X$y <- X$y / matrix(rowSums(X$y), ncol=ncol(X$y), nrow=nrow(X$y))
-      }
-   }
-   else if(is.element(x$distribution$name, c("bernoulli", "pairwise")) && type=="response") {
-      X$y <- 1/(1+exp(-y))
-   }
-   else if ((x$distribution$name=="poisson") && (type=="response")){
+     # Convert to class probabilities (if requested)
+     if (type == "response") {
+       X$y <- exp(X$y)
+       X$y <- X$y / matrix(rowSums(X$y), ncol = ncol(X$y), nrow = nrow(X$y))
+     }
+   } else if(is.element(x$distribution$name, c("bernoulli", "pairwise")) && 
+             type == "response") {
+     X$y <- 1 / (1 + exp(-y))
+   } else if ((x$distribution$name == "poisson") && (type == "response")) {
       X$y <- exp(y)
-   }
-   else if (type=="response"){
-      warning("type 'response' only implemented for 'bernoulli', 'poisson', 'multinomial', and 'pairwise'. Ignoring" )
-   }
-   else { X$y <- y }
-
-   # transform categorical variables back to factors
-   f.factor <- rep(FALSE,length(i.var))
-   for(i in 1:length(i.var))
-   {
-      if(!is.numeric(x$var.levels[[i.var[i]]]))
-      {
-         X[,i] <- factor(x$var.levels[[i.var[i]]][X[,i]+1],
-                         levels=x$var.levels[[i.var[i]]])
-         f.factor[i] <- TRUE
-      }
+   } else if (type == "response"){
+      warning("`type = \"response\"` only implemented for \"bernoulli\", ",
+              "\"poisson\", \"multinomial\", and \"pairwise\" distributions. ",
+              "Ignoring." )
+   } else { 
+     X$y <- y 
    }
 
-   if(return.grid)
-   {
-      names(X)[1:length(i.var)] <- x$var.names[i.var]
-      return(X)
+   # Transform categorical variables back to factors
+   f.factor <- rep(FALSE, length(i.var))
+   for(i in 1:length(i.var)) {
+     if(!is.numeric(x$var.levels[[i.var[i]]])) {
+       X[,i] <- factor(x$var.levels[[i.var[i]]][X[, i] + 1],
+                       levels = x$var.levels[[i.var[i]]])
+       f.factor[i] <- TRUE
+     }
    }
 
-   # create the plots
-   if(length(i.var)==1)
-   {
+   # Return grid only (if requested)
+   if(return.grid) {
+     names(X)[1:length(i.var)] <- x$var.names[i.var]
+     return(X)
+   }
+
+   # Construct plots
+   if(length(i.var) == 1) {
       if(!f.factor)
       {
          j <- order(X$X1)
@@ -329,7 +321,7 @@ plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees,
          {
             for (ii in 1:x$num.classes){
                X$temp <- X$y[, ii]
-               print( stripplot(X1~temp|X2,data=X,
+               print( stripplot(temp~X1|X2,data=X,
                                 xlab=x$var.names[i.var[2]],
                                 ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
                                 ...) )
@@ -338,7 +330,7 @@ plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees,
             X$temp <- NULL
          }
          else {
-            print(stripplot(X1~y|X2,data=X,
+            print(stripplot(y~X1|X2,data=X,
                       xlab=x$var.names[i.var[2]],
                       ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
                       ...))
@@ -426,7 +418,7 @@ plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees,
          {
             for (ii in 1:x$num.classes){
                X.new$temp <- X.new$y[, ii]
-               print( stripplot(X1~temp|X2*X3,data=X.new,
+               print( stripplot(temp~X1|X2*X3,data=X.new,
                                 xlab=x$var.names[i.var[i[1]]],
                                 ylab=paste("f(",paste(x$var.names[i.var[1:3]],collapse=","),")",sep=""),
                                 ...) )
@@ -435,7 +427,7 @@ plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees,
             X.new$temp <- NULL
          }
          else {
-            print(stripplot(X1~y|X2*X3,data=X.new,
+            print(stripplot(y~X1|X2*X3,data=X.new,
                       xlab=x$var.names[i.var[i[1]]],
                       ylab=paste("f(",paste(x$var.names[i.var[1:3]],collapse=","),")",sep=""),
                       ...))
