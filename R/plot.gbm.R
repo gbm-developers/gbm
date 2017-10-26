@@ -14,41 +14,46 @@
 #' the result of the function, and develop another graphic display more
 #' appropriate to the particular example.
 #' 
-#' @param x a \code{\link{gbm.object}} fitted using a call to \code{\link{gbm}}
-#' @param i.var a vector of indices or the names of the variables to plot. If
+#' @param x A \code{\link{gbm.object}} that was fit using a call to 
+#' \code{\link{gbm}}.
+#' 
+#' @param i.var Vector of indices or the names of the variables to plot. If
 #' using indices, the variables are indexed in the same order that they appear
 #' in the initial \code{gbm} formula.  If \code{length(i.var)} is between 1 and
 #' 3 then \code{plot.gbm} produces the plots. Otherwise, \code{plot.gbm}
 #' returns only the grid of evaluation points and their average predictions
-#' @param n.trees the number of trees used to generate the plot. Only the first
-#' \code{n.trees} trees will be used
-#' @param continuous.resolution The number of equally space points at which to
-#' evaluate continuous predictors
-#' @param return.grid if \code{TRUE} then \code{plot.gbm} produces no graphics
-#' and only returns the grid of evaluation points and their average
-#' predictions. This is useful for customizing the graphics for special
-#' variable types or for dimensions greater than 3
-#' @param type the type of prediction to plot on the vertical axis. See
-#' \code{predict.gbm}
-#' @param \dots other arguments passed to the plot function
-#' @return Nothing unless \code{return.grid} is true then \code{plot.gbm}
-#' produces no graphics and only returns the grid of evaluation points and
-#' their average predictions.
+#' 
+#' @param n.trees Integer specifying the number of trees to use to generate the 
+#' plot. Default is to use \code{x$n.trees} (i.e., the entire ensemble).
+#' 
+#' @param continuous.resolution Integer specifying the number of equally space 
+#' points at which to evaluate continuous predictors.
+#' 
+#' @param return.grid Logical indicating whether or not to produce graphics 
+#' \code{FALSE} or only return the grid of evaluation points and their average
+#' predictions \code{TRUE}. This is useful for customizing the graphics for 
+#' special variable types, or for higher dimensional graphs.
+#' 
+#' @param type Character string specifying the type of prediction to plot on the 
+#' vertical axis. See \link{\code{predict.gbm}} for details.
+#' @param ... Additional optional arguments to be passed onto 
+#' \link[graphics]{\code{plot}}.
+#' 
+#' @return If \code{return.grid = TRUE}, a grid of evaluation points and their 
+#' average predictions. Otherwise, a plot is returned.
+#' 
 #' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
-#' @seealso \code{\link{gbm}}, \code{\link{gbm.object}},
-#' \code{\link[graphics]{plot}}
+#' 
+#' @seealso \code{\link{gbm}} and \code{\link{gbm.object}}.
+#'
 #' @references J.H. Friedman (2001). "Greedy Function Approximation: A Gradient
 #' Boosting Machine," Annals of Statistics 29(4).
-#' @keywords hplot
+#' 
 #' @export
-plot.gbm <- function(x,
-                     i.var=1,
-                     n.trees=x$n.trees,
-                     continuous.resolution=100,
-                     return.grid=FALSE,
-                     type="link",
-                     ...)
-{
+plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees, 
+                     continuous.resolution = 100, return.grid = FALSE, 
+                     type = "link", ...) {
+  
    if (!is.element(type, c("link", "response"))){
       stop( "type must be either 'link' or 'response'")
    }

@@ -107,24 +107,26 @@
 #' perform a cross-validation, calculate an estimate of generalization error
 #' returned in \code{cv.error}.
 #' 
-#' @param interaction.depth The maximum depth of variable interactions. 1
-#' implies an additive model, 2 implies a model with up to 2-way interactions,
-#' etc.
+#' @param interaction.depth The maximum depth of variable interactions. A value
+#' of 1 implies an additive model, a value of 2 implies a model with up to 2-way 
+#' interactions, etc. Default is \code{1}.
 #' 
 #' @param n.minobsinnode minimum number of observations in the trees terminal
 #' nodes. Note that this is the actual number of observations not the total
 #' weight.
 #' 
 #' @param shrinkage a shrinkage parameter applied to each tree in the
-#' expansion. Also known as the learning rate or step-size reduction.
+#' expansion. Also known as the learning rate or step-size reduction; 0.001 to 
+#' 0.1 usually work, but a smaller learning rate typically requires more trees.
+#' Default is \code{0.1}.
 #' 
 #' @param bag.fraction the fraction of the training set observations randomly
 #' selected to propose the next tree in the expansion. This introduces
-#' randomnesses into the model fit. If \code{bag.fraction}<1 then running the
+#' randomnesses into the model fit. If \code{bag.fraction} < 1 then running the
 #' same model twice will result in similar but different fits. \code{gbm} uses
 #' the R random number generator so \code{set.seed} can ensure that the model
 #' can be reconstructed. Preferably, the user can save the returned
-#' \code{\link{gbm.object}} using \code{\link{save}}.
+#' \code{\link{gbm.object}} using \code{\link{save}}. Default is \code{0.5}.
 #' 
 #' @param train.fraction The first \code{train.fraction * nrows(data)}
 #' observations are used to fit the \code{gbm} and the remainder are used for
@@ -146,37 +148,39 @@
 #' 
 #' @param n.new.trees the number of additional trees to add to \code{object}.
 #' 
-#' @param verbose If TRUE, gbm will print out progress and performance
-#' indicators. If this option is left unspecified for gbm.more then it uses
-#' \code{verbose} from \code{object}.
+#' @param verbose Logical indicating whether or not to print out progress and 
+#' performance indicators (\code{TRUE}). If this option is left unspecified for 
+#' \code{gbm.more}, then it uses \code{verbose} from \code{object}. Default is
+#' \code{FALSE}.
 #' 
-#' @param class.stratify.cv whether or not the cross-validation should be
-#' stratified by class. Defaults to \code{TRUE} for
-#' \code{distribution="multinomial"} and is only implementated for
-#' \code{multinomial} and \code{bernoulli}. The purpose of stratifying the
+#' @param class.stratify.cv Logical indicating whether or not the 
+#' cross-validation should be stratified by class. Defaults to \code{TRUE} for
+#' \code{distribution = "multinomial"} and is only implementated for
+#' \code{"multinomial"} and \code{"bernoulli"}. The purpose of stratifying the
 #' cross-validation is to help avoiding situations in which training sets do
 #' not contain all classes.
 #' 
-#' @param x,y For \code{gbm.fit}: \code{x} is a data frame or data matrix
-#' containing the predictor variables and \code{y} is the vector of outcomes.
-#' The number of rows in \code{x} must be the same as the length of \code{y}.
+#' @param x,y \code{x} is a data frame or data matrix containing the predictor 
+#' variables and \code{y} is the vector of outcomes. The number of rows in 
+#' \code{x} must be the same as the length of \code{y}. (Used by 
+#' \code{gbm.fit}.)
 #' 
-#' @param offset a vector of values for the offset.
+#' @param offset Vector offset values.
 #' 
-#' @param misc For \code{gbm.fit}: \code{misc} is an R object that is simply
-#' passed on to the gbm engine. It can be used for additional data for the
-#' specific distribution. Currently it is only used for passing the censoring
-#' indicator for the Cox proportional hazards model.
+#' @param misc An R object that is simply passed on to the gbm engine (through 
+#' \code{gbm.fit}). It can be used for additional data for the specific 
+#' distribution. Currently it is only used for passing the censoring indicator 
+#' for the Cox proportional hazards model.
 #' 
-#' @param w For \code{gbm.fit}: \code{w} is a vector of weights of the same
-#' length as the \code{y}.
+#' @param w Vector of weights of the same length as the \code{y}. (Used by
+#' \code{gbm.fit}.)
 #' 
-#' @param var.names For \code{gbm.fit}: A vector of strings of length equal to
-#' the number of columns of \code{x} containing the names of the predictor
-#' variables.
+#' @param var.names Vector of strings of length equal to the number of columns 
+#' of \code{x} containing the names of the predictor variables. (Used by
+#' \code{gbm.fit}.)
 #' 
-#' @param response.name For \code{gbm.fit}: A character string label for the
-#' response variable.
+#' @param response.name Character string label for the response variable. (Used
+#' by \code{gbm.fit}.)
 #' 
 #' @param group \code{group} used when \code{distribution = "pairwise"}.
 #' 
@@ -347,9 +351,9 @@
 #' gbm2 <- gbm.more(gbm1, n.new.trees = 100, verbose = FALSE)
 gbm <- function(formula = formula(data), distribution = "bernoulli", 
                 data = list(), weights, var.monotone = NULL, n.trees = 100,
-                interaction.depth = 1, n.minobsinnode = 10, shrinkage = 0.001,
+                interaction.depth = 1, n.minobsinnode = 10, shrinkage = 0.1,
                 bag.fraction = 0.5, train.fraction = 1.0, cv.folds = 0,
-                keep.data = TRUE, verbose = "CV", class.stratify.cv = NULL,
+                keep.data = TRUE, verbose = FALSE, class.stratify.cv = NULL,
                 n.cores = NULL) {
   
   # Match the call to gbm
