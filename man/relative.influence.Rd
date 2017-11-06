@@ -56,8 +56,7 @@ J.H. Friedman (2001). "Greedy Function Approximation: A Gradient
 Boosting Machine," Annals of Statistics 29(5):1189-1232.
 
 L. Breiman (2001).
-\url{http://oz.berkeley.edu/users/breiman/randomforest2001.pdfRandom
-Forests}.
+\url{https://www.stat.berkeley.edu/users/breiman/randomforest2001.pdf}.
 }
 \seealso{
 \code{\link{summary.gbm}}

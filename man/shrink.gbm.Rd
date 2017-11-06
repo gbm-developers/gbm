@@ -7,14 +7,14 @@
 shrink.gbm(object, n.trees, lambda = rep(10, length(object$var.names)), ...)
 }
 \arguments{
-\item{object}{A \code{\link{gbm.object}}}
+\item{object}{A \code{\link{gbm.object}}.}
 
-\item{n.trees}{the number of trees to use}
+\item{n.trees}{Integer specifying the number of trees to use.}
 
-\item{lambda}{a vector with length equal to the number of variables
-containing the shrinkage parameter for each variable}
+\item{lambda}{Vector of length equal to the number of variables containing 
+the shrinkage parameter for each variable.}
 
-\item{\dots}{other parameters (ignored)}
+\item{\dots}{Additional optional arguments. (Currently ignored.)}
 }
 \value{
 \item{predF}{Predicted values from the shrunken tree}
@@ -32,14 +32,13 @@ different shrinkage parameters for each variable.
 This function is currently experimental. Used in conjunction with a gradient
 ascent search for inclusion of variables.
 }
-\section{Warning}{
- This function is experimental.
+\note{
+Warning: This function is experimental.
 }
-
 \references{
 Hastie, T. J., and Pregibon, D.
-\url{http://www-stat.stanford.edu/~hastie/Papers/shrinktree.psShrinking
-Trees}. AT&T Bell Laboratories Technical Report (March 1990).
+\url{https://web.stanford.edu/~hastie/Papers/shrink_tree.pdf}. AT&T Bell 
+Laboratories Technical Report (March 1990).
 }
 \seealso{
 \code{\link{shrink.gbm.pred}}, \code{\link{gbm}}

@@ -35,8 +35,27 @@
 #' special variable types, or for higher dimensional graphs.
 #' 
 #' @param type Character string specifying the type of prediction to plot on the 
-#' vertical axis. See \code{\link{predict.gbm}} for details
-#' .
+#' vertical axis. See \code{\link{predict.gbm}} for details.
+#' 
+#' @param level.plot Logical indicating whether or not to use a false color level
+#' plot (\code{TRUE}) or a 3-D surface (\code{FALSE}). Default is \code{TRUE}.
+#'
+#' @param contour Logical indicating whether or not to add contour lines to the
+#' level plot. Only used when \code{level.plot = TRUE}. Default is \code{FALSE}.
+#'
+#' @param number Integer specifying the number of conditional intervals to use
+#' for the continuous panel variables. See \code{\link[graphics]{co.intervals}}
+#' and \code{\link[lattice]{equal.count}} for further details.
+#'
+#' @param overlap The fraction of overlap of the conditioning variables. See
+#' \code{\link[graphics]{co.intervals}} and \code{\link[lattice]{equal.count}}
+#' for further details.
+#'
+#' @param col.regions Color vector to be used if \code{level.plot} is
+#' \code{TRUE}. Defaults to the wonderful Matplotlib 'viridis' color map
+#' provided by the \code{viridis} package. See \code{\link[viridis]{viridis}}
+#' for details.
+#' 
 #' @param ... Additional optional arguments to be passed onto 
 #' \code{\link[graphics]{plot}}.
 #' 
@@ -45,8 +64,6 @@
 #' 
 #' @note More flexible plotting is avialble using the \code{\link[pdp]{partial}} 
 #' and \code{\link[pdp]{plotPartial}} functions.
-#' 
-#' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
 #' 
 #' @seealso \code{\link[pdp]{partial}}, \code{\link[pdp]{plotPartial}}, 
 #' \code{\link{gbm}}, and \code{\link{gbm.object}}.
@@ -61,377 +78,277 @@
 #' @export
 plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees, 
                      continuous.resolution = 100, return.grid = FALSE, 
-                     type = c("link", "response"), ...) {
+                     type = c("link", "response"), level.plot = TRUE, 
+                     contour = FALSE, number = 4, overlap = 0.1,
+                     col.regions = viridis::viridis, ...) {
   
-   # Match type argument
-   type <- match.arg(type)
+  # Match type argument
+  type <- match.arg(type)
+  
+  # Sanity checks
+  if(all(is.character(i.var))) {
+    i <- match(i.var, x$var.names)
+    if(any(is.na(i))) {
+      stop("Requested variables not found in ", deparse(substitute(x)), ": ", 
+           i.var[is.na(i)])
+    } else {
+      i.var <- i
+    }
+  }
+  if((min(i.var) < 1) || (max(i.var) > length(x$var.names))) {
+    warning("i.var must be between 1 and ", length(x$var.names))
+  }
+  if(n.trees > x$n.trees) {
+    warning(paste("n.trees exceeds the number of tree(s) in the model: ",
+                  x$n.trees, ". Using ", x$n.trees, 
+                  " tree(s) instead.", sep = ""))
+    n.trees <- x$n.trees
+  }
+  
+  if(length(i.var) > 3) {
+    warning("plot.gbm() will only create up to (and including) 3-way ", 
+            "interaction plots.\nBeyond that, plot.gbm() will only return ",
+            "the plotting data structure.")
+    return.grid <- TRUE
+  }
+  
+  # Generate grid of predictor values on which to compute the partial 
+  # dependence values
+  grid.levels <- vector("list", length(i.var))
+  for(i in 1:length(i.var)) {
+    if(is.numeric(x$var.levels[[i.var[i]]])) {  # continuous
+      grid.levels[[i]] <- seq(from = min(x$var.levels[[i.var[i]]]), 
+                              to = max(x$var.levels[[i.var[i]]]),
+                              length = continuous.resolution)
+    } else {  # categorical
+      grid.levels[[i]] <- 
+        as.numeric(factor(x$var.levels[[i.var[i]]], 
+                          levels = x$var.levels[[i.var[i]]])) - 1
+    }
+  }
+  X <- expand.grid(grid.levels)
+  names(X) <- paste("X", 1:length(i.var), sep = "")
+  
+  # For compatibility with gbm version 1.6
+  if (is.null(x$num.classes)) {
+    x$num.classes <- 1
+  }
+  
+  # Compute partial dependence values
+  y <- .Call("gbm_plot", X = as.double(data.matrix(X)), 
+             cRows = as.integer(nrow(X)), cCols = as.integer(ncol(X)),
+             n.class = as.integer(x$num.classes), 
+             i.var = as.integer(i.var - 1), n.trees = as.integer(n.trees),
+             initF = as.double(x$initF), trees = x$trees, 
+             c.splits = x$c.splits, var.type = as.integer(x$var.type),
+             PACKAGE = "gbm")
+  
+  if (x$distribution$name == "multinomial") {  # reshape into matrix
+    X$y <- matrix(y, ncol = x$num.classes)
+    colnames(X$y) <- x$classes
+    
+    # Convert to class probabilities (if requested)
+    if (type == "response") {
+      X$y <- exp(X$y)
+      X$y <- X$y / matrix(rowSums(X$y), ncol = ncol(X$y), nrow = nrow(X$y))
+    }
+  } else if(is.element(x$distribution$name, c("bernoulli", "pairwise")) && 
+            type == "response") {
+    X$y <- 1 / (1 + exp(-y))
+  } else if ((x$distribution$name == "poisson") && (type == "response")) {
+    X$y <- exp(y)
+  } else if (type == "response"){
+    warning("`type = \"response\"` only implemented for \"bernoulli\", ",
+            "\"poisson\", \"multinomial\", and \"pairwise\" distributions. ",
+            "Ignoring." )
+  } else { 
+    X$y <- y 
+  }
+  
+  # Transform categorical variables back to factors
+  f.factor <- rep(FALSE, length(i.var))
+  for(i in 1:length(i.var)) {
+    if(!is.numeric(x$var.levels[[i.var[i]]])) {
+      X[,i] <- factor(x$var.levels[[i.var[i]]][X[, i] + 1],
+                      levels = x$var.levels[[i.var[i]]])
+      f.factor[i] <- TRUE
+    }
+  }
+  
+  # Return original variable names
+  names(X)[1:length(i.var)] <- x$var.names[i.var]
+  
+  # Return grid only (if requested)
+  if(return.grid) {
+    return(X)
+  }
+  
+  # Determine number of predictors
+  nx <- length(i.var)
+  
+  # Determine which type of plot to draw based on the number of predictors
+  if (nx == 1L) {
+    
+    # Single predictor
+    plotOnePredictorPDP(X, ...)
+    
+  } else if (nx == 2) {
+    
+    # Two predictors
+    plotTwoPredictorPDP(X, level.plot = level.plot, contour = contour,
+                        col.regions = col.regions, ...)
+    
+  } else {
+    
+    # Three predictors (paneled version of plotTwoPredictorPDP)
+    plotThreePredictorPDP(X, nx = nx, level.plot = level.plot,
+                          contour = contour, col.regions = col.regions,
+                          number = number, overlap = overlap, ...)
+    
+  }
+  
+}
 
-   # Sanity checks
-   if(all(is.character(i.var))) {
-     i <- match(i.var, x$var.names)
-     if(any(is.na(i))) {
-       stop("Requested variables not found in ", deparse(substitute(x)), ": ", 
-            i.var[is.na(i)])
-     } else {
-       i.var <- i
-     }
-   }
-   if((min(i.var) < 1) || (max(i.var) > length(x$var.names))) {
-     warning("i.var must be between 1 and ", length(x$var.names))
-   }
-   if(n.trees > x$n.trees) {
-     warning(paste("n.trees exceeds the number of tree(s) in the model: ",
-                   x$n.trees, ". Using ", x$n.trees, 
-                   " tree(s) instead.", sep = ""))
-      n.trees <- x$n.trees
-   }
 
-   if(length(i.var) > 3) {
-     warning("plot.gbm() will only create up to (and including) 3-way ", 
-             "interaction plots.\nBeyond that, plot.gbm() will only return ",
-             "the plotting data structure.")
-      return.grid = TRUE
-   }
+#' @keywords internal
+plotOnePredictorPDP <- function(X, ...) {
+  
+  # Use the first column to determine which type of plot to construct
+  if (is.numeric(X[[1L]])) {
+    
+    # Draw a line plot
+    lattice::xyplot(stats::as.formula(paste("y ~", names(X)[1L])), 
+                    data = X, type = "l", ...)
+    
+  } else {
+    
+    # Draw a Cleveland dot plot
+    lattice::dotplot(stats::as.formula(paste("y ~", names(X)[1L])), 
+                     data = X, xlab = names(X)[1L], ...)
+    
+  }
+}
 
-   # Generate grid of predictor values on which to compute the partial 
-   # dependence values
-   grid.levels <- vector("list", length(i.var))
-   for(i in 1:length(i.var)) {
-     if(is.numeric(x$var.levels[[i.var[i]]])) {  # continuous
-       grid.levels[[i]] <- seq(from = min(x$var.levels[[i.var[i]]]), 
-                               to = max(x$var.levels[[i.var[i]]]),
-                               length = continuous.resolution)
-      } else {  # categorical
-        grid.levels[[i]] <- 
-          as.numeric(factor(x$var.levels[[i.var[i]]], 
-                            levels = x$var.levels[[i.var[i]]])) - 1
-      }
-   }
-   X <- expand.grid(grid.levels)
-   names(X) <- paste("X", 1:length(i.var), sep = "")
 
-   # For compatibility with gbm version 1.6
-   if (is.null(x$num.classes)) {
-     x$num.classes <- 1
-   }
+#' @keywords internal
+plotTwoPredictorPDP <- function(X, level.plot, contour, col.regions, ...) {
+  
+  # Use the first two columns to determine which type of plot to construct
+  if (is.factor(X[[1L]]) && is.factor(X[[2L]])) {
+    
+    # Draw a Cleveland dot plot
+    lattice::dotplot(stats::as.formula(
+      paste("y ~", paste(names(X)[1L:2L], collapse = "|"))
+    ), data = X, xlab = names(X)[1L], ...)
+    
+  } else if (is.factor(X[[1L]]) || is.factor(X[[2L]])) {
+    
+    # Lattice plot formula
+    form <- if (is.factor(X[[1L]])) {
+      stats::as.formula(paste("y ~", paste(names(X)[2L:1L], collapse = "|")))
+    } else {
+      stats::as.formula(paste("y ~", paste(names(X)[1L:2L], collapse = "|")))
+    }
+    
+    # Draw a paneled line plot
+    lattice::xyplot(form, data = X, type = "l", ...)
+    
+  } else {
+    
+    # Lattice plot formula
+    form <- stats::as.formula(
+      paste("y ~", paste(names(X)[1L:2L], collapse = "*"))
+    )
+    
+    # Draw a three-dimensional surface
+    if (level.plot) {
+      
+      # Draw a false color level plot
+      lattice::levelplot(form, data = X, col.regions = col.regions, 
+                         contour = contour, ...)
+      
+    } else {
+      
+      # Draw a wireframe plot
+      lattice::wireframe(form, data = X, ...)
+      
+    }
+    
+  }
+}
 
-   # Compute partial dependence values
-   y <- .Call("gbm_plot", X = as.double(data.matrix(X)), 
-              cRows = as.integer(nrow(X)), cCols = as.integer(ncol(X)),
-              n.class = as.integer(x$num.classes), 
-              i.var = as.integer(i.var - 1), n.trees = as.integer(n.trees),
-              initF = as.double(x$initF), trees = x$trees, 
-              c.splits = x$c.splits, var.type = as.integer(x$var.type),
-              PACKAGE = "gbm")
 
-   if (x$distribution$name == "multinomial") {  # reshape into matrix
-     X$y <- matrix(y, ncol = x$num.classes)
-     colnames(X$y) <- x$classes
-
-     # Convert to class probabilities (if requested)
-     if (type == "response") {
-       X$y <- exp(X$y)
-       X$y <- X$y / matrix(rowSums(X$y), ncol = ncol(X$y), nrow = nrow(X$y))
-     }
-   } else if(is.element(x$distribution$name, c("bernoulli", "pairwise")) && 
-             type == "response") {
-     X$y <- 1 / (1 + exp(-y))
-   } else if ((x$distribution$name == "poisson") && (type == "response")) {
-      X$y <- exp(y)
-   } else if (type == "response"){
-      warning("`type = \"response\"` only implemented for \"bernoulli\", ",
-              "\"poisson\", \"multinomial\", and \"pairwise\" distributions. ",
-              "Ignoring." )
-   } else { 
-     X$y <- y 
-   }
-
-   # Transform categorical variables back to factors
-   f.factor <- rep(FALSE, length(i.var))
-   for(i in 1:length(i.var)) {
-     if(!is.numeric(x$var.levels[[i.var[i]]])) {
-       X[,i] <- factor(x$var.levels[[i.var[i]]][X[, i] + 1],
-                       levels = x$var.levels[[i.var[i]]])
-       f.factor[i] <- TRUE
-     }
-   }
-
-   # Return grid only (if requested)
-   if(return.grid) {
-     names(X)[1:length(i.var)] <- x$var.names[i.var]
-     return(X)
-   }
-
-   # Construct plots
-   if(length(i.var) == 1) {
-      if(!f.factor)
-      {
-         j <- order(X$X1)
-
-         if (x$distribution$name == "multinomial") {
-            if ( type == "response" ){
-               ylabel <- "Predicted class probability"
-            }
-            else { ylabel <- paste("f(",x$var.names[i.var],")",sep="") }
-            plot(range(X$X1), range(X$y), type = "n", xlab = x$var.names[i.var],
-                 ylab = ylabel)
-
-            for (ii in 1:x$num.classes){
-               lines(X$X1,X$y[,ii],
-                     xlab=x$var.names[i.var],
-                     ylab=paste("f(",x$var.names[i.var],")",sep=""),
-                     col = ii, ...)
-            }
-         }
-         else if (is.element(x$distribution$name, c("bernoulli", "pairwise"))) {
-            if ( type == "response" ){
-               ylabel <- "Predicted probability"
-            }
-            else {
-               ylabel <- paste("f(",x$var.names[i.var],")",sep="")
-            }
-            plot( X$X1, X$y , type = "l", xlab = x$var.names[i.var], ylab=ylabel )
-         }
-         else if ( x$distribution$name == "poisson" ){
-            if (type == "response" ){
-               ylabel <- "Predicted count"
-            }
-            else{
-               ylabel <- paste("f(",x$var.names[i.var],")",sep="")
-            }
-            plot( X$X1, X$y , type = "l", xlab = x$var.names[i.var], ylab=ylabel )
-         }
-         else {
-            plot(X$X1,X$y,
-                 type="l",
-                 xlab=x$var.names[i.var],
-                 ylab=paste("f(",x$var.names[i.var],")",sep=""),...)
-         }
-      }
-      else
-      {
-         if (x$distribution$name == "multinomial") {
-            nX <- length(X$X1)
-            dim.y <- dim(X$y)
-            if (type == "response" ){
-               ylabel <- "Predicted probability"
-            }
-            else{ ylabel <- paste("f(",x$var.names[i.var],")",sep="") }
-
-            plot(c(0,nX), range(X$y), axes = FALSE, type = "n",
-                 xlab = x$var.names[i.var], ylab = ylabel)
-            axis(side = 1, labels = FALSE, at = 0:nX)
-            axis(side = 2)
-
-            mtext(as.character(X$X1), side = 1, at = 1:nX - 0.5)
-
-            segments(x1 = rep(1:nX - 0.75, each = dim.y[2]), y1 = as.vector(t(X$y)),
-                     x2 = rep(1:nX - 0.25, each = dim.y[2]), col = 1:dim.y[2])
-         }
-         else if (is.element(x$distribution$name, c("bernoulli", "pairwise")) && type == "response" ){
-            ylabel <- "Predicted probability"
-            plot( X$X1, X$y, type = "l", xlab=x$var.names[i.var], ylab=ylabel )
-         }
-         else if ( x$distribution$name == "poisson" & type == "response" ){
-            ylabel <- "Predicted count"
-            plot( X$X1, X$y, type = "l", xlab=x$var.names[i.var], ylab=ylabel )
-         }
-         else {
-            plot(X$X1,X$y,
-                 type="l",
-                 xlab=x$var.names[i.var],
-                 ylab=paste("f(",x$var.names[i.var],")",sep=""),...)
-         }
-      }
-   }
-   else if(length(i.var)==2)
-   {
-      if(!f.factor[1] && !f.factor[2])
-      {
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X$temp <- X$y[, ii]
-               print(levelplot(temp~X1*X2,data=X,
-                               xlab=x$var.names[i.var[1]],
-                               ylab=x$var.names[i.var[2]],...))
-               title(paste("Class:", dimnames(X$y)[[2]][ii]))
-            }
-            X$temp <- NULL
-         }
-         else {
-            print(levelplot(y~X1*X2,data=X,
-                      xlab=x$var.names[i.var[1]],
-                      ylab=x$var.names[i.var[2]],...))
-         }
-      }
-      else if(f.factor[1] && !f.factor[2])
-      {
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X$temp <- X$y[, ii]
-               print( xyplot(temp~X2|X1,data=X,
-                             xlab=x$var.names[i.var[2]],
-                             ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
-                             type="l",
-                             panel = panel.xyplot,
-                             ...) )
-               title(paste("Class:", dimnames(X$y)[[2]][ii]))
-            }
-            X$temp <- NULL
-         }
-         else {
-            print(xyplot(y~X2|X1,data=X,
-                   xlab=x$var.names[i.var[2]],
-                   ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
-                   type="l",
-                   panel = panel.xyplot,
-                   ...))
-         }
-      }
-      else if(!f.factor[1] && f.factor[2])
-      {
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X$temp <- X$y[, ii]
-               print( xyplot(temp~X1|X2,data=X,
-                             xlab=x$var.names[i.var[1]],
-                             ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
-                             type="l",
-                             panel = panel.xyplot,
-                             ...) )
-               title(paste("Class:", dimnames(X$y)[[2]][ii]))
-            }
-            X$temp <- NULL
-         }
-         else {
-            print(xyplot(y~X1|X2,data=X,
-                   xlab=x$var.names[i.var[1]],
-                   ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
-                   type="l",
-                   panel = panel.xyplot,
-                   ...))
-         }
-      }
-      else
-      {
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X$temp <- X$y[, ii]
-               print( stripplot(temp~X1|X2,data=X,
-                                xlab=x$var.names[i.var[2]],
-                                ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
-                                ...) )
-               title(paste("Class:", dimnames(X$y)[[2]][ii]))
-            }
-            X$temp <- NULL
-         }
-         else {
-            print(stripplot(y~X1|X2,data=X,
-                      xlab=x$var.names[i.var[2]],
-                      ylab=paste("f(",x$var.names[i.var[1]],",",x$var.names[i.var[2]],")",sep=""),
-                      ...))
-         }
-      }
-   }
-   else if(length(i.var)==3)
-   {
-      i <- order(f.factor)
-      X.new <- X[,i]
-      X.new$y <- X$y
-      names(X.new) <- names(X)
-
-      # 0 factor, 3 continuous
-      if(sum(f.factor)==0)
-      {
-         X.new$X3 <- equal.count(X.new$X3)
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X.new$temp <- X.new$y[, ii]
-               print( levelplot(temp~X1*X2|X3,data=X.new,
-                                xlab=x$var.names[i.var[i[1]]],
-                                ylab=x$var.names[i.var[i[2]]],...) )
-               title(paste("Class:", dimnames(X.new$y)[[2]][ii]))
-            }
-            X.new$temp <- NULL
-         }
-         else {
-            print(levelplot(y~X1*X2|X3,data=X.new,
-                      xlab=x$var.names[i.var[i[1]]],
-                      ylab=x$var.names[i.var[i[2]]],...))
-         }
-      }
-      # 1 factor, 2 continuous
-      else if(sum(f.factor)==1)
-      {
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X.new$temp <- X.new$y[, ii]
-               print( levelplot(temp~X1*X2|X3,data=X.new,
-                                xlab=x$var.names[i.var[i[1]]],
-                                ylab=x$var.names[i.var[i[2]]],...))
-               title(paste("Class:", dimnames(X.new$y)[[2]][ii]) )
-            }
-            X.new$temp <- NULL
-         }
-         else {
-            print(levelplot(y~X1*X2|X3,data=X.new,
-                      xlab=x$var.names[i.var[i[1]]],
-                      ylab=x$var.names[i.var[i[2]]],...))
-         }
-      }
-      # 2 factors, 1 continuous
-      else if(sum(f.factor)==2)
-      {
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X.new$temp <- X.new$y[, ii]
-               print( xyplot(temp~X1|X2*X3,data=X.new,
-                             type="l",
-                             xlab=x$var.names[i.var[i[1]]],
-                             ylab=paste("f(",paste(x$var.names[i.var[1:3]],collapse=","),")",sep=""),
-                             panel = panel.xyplot,
-                             ...) )
-               title(paste("Class:", dimnames(X.new$y)[[2]][ii]) )
-            }
-            X.new$temp <- NULL
-         }
-         else {
-            print(xyplot(y~X1|X2*X3,data=X.new,
-                   type="l",
-                   xlab=x$var.names[i.var[i[1]]],
-                   ylab=paste("f(",paste(x$var.names[i.var[1:3]],collapse=","),")",sep=""),
-                   panel = panel.xyplot,
-                   ...))
-         }
-      }
-      # 3 factors, 0 continuous
-      else if(sum(f.factor)==3)
-      {
-         if (x$distribution$name == "multinomial")
-         {
-            for (ii in 1:x$num.classes){
-               X.new$temp <- X.new$y[, ii]
-               print( stripplot(temp~X1|X2*X3,data=X.new,
-                                xlab=x$var.names[i.var[i[1]]],
-                                ylab=paste("f(",paste(x$var.names[i.var[1:3]],collapse=","),")",sep=""),
-                                ...) )
-               title(paste("Class:", dimnames(X.new$y)[[2]][ii]) )
-            }
-            X.new$temp <- NULL
-         }
-         else {
-            print(stripplot(y~X1|X2*X3,data=X.new,
-                      xlab=x$var.names[i.var[i[1]]],
-                      ylab=paste("f(",paste(x$var.names[i.var[1:3]],collapse=","),")",sep=""),
-                      ...))
-         }
-      }
-   }
+#' @keywords internal
+plotThreePredictorPDP <- function(X, nx, level.plot, contour, col.regions, 
+                                  number, overlap, ...) {
+  
+  # Factor, numeric, numeric
+  if (is.factor(X[[1L]]) && !is.factor(X[[2L]]) && !is.factor(X[[3L]])) {
+    X[, 1L:3L] <- X[, c(2L, 3L, 1L)]
+  }
+  
+  # Numeric, factor, numeric
+  if (!is.factor(X[[1L]]) && is.factor(X[[2L]]) && !is.factor(X[[3L]])) {
+    X[, 1L:3L] <- X[, c(1L, 3L, 2L)]
+  }
+  
+  # Factor, factor, numeric
+  if (is.factor(X[[1L]]) && is.factor(X[[2L]]) && !is.factor(X[[3L]])) {
+    X[, 1L:3L] <- X[, c(3L, 1L, 2L)]
+  }
+  
+  # Factor, numeric, factor
+  if (is.factor(X[[1L]]) && !is.factor(X[[2L]]) && is.factor(X[[3L]])) {
+    X[, 1L:3L] <- X[, c(2L, 1L, 3L)]
+  }
+  
+  # Convert third predictor to a factor using the equal count algorithm
+  if (is.numeric(X[[3L]])) {
+    X[[3L]] <- equal.count(X[[3L]], number = number, overlap = overlap)
+  }
+  
+  if (is.factor(X[[1L]]) && is.factor(X[[2L]])) {
+    
+    # Lattice plot formula
+    form <- stats::as.formula(
+      paste("y ~", names(X)[1L], "|", paste(names(X)[2L:nx], collapse = "*"))
+    )
+    
+    # Produce a paneled dotplot
+    lattice::dotplot(form, data = X, xlab = names(X)[1L], ...)
+    
+  } else if (is.numeric(X[[1L]]) && is.factor(X[[2L]])) {
+    
+    # Lattice plot formula
+    form <- stats::as.formula(
+      paste("y ~", names(X)[1L], "|", paste(names(X)[2L:nx], collapse = "*"))
+    )
+  
+    # Produce a paneled lineplot
+    lattice::xyplot(form, data = X, type = "l", ...)
+    
+  } else {
+    
+    # Lattice plot formula
+    form <- stats::as.formula(
+      paste("y ~", paste(names(X)[1L:2L], collapse = "*"), "|",
+            paste(names(X)[3L:nx], collapse = "*"))
+    )
+    
+    # Draw a three-dimensional surface
+    if (level.plot) {
+      
+      # Draw a false color level plot
+      lattice::levelplot(form, data = X, col.regions = col.regions, 
+                         contour = contour, ...)
+      
+    } else {
+      
+      # Draw a wireframe plot
+      lattice::wireframe(form, data = X, ...)
+      
+    }
+    
+  }
+  
 }

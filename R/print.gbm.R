@@ -134,8 +134,7 @@ show.gbm <- print.gbm
 #' Boosting Machine," Annals of Statistics 29(5):1189-1232.
 #' 
 #' L. Breiman
-#' (2001).\url{http://oz.berkeley.edu/users/breiman/randomforest2001.pdfRandom
-#' Forests}.
+#' (2001).\url{https://www.stat.berkeley.edu/users/breiman/randomforest2001.pdf}.
 #' @keywords hplot
 #' @export
 summary.gbm <- function(object,

@@ -6,7 +6,8 @@
 \usage{
 \method{plot}{gbm}(x, i.var = 1, n.trees = x$n.trees,
   continuous.resolution = 100, return.grid = FALSE, type = c("link",
-  "response"), ...)
+  "response"), level.plot = TRUE, contour = FALSE, number = 4,
+  overlap = 0.1, col.regions = viridis::viridis, ...)
 }
 \arguments{
 \item{x}{A \code{\link{gbm.object}} that was fit using a call to 
@@ -30,8 +31,26 @@ predictions \code{TRUE}. This is useful for customizing the graphics for
 special variable types, or for higher dimensional graphs.}
 
 \item{type}{Character string specifying the type of prediction to plot on the 
-vertical axis. See \code{\link{predict.gbm}} for details
-.}
+vertical axis. See \code{\link{predict.gbm}} for details.}
+
+\item{level.plot}{Logical indicating whether or not to use a false color level
+plot (\code{TRUE}) or a 3-D surface (\code{FALSE}). Default is \code{TRUE}.}
+
+\item{contour}{Logical indicating whether or not to add contour lines to the
+level plot. Only used when \code{level.plot = TRUE}. Default is \code{FALSE}.}
+
+\item{number}{Integer specifying the number of conditional intervals to use
+for the continuous panel variables. See \code{\link[graphics]{co.intervals}}
+and \code{\link[lattice]{equal.count}} for further details.}
+
+\item{overlap}{The fraction of overlap of the conditioning variables. See
+\code{\link[graphics]{co.intervals}} and \code{\link[lattice]{equal.count}}
+for further details.}
+
+\item{col.regions}{Color vector to be used if \code{level.plot} is
+\code{TRUE}. Defaults to the wonderful Matplotlib 'viridis' color map
+provided by the \code{viridis} package. See \code{\link[viridis]{viridis}}
+for details.}
 
 \item{...}{Additional optional arguments to be passed onto 
 \code{\link[graphics]{plot}}.}
@@ -71,7 +90,4 @@ Partial Dependence Plots," The R Journal 9(1), 421--436.
 \seealso{
 \code{\link[pdp]{partial}}, \code{\link[pdp]{plotPartial}}, 
 \code{\link{gbm}}, and \code{\link{gbm.object}}.
-}
-\author{
-Greg Ridgeway \email{gregridgeway@gmail.com}
 }

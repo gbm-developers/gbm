@@ -312,11 +312,10 @@ Yhat <- predict(gbm1, newdata = data2, n.trees = best.iter, type = "link")
 print(sum((data2$Y - Yhat)^2))
 
 # Construct univariate partial dependence plots
-par(mfrow = c(1, 3))
-plot(gbm1, i.var = 1, n.trees = best.iter)
-plot(gbm1, i.var = 2, n.trees = best.iter)
-plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
-par(mfrow = c(1, 1))
+p1 <- plot(gbm1, i.var = 1, n.trees = best.iter)
+p2 <- plot(gbm1, i.var = 2, n.trees = best.iter)
+p3 <- plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
+grid.arrange(p1, p2, p3, ncol = 3)
 
 # Construct bivariate partial dependence plots
 plot(gbm1, i.var = 1:2, n.trees = best.iter)
@@ -324,7 +323,8 @@ plot(gbm1, i.var = c("X2", "X3"), n.trees = best.iter)
 plot(gbm1, i.var = 3:4, n.trees = best.iter)
 
 # Construct trivariate partial dependence plots
-plot(gbm1, i.var = c(1, 2, 6), n.trees = best.iter, cont = 20)
+plot(gbm1, i.var = c(1, 2, 6), n.trees = best.iter, 
+     continuous.resolution = 20)
 plot(gbm1, i.var = 1:3, n.trees = best.iter)
 plot(gbm1, i.var = 2:4, n.trees = best.iter)
 plot(gbm1, i.var = 3:5, n.trees = best.iter)
@@ -350,10 +350,10 @@ Boosting Machine,} \emph{Annals of Statistics} 29(5):1189-1232.
 J.H. Friedman (2002). \dQuote{Stochastic Gradient Boosting,}
 \emph{Computational Statistics and Data Analysis} 38(4):367-378.
 
-B. Kriegler (2007).
-\url{http://statistics.ucla.edu/theses/uclastat-dissertation-2007:2Cost-Sensitive
-Stochastic Gradient Boosting Within a Quantitative Regression Framework}.
-PhD dissertation, UCLA Statistics.
+B. Kriegler (2007). Cost-Sensitive Stochastic Gradient Boosting Within a 
+Quantitative Regression Framework. Ph.D. Dissertation. University of 
+California at Los Angeles, Los Angeles, CA, USA. Advisor(s) Richard A. Berk. 
+url{https://dl.acm.org/citation.cfm?id=1354603}.
 
 C. Burges (2010). \dQuote{From RankNet to LambdaRank to LambdaMART: An
 Overview,} Microsoft Research Technical Report MSR-TR-2010-82.

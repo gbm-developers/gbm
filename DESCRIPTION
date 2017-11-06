@@ -1,5 +1,5 @@
 Package: gbm
-Version: 2.1.3.9000
+Version: 2.1.4
 Title: Generalized Boosted Regression Models
 Authors@R: c(
   person("Greg", "Ridgeway",
@@ -13,15 +13,17 @@ Authors@R: c(
   )
 Depends: R (>= 2.9.0)
 Imports:
+  gridExtra,
   lattice,
   parallel,
   survival
 Suggests:
+  knitr,
   pdp,
   RUnit,
   splines,
-  knitr
-Description: This package implements extension to Freund and Schapire's AdaBoost 
+  viridis
+Description: An implementation of extensions to Freund and Schapire's AdaBoost 
   algorithm and Friedman's gradient boosting machine. Includes regression 
   methods for least squares, absolute loss, t-distribution loss, quantile 
   regression, logistic, multinomial logistic, Poisson, Cox proportional hazards 

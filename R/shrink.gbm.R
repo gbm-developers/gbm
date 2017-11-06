@@ -9,24 +9,34 @@
 #' This function is currently experimental. Used in conjunction with a gradient
 #' ascent search for inclusion of variables.
 #' 
-#' @param object A \code{\link{gbm.object}}
-#' @param n.trees the number of trees to use
-#' @param lambda a vector with length equal to the number of variables
-#' containing the shrinkage parameter for each variable
-#' @param \dots other parameters (ignored)
+#' @param object A \code{\link{gbm.object}}.
+#' 
+#' @param n.trees Integer specifying the number of trees to use.
+#' 
+#' @param lambda Vector of length equal to the number of variables containing 
+#' the shrinkage parameter for each variable.
+#' 
+#' @param \dots Additional optional arguments. (Currently ignored.)
+#' 
 #' @return \item{predF}{Predicted values from the shrunken tree}
 #' \item{objective}{The value of the loss function associated with the
 #' predicted values} \item{gradient}{A vector with length equal to the number
 #' of variables containing the derivative of the objective function with
 #' respect to beta, the logit transform of the shrinkage parameter for each
 #' variable}
-#' @section Warning: This function is experimental.
+#' 
+#' @note Warning: This function is experimental.
+#' 
 #' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
+#' 
 #' @seealso \code{\link{shrink.gbm.pred}}, \code{\link{gbm}}
+#' 
 #' @references Hastie, T. J., and Pregibon, D.
-#' \url{http://www-stat.stanford.edu/~hastie/Papers/shrinktree.psShrinking
-#' Trees}. AT&T Bell Laboratories Technical Report (March 1990).
+#' \url{https://web.stanford.edu/~hastie/Papers/shrink_tree.pdf}. AT&T Bell 
+#' Laboratories Technical Report (March 1990).
+#' 
 #' @keywords methods
+#' 
 #' @export
 shrink.gbm <- function(object,n.trees,
                        lambda=rep(10,length(object$var.names)),
