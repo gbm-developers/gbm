@@ -4,7 +4,8 @@
 \alias{shrink.gbm}
 \title{L1 shrinkage of the predictor variables in a GBM}
 \usage{
-shrink.gbm(object, n.trees, lambda = rep(10, length(object$var.names)), ...)
+shrink.gbm(object, n.trees, lambda = rep(10, length(object$var.names)),
+  ...)
 }
 \arguments{
 \item{object}{A \code{\link{gbm.object}}.}

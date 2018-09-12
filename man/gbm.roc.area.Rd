@@ -9,13 +9,6 @@
 \alias{ir.measure.map}
 \alias{ir.measure.ndcg}
 \alias{perf.pairwise}
-\alias{gbm.conc}
-\alias{ir.measure.conc}
-\alias{ir.measure.auc}
-\alias{ir.measure.mrr}
-\alias{ir.measure.map}
-\alias{ir.measure.ndcg}
-\alias{perf.pairwise}
 \title{Compute Information Retrieval measures.}
 \usage{
 gbm.roc.area(obs, pred)

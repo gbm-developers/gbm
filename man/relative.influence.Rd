@@ -4,15 +4,14 @@
 \alias{relative.influence}
 \alias{permutation.test.gbm}
 \alias{gbm.loss}
-\alias{permutation.test.gbm}
-\alias{gbm.loss}
 \title{Methods for estimating relative influence}
 \usage{
 relative.influence(object, n.trees, scale. = FALSE, sort. = FALSE)
 
 permutation.test.gbm(object, n.trees)
 
-gbm.loss(y, f, w, offset, dist, baseline, group = NULL, max.rank = NULL)
+gbm.loss(y, f, w, offset, dist, baseline, group = NULL,
+  max.rank = NULL)
 }
 \arguments{
 \item{object}{a \code{gbm} object created from an initial call to

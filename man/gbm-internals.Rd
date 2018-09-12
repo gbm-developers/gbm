@@ -10,14 +10,6 @@
 \alias{checkOffset}
 \alias{getVarNames}
 \alias{gbmCluster}
-\alias{getCVgroup}
-\alias{getStratify}
-\alias{checkMissing}
-\alias{checkWeights}
-\alias{checkID}
-\alias{checkOffset}
-\alias{getVarNames}
-\alias{gbmCluster}
 \title{gbm internal functions}
 \usage{
 guessDist(y)
