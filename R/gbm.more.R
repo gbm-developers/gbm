@@ -1,5 +1,130 @@
-#' @rdname gbm
+#' Generalized Boosted Regression Modeling (GBM)
+#' 
+#' Adds additional trees to a \code{\link{gbm.object}} object.
+#' 
+#' @param object A \code{\link{gbm.object}} object created from an initial call 
+#' to \code{\link{gbm}}.
+#' 
+#' @param n.new.trees Integer specifying the number of additional trees to add 
+#' to \code{object}. Default is 100.
+#' 
+#' @param data An optional data frame containing the variables in the model. By
+#' default the variables are taken from \code{environment(formula)}, typically
+#' the environment from which \code{gbm} is called. If \code{keep.data=TRUE} in
+#' the initial call to \code{gbm} then \code{gbm} stores a copy with the
+#' object. If \code{keep.data=FALSE} then subsequent calls to
+#' \code{\link{gbm.more}} must resupply the same dataset. It becomes the user's
+#' responsibility to resupply the same data at this point.
+#' 
+#' @param weights An optional vector of weights to be used in the fitting
+#' process. Must be positive but do not need to be normalized. If
+#' \code{keep.data=FALSE} in the initial call to \code{gbm} then it is the
+#' user's responsibility to resupply the weights to \code{\link{gbm.more}}.
+#' 
+#' @param offset A vector of offset values.
+#' 
+#' @param verbose Logical indicating whether or not to print out progress and 
+#' performance indicators (\code{TRUE}). If this option is left unspecified for 
+#' \code{gbm.more}, then it uses \code{verbose} from \code{object}. Default is
+#' \code{FALSE}.
+#' 
+#' @return A \code{\link{gbm.object}} object.
+#'
 #' @export
+#' 
+#' @examples
+#' #
+#' # A least squares regression example 
+#' #
+#' 
+#' # Simulate data
+#' set.seed(101)  # for reproducibility
+#' N <- 1000
+#' X1 <- runif(N)
+#' X2 <- 2 * runif(N)
+#' X3 <- ordered(sample(letters[1:4], N, replace = TRUE), levels = letters[4:1])
+#' X4 <- factor(sample(letters[1:6], N, replace = TRUE))
+#' X5 <- factor(sample(letters[1:3], N, replace = TRUE))
+#' X6 <- 3 * runif(N) 
+#' mu <- c(-1, 0, 1, 2)[as.numeric(X3)]
+#' SNR <- 10  # signal-to-noise ratio
+#' Y <- X1 ^ 1.5 + 2 * (X2 ^ 0.5) + mu
+#' sigma <- sqrt(var(Y) / SNR)
+#' Y <- Y + rnorm(N, 0, sigma)
+#' X1[sample(1:N,size=500)] <- NA  # introduce some missing values
+#' X4[sample(1:N,size=300)] <- NA  # introduce some missing values
+#' data <- data.frame(Y, X1, X2, X3, X4, X5, X6)
+#' 
+#' # Fit a GBM
+#' set.seed(102)  # for reproducibility
+#' gbm1 <- gbm(Y ~ ., data = data, var.monotone = c(0, 0, 0, 0, 0, 0),
+#'             distribution = "gaussian", n.trees = 1000, shrinkage = 0.05,             
+#'             interaction.depth = 3, bag.fraction = 0.5, train.fraction = 0.5,  
+#'             n.minobsinnode = 10, cv.folds = 5, keep.data = TRUE, 
+#'             verbose = FALSE, n.cores = 1)  
+#' 
+#' # Check performance using the out-of-bag (OOB) error; the OOB error typically
+#' # underestimates the optimal number of iterations
+#' best.iter <- gbm.perf(gbm1, method = "OOB")
+#' print(best.iter)
+#' 
+#' # Check performance using the 50% heldout test set
+#' best.iter <- gbm.perf(gbm1, method = "test")
+#' print(best.iter)
+#' 
+#' # Check performance using 5-fold cross-validation
+#' best.iter <- gbm.perf(gbm1, method = "cv")
+#' print(best.iter)
+#' 
+#' # Plot relative influence of each variable
+#' par(mfrow = c(1, 2))
+#' summary(gbm1, n.trees = 1)          # using first tree
+#' summary(gbm1, n.trees = best.iter)  # using estimated best number of trees
+#' 
+#' # Compactly print the first and last trees for curiosity
+#' print(pretty.gbm.tree(gbm1, i.tree = 1))
+#' print(pretty.gbm.tree(gbm1, i.tree = gbm1$n.trees))
+#' 
+#' # Simulate new data
+#' set.seed(103)  # for reproducibility
+#' N <- 1000
+#' X1 <- runif(N)
+#' X2 <- 2 * runif(N)
+#' X3 <- ordered(sample(letters[1:4], N, replace = TRUE))
+#' X4 <- factor(sample(letters[1:6], N, replace = TRUE))
+#' X5 <- factor(sample(letters[1:3], N, replace = TRUE))
+#' X6 <- 3 * runif(N) 
+#' mu <- c(-1, 0, 1, 2)[as.numeric(X3)]
+#' Y <- X1 ^ 1.5 + 2 * (X2 ^ 0.5) + mu + rnorm(N, 0, sigma)
+#' data2 <- data.frame(Y, X1, X2, X3, X4, X5, X6)
+#' 
+#' # Predict on the new data using the "best" number of trees; by default,
+#' # predictions will be on the link scale
+#' Yhat <- predict(gbm1, newdata = data2, n.trees = best.iter, type = "link")
+#' 
+#' # least squares error
+#' print(sum((data2$Y - Yhat)^2))
+#' 
+#' # Construct univariate partial dependence plots
+#' p1 <- plot(gbm1, i.var = 1, n.trees = best.iter)
+#' p2 <- plot(gbm1, i.var = 2, n.trees = best.iter)
+#' p3 <- plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
+#' grid.arrange(p1, p2, p3, ncol = 3)
+#' 
+#' # Construct bivariate partial dependence plots
+#' plot(gbm1, i.var = 1:2, n.trees = best.iter)
+#' plot(gbm1, i.var = c("X2", "X3"), n.trees = best.iter)
+#' plot(gbm1, i.var = 3:4, n.trees = best.iter)
+#' 
+#' # Construct trivariate partial dependence plots
+#' plot(gbm1, i.var = c(1, 2, 6), n.trees = best.iter, 
+#'      continuous.resolution = 20)
+#' plot(gbm1, i.var = 1:3, n.trees = best.iter)
+#' plot(gbm1, i.var = 2:4, n.trees = best.iter)
+#' plot(gbm1, i.var = 3:5, n.trees = best.iter)
+#' 
+#' # Add more (i.e., 100) boosting iterations to the ensemble
+#' gbm2 <- gbm.more(gbm1, n.new.trees = 100, verbose = FALSE)
 gbm.more <- function(object,
                      n.new.trees = 100,
                      data = NULL,

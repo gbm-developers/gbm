@@ -1,5 +1,206 @@
-#' @rdname gbm
-#' @export
+#' Generalized Boosted Regression Modeling (GBM)
+#' 
+#' Workhorse function providing the link between R and the C++ gbm engine.
+#' \code{gbm} is a front-end to \code{gbm.fit} that uses the familiar R
+#' modeling formulas. However, \code{\link[stats]{model.frame}} is very slow if
+#' there are many predictor variables. For power-users with many variables use
+#' \code{gbm.fit}. For general practice \code{gbm} is preferable.
+#'
+#' @param x A data frame or matrix containing the predictor variables. The 
+#' number of rows in \code{x} must be the same as the length of \code{y}. 
+#' 
+#' @param y A vector of outcomes. The number of rows in \code{x} must be the 
+#' same as the length of \code{y}.
+#' 
+#' @param offset A vector of offset values.
+#' 
+#' @param misc An R object that is simply passed on to the gbm engine. It can be 
+#' used for additional data for the specific distribution. Currently it is only 
+#' used for passing the censoring indicator for the Cox proportional hazards 
+#' model.
+#' 
+#' @param distribution Either a character string specifying the name of the
+#' distribution to use or a list with a component \code{name} specifying the
+#' distribution and any additional parameters needed. If not specified,
+#' \code{gbm} will try to guess: if the response has only 2 unique values,
+#' bernoulli is assumed; otherwise, if the response is a factor, multinomial is
+#' assumed; otherwise, if the response has class \code{"Surv"}, coxph is 
+#' assumed; otherwise, gaussian is assumed.
+#' 
+#' Currently available options are \code{"gaussian"} (squared error), 
+#' \code{"laplace"} (absolute loss), \code{"tdist"} (t-distribution loss), 
+#' \code{"bernoulli"} (logistic regression for 0-1 outcomes), 
+#' \code{"huberized"} (huberized hinge loss for 0-1 outcomes), classes), 
+#' \code{"adaboost"} (the AdaBoost exponential loss for 0-1 outcomes),
+#' \code{"poisson"} (count outcomes), \code{"coxph"} (right censored 
+#' observations), \code{"quantile"}, or \code{"pairwise"} (ranking measure 
+#' using the LambdaMart algorithm).
+#' 
+#' If quantile regression is specified, \code{distribution} must be a list of
+#' the form \code{list(name = "quantile", alpha = 0.25)} where \code{alpha} is 
+#' the quantile to estimate. The current version's quantile regression method 
+#' does not handle non-constant weights and will stop.
+#' 
+#' If \code{"tdist"} is specified, the default degrees of freedom is 4 and 
+#' this can be controlled by specifying 
+#' \code{distribution = list(name = "tdist", df = DF)} where \code{DF} is your 
+#' chosen degrees of freedom.
+#' 
+#' If "pairwise" regression is specified, \code{distribution} must be a list of
+#' the form \code{list(name="pairwise",group=...,metric=...,max.rank=...)}
+#' (\code{metric} and \code{max.rank} are optional, see below). \code{group} is
+#' a character vector with the column names of \code{data} that jointly
+#' indicate the group an instance belongs to (typically a query in Information
+#' Retrieval applications). For training, only pairs of instances from the same
+#' group and with different target labels can be considered. \code{metric} is
+#' the IR measure to use, one of 
+#' \describe{ 
+#'   \item{list("conc")}{Fraction of concordant pairs; for binary labels, this 
+#'         is equivalent to the Area under the ROC Curve}
+#'   \item{:}{Fraction of concordant pairs; for binary labels, this is 
+#'            equivalent to the Area under the ROC Curve} 
+#'   \item{list("mrr")}{Mean reciprocal rank of the highest-ranked positive 
+#'         instance}
+#'   \item{:}{Mean reciprocal rank of the highest-ranked positive instance}
+#'   \item{list("map")}{Mean average precision, a generalization of \code{mrr} 
+#'         to multiple positive instances}\item{:}{Mean average precision, a
+#'         generalization of \code{mrr} to multiple positive instances}
+#'   \item{list("ndcg:")}{Normalized discounted cumulative gain. The score is 
+#'         the weighted sum (DCG) of the user-supplied target values, weighted 
+#'         by log(rank+1), and normalized to the maximum achievable value. This 
+#'         is the default if the user did not specify a metric.} 
+#' }
+#' 
+#' \code{ndcg} and \code{conc} allow arbitrary target values, while binary
+#' targets {0,1} are expected for \code{map} and \code{mrr}. For \code{ndcg}
+#' and \code{mrr}, a cut-off can be chosen using a positive integer parameter
+#' \code{max.rank}. If left unspecified, all ranks are taken into account.
+#' 
+#' Note that splitting of instances into training and validation sets follows
+#' group boundaries and therefore only approximates the specified
+#' \code{train.fraction} ratio (the same applies to cross-validation folds).
+#' Internally, queries are randomly shuffled before training, to avoid bias.
+#' 
+#' Weights can be used in conjunction with pairwise metrics, however it is
+#' assumed that they are constant for instances from the same group.
+#' 
+#' For details and background on the algorithm, see e.g. Burges (2010).
+#' 
+#' @param w A vector of weights of the same length as the \code{y}.
+#'
+#' @param var.monotone an optional vector, the same length as the number of
+#' predictors, indicating which variables have a monotone increasing (+1),
+#' decreasing (-1), or arbitrary (0) relationship with the outcome.
+#' 
+#' @param n.trees the total number of trees to fit. This is equivalent to the
+#' number of iterations and the number of basis functions in the additive
+#' expansion.
+#' 
+#' @param interaction.depth The maximum depth of variable interactions. A value
+#' of 1 implies an additive model, a value of 2 implies a model with up to 2-way 
+#' interactions, etc. Default is \code{1}.
+#' 
+#' @param n.minobsinnode Integer specifying the minimum number of observations 
+#' in the trees terminal nodes. Note that this is the actual number of 
+#' observations not the total weight.
+#' 
+#' @param shrinkage The shrinkage parameter applied to each tree in the
+#' expansion. Also known as the learning rate or step-size reduction; 0.001 to 
+#' 0.1 usually work, but a smaller learning rate typically requires more trees.
+#' Default is \code{0.1}.
+#' 
+#' @param bag.fraction The fraction of the training set observations randomly
+#' selected to propose the next tree in the expansion. This introduces
+#' randomnesses into the model fit. If \code{bag.fraction} < 1 then running the
+#' same model twice will result in similar but different fits. \code{gbm} uses
+#' the R random number generator so \code{set.seed} can ensure that the model
+#' can be reconstructed. Preferably, the user can save the returned
+#' \code{\link{gbm.object}} using \code{\link{save}}. Default is \code{0.5}.
+#' 
+#' @param nTrain An integer representing the number of cases on which to train.
+#' This is the preferred way of specification for \code{gbm.fit}; The option
+#' \code{train.fraction} in \code{gbm.fit} is deprecated and only maintained
+#' for backward compatibility. These two parameters are mutually exclusive. If
+#' both are unspecified, all data is used for training.
+#' 
+#' @param train.fraction The first \code{train.fraction * nrows(data)}
+#' observations are used to fit the \code{gbm} and the remainder are used for
+#' computing out-of-sample estimates of the loss function.
+#' 
+#' @param keep.data Logical indicating whether or not to keep the data and an 
+#' index of the data stored with the object. Keeping the data and index makes 
+#' subsequent calls to \code{\link{gbm.more}} faster at the cost of storing an 
+#' extra copy of the dataset.
+#' 
+#' @param verbose Logical indicating whether or not to print out progress and 
+#' performance indicators (\code{TRUE}). If this option is left unspecified for 
+#' \code{gbm.more}, then it uses \code{verbose} from \code{object}. Default is
+#' \code{FALSE}.
+#' 
+#' @param var.names Vector of strings of length equal to the number of columns 
+#' of \code{x} containing the names of the predictor variables.
+#' 
+#' @param response.name Character string label for the response variable.
+#' 
+#' @param group The \code{group} to use when \code{distribution = "pairwise"}.
+#' 
+#' @return A \code{\link{gbm.object}} object.
+#' 
+#' @details 
+#' This package implements the generalized boosted modeling framework. Boosting
+#' is the process of iteratively adding basis functions in a greedy fashion so
+#' that each additional basis function further reduces the selected loss
+#' function. This implementation closely follows Friedman's Gradient Boosting
+#' Machine (Friedman, 2001).
+#' 
+#' In addition to many of the features documented in the Gradient Boosting
+#' Machine, \code{gbm} offers additional features including the out-of-bag
+#' estimator for the optimal number of iterations, the ability to store and
+#' manipulate the resulting \code{gbm} object, and a variety of other loss
+#' functions that had not previously had associated boosting algorithms,
+#' including the Cox partial likelihood for censored data, the poisson
+#' likelihood for count outcomes, and a gradient boosting implementation to
+#' minimize the AdaBoost exponential loss function.
+#' 
+#' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
+#' 
+#' Quantile regression code developed by Brian Kriegler
+#' \email{bk@@stat.ucla.edu}
+#' 
+#' t-distribution, and multinomial code developed by Harry Southworth and
+#' Daniel Edwards
+#' 
+#' Pairwise code developed by Stefan Schroedl \email{schroedl@@a9.com}
+#' 
+#' @seealso \code{\link{gbm.object}}, \code{\link{gbm.perf}}, 
+#' \code{\link{plot.gbm}}, \code{\link{predict.gbm}}, \code{\link{summary.gbm}}, 
+#' and \code{\link{pretty.gbm.tree}}.
+#' 
+#' @references 
+#' Y. Freund and R.E. Schapire (1997) \dQuote{A decision-theoretic
+#' generalization of on-line learning and an application to boosting,}
+#' \emph{Journal of Computer and System Sciences,} 55(1):119-139.
+#' 
+#' G. Ridgeway (1999). \dQuote{The state of boosting,} \emph{Computing Science
+#' and Statistics} 31:172-181.
+#' 
+#' J.H. Friedman, T. Hastie, R. Tibshirani (2000). \dQuote{Additive Logistic
+#' Regression: a Statistical View of Boosting,} \emph{Annals of Statistics}
+#' 28(2):337-374.
+#' 
+#' J.H. Friedman (2001). \dQuote{Greedy Function Approximation: A Gradient
+#' Boosting Machine,} \emph{Annals of Statistics} 29(5):1189-1232.
+#' 
+#' J.H. Friedman (2002). \dQuote{Stochastic Gradient Boosting,}
+#' \emph{Computational Statistics and Data Analysis} 38(4):367-378.
+#' 
+#' B. Kriegler (2007). Cost-Sensitive Stochastic Gradient Boosting Within a 
+#' Quantitative Regression Framework. Ph.D. Dissertation. University of 
+#' California at Los Angeles, Los Angeles, CA, USA. Advisor(s) Richard A. Berk. 
+#' url{https://dl.acm.org/citation.cfm?id=1354603}.
+#' 
+#' C. Burges (2010). \dQuote{From RankNet to LambdaRank to LambdaMART: An
+#' Overview,} Microsoft Research Technical Report MSR-TR-2010-82.
 gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli",
                     w = NULL, var.monotone = NULL, n.trees = 100, 
                     interaction.depth = 1, n.minobsinnode = 10, 
@@ -337,20 +538,37 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
   
   if(keep.data) {
     if(distribution$name == "coxph") {
-      # put the observations back in order
-      gbm.obj$data <- list(y=y,x=x,x.order=x.order,offset=offset,Misc=Misc,w=w,
-                           i.timeorder=i.timeorder)
+      # Put the observations back in order
+      gbm.obj$data <- list(
+        y = y,
+        x = x,
+        x.order = x.order,
+        offset = offset,
+        Misc = Misc,
+        w = w,
+        i.timeorder = i.timeorder
+      )
     }
     else if ( distribution$name == "multinomial" ) {
       # Restore original order of the data
-      new.idx <- order( new.idx )
-      gbm.obj$data <- list( y=as.vector(matrix(y, ncol=length(classes),byrow=FALSE)[new.idx,]),
-                            x=as.vector(matrix(x, ncol=length(var.names), byrow=FALSE)[new.idx,]),
-                            x.order=x.order,
-                            offset=offset[new.idx],
-                            Misc=Misc, w=w[new.idx] )
+      new.idx <- order(new.idx)
+      gbm.obj$data <- list(
+        y = as.vector(matrix(y, ncol = length(classes), byrow = FALSE)[new.idx, ]),
+        x = as.vector(matrix(x, ncol = length(var.names), byrow = FALSE)[new.idx, ]),
+        x.order = x.order,
+        offset = offset[new.idx],
+        Misc = Misc, 
+        w = w[new.idx] 
+      )
     } else {
-      gbm.obj$data <- list(y=y,x=x,x.order=x.order,offset=offset,Misc=Misc,w=w)
+      gbm.obj$data <- list(
+        y = y,
+        x = x,
+        x.order = x.order,
+        offset = offset,
+        Misc = Misc,
+        w = w
+      )
     }
   }
   else {
@@ -359,7 +577,7 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
   
   # Reuturn object of class "gbm"
   class(gbm.obj) <- "gbm"
-  return(gbm.obj)
+  gbm.obj
   
 }
 

@@ -98,27 +98,23 @@
 #' predictors, indicating which variables have a monotone increasing (+1),
 #' decreasing (-1), or arbitrary (0) relationship with the outcome.
 #' 
-#' @param n.trees the total number of trees to fit. This is equivalent to the
-#' number of iterations and the number of basis functions in the additive
-#' expansion.
+#' @param n.trees Integer specifying the total number of trees to fit. This is 
+#' equivalent to the number of iterations and the number of basis functions in 
+#' the additive expansion. Default is 100.
 #' 
-#' @param cv.folds Number of cross-validation folds to perform. If
-#' \code{cv.folds}>1 then \code{gbm}, in addition to the usual fit, will
-#' perform a cross-validation, calculate an estimate of generalization error
-#' returned in \code{cv.error}.
+#' @param interaction.depth Integer specifying the maximum depth of each tree 
+#' (i.e., the highest level of variable interactions allowed). A value of 1 
+#' implies an additive model, a value of 2 implies a model with up to 2-way 
+#' interactions, etc. Default is 1.
 #' 
-#' @param interaction.depth The maximum depth of variable interactions. A value
-#' of 1 implies an additive model, a value of 2 implies a model with up to 2-way 
-#' interactions, etc. Default is \code{1}.
-#' 
-#' @param n.minobsinnode minimum number of observations in the trees terminal
-#' nodes. Note that this is the actual number of observations not the total
-#' weight.
+#' @param n.minobsinnode Integer specifying the minimum number of observations 
+#' in the terminal nodes of the trees. Note that this is the actual number of 
+#' observations, not the total weight.
 #' 
 #' @param shrinkage a shrinkage parameter applied to each tree in the
 #' expansion. Also known as the learning rate or step-size reduction; 0.001 to 
 #' 0.1 usually work, but a smaller learning rate typically requires more trees.
-#' Default is \code{0.1}.
+#' Default is 0.1.
 #' 
 #' @param bag.fraction the fraction of the training set observations randomly
 #' selected to propose the next tree in the expansion. This introduces
@@ -126,27 +122,21 @@
 #' same model twice will result in similar but different fits. \code{gbm} uses
 #' the R random number generator so \code{set.seed} can ensure that the model
 #' can be reconstructed. Preferably, the user can save the returned
-#' \code{\link{gbm.object}} using \code{\link{save}}. Default is \code{0.5}.
+#' \code{\link{gbm.object}} using \code{\link{save}}. Default is 0.5.
 #' 
 #' @param train.fraction The first \code{train.fraction * nrows(data)}
 #' observations are used to fit the \code{gbm} and the remainder are used for
 #' computing out-of-sample estimates of the loss function.
 #' 
-#' @param nTrain An integer representing the number of cases on which to train.
-#' This is the preferred way of specification for \code{gbm.fit}; The option
-#' \code{train.fraction} in \code{gbm.fit} is deprecated and only maintained
-#' for backward compatibility. These two parameters are mutually exclusive. If
-#' both are unspecified, all data is used for training.
+#' @param cv.folds Number of cross-validation folds to perform. If
+#' \code{cv.folds}>1 then \code{gbm}, in addition to the usual fit, will
+#' perform a cross-validation, calculate an estimate of generalization error
+#' returned in \code{cv.error}.
 #' 
 #' @param keep.data a logical variable indicating whether to keep the data and
 #' an index of the data stored with the object. Keeping the data and index
 #' makes subsequent calls to \code{\link{gbm.more}} faster at the cost of
 #' storing an extra copy of the dataset.
-#' 
-#' @param object a \code{gbm} object created from an initial call to
-#' \code{\link{gbm}}.
-#' 
-#' @param n.new.trees the number of additional trees to add to \code{object}.
 #' 
 #' @param verbose Logical indicating whether or not to print out progress and 
 #' performance indicators (\code{TRUE}). If this option is left unspecified for 
@@ -160,30 +150,6 @@
 #' cross-validation is to help avoiding situations in which training sets do
 #' not contain all classes.
 #' 
-#' @param x,y \code{x} is a data frame or data matrix containing the predictor 
-#' variables and \code{y} is the vector of outcomes. The number of rows in 
-#' \code{x} must be the same as the length of \code{y}. (Used by 
-#' \code{gbm.fit}.)
-#' 
-#' @param offset Vector offset values.
-#' 
-#' @param misc An R object that is simply passed on to the gbm engine (through 
-#' \code{gbm.fit}). It can be used for additional data for the specific 
-#' distribution. Currently it is only used for passing the censoring indicator 
-#' for the Cox proportional hazards model.
-#' 
-#' @param w Vector of weights of the same length as the \code{y}. (Used by
-#' \code{gbm.fit}.)
-#' 
-#' @param var.names Vector of strings of length equal to the number of columns 
-#' of \code{x} containing the names of the predictor variables. (Used by
-#' \code{gbm.fit}.)
-#' 
-#' @param response.name Character string label for the response variable. (Used
-#' by \code{gbm.fit}.)
-#' 
-#' @param group \code{group} used when \code{distribution = "pairwise"}.
-#' 
 #' @param n.cores The number of CPU cores to use. The cross-validation loop
 #' will attempt to send different CV folds off to different cores. If
 #' \code{n.cores} is not specified by the user, it is guessed using the
@@ -191,8 +157,7 @@
 #' documentation for \code{detectCores} makes clear that it is not failsave and
 #' could return a spurious number of available cores.
 #' 
-#' @return \code{gbm}, \code{gbm.fit}, and \code{gbm.more} return a
-#' \code{\link{gbm.object}}.
+#' @return A \code{\link{gbm.object}} object.
 #' 
 #' @details 
 #' This package implements the generalized boosted modeling framework. Boosting
@@ -249,11 +214,7 @@
 #' 
 #' C. Burges (2010). \dQuote{From RankNet to LambdaRank to LambdaMART: An
 #' Overview,} Microsoft Research Technical Report MSR-TR-2010-82.
-#' 
-#' @aliases gbm, gbm.fit, gbm.more
-#' 
-#' @rdname gbm
-#' 
+#'
 #' @export
 #' 
 #' @examples
