@@ -7,7 +7,6 @@ Status](https://travis-ci.org/gbm-developers/gbm.svg?branch=master)](https://tra
 [![Downloads](http://cranlogs.r-pkg.org/badges/gbm)](http://cranlogs.r-pkg.org/badges/gbm)
 [![Total
 Downloads](http://cranlogs.r-pkg.org/badges/grand-total/gbm)](http://cranlogs.r-pkg.org/badges/grand-total/gbm)
-[![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/#retired)
 
 Overview
 --------
