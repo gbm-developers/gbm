@@ -50,7 +50,7 @@ Computes the relative influence of each variable in the gbm object.
 \details{
 For \code{distribution="gaussian"} this returns exactly the reduction of
 squared error attributable to each variable. For other loss functions this
-returns the reduction attributeable to each varaible in sum of squared error
+returns the reduction attributable to each variable in sum of squared error
 in predicting the gradient on each iteration. It describes the relative
 influence of each variable in reducing the loss function. See the references
 below for exact details on the computation.

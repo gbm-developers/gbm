@@ -41,7 +41,7 @@ After estimating f(x), \code{basehaz.gbm} can compute the a nonparametric
 estimate of lambda(t).
 }
 \references{
-N. Breslow (1972). "Disussion of `Regression Models and
+N. Breslow (1972). "Discussion of `Regression Models and
 Life-Tables' by D.R. Cox," Journal of the Royal Statistical Society, Series
 B, 34(2):216-217.
 

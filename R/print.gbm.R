@@ -88,6 +88,7 @@ print.gbm <- function(x, ... )
 
 
 #' @rdname print.gbm
+#' 
 #' @export
 show.gbm <- print.gbm
 
@@ -98,7 +99,7 @@ show.gbm <- print.gbm
 #' 
 #' For \code{distribution="gaussian"} this returns exactly the reduction of
 #' squared error attributable to each variable. For other loss functions this
-#' returns the reduction attributeable to each varaible in sum of squared error
+#' returns the reduction attributable to each variable in sum of squared error
 #' in predicting the gradient on each iteration. It describes the relative
 #' influence of each variable in reducing the loss function. See the references
 #' below for exact details on the computation.
@@ -136,6 +137,7 @@ show.gbm <- print.gbm
 #' L. Breiman
 #' (2001).\url{https://www.stat.berkeley.edu/users/breiman/randomforest2001.pdf}.
 #' @keywords hplot
+#' 
 #' @export
 summary.gbm <- function(object,
                         cBars=length(object$var.names),

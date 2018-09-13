@@ -58,7 +58,7 @@
 #' # Fit a GBM
 #' set.seed(102)  # for reproducibility
 #' gbm1 <- gbm(Y ~ ., data = data, var.monotone = c(0, 0, 0, 0, 0, 0),
-#'             distribution = "gaussian", n.trees = 1000, shrinkage = 0.05,             
+#'             distribution = "gaussian", n.trees = 100, shrinkage = 0.1,             
 #'             interaction.depth = 3, bag.fraction = 0.5, train.fraction = 0.5,  
 #'             n.minobsinnode = 10, cv.folds = 5, keep.data = TRUE, 
 #'             verbose = FALSE, n.cores = 1)  

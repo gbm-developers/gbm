@@ -33,8 +33,9 @@ special variable types, or for higher dimensional graphs.}
 \item{type}{Character string specifying the type of prediction to plot on the 
 vertical axis. See \code{\link{predict.gbm}} for details.}
 
-\item{level.plot}{Logical indicating whether or not to use a false color level
-plot (\code{TRUE}) or a 3-D surface (\code{FALSE}). Default is \code{TRUE}.}
+\item{level.plot}{Logical indicating whether or not to use a false color 
+level plot (\code{TRUE}) or a 3-D surface (\code{FALSE}). Default is 
+\code{TRUE}.}
 
 \item{contour}{Logical indicating whether or not to add contour lines to the
 level plot. Only used when \code{level.plot = TRUE}. Default is \code{FALSE}.}
@@ -76,8 +77,8 @@ the result of the function, and develop another graphic display more
 appropriate to the particular example.
 }
 \note{
-More flexible plotting is avialble using the \code{\link[pdp]{partial}} 
-and \code{\link[pdp]{plotPartial}} functions.
+More flexible plotting is available using the 
+\code{\link[pdp]{partial}} and \code{\link[pdp]{plotPartial}} functions.
 }
 \references{
 J. H. Friedman (2001). "Greedy Function Approximation: A Gradient

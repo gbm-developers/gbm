@@ -145,7 +145,7 @@
 #' 
 #' @param class.stratify.cv Logical indicating whether or not the 
 #' cross-validation should be stratified by class. Defaults to \code{TRUE} for
-#' \code{distribution = "multinomial"} and is only implementated for
+#' \code{distribution = "multinomial"} and is only implemented for
 #' \code{"multinomial"} and \code{"bernoulli"}. The purpose of stratifying the
 #' cross-validation is to help avoiding situations in which training sets do
 #' not contain all classes.
@@ -154,7 +154,7 @@
 #' will attempt to send different CV folds off to different cores. If
 #' \code{n.cores} is not specified by the user, it is guessed using the
 #' \code{detectCores} function in the \code{parallel} package. Note that the
-#' documentation for \code{detectCores} makes clear that it is not failsave and
+#' documentation for \code{detectCores} makes clear that it is not failsafe and
 #' could return a spurious number of available cores.
 #' 
 #' @return A \code{\link{gbm.object}} object.
@@ -243,7 +243,7 @@
 #' # Fit a GBM
 #' set.seed(102)  # for reproducibility
 #' gbm1 <- gbm(Y ~ ., data = data, var.monotone = c(0, 0, 0, 0, 0, 0),
-#'             distribution = "gaussian", n.trees = 1000, shrinkage = 0.05,             
+#'             distribution = "gaussian", n.trees = 100, shrinkage = 0.1,             
 #'             interaction.depth = 3, bag.fraction = 0.5, train.fraction = 0.5,  
 #'             n.minobsinnode = 10, cv.folds = 5, keep.data = TRUE, 
 #'             verbose = FALSE, n.cores = 1)  
@@ -341,7 +341,8 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
   offset <- model.offset(mf)
   
   # Determine and check response distribution
-  distribution <- if (missing(distribution)) { 
+  distribution <- if (missing(distribution)) {
+    y <- data[, all.vars(formula)[1L], drop = TRUE]
     guessDist(y) 
   } else if (is.character(distribution)) { 
     list(name = distribution) 

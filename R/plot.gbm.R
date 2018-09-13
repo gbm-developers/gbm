@@ -37,8 +37,9 @@
 #' @param type Character string specifying the type of prediction to plot on the 
 #' vertical axis. See \code{\link{predict.gbm}} for details.
 #' 
-#' @param level.plot Logical indicating whether or not to use a false color level
-#' plot (\code{TRUE}) or a 3-D surface (\code{FALSE}). Default is \code{TRUE}.
+#' @param level.plot Logical indicating whether or not to use a false color 
+#' level plot (\code{TRUE}) or a 3-D surface (\code{FALSE}). Default is 
+#' \code{TRUE}.
 #'
 #' @param contour Logical indicating whether or not to add contour lines to the
 #' level plot. Only used when \code{level.plot = TRUE}. Default is \code{FALSE}.
@@ -62,8 +63,8 @@
 #' @return If \code{return.grid = TRUE}, a grid of evaluation points and their 
 #' average predictions. Otherwise, a plot is returned.
 #' 
-#' @note More flexible plotting is avialble using the \code{\link[pdp]{partial}} 
-#' and \code{\link[pdp]{plotPartial}} functions.
+#' @note More flexible plotting is available using the 
+#' \code{\link[pdp]{partial}} and \code{\link[pdp]{plotPartial}} functions.
 #' 
 #' @seealso \code{\link[pdp]{partial}}, \code{\link[pdp]{plotPartial}}, 
 #' \code{\link{gbm}}, and \code{\link{gbm.object}}.

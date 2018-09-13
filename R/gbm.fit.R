@@ -201,6 +201,8 @@
 #' 
 #' C. Burges (2010). \dQuote{From RankNet to LambdaRank to LambdaMART: An
 #' Overview,} Microsoft Research Technical Report MSR-TR-2010-82.
+#' 
+#' @export
 gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli",
                     w = NULL, var.monotone = NULL, n.trees = 100, 
                     interaction.depth = 1, n.minobsinnode = 10, 

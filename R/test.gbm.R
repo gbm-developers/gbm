@@ -128,7 +128,7 @@ test.gbm <- function(){
     data <- data.frame(tt=tt,delta=delta,X1=X1,X2=X2,X3=X3)
 
     # fit initial model
-    gbm1 <- gbm(Surv(tt,delta)~X1+X2+X3,       # formula
+    gbm1 <- gbm(Surv(tt,delta)~X1+X2+X3,   # formula
                 data=data,                 # dataset
                 weights=w,
                 var.monotone=c(0,0,0),     # -1: monotone decrease, +1: monotone increase, 0: no monotone restrictions
@@ -163,7 +163,7 @@ test.gbm <- function(){
 
     # predict on the new data using "best" number of trees
     # f.predict will be on the canonical scale (logit,log,etc.)
-    f.predict <- predict(gbm1,data2,best.iter)
+    f.predict <- predict(gbm1, newdata = data2, n.trees = best.iter)
 
     #plot(data2$f,f.predict)
     # Use observed sd
@@ -264,24 +264,23 @@ test.relative.influence <- function(){
 
 #' @export
 validate.gbm <- function () {
-   wh <- (1:length(search()))[search() == "package:gbm"]
-   tests <- objects(wh)[substring(objects(wh), 1, 5) == "test."]
-
-   # Create temporary directory to put tests into
-   if (.Platform$OS.type == "windows"){ sep <- "\\" }
-   else { sep <- "/" }
-
-   dir <- file.path(tempdir(), "gbm.tests", fsep = sep)
-
-   dir.create(dir)
-
-   for (i in 1:length(tests)) {
-       str <- paste(dir, sep, tests[i], ".R", sep = "")
-       dump(tests[i], file = str)
-   }
-   res <- RUnit::defineTestSuite("gbm", dirs = dir, testFuncRegexp = "^test.+", 
-                                 testFileRegexp = "*.R")
-   cat("Running gbm test suite.\nThis will take some time...\n\n")
-   RUnit::runTestSuite(res)
+    wh <- (1:length(search()))[search() == "package:gbm"]
+    tests <- objects(wh)[substring(objects(wh), 1, 5) == "test."]
+    
+    # Create temporary directory to put tests into
+    sep <- if (.Platform$OS.type == "windows") "\\" else "/"
+    
+    dir <- file.path(tempdir(), "gbm.tests", fsep = sep)
+    
+    dir.create(dir)
+    
+    for (i in 1:length(tests)) {
+        str <- paste(dir, sep, tests[i], ".R", sep = "")
+        dump(tests[i], file = str)
+    }
+    res <- RUnit::defineTestSuite("gbm", dirs = dir, testFuncRegexp = "^test.+", 
+                                  testFileRegexp = "*.R")
+    cat("Running gbm test suite.\nThis will take some time...\n\n")
+    RUnit::runTestSuite(res)
 }
 

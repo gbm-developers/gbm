@@ -31,7 +31,7 @@
 #' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
 #' @seealso \code{\link[survival]{survfit}}, \code{\link{gbm}}
 #' @references 
-#' N. Breslow (1972). "Disussion of `Regression Models and
+#' N. Breslow (1972). "Discussion of `Regression Models and
 #' Life-Tables' by D.R. Cox," Journal of the Royal Statistical Society, Series
 #' B, 34(2):216-217.
 #' 

@@ -17,13 +17,19 @@
 #' variables) as the one originally used to fit the model.
 #' 
 #' @param object Object of class inheriting from (\code{\link{gbm.object}})
+#' 
 #' @param newdata Data frame of observations for which to make predictions
+#' 
 #' @param n.trees Number of trees used in the prediction. \code{n.trees} may be
 #' a vector in which case predictions are returned for each iteration specified
+#' 
 #' @param type The scale on which gbm makes the predictions
+#' 
 #' @param single.tree If \code{single.tree=TRUE} then \code{predict.gbm}
 #' returns only the predictions from tree(s) \code{n.trees}
+#' 
 #' @param \dots further arguments passed to or from other methods
+#' 
 #' @return Returns a vector of predictions. By default the predictions are on
 #' the scale of f(x). For example, for the Bernoulli loss the returned value is
 #' on the log odds scale, poisson loss on the log scale, and coxph is on the
@@ -33,9 +39,13 @@
 #' the outcome. Currently the only effect this will have is returning
 #' probabilities for bernoulli and expected counts for poisson. For the other
 #' distributions "response" and "link" return the same.
+#' 
 #' @author Greg Ridgeway \email{gregridgeway@@gmail.com}
+#' 
 #' @seealso \code{\link{gbm}}, \code{\link{gbm.object}}
+#' 
 #' @keywords models regression
+#' 
 #' @export
 predict.gbm <- function(object,newdata,n.trees,
                         type="link",
