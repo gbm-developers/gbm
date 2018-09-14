@@ -76,6 +76,7 @@
 #' Partial Dependence Plots," The R Journal 9(1), 421--436. 
 #' \url{https://journal.r-project.org/archive/2017/RJ-2017-016/index.html}.
 #' 
+#' @export plot.gbm
 #' @export
 plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees, 
                      continuous.resolution = 100, return.grid = FALSE, 

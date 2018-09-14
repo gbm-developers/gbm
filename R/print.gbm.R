@@ -138,6 +138,7 @@ show.gbm <- print.gbm
 #' (2001).\url{https://www.stat.berkeley.edu/users/breiman/randomforest2001.pdf}.
 #' @keywords hplot
 #' 
+#' @export summary.gbm
 #' @export
 summary.gbm <- function(object,
                         cBars=length(object$var.names),

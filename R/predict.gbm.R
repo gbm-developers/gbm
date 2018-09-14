@@ -46,6 +46,7 @@
 #' 
 #' @keywords models regression
 #' 
+#' @export predict.gbm
 #' @export
 predict.gbm <- function(object,newdata,n.trees,
                         type="link",
