@@ -311,7 +311,7 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
   distribution.call.name <- distribution$name
   
   # Check for potential problems with the distribution
-  if(!is.element(distribution$name,supported.distributions)) {
+  if(!is.element(distribution$name, supported.distributions)) {
     stop("Distribution ",distribution$name," is not supported")
   }
   if((distribution$name == "bernoulli") && !all(is.element(y,0:1))) {

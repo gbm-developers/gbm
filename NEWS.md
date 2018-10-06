@@ -1,3 +1,8 @@
+# gbm 2.1.4.9000
+
+* Fixed bug that occurred whenever `distribution` was a list (e.g., "pairwise" regression) [(#27)](https://github.com/gbm-developers/gbm/issues/27).
+
+
 # gbm 2.1.4
 
 * Switched from `CHANGES` to `NEWS` file.
@@ -7,7 +12,7 @@
 * Fixed bug caused by factors with unused levels
 [(#5)](https://github.com/gbm-developers/gbm/issues/5).
 
-* Fixed bug with axis labels in the `plot()` method for `"gbm"` objects. [(#17)](https://github.com/gbm-developers/gbm/issues/17).
+* Fixed bug with axis labels in the `plot()` method for `"gbm"` objects [(#17)](https://github.com/gbm-developers/gbm/issues/17).
 
 * The `plot()` method for `"gbm"` objects is now more consistent and always returns a `"trellis"` object [(#19)](https://github.com/gbm-developers/gbm/issues/19). Consequently, setting graphical parameters via `par` will no longer have an effect on the output from `plot.gbm`.
 

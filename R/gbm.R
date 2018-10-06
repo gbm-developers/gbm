@@ -341,12 +341,14 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
   offset <- model.offset(mf)
   
   # Determine and check response distribution
-  distribution <- if (missing(distribution)) {
+  if (missing(distribution)) {
     y <- data[, all.vars(formula)[1L], drop = TRUE]
-    guessDist(y) 
-  } else if (is.character(distribution)) { 
-    list(name = distribution) 
+    distribution <- guessDist(y)
   }
+  if (is.character(distribution)) { 
+    distribution <- list(name = distribution) 
+  } 
+  
   if (!is.element(distribution$name, getAvailableDistributions())) {
     stop("Distribution ", distribution$name, " is not supported.")
   }
