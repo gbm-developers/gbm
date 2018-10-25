@@ -97,7 +97,7 @@ predict.gbm <- function(object,newdata,n.trees,
         if (!identical(object$var.levels[[i]], new.compare)) {
           x[,i] <- factor(x[,i], union(object$var.levels[[i]], levels(x[,i])))
         }
-        x[,i] <- as.numeric(factor(x[,i]))-1
+        x[,i] <- as.numeric(factor(x[,i], levels = object$var.levels[[i]]))-1
       }
    }
 
