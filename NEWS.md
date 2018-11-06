@@ -4,6 +4,8 @@
 
 * Fixed a bug that occurred when making predictions on new data with different factor levels [(#28)](https://github.com/gbm-developers/gbm/issues/28).
 
+* Fixed a bug that caused `relative.influence()` to give different values whenever `n.trees` was/wasn't given for multinomial distributions [(#31)](https://github.com/gbm-developers/gbm/issues/31).
+
 
 # gbm 2.1.4
 
