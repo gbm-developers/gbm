@@ -6,6 +6,10 @@
 
 * Fixed a bug that caused `relative.influence()` to give different values whenever `n.trees` was/wasn't given for multinomial distributions [(#31)](https://github.com/gbm-developers/gbm/issues/31).
 
+* The `plot.it` argument of `gbm.perf()` is no longer ignored [(#34)](https://github.com/gbm-developers/gbm/issues/34). 
+
+* Fixed an error that occurred in `gbm.perf()` whenever `oobag.curve = FALSE` and `overlay = FALSE`.
+
 
 # gbm 2.1.4
 

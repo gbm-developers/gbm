@@ -48,48 +48,57 @@ gbm.perf <- function(object, plot.it = TRUE, oobag.curve = FALSE,
   # Determine "optimal" number of iterations
   best.iter <- best_iter(object, method = method)
   
-  # Determine an appropriate y-axis label
-  ylab <- get_ylab(object)
-  
-  # Determine an appropriate range for the y-axis
-  ylim <- get_ylim(object, method = method)
-  
   # Plot results
-  plot(object$train.error, ylim = ylim, type = "l", xlab = "Iteration", 
-       ylab = ylab)
-  
-  if(object$train.fraction!=1) {
-    lines(object$valid.error,col="red")
-  }
-  if(method=="cv") {
-    lines(object$cv.error,col="green")
-  }
-  if(!is.na(best.iter)) {
-    abline(v=best.iter,col="blue",lwd=2,lty=2)
-  }
-  if(oobag.curve) {
-    if(overlay) {
-      smoother <- attr(best.iter, "smoother")
-      par(new = TRUE)
-      plot(smoother$x,
-           cumsum(smoother$y),
-           col="blue",
-           type="l",
-           xlab="",ylab="",
-           axes=FALSE)
-      axis(4,srt=0)
-      at <- mean(range(smoother$y))
-      mtext(paste("OOB improvement in",ylab),side=4,srt=270,line=2)
-      abline(h=0,col="blue",lwd=2)
+  if (plot.it) {
+    # Determine an appropriate y-axis label
+    ylab <- get_ylab(object)
+    
+    # Determine an appropriate range for the y-axis
+    ylim <- get_ylim(object, method = method)
+    
+    # Plot results
+    plot(object$train.error, 
+         ylim = ylim, 
+         type = "l", 
+         xlab = "Iteration", 
+         ylab = ylab)
+    if (object$train.fraction != 1) {
+      lines(object$valid.error, col = "red")
     }
-    
-    plot(object$oobag.improve,type="l",
-         xlab="Iteration",
-         ylab=paste("OOB change in",ylab))
-    lines(smoother,col="red",lwd=2)
-    abline(h=0,col="blue",lwd=1)
-    
-    abline(v=best.iter,col="blue",lwd=1)
+    if (method=="cv") {
+      lines(object$cv.error, col = "green")
+    }
+    if (!is.na(best.iter)) {
+      abline(v = best.iter, col = "blue", lwd = 2, lty = 2)
+    }
+    if (oobag.curve) {
+      smoother <- attr(best.iter, "smoother")
+      if (overlay) {
+        # smoother <- attr(best.iter, "smoother")
+        par(new = TRUE)
+        plot(smoother$x,
+             cumsum(smoother$y),
+             col = "blue",
+             type = "l",
+             xlab = "",
+             ylab = "",
+             axes = FALSE)
+        axis(4, srt = 0)
+        at <- mean(range(smoother$y))
+        mtext(paste("OOB improvement in", ylab), side = 4, srt = 270, line = 2)
+        abline(h = 0, col = "blue", lwd = 2)
+      }
+      plot(object$oobag.improve,
+           type = "l",
+           xlab = "Iteration",
+           ylab = paste("OOB change in", ylab))
+      lines(smoother, col = "red", lwd = 2)
+      abline(h = 0, col = "blue", lwd = 1)
+      abline(v =best.iter, col = "blue", lwd = 1)
+    }
   }
-  return(best.iter)
+  
+  # Return "best" number of iterations (i.e., number of boosted trees)
+  best.iter
+  
 }
