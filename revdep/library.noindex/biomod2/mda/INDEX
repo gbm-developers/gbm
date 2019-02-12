@@ -1,0 +1,24 @@
+ESL.mixture             Mixture example from "Elements of Statistical
+                        Learning"
+bruto                   Fit an Additive Spline Model by Adaptive
+                        Backfitting
+coef.fda                Produce coefficients for an fda or mda object
+confusion               Confusion Matrices
+fda                     Flexible Discriminant Analysis
+gen.ridge               Penalized Regression
+glass                   Glass Identification Database
+laplacian               create penalty object for two-dimensional
+                        smoothing.
+mars                    Multivariate Adaptive Regression Splines
+mda                     Mixture Discriminant Analysis
+mda.start               Initialization for Mixture Discriminant
+                        Analysis
+model.matrix.mars       Produce a Design Matrix from a 'mars' Object
+mspline                 Vector Smoothing Spline
+plot.fda                Plot for Flexible Discriminant Analysis
+polyreg                 Polynomial Regression
+predict.bruto           Predict method for BRUTO Objects
+predict.fda             Classify by Flexible Discriminant Analysis
+predict.mars            Predict method for MARS Objects
+predict.mda             Classify by Mixture Discriminant Analysis
+softmax                 Find the Maximum in Each Row of a Matrix

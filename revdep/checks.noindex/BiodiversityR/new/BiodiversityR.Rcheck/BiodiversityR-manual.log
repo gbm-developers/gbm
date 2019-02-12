@@ -1,0 +1,1734 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  20 DEC 2018 09:40
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**\input ./Rd2.tex
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+Package: Rd 
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip43
+\LTright=\skip44
+\LTpre=\skip45
+\LTpost=\skip46
+\LTchunksize=\count89
+\LTcapwidth=\dimen103
+\LT@head=\box26
+\LT@firsthead=\box27
+\LT@foot=\box28
+\LT@lastfoot=\box29
+\LT@cols=\count90
+\LT@rows=\count91
+\c@LT@tables=\count92
+\c@LT@chunks=\count93
+\LT@p@ftn=\toks14
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks15
+\verbatim@line=\toks16
+\verbatim@in@stream=\read1
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2017/04/05 v2.0i Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+Now handling font encoding TS1 ...
+... processing UTF-8 mapping file for font encoding TS1
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu
+File: ts1enc.dfu 2018/04/05 v1.2c UTF-8 support for inputenc
+   defining Unicode char U+00A2 (decimal 162)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00A4 (decimal 164)
+   defining Unicode char U+00A5 (decimal 165)
+   defining Unicode char U+00A6 (decimal 166)
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00A8 (decimal 168)
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AC (decimal 172)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00AF (decimal 175)
+   defining Unicode char U+00B0 (decimal 176)
+   defining Unicode char U+00B1 (decimal 177)
+   defining Unicode char U+00B2 (decimal 178)
+   defining Unicode char U+00B3 (decimal 179)
+   defining Unicode char U+00B4 (decimal 180)
+   defining Unicode char U+00B5 (decimal 181)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00B9 (decimal 185)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+00BC (decimal 188)
+   defining Unicode char U+00BD (decimal 189)
+   defining Unicode char U+00BE (decimal 190)
+   defining Unicode char U+00D7 (decimal 215)
+   defining Unicode char U+00F7 (decimal 247)
+   defining Unicode char U+0192 (decimal 402)
+   defining Unicode char U+02C7 (decimal 711)
+   defining Unicode char U+02D8 (decimal 728)
+   defining Unicode char U+02DD (decimal 733)
+   defining Unicode char U+0E3F (decimal 3647)
+   defining Unicode char U+2016 (decimal 8214)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+203B (decimal 8251)
+   defining Unicode char U+203D (decimal 8253)
+   defining Unicode char U+2044 (decimal 8260)
+   defining Unicode char U+204E (decimal 8270)
+   defining Unicode char U+2052 (decimal 8274)
+   defining Unicode char U+20A1 (decimal 8353)
+   defining Unicode char U+20A4 (decimal 8356)
+   defining Unicode char U+20A6 (decimal 8358)
+   defining Unicode char U+20A9 (decimal 8361)
+   defining Unicode char U+20AB (decimal 8363)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+20B1 (decimal 8369)
+   defining Unicode char U+2103 (decimal 8451)
+   defining Unicode char U+2116 (decimal 8470)
+   defining Unicode char U+2117 (decimal 8471)
+   defining Unicode char U+211E (decimal 8478)
+   defining Unicode char U+2120 (decimal 8480)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2126 (decimal 8486)
+   defining Unicode char U+2127 (decimal 8487)
+   defining Unicode char U+212E (decimal 8494)
+   defining Unicode char U+2190 (decimal 8592)
+   defining Unicode char U+2191 (decimal 8593)
+   defining Unicode char U+2192 (decimal 8594)
+   defining Unicode char U+2193 (decimal 8595)
+   defining Unicode char U+2329 (decimal 9001)
+   defining Unicode char U+232A (decimal 9002)
+   defining Unicode char U+2422 (decimal 9250)
+   defining Unicode char U+25E6 (decimal 9702)
+   defining Unicode char U+25EF (decimal 9711)
+   defining Unicode char U+266A (decimal 9834)
+   defining Unicode char U+FEFF (decimal 65279)
+))
+LaTeX Info: Redefining \oldstylenums on input line 334.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
+Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+)
+\ldescriptionwidth=\skip47
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+Package: zi4 2017/01/04 v1.112
+
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks17
+\XKV@tempa@toks=\toks18
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count94
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\zifour@ocount=\count95
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2018/02/06 v6.86b Hypertext links for LaTeX
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen104
+\Hy@linkcounter=\count96
+\Hy@pagecounter=\count97
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count98
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4509.
+Package hyperref Info: Link nesting OFF on input line 4514.
+Package hyperref Info: Hyper index ON on input line 4517.
+Package hyperref Info: Plain pages OFF on input line 4524.
+Package hyperref Info: Backreferencing OFF on input line 4529.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4762.
+\c@Hy@tempcnt=\count99
+LaTeX Info: Redefining \url on input line 5115.
+\XeTeXLinkMargin=\dimen105
+\Fld@menulength=\count100
+\Field@Width=\dimen106
+\Fld@charsize=\dimen107
+Package hyperref Info: Hyper figures OFF on input line 6369.
+Package hyperref Info: Link nesting OFF on input line 6374.
+Package hyperref Info: Hyper index ON on input line 6377.
+Package hyperref Info: backreferencing OFF on input line 6384.
+Package hyperref Info: Link coloring OFF on input line 6389.
+Package hyperref Info: Link coloring with OCG OFF on input line 6394.
+Package hyperref Info: PDF/A mode OFF on input line 6399.
+LaTeX Info: Redefining \ref on input line 6439.
+LaTeX Info: Redefining \pageref on input line 6443.
+\Hy@abspage=\count101
+\c@Item=\count102
+\c@Hfootnote=\count103
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
+\Fld@listcount=\count104
+\c@bookmark@seq@number=\count105
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip48
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+Package hyperref Info: Option `colorlinks' set `true' on input line 366.
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+Package hyperref Info: Option `linktocpage' set `true' on input line 366.
+Package hyperref Info: Option `plainpages' set `false' on input line 366.
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/04/06 v1.3b Input encoding file
+\inpenc@prehook=\toks19
+\inpenc@posthook=\toks20
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/latin1.def
+File: latin1.def 2018/04/06 v1.3b Input encoding file
+))
+\@indexfile=\write3
+\openout3 = `Rd2.idx'.
+
+
+Writing index file Rd2.idx
+(./Rd2.aux)
+\openout1 = `Rd2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 8.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 8.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count106
+\scratchdimen=\dimen108
+\scratchbox=\box30
+\nofMPsegments=\count107
+\nofMParguments=\count108
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count109
+\MPscratchDim=\dimen109
+\MPnumerator=\count110
+\makeMPintoPDFobject=\count111
+\everyMPtoPDFconversion=\toks22
+)
+\AtBeginShipoutBox=\box31
+Package hyperref Info: Link coloring ON on input line 8.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count112
+)
+LaTeX Info: Redefining \ref on input line 8.
+LaTeX Info: Redefining \pageref on input line 8.
+LaTeX Info: Redefining \nameref on input line 8.
+
+(./Rd2.out) (./Rd2.out)
+\@outlinefile=\write4
+\openout4 = `Rd2.out'.
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 9.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Try loading font information for T1+zi4 on input line 21.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 21.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 24.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 37.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 37.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
+) (./Rd2.toc
+[1
+
+
+{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+\tf@toc=\write5
+\openout5 = `Rd2.toc'.
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/utf8.def
+File: utf8.def 2018/04/05 v1.2c UTF-8 support for inputenc
+)
+Overfull \hbox (2.59743pt too wide) in paragraph at lines 44--45
+[]\T1/ptm/m/n/10 This pack-age pro-vides a GUI (Graph-i-cal User In-ter-face, v
+ia the R-Commander; [][]\T1/zi4/m/n/10 BiodiversityRGUI[][][]\T1/ptm/m/n/10 )
+ []
+
+[2] [3]
+Overfull \hbox (5.00806pt too wide) in paragraph at lines 100--101
+[]\T1/ptm/m/n/10 Method of cal-cu-lat-ing the species ac-cu-mu-la-tion curve (a
+s in func-tion [][]\T1/zi4/m/n/10 specaccum[][][]\T1/ptm/m/n/10 ).
+ []
+
+
+Overfull \hbox (49.7682pt too wide) in paragraph at lines 106--107
+[]\T1/ptm/m/n/10 Colour for draw-ing lines of the species ac-cu-mu-la-tion curv
+e (as in func-tion [][]\T1/zi4/m/n/10 plot.specaccum[][][]\T1/ptm/m/n/10 ). 
+ []
+
+
+Overfull \hbox (2.31839pt too wide) in paragraph at lines 109--110
+[]\T1/ptm/m/n/10 Symbol used for draw-ing the species ac-cu-mu-la-tion curve (a
+s in func-tion [][]\T1/zi4/m/n/10 points[][][]\T1/ptm/m/n/10 ). 
+ []
+
+[4]
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 151.
+LaTeX Font Info:    Try loading font information for TS1+zi4 on input line 156.
+
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd
+File: ts1zi4.fd 2018/01/14 TS1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 156.
+
+Overfull \hbox (23.26248pt too wide) in paragraph at lines 156--156
+ []\T1/zi4/m/n/9 Accum.1 <- accumresult(dune, y=dune.env, scale=\TS1/zi4/m/n/9 
+'\T1/zi4/m/n/9 site.totals\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , method=\TS1/zi4/m/n/9
+ '\T1/zi4/m/n/9 exact\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , conditioned=TRUE)[] 
+ []
+
+[5]
+Overfull \hbox (29.26555pt too wide) in paragraph at lines 159--159
+ []\T1/zi4/m/n/9 accumcomp(dune, y=dune.env, factor=\TS1/zi4/m/n/9 '\T1/zi4/m/n
+/9 Management\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , method=\TS1/zi4/m/n/9 '\T1/zi4/m/n
+/9 exact\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , legend=FALSE, conditioned=TRUE)[] 
+ []
+
+
+Overfull \hbox (3.80942pt too wide) in paragraph at lines 180--181
+[]\T1/ptm/m/n/10 Ordination re-sult as cal-cu-lated by [][]\T1/zi4/m/n/10 cmdsc
+ale[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 isoMDS[][][]\T1/ptm/m/n/10 , [][]\
+T1/zi4/m/n/10 sammon[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 postMDS[][][]\T1/
+ptm/m/n/10 , [][]\T1/zi4/m/n/10 metaMDS[][][]
+ []
+
+
+Overfull \hbox (12.60794pt too wide) in paragraph at lines 182--183
+\T1/ptm/m/n/10 method "wa.scores" cal-cu-lates the weighted av-er-age scores (v
+ia func-tion [][]\T1/zi4/m/n/10 wascores[][][]\T1/ptm/m/n/10 )
+ []
+
+[6] [7]
+Overfull \hbox (42.76555pt too wide) in paragraph at lines 299--299
+ []\T1/zi4/m/n/9 Accum.2 <- balanced.specaccum(dune, strata=dune.env$Management
+, reps=3, scale=dune.env$site.totals)[] 
+ []
+
+[8] [9] [10]
+Overfull \hbox (28.09036pt too wide) in paragraph at lines 430--430
+ []\T1/zi4/m/n/10 CAPdiscrim(formula, data, dist="bray", axes=4, m=0, mmax=10, 
+add=FALSE, permutations=0)[] 
+ []
+
+[11]
+Overfull \hbox (7.57796pt too wide) in paragraph at lines 438--439
+\T1/ptm/m/n/10 to "man-hat-tan", "eu-clidean", "can-berra", "bray", "kul-czyn-s
+ki", "jac-card", "gower",
+ []
+
+[12] [13]
+Overfull \hbox (0.25708pt too wide) in paragraph at lines 547--548
+[]\T1/ptm/m/n/10 The first step of distance-based re-dun-dancy anal-y-sis in-vo
+lves prin-ci-pal co-or-di-nates anal-y-sis whereby
+ []
+
+[14] [15] [16] [17] [18] [19] [20]
+Overfull \hbox (21.97787pt too wide) in paragraph at lines 926--927
+\T1/ptm/m/n/10 "hellinger", "chord", "pro-files", "chi.square", "log", "square"
+, "pa", "Braun.Blanquet",
+ []
+
+[21] [22] [23]
+Overfull \hbox (9.43779pt too wide) in paragraph at lines 1033--1034
+[]\T1/ptm/m/n/10 The func-tions pro-vide al-ter-na-tive meth-ods of ob-tain-ing
+ di-ver-sity re-sults. For func-tion \T1/zi4/m/n/10 diversitycomp\T1/ptm/m/n/10
+ ,
+ []
+
+[24]
+LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 1100.
+
+Overfull \hbox (36.43051pt too wide) in paragraph at lines 1103--1103
+ []\T1/zi4/m/n/10 ensemble.analogue.object(ref.location, future.stack, current.
+stack, name = "reference1",[] 
+ []
+
+
+Overfull \hbox (2.11903pt too wide) in paragraph at lines 1112--1113
+\T1/ptm/m/n/10 in-ter-nally by [][]\T1/zi4/m/n/10 predict[][][]\T1/ptm/m/n/10 .
+ This ob-ject is cre-ated with [][]\T1/zi4/m/n/10 ensemble.analogue.object[][][
+]\T1/ptm/m/n/10 . 
+ []
+
+[25]
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 1116--1117
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (1.76857pt too wide) in paragraph at lines 1117--1118
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 dataType[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRaster[
+][][]\T1/ptm/m/n/10 . 
+ []
+
+[26]
+Overfull \hbox (30.42809pt too wide) in paragraph at lines 1133--1134
+\T1/ptm/m/n/10 min-i-mum and max-i-mum monthly tem-per-a-ture val-ues). Not use
+d for \T1/zi4/m/n/10 method = "mahal"\T1/ptm/m/n/10 . 
+ []
+
+[27]
+Overfull \hbox (14.23488pt too wide) in paragraph at lines 1218--1218
+ []\T1/zi4/m/n/9 # climate analogue analysis based on the Euclidean distance an
+d dividing each variable by the sd[] 
+ []
+
+[28]
+Overfull \hbox (35.26862pt too wide) in paragraph at lines 1230--1230
+ []\T1/zi4/m/n/9 analogue.file <- paste(getwd(), "//ensembles//analogue//Florid
+aMahal_south_analogue.grd", sep="")[] 
+ []
+
+
+Overfull \hbox (21.76862pt too wide) in paragraph at lines 1241--1241
+ []\T1/zi4/m/n/9 analogue.file <- paste(getwd(), "//ensembles//analogue//Florid
+aSD_south_analogue.grd", sep="")[] 
+ []
+
+
+Overfull \hbox (63.74844pt too wide) in paragraph at lines 1263--1264
+\T1/ptm/m/n/10 Raster-Stacks. The func-tion makes in-ter-nal calls to [][]\T1/z
+i4/m/n/10 ensemble.calibrate.weights[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 e
+nsemble.calibrate.models[][][]
+ []
+
+[29]
+Overfull \hbox (4.68887pt too wide) in paragraph at lines 1286--1286
+ []    \T1/zi4/m/n/10 MAXENT = 1, MAXLIKE = 1, GBM = 1, GBMSTEP = 0, RF = 1, GL
+M = 1, GLMSTEP = 1, GAM = 1,[] 
+ []
+
+
+Overfull \hbox (16.41006pt too wide) in paragraph at lines 1331--1331
+ []        \T1/zi4/m/n/10 "consensussuitability", "consensuspresence", "consens
+uscount", "consensussd"),[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [30]
+[31]
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 1370--1371
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (1.76857pt too wide) in paragraph at lines 1371--1372
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 dataType[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRaster[
+][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (18.23796pt too wide) in paragraph at lines 1376--1377
+[]\T1/ptm/m/n/10 Save the list with model de-tails to a file (if \T1/zi4/m/n/10
+ TRUE\T1/ptm/m/n/10 ). The file-name will be \T1/zi4/m/n/10 species.name
+ []
+
+
+Overfull \hbox (45.62764pt too wide) in paragraph at lines 1379--1380
+[]\T1/ptm/m/n/10 If \T1/zi4/m/n/10 TRUE \T1/ptm/m/n/10 cal-cu-late thresh-olds 
+with the Pres-ence-Ab-sence pack-age. See [][]\T1/zi4/m/n/10 optimal.thresholds
+[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (37.51868pt too wide) in paragraph at lines 1381--1382
+\T1/ptm/m/n/10 to be in-cluded in the en-sem-ble. In case a vec-tor is pro-vide
+d, func-tion \T1/zi4/m/n/10 ensemble.strategy
+ []
+
+[32] [33]
+Overfull \hbox (118.03783pt too wide) in paragraph at lines 1408--1409
+\T1/ptm/m/n/10 mum en-tropy or GAM) a gen-er-al-ized lin-ear model ([][]\T1/zi4
+/m/n/10 glm[][][]\T1/ptm/m/n/10 ) with pro-bit link \T1/zi4/m/n/10 family=binom
+ial(link="probit")
+ []
+
+
+Overfull \hbox (5.89865pt too wide) in paragraph at lines 1409--1410
+[]\T1/ptm/m/n/10 chooses how cases of pres-ence and back-ground (ab-sence) are 
+weighted; \T1/zi4/m/n/10 "BIOMOD"
+ []
+
+
+Overfull \hbox (4.58868pt too wide) in paragraph at lines 1413--1414
+[]\T1/ptm/m/n/10 Suggest for-mu-lae for most of the mod-els (if \T1/zi4/m/n/10 
+TRUE\T1/ptm/m/n/10 ). See also [][]\T1/zi4/m/n/10 ensemble.formulae[][][]\T1/pt
+m/m/n/10 . 
+ []
+
+[34]
+Overfull \hbox (0.25786pt too wide) in paragraph at lines 1426--1427
+[]\T1/ptm/m/n/10 number of trees to add at each cy-cle for step-wise boosted re
+-gres-sion trees (should
+ []
+
+
+Overfull \hbox (6.84764pt too wide) in paragraph at lines 1447--1448
+[]\T1/ptm/m/n/10 number of cross-validations for the re-cur-sive par-tion-ing a
+nd re-gres-sion tree model;
+ []
+
+[35]
+Overfull \hbox (15.8985pt too wide) in paragraph at lines 1463--1464
+[]\T1/ptm/m/n/10 Number of breaks in the colour-ing scheme for ab-sence (only a
+p-plies to \T1/zi4/m/n/10 suitability
+ []
+
+
+Overfull \hbox (19.22845pt too wide) in paragraph at lines 1464--1465
+[]\T1/ptm/m/n/10 Number of breaks in the colour-ing scheme for pres-ence (only 
+ap-plies to \T1/zi4/m/n/10 suitability
+ []
+
+[36]
+Overfull \hbox (80.09892pt too wide) in paragraph at lines 1489--1490
+\T1/ptm/m/n/10 Stacks. The func-tion makes in-ter-nal calls to [][]\T1/zi4/m/n/
+10 ensemble.spatialThin[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 ensemble.VIF[]
+[][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 ensemble.calibrate.weights[][][]\T1/ptm
+/m/n/10 ,
+ []
+
+[37] [38]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [39]
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 1655--1656
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+[40]
+Overfull \hbox (32.35713pt too wide) in paragraph at lines 1663--1664
+[]\T1/ptm/m/n/10 If \T1/zi4/m/n/10 TRUE \T1/ptm/m/n/10 then op-ti-mal lim-its a
+re cal-cu-lated as quan-tiles cor-re-spond-ing to \T1/zi4/m/n/10 0.5-fraction/2
+
+ []
+
+[41] [42]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [43]
+Overfull \hbox (8.25941pt too wide) in paragraph at lines 1802--1802
+ []\T1/zi4/m/n/9 raster::plot(raster(rasterfull1), breaks=c(-0.1, 0, 0.5, 1), c
+ol=c("grey", "blue", "green"),[] 
+ []
+
+
+Overfull \hbox (8.25941pt too wide) in paragraph at lines 1804--1804
+ []\T1/zi4/m/n/9 raster::plot(raster(rasterfull3), breaks=c(-0.1, 0, 0.5, 1), c
+ol=c("grey", "blue", "green"),[] 
+ []
+
+[44]
+Overfull \hbox (9.51811pt too wide) in paragraph at lines 1857--1858
+[]\T1/ptm/m/n/10 function \T1/zi4/m/n/10 ensemble.bioclim.graph.data \T1/ptm/m/
+n/10 cre-ates a data frame, func-tion codeensem-ble.bioclim.graph
+ []
+
+[45]
+Overfull \hbox (8.82765pt too wide) in paragraph at lines 1940--1941
+[]\T1/ptm/m/n/10 The ba-sic func-tion \T1/zi4/m/n/10 ensemble.calibrate.models 
+\T1/ptm/m/n/10 al-lows to eval-u-ate dif-fer-ent al-go-rithms for (species)
+ []
+
+
+Overfull \hbox (1.39984pt too wide) in paragraph at lines 1945--1945
+ []\T1/zi4/m/n/10 ensemble.calibrate.models(x = NULL, p = NULL, a = NULL, an = 
+1000, excludep = FALSE,[] 
+ []
+
+[46] [47]
+Overfull \hbox (21.39984pt too wide) in paragraph at lines 2043--2043
+ []\T1/zi4/m/n/10 ensemble.calibrate.models.gbm(x = NULL, p = NULL, a = NULL, a
+n = 1000, excludep = FALSE,[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [48]
+Overfull \hbox (26.39984pt too wide) in paragraph at lines 2055--2055
+ []\T1/zi4/m/n/10 ensemble.calibrate.models.nnet(x = NULL, p = NULL, a = NULL, 
+an = 1000, excludep = FALSE,[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [49]
+Overfull \hbox (19.76044pt too wide) in paragraph at lines 2116--2116
+ []\T1/zi4/m/n/10 ensemble.threshold(eval, threshold.method = "spec_sens", thre
+shold.sensitivity = 0.9,[] 
+ []
+
+
+Overfull \hbox (3.358pt too wide) in paragraph at lines 2131--2132
+[]\T1/ptm/m/n/10 background points used for cal-i-brat-ing the suit-abil-ity mo
+d-els (ex-cept for [][]\T1/zi4/m/n/10 maxent[][][]\T1/ptm/m/n/10 ),
+ []
+
+
+Overfull \hbox (6.14922pt too wide) in paragraph at lines 2134--2135
+\T1/ptm/m/n/10 points to be used for eval-u-at-ing the mod-els). For \T1/zi4/m/
+n/10 ensemble.calibrate.weights\T1/ptm/m/n/10 ,
+ []
+
+[50]
+Overfull \hbox (61.61885pt too wide) in paragraph at lines 2140--2141
+\T1/ptm/m/n/10 tions for var-i-ous mod-els - such dataframe can be pro-vided by
+ the \T1/zi4/m/n/10 ensemble.calibrate.models
+ []
+
+
+Overfull \hbox (45.62764pt too wide) in paragraph at lines 2148--2149
+[]\T1/ptm/m/n/10 If \T1/zi4/m/n/10 TRUE \T1/ptm/m/n/10 cal-cu-late thresh-olds 
+with the Pres-ence-Ab-sence pack-age. See [][]\T1/zi4/m/n/10 optimal.thresholds
+[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (18.23796pt too wide) in paragraph at lines 2152--2153
+[]\T1/ptm/m/n/10 Save the list with model de-tails to a file (if \T1/zi4/m/n/10
+ TRUE\T1/ptm/m/n/10 ). The file-name will be \T1/zi4/m/n/10 species.name
+ []
+
+[51]
+Overfull \hbox (37.51868pt too wide) in paragraph at lines 2157--2158
+\T1/ptm/m/n/10 to be in-cluded in the en-sem-ble. In case a vec-tor is pro-vide
+d, func-tion \T1/zi4/m/n/10 ensemble.strategy
+ []
+
+
+Overfull \hbox (11.868pt too wide) in paragraph at lines 2164--2165
+[]\T1/ptm/m/n/10 number: if larger than 0, then a step-wise boosted re-gres-sio
+n trees model ([][]\T1/zi4/m/n/10 gbm.step[][][]\T1/ptm/m/n/10 )
+ []
+
+[52]
+Overfull \hbox (17.68782pt too wide) in paragraph at lines 2179--2180
+[]\T1/ptm/m/n/10 number: if larger than 0, then the orig-i-nal BIO-CLIM al-go-r
+ithm ([][]\T1/zi4/m/n/10 ensemble.bioclim[][][]\T1/ptm/m/n/10 )
+ []
+
+
+Overfull \hbox (118.03783pt too wide) in paragraph at lines 2184--2185
+\T1/ptm/m/n/10 mum en-tropy or GAM) a gen-er-al-ized lin-ear model ([][]\T1/zi4
+/m/n/10 glm[][][]\T1/ptm/m/n/10 ) with pro-bit link \T1/zi4/m/n/10 family=binom
+ial(link="probit")
+ []
+
+
+Overfull \hbox (5.89865pt too wide) in paragraph at lines 2185--2186
+[]\T1/ptm/m/n/10 chooses how cases of pres-ence and back-ground (ab-sence) are 
+weighted; \T1/zi4/m/n/10 "BIOMOD"
+ []
+
+
+Overfull \hbox (13.49855pt too wide) in paragraph at lines 2186--2187
+\T1/ptm/m/n/10 ar-gu-ment is es-pe-cially use-ful for the \T1/zi4/m/n/10 ensemb
+le.drop1 \T1/ptm/m/n/10 func-tion. See also [][]\T1/zi4/m/n/10 addLayer[][][]\T
+1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (4.58868pt too wide) in paragraph at lines 2189--2190
+[]\T1/ptm/m/n/10 Suggest for-mu-lae for most of the mod-els (if \T1/zi4/m/n/10 
+TRUE\T1/ptm/m/n/10 ). See also [][]\T1/zi4/m/n/10 ensemble.formulae[][][]\T1/pt
+m/m/n/10 . 
+ []
+
+[53]
+Overfull \hbox (0.25786pt too wide) in paragraph at lines 2202--2203
+[]\T1/ptm/m/n/10 number of trees to add at each cy-cle for step-wise boosted re
+-gres-sion trees (should
+ []
+
+[54]
+Overfull \hbox (6.84764pt too wide) in paragraph at lines 2223--2224
+[]\T1/ptm/m/n/10 number of cross-validations for the re-cur-sive par-tion-ing a
+nd re-gres-sion tree model;
+ []
+
+[55]
+Overfull \hbox (2.16743pt too wide) in paragraph at lines 2265--2266
+[]\T1/ptm/m/n/10 The ba-sic func-tion \T1/zi4/m/n/10 ensemble.calibrate.models 
+\T1/ptm/m/n/10 first cal-i-brates in-di-vid-ual suit-abil-ity mod-els based
+ []
+
+[56]
+Overfull \hbox (68.26878pt too wide) in paragraph at lines 2289--2290
+[]\T1/ptm/m/n/10 Function \T1/zi4/m/n/10 ensemble.formulae \T1/ptm/m/n/10 pro-v
+ides sug-ges-tions for for-mu-lae that can be used for \T1/zi4/m/n/10 ensemble.
+calibrate.models
+ []
+
+
+Overfull \hbox (52.64954pt too wide) in paragraph at lines 2291--2292
+[]\T1/ptm/m/n/10 The \T1/zi4/m/n/10 ensemble.weights \T1/ptm/m/n/10 func-tion i
+s used in-ter-nally by the \T1/zi4/m/n/10 ensemble.calibrate.models \T1/ptm/m/n
+/10 and [][]\T1/zi4/m/n/10 ensemble.raster[][][]
+ []
+
+
+Overfull \hbox (31.7087pt too wide) in paragraph at lines 2293--2294
+\T1/ptm/m/n/10 rithms and dif-fer-ent com-bi-na-tions of pa-ram-e-ters \T1/zi4/
+m/n/10 ENSEMBLE.best\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ENSEMBLE.min \T1/ptm/m/n/10
+ and \T1/zi4/m/n/10 ENSEMBLE.exponent\T1/ptm/m/n/10 .
+ []
+
+
+Overfull \hbox (38.92957pt too wide) in paragraph at lines 2295--2296
+[]\T1/ptm/m/n/10 The \T1/zi4/m/n/10 ensemble.threshold \T1/ptm/m/n/10 func-tion
+ is used in-ter-nally by the \T1/zi4/m/n/10 ensemble.calibrate.models\T1/ptm/m/
+n/10 , \T1/zi4/m/n/10 ensemble.mean
+ []
+
+[57]
+Overfull \hbox (5.85785pt too wide) in paragraph at lines 2305--2306
+[]\T1/ptm/m/n/10 Function \T1/zi4/m/n/10 ensemble.calibrate.weights \T1/ptm/m/n
+/10 re-turns a ma-trix with, for each in-di-vid-ual suit-abil-ity model,
+ []
+
+[58]
+Overfull \hbox (3.76862pt too wide) in paragraph at lines 2371--2371
+ []\T1/zi4/m/n/9 ensemble.nofactors <- ensemble.calibrate.models(x=predictors, 
+p=pres_train, a=backg_train,[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [59]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [60]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [61]
+[62]
+Overfull \hbox (15.69836pt too wide) in paragraph at lines 2561--2562
+[]\T1/ptm/m/n/10 overwrite an ex-ist-ing file name with the same name (if \T1/z
+i4/m/n/10 TRUE\T1/ptm/m/n/10 ). See also [][]\T1/zi4/m/n/10 writeRaster[][][]\T
+1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (12.46735pt too wide) in paragraph at lines 2572--2573
+\T1/ptm/m/n/10 pos-si-ble to limit the num-ber of dummy vari-ables that will be
+ cre-ated. For ex-am-ple, \T1/zi4/m/n/10 most.frequent = 5
+ []
+
+[63]
+Overfull \hbox (3.76862pt too wide) in paragraph at lines 2641--2641
+ []\T1/zi4/m/n/9 ensemble.nofactors <- ensemble.calibrate.models(x=predictors, 
+p=pres_train, a=backg_train,[] 
+ []
+
+[64]
+Overfull \hbox (10.06886pt too wide) in paragraph at lines 2661--2662
+[]\T1/ptm/m/n/10 Function \T1/zi4/m/n/10 ensemble.novel \T1/ptm/m/n/10 cre-ates
+ the map with novel con-di-tions. Func-tion \T1/zi4/m/n/10 ensemble.novel.objec
+t
+ []
+
+
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 2684--2685
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (1.76857pt too wide) in paragraph at lines 2685--2686
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 dataType[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRaster[
+][][]\T1/ptm/m/n/10 . 
+ []
+
+[65] [66]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [67]
+Overfull \hbox (10.06886pt too wide) in paragraph at lines 2792--2793
+[]\T1/ptm/m/n/10 Function \T1/zi4/m/n/10 ensemble.novel \T1/ptm/m/n/10 cre-ates
+ the map with novel con-di-tions. Func-tion \T1/zi4/m/n/10 ensemble.novel.objec
+t
+ []
+
+
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 2815--2816
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (1.76857pt too wide) in paragraph at lines 2816--2817
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 dataType[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRaster[
+][][]\T1/ptm/m/n/10 . 
+ []
+
+[68]
+Overfull \hbox (6.66803pt too wide) in paragraph at lines 2825--2826
+[]\T1/ptm/m/n/10 If \T1/zi4/m/n/10 TRUE\T1/ptm/m/n/10 , then re-place min-ima a
+nd max-ima with quan-tile val-ues. See also [][]\T1/zi4/m/n/10 quantile[][][]
+ []
+
+[69]
+Overfull \hbox (8.26862pt too wide) in paragraph at lines 2902--2902
+ []\T1/zi4/m/n/9 Bradypus.ranges2 <- ensemble.novel.object(pres.data, name="Bra
+dypusQuantiles", quantiles=T)[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [70]
+Overfull \hbox (0.77168pt too wide) in paragraph at lines 2935--2935
+ []\T1/zi4/m/n/9 novel.levels.quantiles <- ensemble.novel.object(predictors.dum
+my.current, quantiles=TRUE,[] 
+ []
+
+
+Overfull \hbox (0.79782pt too wide) in paragraph at lines 2969--2970
+[]\T1/ptm/m/n/10 The ba-sic func-tion \T1/zi4/m/n/10 ensemble.raster \T1/ptm/m/
+n/10 cre-ates two con-sen-sus raster lay-ers, one based on a (weighted)
+ []
+
+[71]
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 3008--3009
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (1.76857pt too wide) in paragraph at lines 3009--3010
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 dataType[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRaster[
+][][]\T1/ptm/m/n/10 . 
+ []
+
+[72] [73]
+Overfull \hbox (48.34094pt too wide) in paragraph at lines 3067--3068
+[][][]\T1/zi4/m/n/10 evaluation.strip.plot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/
+n/10 ensemble.calibrate.models[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 ensembl
+e.calibrate.weights[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 ensemble.batch[][]
+[] 
+ []
+
+[74]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [75]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [76]
+Overfull \hbox (17.26862pt too wide) in paragraph at lines 3198--3198
+ []\T1/zi4/m/n/9 change.file <- paste(getwd(), "/ensembles/change/Bradypus_reca
+librated_presence.grd", sep="")[] 
+ []
+
+
+Overfull \hbox (6.92824pt too wide) in paragraph at lines 3224--3225
+\T1/ptm/m/n/10 redlist-ing of species based on IUCN cri-te-ria ([][]$\T1/zi4/m/
+n/10 http : / / www . iucnredlist . org / static / categories _
+ []
+
+[77]
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 3249--3250
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (1.76857pt too wide) in paragraph at lines 3250--3251
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 dataType[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRaster[
+][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (16.38791pt too wide) in paragraph at lines 3265--3266
+\T1/ptm/m/n/10 max-i-mum dis-tance among pres-ence lo-ca-tions ([][]\T1/zi4/m/n
+/10 pointDistance[][][]\T1/ptm/m/n/10 ) mul-ti-plied by ar-gu-ment \T1/zi4/m/n/
+10 buffer.width\T1/ptm/m/n/10 .
+ []
+
+[78]
+Overfull \hbox (15.76555pt too wide) in paragraph at lines 3332--3332
+ []\T1/zi4/m/n/9 count.file <- paste(getwd(), "/ensembles/consensuscount/Bradyp
+us variegatus_red.grd", sep="")[] 
+ []
+
+[79]
+Overfull \hbox (24.76555pt too wide) in paragraph at lines 3338--3338
+ []\T1/zi4/m/n/9 pres.file <- paste(getwd(), "/ensembles/consensuspresence/Brad
+ypus variegatus_red.grd", sep="")[] 
+ []
+
+
+Overfull \hbox (24.76555pt too wide) in paragraph at lines 3353--3353
+ []\T1/zi4/m/n/9 pres.file <- paste(getwd(), "/ensembles/consensuspresence/Brad
+ypus variegatus_red.grd", sep="")[] 
+ []
+
+
+Overfull \hbox (15.76555pt too wide) in paragraph at lines 3367--3367
+ []\T1/zi4/m/n/9 count.file <- paste(getwd(), "/ensembles/consensuscount/Bradyp
+us variegatus_red.grd", sep="")[] 
+ []
+
+
+Overfull \hbox (3.69736pt too wide) in paragraph at lines 3382--3383
+\T1/ptm/m/n/10 (geodesic) is above a pre-de-fined min-i-mum. The geodesic is ca
+l-cu-lated more ac-cu-rately (via [][]\T1/zi4/m/n/10 distGeo[][][]\T1/ptm/m/n/1
+0 )
+ []
+
+[80] [81]
+Overfull \hbox (26.76778pt too wide) in paragraph at lines 3477--3478
+\T1/ptm/m/n/10 min-i-mum Ma-ha-lanobis dis-tance (via [][]\T1/zi4/m/n/10 mahala
+nobis[][][]\T1/ptm/m/n/10 ) to dif-fer-ent cen-troids. Func-tion \T1/zi4/m/n/10
+ ensemble.centroids
+ []
+
+[82]
+Overfull \hbox (8.03821pt too wide) in paragraph at lines 3500--3501
+[]\T1/ptm/m/n/10 Object list-ing val-ues for cen-troids and co-vari-ance to be 
+used with the [][]\T1/zi4/m/n/10 mahalanobis[][][]
+ []
+
+
+Overfull \hbox (21.76857pt too wide) in paragraph at lines 3505--3506
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 writeFormats[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRas
+ter[][][]\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (1.76857pt too wide) in paragraph at lines 3506--3507
+[]\T1/ptm/m/n/10 Format of the raster files that will be gen-er-ated. See [][]\
+T1/zi4/m/n/10 dataType[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 writeRaster[
+][][]\T1/ptm/m/n/10 . 
+ []
+
+[83] [84]
+Overfull \hbox (14.24408pt too wide) in paragraph at lines 3581--3581
+ []\T1/zi4/m/n/9 # get presence map as for example created with ensemble.raster
+ in subfolder \TS1/zi4/m/n/9 '\T1/zi4/m/n/9 ensemble/presence\TS1/zi4/m/n/9 '[]
+ 
+ []
+
+[85] [86] [87]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [88]
+[89] [90] [91] [92]
+Overfull \hbox (39.77066pt too wide) in paragraph at lines 3996--3996
+ []\T1/zi4/m/n/10 stackcommunitydataset(comm, remove.zeroes=FALSE, order.sites=
+FALSE, order.species=FALSE)[] 
+ []
+
+[93] [94] [95]
+Overfull \hbox (7.57796pt too wide) in paragraph at lines 4155--4156
+\T1/ptm/m/n/10 to "man-hat-tan", "eu-clidean", "can-berra", "bray", "kul-czyn-s
+ki", "jac-card", "gower",
+ []
+
+[96]
+Overfull \hbox (41.57855pt too wide) in paragraph at lines 4163--4164
+\T1/zi4/m/n/10 nested.npmanova \T1/ptm/m/n/10 pro-ceeds via [][]\T1/zi4/m/n/10 
+adonis[][][]\T1/ptm/m/n/10 . Both meth-ods are com-ple-men-tary to each other a
+s \T1/zi4/m/n/10 nested.npmanova
+ []
+
+[97] [98] [99] [100]
+Overfull \hbox (16.42029pt too wide) in paragraph at lines 4400--4400
+ []\T1/zi4/m/n/10 ordicluster2(ordiplot, cluster, mingroups = 1, maxgroups = nr
+ow(ordiplot$sites), ...)[] 
+ []
+
+[101] [102] [103]
+Overfull \hbox (2.8583pt too wide) in paragraph at lines 4551--4552
+[]\T1/ptm/m/n/10 Provides al-ter-na-tive meth-ods of ob-tain-ing rank abun-danc
+e curves than pro-vided by func-tions [][]\T1/zi4/m/n/10 radfit[][][]\T1/ptm/m/
+n/10 ,
+ []
+
+[104] [105] [106] [107] [108] [109]
+Overfull \hbox (6.3794pt too wide) in paragraph at lines 4829--4829
+ []    \T1/zi4/m/n/10 scales = c(0, 0.25, 0.5, 1, 2, 4, 8, Inf), permutations =
+ 100, plotit = FALSE, ...)[] 
+ []
+
+[110]
+Overfull \hbox (27.86815pt too wide) in paragraph at lines 4869--4870
+\T1/ptm/m/n/10 for sub-sets of the com-mu-nity and en-vi-ron-men-tal data sets.
+ func-tions \T1/zi4/m/n/10 renyiresult \T1/ptm/m/n/10 and \T1/zi4/m/n/10 renyia
+ccumresult
+ []
+
+[111]
+Overfull \hbox (24.71954pt too wide) in paragraph at lines 4923--4923
+ []\T1/zi4/m/n/10 residualssurface(model, data, x, y, gam = F, npol = 2, plotit
+ = T, filled = F, bubble = F)[] 
+ []
+
+
+Overfull \hbox (7.87735pt too wide) in paragraph at lines 4937--4938
+[]\T1/ptm/m/n/10 Provide a bub-ble graph of the resid-u-als: cir-cles in-di-cat
+e pos-i-tive resid-u-als, whereas
+ []
+
+[112] [113] [114] [115] [116] [117] [118] [119] [120] [121] (./Rd2.ind [122]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 3.
+
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 47.
+
+LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
+(Font)              scaled to size 10.0pt on input line 49.
+[123
+
+] [124] [125] [126
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 5406.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 5406.
+ (./Rd2.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 5406.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 5406.
+
+Package rerunfilecheck Info: File `Rd2.out' has not changed.
+(rerunfilecheck)             Checksum: 5C255E055827409D53D634BA3C14F284;3161.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 5406.
+ ) 
+Here is how much of TeX's memory you used:
+ 7128 strings out of 492649
+ 102204 string characters out of 6129622
+ 186017 words of memory out of 5000000
+ 10112 multiletter control sequences out of 15000+600000
+ 44142 words of font info for 53 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 38i,6n,36p,1571b,593s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Rfn.residuals} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.filled.contour} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.interp} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.surf.ls} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.renyiaccum} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.renyi} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.plot.radfit} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.prestonfit} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.fisherfit} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.radfit} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrows} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.symbols} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lines.spantree} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordicluster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordiellipse} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordigrid} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordisegments} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordiarrows} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordispider} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordihull} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.legend} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.par} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.initMDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.adonis} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.anova.cca} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.dbrda} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.cca} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.citation} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn..packages} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.levels} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mean} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.boxplot} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.silhouette} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.cascadeKM} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.scores} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.extent} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.kmeans} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.distGeo} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aoo} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.pointDistance} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gBuffer} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.map.sdm} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ModelEvaluation} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.trunc} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.areaPolygon} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mess} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mask} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.getCrop} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ecocrop} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.biovars} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.freq} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.raster} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.pairs} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.round} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.evaluate} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.vif} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.qnorm} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.nicheOverlap} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.wrld.Rul.simpl} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.dev.new} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.predict.glmnet} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.rpart.control} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.s} has been referenced but does not exist, repl
+aced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.optim} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gam.control} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.glm.control} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.prepareData} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.addLayer} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mahal} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.domain} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.bioclim} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.glmnet} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.svm} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ksvm} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.fda} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.nnet} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.rpart} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.earth} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.step.gam} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.stepAIC} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.randomForest} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gbm.step} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gbm} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.maxlike} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.maxent} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.optimal.thresholds} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.threshold} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.sink} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ssb} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.circles} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.get.block} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.kfold} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.quantile} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.randomPoints} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.cov} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mahalanobis} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.extract} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.tryCatch} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.KML} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.dataType} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.writeRaster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.writeFormats} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.stack} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.predict} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.estimateR} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.specnumber} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.specpool} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.fisher.alpha} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.diversity} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.dispweight} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.coverscale} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.decostand} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gam} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mantel} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.bioenv} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.distconnected} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.na.omit} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.anova.negbin} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.anova.glm} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.glm.nb} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.glm} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.chisq.test} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ordiplot} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lda} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.vegdist} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.capscale} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.as.dist} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.BCI} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.wascores} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.cor} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.metaMDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.postMDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.sammon} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.isoMDS} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.cmdscale} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.rda} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.plot} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.points} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.plot.specaccum} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.specaccum} has been referenced but does not exi
+st, replaced by a fixed one
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
+/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/201
+8/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018/texmf
+-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/font
+s/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/ur
+w/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/ut
+mri8a.pfb>
+Output written on Rd2.pdf (126 pages, 453892 bytes).
+PDF statistics:
+ 3008 PDF objects out of 3580 (max. 8388607)
+ 2839 compressed objects within 29 object streams
+ 807 named destinations out of 1000 (max. 500000)
+ 417 words of extra memory for PDF output out of 10000 (max. 10000000)
+

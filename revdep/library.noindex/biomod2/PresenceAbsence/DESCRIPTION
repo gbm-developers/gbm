@@ -1,0 +1,22 @@
+Package: PresenceAbsence
+Type: Package
+Title: Presence-Absence Model Evaluation.
+Version: 1.1.9
+Date: 2012-08-17
+Depends: R (>= 2.2.0)
+Author: Elizabeth Freeman
+Maintainer: Elizabeth Freeman <eafreeman@fs.fed.us>
+Description: This package provides a set of functions useful when
+        evaluating the results of presence-absence models. Package
+        includes functions for calculating threshold dependent measures
+        such as confusion matrices, pcc, sensitivity, specificity, and
+        Kappa, and produces plots of each measure as the threshold is
+        varied. It will calculate optimal threshold choice according to
+        a choice of optimization criteria. It also includes functions
+        to plot the threshold independent ROC curves along with the
+        associated AUC (area under the curve).
+License: Unlimited
+Packaged: 2012-08-17 18:15:00 UTC; eafreeman
+Repository: CRAN
+Date/Publication: 2012-08-17 18:47:44
+Built: R 3.5.0; ; 2018-04-23 06:09:46 UTC; unix

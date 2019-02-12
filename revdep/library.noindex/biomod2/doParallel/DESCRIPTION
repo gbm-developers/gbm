@@ -1,0 +1,28 @@
+Package: doParallel
+Type: Package
+Title: Foreach Parallel Adaptor for the 'parallel' Package
+Version: 1.0.14
+Authors@R: c(person("Rich", "Calaway", role="cre", email="richcala@microsoft.com"),
+             person("Microsoft", "Corporation", role=c("aut", "cph")),
+			 person("Steve", "Weston", role="aut"),
+			 person("Dan", "Tenenbaum", role="ctb"))
+Description: Provides a parallel backend for the %dopar% function using
+        the parallel package.
+Depends: R (>= 2.14.0), foreach(>= 1.2.0), iterators(>= 1.0.0),
+        parallel, utils
+Suggests: caret, mlbench, rpart, RUnit
+Enhances: compiler
+License: GPL-2
+Author: Rich Calaway [cre],
+  Microsoft Corporation [aut, cph],
+  Steve Weston [aut],
+  Dan Tenenbaum [ctb]
+Maintainer: Rich Calaway <richcala@microsoft.com>
+Repository: CRAN
+Repository/R-Forge/Project: doparallel
+Repository/R-Forge/Revision: 21
+Repository/R-Forge/DateTimeStamp: 2018-09-21 22:41:46
+Date/Publication: 2018-09-24 19:20:09 UTC
+NeedsCompilation: no
+Packaged: 2018-09-21 22:51:03 UTC; rforge
+Built: R 3.5.0; ; 2018-09-25 05:47:45 UTC; unix

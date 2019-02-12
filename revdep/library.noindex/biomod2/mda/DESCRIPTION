@@ -1,0 +1,17 @@
+Package: mda
+Version: 0.4-10
+Date: 2017-11-02
+Author: S original by Trevor Hastie & Robert Tibshirani. Original R port by Friedrich Leisch, Kurt Hornik and Brian D. Ripley.
+Maintainer: Trevor Hastie <hastie@stanford.edu>
+Description: Mixture and flexible discriminant analysis, multivariate
+        adaptive regression splines (MARS), BRUTO, ...
+Title: Mixture and Flexible Discriminant Analysis
+Depends: R (>= 1.9.0), stats, class
+Suggests: earth
+License: GPL-2
+Packaged: 2017-11-02 15:46:34 UTC; hastie
+Repository: CRAN
+Date/Publication: 2017-11-02 16:15:22 UTC
+NeedsCompilation: yes
+Built: R 3.5.0; x86_64-apple-darwin15.6.0; 2018-04-23 15:48:01 UTC; unix
+Archs: mda.so.dSYM

@@ -1,0 +1,17 @@
+
+
+############ PresenceAbsence 1.1.5 (12-06-10) ######################
+
+New version of cmx that should avoid the integer overflow issues with large datasets
+
+############ PresenceAbsence 1.1.6 (12-04-21) ######################
+
+Re-compiled under R 2.13.0
+
+############ PresenceAbsence 1.1.8 (12-08-12) ######################
+
+Fixed spelling error
+
+############ PresenceAbsence 1.1.9 (12-08-17) ######################
+
+deleted empty sections in documentation files

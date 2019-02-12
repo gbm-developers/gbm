@@ -1,0 +1,24 @@
+Package: plotrix
+Version: 3.7-4
+Date: 2018-10-03
+Title: Various Plotting Functions
+Author: Jim Lemon, Ben Bolker, Sander Oom,
+	Eduardo Klein, Barry Rowlingson,
+	Hadley Wickham, Anupam Tyagi,
+	Olivier Eterradossi, Gabor Grothendieck,
+	Michael Toews, John Kane, Rolf Turner,
+	Carl Witthoft, Julian Stander, Thomas Petzoldt,
+	Remko Duursma, Elisa Biancotto, Ofir Levy,
+	Christophe Dutang, Peter Solymos, Robby Engelmann, 
+	Michael Hecker, Felix Steinbeck, Hans Borchers,
+	Henrik Singmann, Ted Toal, Derek Ogle, Darshan Baral,
+	Ulrike Groemping
+Maintainer: Jim Lemon <drjimlemon@gmail.com>
+Imports: grDevices, graphics, stats, utils
+Description: Lots of plots, various labeling, axis and color scaling functions.
+License: GPL (>= 2)
+NeedsCompilation: no
+Packaged: 2018-10-03 09:56:10 UTC; root
+Repository: CRAN
+Date/Publication: 2018-10-03 10:40:03 UTC
+Built: R 3.5.0; ; 2018-10-04 11:23:37 UTC; unix

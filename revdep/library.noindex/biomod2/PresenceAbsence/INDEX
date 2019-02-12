@@ -1,0 +1,25 @@
+Kappa                   Kappa
+PresenceAbsence-package
+                        Presence-Absence model evaluation
+SIM3DATA                Simulated Presence-Absence Data
+SPDATA                  Species Presence/Absence Data
+SPPREV                  Overall Preavalences for Species
+                        Presence/Absence Data
+auc                     Area Under the Curve
+auc.roc.plot            AUC ROC Plot
+calibration.plot        Calibration Plot
+cmx                     Confusion Matrix
+error.threshold.plot    Error Threshold Plot
+optimal.thresholds      Calculate Optimal Thresholds
+pcc                     Percent Correctly Classified
+predicted.prevalence    Predicted Prevalence
+presence.absence.accuracy
+                        Accuracy Table for Presence/Absence Data
+presence.absence.hist   Presence/Absence Histogram
+presence.absence.simulation
+                        Presence/Absence Data Simulation
+presence.absence.summary
+                        Presence/Absence Summary Plots
+roc.plot.calculate      ROC Plot Calculations
+sensitivity             Sensitivity
+specificity             Specificity

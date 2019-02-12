@@ -1,0 +1,15 @@
+Library: /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/gbm/old
+gbm (2.1.4)
+
+Library: /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/BigTSP
+codetools    (0.2-15)
+foreach      (1.4.4)
+glmnet       (2.0-16)
+gridExtra    (2.3)
+gtable       (0.2.0)
+iterators    (1.0.10)
+lattice      (0.20-38)
+Matrix       (1.2-15)
+randomForest (4.6-14)
+survival     (2.43-3)
+tree         (1.0-39)

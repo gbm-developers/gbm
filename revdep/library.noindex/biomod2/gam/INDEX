@@ -1,0 +1,15 @@
+gam		Fit a generalized additive model
+lo		local regression wrapper to be used in a gam formula
+s		smoothing spline wrapper to be used in a gam formula
+random		random effects wrapper
+plot.Gam	an interactive plotting function for Gams
+predict.Gam	make predictions from a Gam object
+step.Gam	stepwise model search with gam
+anova.Gam	compare the fits of a number of Gam models
+summary.Gam	summary method for gam
+preplot.Gam     extracts the components from a Gam in a plot-ready form
+gam.lo		local regression smoother for gam, used by all.wam
+gam.s		smoothing spline smoother for gam,used by all.wam
+na.gam.replace	a missing value method that is helpful with Gams
+gam.exact	a wrapper for semiparametric Gams producing exact standard errors
+gam.control	control parameters for fitting Gam models

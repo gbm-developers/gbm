@@ -1,0 +1,30 @@
+useDynLib("mda")
+importFrom(class,lvqinit, olvq1, lvq3, lvqtest)
+importFrom(utils,head,tail,packageDescription)
+importFrom("graphics", "par", "plot", "points")
+importFrom("stats", "contr.helmert", "delete.response", "fitted",
+            "kmeans", "model.extract", "model.frame", "model.matrix",
+            "predict", "terms", "update", "var")
+
+export("bruto", "coef.fda",
+       "confusion",
+       "fda",
+       "gen.ridge", "laplacian","mspline",
+       "mars", "mda", "mda.start",
+       "polyreg",
+       "softmax")
+
+S3method("coef", "fda")
+S3method("confusion", "default")
+S3method("confusion", "fda")
+S3method("confusion", "list")
+S3method("model.matrix", "mars")
+S3method("plot", "fda")
+S3method("predict", "bruto")
+S3method("predict", "fda")
+S3method("predict", "gen.ridge")
+S3method("predict", "mars")
+S3method("predict", "mda")
+S3method("predict", "polyreg")
+S3method("print", "fda")
+S3method("print", "mda")

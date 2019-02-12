@@ -1,0 +1,39 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> Sys.setenv("R_TESTS" = "")
+> library(testthat, quietly = TRUE)
+> if (identical(Sys.getenv("NOT_CRAN"), "true")) {
++   # NOT_CRAN
++   # run all tests
++   test_check("AzureML")
++   
++ } else {
++   # CRAN
++   # skip some tests on CRAN, to comply with timing directive and other policy
++   test_check("AzureML", filter = "1-workspace-no-config")
++   test_check("AzureML", filter = "7-discover-schema")
++ }
+Loading required package: AzureML
+══ testthat results  ═════════════════════════════════════════════════════════════
+OK: 3 SKIPPED: 0 FAILED: 0
+══ testthat results  ═════════════════════════════════════════════════════════════
+OK: 7 SKIPPED: 0 FAILED: 0
+> 
+> proc.time()
+   user  system elapsed 
+  0.741   0.332   3.809 
