@@ -6,6 +6,9 @@
 
 * Switched to using `lapply()` instead of `parallel::parLapply()` whenever `n.cores = 1`.
 
+* Calling `gbm()` with `distribution = "bernoulli"` will now throw an error whenever the response is non-numeric (e.g., 0/1 factors will throw an error instead of possibly crashing the session.) [(#6)](https://github.com/gbm-developers/gbm/issues/6).
+
+
 #### Bug fixes
 
 * Fixed a long standing bug that could occur when using k-fold cross-validation with a response that's been transformed in the mdoel formula [(#30)](https://github.com/gbm-developers/gbm/issues/30).

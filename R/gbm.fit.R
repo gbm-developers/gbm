@@ -314,7 +314,9 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
   if(!is.element(distribution$name, supported.distributions)) {
     stop("Distribution ",distribution$name," is not supported")
   }
-  if((distribution$name == "bernoulli") && !all(is.element(y,0:1))) {
+  if((distribution$name == "bernoulli") && !all(is.element(y, 0:1)) && 
+     !is.numeric(y)) {
+    # NOTE: Including `!is.numeric(y)` will catch cases where y is a 0/1 factor
     stop("Bernoulli requires the response to be in {0,1}")
     if (is.factor(y)) {
       y <- as.integer(y) - 1
