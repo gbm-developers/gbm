@@ -56,7 +56,7 @@ predict.gbm <- function(object,newdata,n.trees,
    if ( missing( newdata ) ){
       newdata <- reconstructGBMdata(object)
    }
-   if ( missing(n.trees) ) {
+   if ( missing(n.trees) || length(n.trees) < 1 ) {
       if ( object$train.fraction < 1 ){
          n.trees <- gbm.perf( object, method="test", plot.it = FALSE )
       }

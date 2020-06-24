@@ -6,9 +6,11 @@
 
 * Switched to using `lapply()` instead of `parallel::parLapply()` whenever `n.cores = 1`.
 
-## Bug fixes
+#### Bug fixes
 
 * Fixed a long standing bug that could occur when using k-fold cross-validation with a response that's been transformed in the mdoel formula [(#30)](https://github.com/gbm-developers/gbm/issues/30).
+
+* Fixed a but that would crash the session when giving "bad" input for `n.trees` in the call to `predict.gbm()` [(#45)](https://github.com/gbm-developers/gbm/issues/45). (Thanks to @ngreifer.)
 
 
 # gbm 2.1.5
