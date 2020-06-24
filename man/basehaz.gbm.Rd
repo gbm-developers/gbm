@@ -4,8 +4,7 @@
 \alias{basehaz.gbm}
 \title{Baseline hazard function}
 \usage{
-basehaz.gbm(t, delta, f.x, t.eval = NULL, smooth = FALSE,
-  cumulative = TRUE)
+basehaz.gbm(t, delta, f.x, t.eval = NULL, smooth = FALSE, cumulative = TRUE)
 }
 \arguments{
 \item{t}{The survival times.}

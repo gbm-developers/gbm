@@ -4,8 +4,14 @@
 \alias{gbm.more}
 \title{Generalized Boosted Regression Modeling (GBM)}
 \usage{
-gbm.more(object, n.new.trees = 100, data = NULL, weights = NULL,
-  offset = NULL, verbose = NULL)
+gbm.more(
+  object,
+  n.new.trees = 100,
+  data = NULL,
+  weights = NULL,
+  offset = NULL,
+  verbose = NULL
+)
 }
 \arguments{
 \item{object}{A \code{\link{gbm.object}} object created from an initial call 
@@ -114,10 +120,9 @@ Yhat <- predict(gbm1, newdata = data2, n.trees = best.iter, type = "link")
 print(sum((data2$Y - Yhat)^2))
 
 # Construct univariate partial dependence plots
-p1 <- plot(gbm1, i.var = 1, n.trees = best.iter)
-p2 <- plot(gbm1, i.var = 2, n.trees = best.iter)
-p3 <- plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
-grid.arrange(p1, p2, p3, ncol = 3)
+plot(gbm1, i.var = 1, n.trees = best.iter)
+plot(gbm1, i.var = 2, n.trees = best.iter)
+plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
 
 # Construct bivariate partial dependence plots
 plot(gbm1, i.var = 1:2, n.trees = best.iter)

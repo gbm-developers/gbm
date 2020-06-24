@@ -4,11 +4,23 @@
 \alias{calibrate.plot}
 \title{Calibration plot}
 \usage{
-calibrate.plot(y, p, distribution = "bernoulli", replace = TRUE,
-  line.par = list(col = "black"), shade.col = "lightyellow",
-  shade.density = NULL, rug.par = list(side = 1),
-  xlab = "Predicted value", ylab = "Observed average", xlim = NULL,
-  ylim = NULL, knots = NULL, df = 6, ...)
+calibrate.plot(
+  y,
+  p,
+  distribution = "bernoulli",
+  replace = TRUE,
+  line.par = list(col = "black"),
+  shade.col = "lightyellow",
+  shade.density = NULL,
+  rug.par = list(side = 1),
+  xlab = "Predicted value",
+  ylab = "Observed average",
+  xlim = NULL,
+  ylim = NULL,
+  knots = NULL,
+  df = 6,
+  ...
+)
 }
 \arguments{
 \item{y}{The outcome 0-1 variable.}

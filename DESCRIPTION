@@ -1,5 +1,5 @@
 Package: gbm
-Version: 2.1.4.9000
+Version: 2.1.6
 Title: Generalized Boosted Regression Models
 Authors@R: c(
   person("Brandon", "Greenwell",
@@ -19,15 +19,16 @@ Authors@R: c(
   )
 Depends: R (>= 2.9.0)
 Imports:
-  gridExtra,
   lattice,
   parallel,
   survival
 Suggests:
+  gridExtra,
   knitr,
   pdp,
   RUnit,
   splines,
+  vip,
   viridis
 Description: An implementation of extensions to Freund and Schapire's AdaBoost 
   algorithm and Friedman's gradient boosting machine. Includes regression 
@@ -38,5 +39,5 @@ Description: An implementation of extensions to Freund and Schapire's AdaBoost
 License: GPL (>= 2) | file LICENSE
 URL: https://github.com/gbm-developers/gbm
 BugReports: https://github.com/gbm-developers/gbm/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr

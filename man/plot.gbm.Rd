@@ -4,10 +4,20 @@
 \alias{plot.gbm}
 \title{Marginal plots of fitted gbm objects}
 \usage{
-\method{plot}{gbm}(x, i.var = 1, n.trees = x$n.trees,
-  continuous.resolution = 100, return.grid = FALSE, type = c("link",
-  "response"), level.plot = TRUE, contour = FALSE, number = 4,
-  overlap = 0.1, col.regions = viridis::viridis, ...)
+\method{plot}{gbm}(
+  x,
+  i.var = 1,
+  n.trees = x$n.trees,
+  continuous.resolution = 100,
+  return.grid = FALSE,
+  type = c("link", "response"),
+  level.plot = TRUE,
+  contour = FALSE,
+  number = 4,
+  overlap = 0.1,
+  col.regions = viridis::viridis,
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{\link{gbm.object}} that was fit using a call to 

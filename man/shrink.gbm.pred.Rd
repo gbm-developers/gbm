@@ -4,8 +4,13 @@
 \alias{shrink.gbm.pred}
 \title{Predictions from a shrunked GBM}
 \usage{
-shrink.gbm.pred(object, newdata, n.trees, lambda = rep(1,
-  length(object$var.names)), ...)
+shrink.gbm.pred(
+  object,
+  newdata,
+  n.trees,
+  lambda = rep(1, length(object$var.names)),
+  ...
+)
 }
 \arguments{
 \item{object}{a \code{\link{gbm.object}}}

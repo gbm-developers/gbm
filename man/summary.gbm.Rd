@@ -4,9 +4,16 @@
 \alias{summary.gbm}
 \title{Summary of a gbm object}
 \usage{
-\method{summary}{gbm}(object, cBars = length(object$var.names),
-  n.trees = object$n.trees, plotit = TRUE, order = TRUE,
-  method = relative.influence, normalize = TRUE, ...)
+\method{summary}{gbm}(
+  object,
+  cBars = length(object$var.names),
+  n.trees = object$n.trees,
+  plotit = TRUE,
+  order = TRUE,
+  method = relative.influence,
+  normalize = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{a \code{gbm} object created from an initial call to

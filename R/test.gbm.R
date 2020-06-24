@@ -29,7 +29,7 @@ test.gbm <- function(){
 
     ############################################################################
     ## test Gaussian distribution gbm model
-    set.seed(1)
+    set.seed(123)
 
     cat("Running least squares regression example.\n")
 
@@ -74,7 +74,7 @@ test.gbm <- function(){
     # Get best model
     best.iter <- gbm.perf(gbm1,method="cv", plot.it=FALSE)   # returns cv estimate of best number of trees
 
-    set.seed(2)
+    set.seed(223)
     # make some new data
     N <- 1000
     X1 <- runif(N)
@@ -105,7 +105,7 @@ test.gbm <- function(){
 
     cat("Running cox proportional hazards regression example.\n")
     # create some data
-    set.seed(1)
+    set.seed(2)
     N <- 3000
     X1 <- runif(N)
     X2 <- runif(N)

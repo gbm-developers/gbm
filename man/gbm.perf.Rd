@@ -4,8 +4,7 @@
 \alias{gbm.perf}
 \title{GBM performance}
 \usage{
-gbm.perf(object, plot.it = TRUE, oobag.curve = FALSE, overlay = TRUE,
-  method)
+gbm.perf(object, plot.it = TRUE, oobag.curve = FALSE, overlay = TRUE, method)
 }
 \arguments{
 \item{object}{A \code{\link{gbm.object}} created from an initial call to

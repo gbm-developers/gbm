@@ -8,22 +8,81 @@
 \alias{gbmCrossValPredictions}
 \title{Cross-validate a gbm}
 \usage{
-gbmCrossVal(cv.folds, nTrain, n.cores, class.stratify.cv, data, x, y,
-  offset, distribution, w, var.monotone, n.trees, interaction.depth,
-  n.minobsinnode, shrinkage, bag.fraction, var.names, response.name, group)
+gbmCrossVal(
+  cv.folds,
+  nTrain,
+  n.cores,
+  class.stratify.cv,
+  data,
+  x,
+  y,
+  offset,
+  distribution,
+  w,
+  var.monotone,
+  n.trees,
+  interaction.depth,
+  n.minobsinnode,
+  shrinkage,
+  bag.fraction,
+  var.names,
+  response.name,
+  group
+)
 
 gbmCrossValErr(cv.models, cv.folds, cv.group, nTrain, n.trees)
 
-gbmCrossValPredictions(cv.models, cv.folds, cv.group, best.iter.cv,
-  distribution, data, y)
+gbmCrossValPredictions(
+  cv.models,
+  cv.folds,
+  cv.group,
+  best.iter.cv,
+  distribution,
+  data,
+  y
+)
 
-gbmCrossValModelBuild(cv.folds, cv.group, n.cores, i.train, x, y, offset,
-  distribution, w, var.monotone, n.trees, interaction.depth,
-  n.minobsinnode, shrinkage, bag.fraction, var.names, response.name, group)
+gbmCrossValModelBuild(
+  cv.folds,
+  cv.group,
+  n.cores,
+  i.train,
+  x,
+  y,
+  offset,
+  distribution,
+  w,
+  var.monotone,
+  n.trees,
+  interaction.depth,
+  n.minobsinnode,
+  shrinkage,
+  bag.fraction,
+  var.names,
+  response.name,
+  group
+)
 
-gbmDoFold(X, i.train, x, y, offset, distribution, w, var.monotone, n.trees,
-  interaction.depth, n.minobsinnode, shrinkage, bag.fraction, cv.group,
-  var.names, response.name, group, s)
+gbmDoFold(
+  X,
+  i.train,
+  x,
+  y,
+  offset,
+  distribution,
+  w,
+  var.monotone,
+  n.trees,
+  interaction.depth,
+  n.minobsinnode,
+  shrinkage,
+  bag.fraction,
+  cv.group,
+  var.names,
+  response.name,
+  group,
+  s
+)
 }
 \arguments{
 \item{cv.folds}{The number of cross-validation folds.}

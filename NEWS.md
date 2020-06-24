@@ -1,4 +1,17 @@
-# gbm 2.1.4.9000
+# gbm 2.1.6
+
+* Corrected the number of arguments for `gbm_shrink_gradient()` in `gbm-init.c` [(#50)](https://github.com/gbm-developers/gbm/issues/50). (Thanks to CRAN for highlighting the issue.)
+
+* Removed unnecessary dependency on [gridExtra](https://cran.r-project.org/package=gridExtra).
+
+* Switched to using `lapply()` instead of `parallel::parLapply()` whenever `n.cores = 1`.
+
+## Bug fixes
+
+* Fixed a long standing bug that could occur when using k-fold cross-validation with a response that's been transformed in the mdoel formula [(#30)](https://github.com/gbm-developers/gbm/issues/30).
+
+
+# gbm 2.1.5
 
 * Fixed bug that occurred whenever `distribution` was a list (e.g., "pairwise" regression) [(#27)](https://github.com/gbm-developers/gbm/issues/27).
 

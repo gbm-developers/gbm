@@ -4,8 +4,7 @@
 \alias{predict.gbm}
 \title{Predict method for GBM Model Fits}
 \usage{
-\method{predict}{gbm}(object, newdata, n.trees, type = "link",
-  single.tree = FALSE, ...)
+\method{predict}{gbm}(object, newdata, n.trees, type = "link", single.tree = FALSE, ...)
 }
 \arguments{
 \item{object}{Object of class inheriting from (\code{\link{gbm.object}})}

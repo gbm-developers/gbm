@@ -66,8 +66,8 @@ predict.gbm <- function(object,newdata,n.trees,
       else{ best <- length( object$train.error ) }
       cat( paste( "Using", n.trees, "trees...\n" ) )
    }
-
-   if(!is.element(type, c("link","response" )))
+   
+   if(!is.element(type, c("link", "response" )))
    {
       stop("type must be either 'link' or 'response'")
    }
@@ -81,26 +81,26 @@ predict.gbm <- function(object,newdata,n.trees,
    {
       x <- newdata
    }
-
+   
    cRows <- nrow(x)
    cCols <- ncol(x)
-
+   
    for(i in 1:cCols)
    {
       if(is.factor(x[,i]))
       {
-        if (length(levels(x[,i])) > length(object$var.levels[[i]])) {
-          new.compare <- levels(x[,i])[1:length(object$var.levels[[i]])]
-        } else {
-          new.compare <- levels(x[,i])
-        }
-        if (!identical(object$var.levels[[i]], new.compare)) {
-          x[,i] <- factor(x[,i], union(object$var.levels[[i]], levels(x[,i])))
-        }
-        x[,i] <- as.numeric(factor(x[,i], levels = object$var.levels[[i]]))-1
+         if (length(levels(x[,i])) > length(object$var.levels[[i]])) {
+            new.compare <- levels(x[,i])[1:length(object$var.levels[[i]])]
+         } else {
+            new.compare <- levels(x[,i])
+         }
+         if (!identical(object$var.levels[[i]], new.compare)) {
+            x[,i] <- factor(x[,i], union(object$var.levels[[i]], levels(x[,i])))
+         }
+         x[,i] <- as.numeric(factor(x[,i], levels = object$var.levels[[i]]))-1
       }
    }
-
+   
    x <- as.vector(unlist(x, use.names=FALSE))
    if(missing(n.trees) || any(n.trees > object$n.trees))
    {
@@ -108,12 +108,12 @@ predict.gbm <- function(object,newdata,n.trees,
       warning("Number of trees not specified or exceeded number fit so far. Using ",paste(n.trees,collapse=" "),".")
    }
    i.ntree.order <- order(n.trees)
-
+   
    # Next if block for compatibility with objects created with version 1.6.
    if (is.null(object$num.classes)){
-       object$num.classes <- 1
+      object$num.classes <- 1
    }
-
+   
    predF <- .Call("gbm_pred",
                   X=as.double(x),
                   cRows=as.integer(cRows),
@@ -126,7 +126,7 @@ predict.gbm <- function(object,newdata,n.trees,
                   var.type=as.integer(object$var.type),
                   single.tree = as.integer(single.tree),
                   PACKAGE = "gbm")
-
+   
    if((length(n.trees) > 1) || (object$num.classes > 1))
    {
       if(object$distribution$name=="multinomial")
@@ -141,17 +141,17 @@ predict.gbm <- function(object,newdata,n.trees,
          predF[,i.ntree.order] <- predF
       }
    }
-
+   
    if(type=="response")
    {
       if(is.element(object$distribution$name, c("bernoulli", "pairwise")))
       {
          predF <- 1/(1+exp(-predF))
       } else
-      if(object$distribution$name=="poisson")
-      {
-         predF <- exp(predF)
-      }
+         if(object$distribution$name=="poisson")
+         {
+            predF <- exp(predF)
+         }
       else if (object$distribution$name == "adaboost"){
          predF <- 1 / (1 + exp(-2*predF))
       }
@@ -162,17 +162,17 @@ predict.gbm <- function(object,newdata,n.trees,
          # Transpose each 2d array
          predF <- aperm(psum, c(2, 1, 3))
       }
-
+      
       if((length(n.trees)==1) && (object$distribution$name!="multinomial"))
       {
          predF <- as.vector(predF)
       }
    }
-
+   
    if(!is.null(attr(object$Terms,"offset")))
    {
       warning("predict.gbm does not add the offset to the predicted values.")
    }
-
+   
    return(predF)
 }

@@ -87,7 +87,7 @@ gbmCrossVal <- function(cv.folds, nTrain, n.cores,
 #' @rdname gbmCrossVal
 #' @export
 gbmCrossValErr <- function(cv.models, cv.folds, cv.group, nTrain, n.trees) {
-  in.group <- tabulate(cv.group, nbins=cv.folds)
+  in.group <- tabulate(cv.group, nbins = cv.folds)
   cv.error <- vapply(1:cv.folds,
                      function(index) {
                        model <- cv.models[[index]]
@@ -132,11 +132,11 @@ gbmCrossValPredictions <- function(cv.models, cv.folds, cv.group,
     model <- cv.models[[ind]]
     
     # The %in% here is to handle coxph
-    my.data  <- data[flag, !(data.names %in% model$response.name)]
+    # my.data  <- data[flag, !(data.names %in% model$response.name)]
+    my.data  <- data[flag, model$var.names]
     predictions <- predict(model, newdata = my.data, n.trees = best.iter.cv)  # FIXME
     predictions <- matrix(predictions, ncol = num.cols)
     res[flag, ] <- predictions
-    
   }
   
   # Handle multinomial case
@@ -161,20 +161,27 @@ gbmCrossValModelBuild <- function(cv.folds, cv.group, n.cores, i.train, x, y,
                                   shrinkage, bag.fraction, var.names, 
                                   response.name, group) {
   
-  # Set up cluster and add finalizer
-  cluster <- gbmCluster(n.cores)
-  on.exit(parallel::stopCluster(cluster))
-  
   # Set random seeds
   seeds <- as.integer(runif(cv.folds, -(2^31 - 1), 2^31))
-  
+
   # Perform cross-validation model builds
-  parallel::parLapply(cl = cluster, X = 1:cv.folds, fun = gbmDoFold, i.train, x, 
-                      y, offset, distribution, w, var.monotone, n.trees,
-                      interaction.depth, n.minobsinnode, shrinkage, 
-                      bag.fraction, cv.group, var.names, response.name, group, 
-                      seeds)
-  
+  if (!is.null(n.cores) && n.cores == 1) {  
+    lapply(1:cv.folds, FUN = gbmDoFold, i.train, x, 
+           y, offset, distribution, w, var.monotone, n.trees,
+           interaction.depth, n.minobsinnode, shrinkage, 
+           bag.fraction, cv.group, var.names, response.name, group, 
+           seeds)
+  } else {
+    # Set up cluster and add finalizer
+    cluster <- gbmCluster(n.cores)
+    on.exit(parallel::stopCluster(cluster))
+    parallel::parLapply(cl = cluster, X = 1:cv.folds, fun = gbmDoFold, i.train, x, 
+                        y, offset, distribution, w, var.monotone, n.trees,
+                        interaction.depth, n.minobsinnode, shrinkage, 
+                        bag.fraction, cv.group, var.names, response.name, group, 
+                        seeds)
+  }
+
 }
 
 
@@ -185,11 +192,11 @@ gbmDoFold <- function(X, i.train, x, y, offset, distribution, w, var.monotone,
                       bag.fraction, cv.group, var.names, response.name, group, 
                       s) {
   
-  # Do specified cross-validation fold - a self-contained function for passing 
+  # Do specified cross-validation fold---a self-contained function for passing 
   # to individual cores.
   
   # Load required packages for core
-  library(gbm, quietly=TRUE)
+  library(gbm, quietly = TRUE)
   
   # Print CV information
   cat("CV:", X, "\n")
@@ -197,22 +204,19 @@ gbmDoFold <- function(X, i.train, x, y, offset, distribution, w, var.monotone,
   # Setup
   set.seed(s[[X]])
   i <- order(cv.group == X)
-  x <- x[i.train,,drop=TRUE][i,,drop=FALSE]
+  x <- x[i.train, , drop = TRUE][i, , drop = FALSE]
   y <- y[i.train][i]
   offset <- offset[i.train][i]
   nTrain <- length(which(cv.group != X))
   group <- group[i.train][i]
   
-  # Fit a GBM
-  res <- gbm.fit(x = x, y = y, offset = offset, distribution = distribution,
-                 w = w, var.monotone = var.monotone, n.trees = n.trees,
-                 interaction.depth = interaction.depth,
-                 n.minobsinnode = n.minobsinnode,
-                 shrinkage = shrinkage, bag.fraction = bag.fraction,
-                 nTrain = nTrain, keep.data = FALSE, verbose = FALSE, 
-                 response.name = response.name, group = group)
-  
-  # Return the result
-  res
+  # Return a fitted GBM
+  gbm.fit(x = x, y = y, offset = offset, distribution = distribution,
+          w = w, var.monotone = var.monotone, n.trees = n.trees,
+          interaction.depth = interaction.depth,
+          n.minobsinnode = n.minobsinnode,
+          shrinkage = shrinkage, bag.fraction = bag.fraction,
+          nTrain = nTrain, keep.data = FALSE, verbose = FALSE, 
+          response.name = response.name, group = group)
   
 }

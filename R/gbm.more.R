@@ -106,10 +106,9 @@
 #' print(sum((data2$Y - Yhat)^2))
 #' 
 #' # Construct univariate partial dependence plots
-#' p1 <- plot(gbm1, i.var = 1, n.trees = best.iter)
-#' p2 <- plot(gbm1, i.var = 2, n.trees = best.iter)
-#' p3 <- plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
-#' grid.arrange(p1, p2, p3, ncol = 3)
+#' plot(gbm1, i.var = 1, n.trees = best.iter)
+#' plot(gbm1, i.var = 2, n.trees = best.iter)
+#' plot(gbm1, i.var = "X3", n.trees = best.iter)  # can use index or name
 #' 
 #' # Construct bivariate partial dependence plots
 #' plot(gbm1, i.var = 1:2, n.trees = best.iter)
@@ -209,7 +208,7 @@ gbm.more <- function(object,
          }
 
          # construct group index
-         group <- factor(do.call(paste, c(data[,distribution.group, drop=FALSE], sep=":")))
+         group <- factor(do.call(paste, c(data[, distribution.group, drop = FALSE], sep = ":")))
 
          # Check that weights are constant across groups
          if ((!missing(weights)) && (!is.null(weights)))
@@ -219,7 +218,8 @@ gbm.more <- function(object,
 
             if (any(w.min != w.max))
             {
-               stop("For distribution 'pairwise', all instances for the same group must have the same weight")
+               stop("For distribution 'pairwise', all instances for the same ",
+                    "group must have the same weight")
             }
 
             # Normalize across groups
