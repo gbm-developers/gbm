@@ -348,9 +348,13 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
   if (is.character(distribution)) { 
     distribution <- list(name = distribution) 
   } 
-  
   if (!is.element(distribution$name, getAvailableDistributions())) {
     stop("Distribution ", distribution$name, " is not supported.")
+  }
+  if (distribution$name == "multinomial") {
+    warning("Setting `distribution = \"multinomial\"` is ill-advised as it is ",
+            "currently broken. It exists only for backwards compatibility. ",
+            "Use at your own risk.", call. = FALSE)
   }
   
   # Construct data frame of predictor values

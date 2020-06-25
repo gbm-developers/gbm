@@ -6,14 +6,18 @@
 
 * Switched to using `lapply()` instead of `parallel::parLapply()` whenever `n.cores = 1`.
 
-* Calling `gbm()` with `distribution = "bernoulli"` will now throw an error whenever the response is non-numeric (e.g., 0/1 factors will throw an error instead of possibly crashing the session.) [(#6)](https://github.com/gbm-developers/gbm/issues/6).
+* Calling `gbm()` with `distribution = "bernoulli"` will now throw an error whenever the response is non-numeric (e.g., 0/1 factors will throw an error instead of possibly crashing the session.) [(#6)](https://github.com/gbm-developers/gbm/issues/6). (Thanks to @mzoll.)
+
+* Calling `gbm()` with `distribution = "multinomial"` now comes with a warning message; multinomial support has always been problematic and since this package is only being maintained for backwards compatibility, it likely will not be fixes unless someone makes a PR.
 
 
 #### Bug fixes
 
-* Fixed a long standing bug that could occur when using k-fold cross-validation with a response that's been transformed in the mdoel formula [(#30)](https://github.com/gbm-developers/gbm/issues/30).
+* Fixed a long standing bug that could occur when using k-fold cross-validation with a response that's been transformed in the model formula [(#30)](https://github.com/gbm-developers/gbm/issues/30).
 
 * Fixed a but that would crash the session when giving "bad" input for `n.trees` in the call to `predict.gbm()` [(#45)](https://github.com/gbm-developers/gbm/issues/45). (Thanks to @ngreifer.)
+
+* Fixed a bug where calling `predict()` could throw an error in some cases when `n.trees` was not specified.
 
 
 # gbm 2.1.5
