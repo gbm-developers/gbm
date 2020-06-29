@@ -1,0 +1,16 @@
+Library: /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/gbm/new
+gbm (2.1.6)
+
+Library: /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/inTrees
+arules     (1.6-6)
+data.table (1.12.8)
+gridExtra  (2.3)
+gtable     (0.3.0)
+lattice    (0.20-41)
+magrittr   (1.5)
+Matrix     (1.2-18)
+RRF        (1.9.1)
+stringi    (1.4.6)
+survival   (3.2-3)
+xgboost    (1.1.1.1)
+xtable     (1.8-4)

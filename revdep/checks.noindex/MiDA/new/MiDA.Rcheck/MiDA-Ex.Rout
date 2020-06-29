@@ -1,0 +1,563 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "MiDA"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('MiDA')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("MiBiClassGBODT")
+> ### * MiBiClassGBODT
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiBiClassGBODT
+> ### Title: Binary classification using gradient boosting over desicion
+> ###   trees
+> ### Aliases: MiBiClassGBODT
+> 
+> ### ** Examples
+> 
+> 
+> #get gene expression and specimen data
+> data("IMexpression");data("IMspecimen")
+> #sample expression matrix and specimen data for binary classification,
+> #only "NORM" and "EBV" specimens are left
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis,"norm", "ebv")
+> SampleSpecimen<-MiSpecimenSample(IMspecimen$diagnosis, "norm", "ebv")
+> #Fitting, low tuning for faster running
+> BoostRes<-MiBiClassGBODT(SampleMatrix, SampleSpecimen, n.crossval = 3,
++                        ntrees = 10, shrinkage = 1, intdepth = 2)
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+> BoostRes[[1]] # QC values for n.crossval = 3 models and its summary
+      Model 1    Model 2   Model 3        Min     1st Qu     Median       Mean
+Accur      NA 0.63636364        NA 0.63636364 0.63636364 0.63636364 0.63636364
+AUC       0.5 0.54166667 0.7083333 0.50000000 0.52083333 0.54166667 0.58333333
+MCC        NA 0.08333333        NA 0.08333333 0.08333333 0.08333333 0.08333333
+F1sc       NA 0.33333333        NA 0.33333333 0.33333333 0.33333333 0.33333333
+          3rd Qu        Max        SD
+Accur 0.63636364 0.63636364        NA
+AUC   0.62500000 0.70833333 0.1102396
+MCC   0.08333333 0.08333333        NA
+F1sc  0.33333333 0.33333333        NA
+> length(BoostRes[[2]]) # n.crossval = 3 data frames of probes feature importance for classification
+[1] 3
+> head(BoostRes[[2]][[1]])
+                                      var   rel.inf
+AVEN.NM_020371.z1       AVEN.NM_020371.z1 28.605280
+BAG4.ALL                         BAG4.ALL 16.211475
+APP.ALL                           APP.ALL 13.775427
+AKT2.NM_001243027.z1 AKT2.NM_001243027.z1 10.644344
+ALYREF.NM_005782.z3   ALYREF.NM_005782.z3 10.419839
+BAK1.ALL                         BAK1.ALL  8.816273
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiDataSample")
+> ### * MiDataSample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiDataSample
+> ### Title: Select matrix columns based on values of attendant vector
+> ### Aliases: MiDataSample
+> 
+> ### ** Examples
+> 
+> 
+> #get gene expression and specimen data
+> data("IMexpression");data("IMspecimen")
+> dim(IMexpression) # 100 columns (genes/transcripts) - 89 specimens
+[1] 100  89
+> colnames(IMexpression)[1:10] # look at first 10 columns of matrix - specimens IDs
+ [1] "X47701" "X47702" "X47703" "X48701" "X48702" "X48703" "X50101" "X50102"
+ [9] "X50103" "X50201"
+> IMspecimen[1:10,] # specimens IDs and group factor - diagnoses in attendant vector
+       ID diagnosis
+1  X47701       ebv
+2  X47702       ebv
+3  X47703       ebv
+5  X48701       ebv
+6  X48702       ebv
+7  X48703       ebv
+9  X50101      hhv6
+10 X50102      hhv6
+11 X50103      hhv6
+13 X50201      hhv6
+> # note that specimens in matrix columns are in the same order as specimens in description data
+> # select specimens with only EBV and NORM diagnoses (and sample the description data as well)
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis, "ebv", "norm")
+> SampleSamples<-MiSpecimenSample(IMspecimen$diagnosis, "ebv", "norm")
+> dim(SampleMatrix)# only 68 specimens with EBV and NORM diagnoses left
+[1] 100  68
+> colnames(SampleMatrix)[1:10]
+ [1] "X47701" "X47702" "X47703" "X48701" "X48702" "X48703" "X52601" "X59701"
+ [9] "X59702" "X59703"
+> SampleSamples[1:10] # corresponding diagnoses
+ [1] ebv  ebv  ebv  ebv  ebv  ebv  norm norm norm norm
+Levels: ebv norm
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiFracData")
+> ### * MiFracData
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiFracData
+> ### Title: Subset an expression matrix based on probe's feature importance
+> ### Aliases: MiFracData
+> 
+> ### ** Examples
+> 
+> # get gene expression and specimen data
+> data("IMexpression");data("IMspecimen")
+> #sample expression matrix and specimen data for binary classification,
+> #only "NORM" and "EBV" specimens are left
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis,"norm", "ebv")
+> dim(SampleMatrix) # 100 probes
+[1] 100  68
+> SampleSpecimen<-MiSpecimenSample(IMspecimen$diagnosis, "norm", "ebv")
+> #Fitting, low tuning for faster running
+> ClassRes<-MiBiClassGBODT(SampleMatrix, SampleSpecimen, n.crossval = 3,
++                          ntrees = 10, shrinkage = 1, intdepth = 2)
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+> # List of influence data frames for all 3 models build using cross-validation
+> # is the 2nd element of BiClassGBODT results
+> # take 10 most important probes from each model
+> Sample2Matrix<-MiFracData(SampleMatrix, importance.list = ClassRes[[2]], 10)
+> dim(Sample2Matrix) # less than 100 probes left
+[1] 22 68
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiInflCount")
+> ### * MiInflCount
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiInflCount
+> ### Title: Mean microarray probes' feature importance from binary
+> ###   classification
+> ### Aliases: MiInflCount
+> 
+> ### ** Examples
+> 
+> 
+> # get gene expression and specimen data
+> data("IMexpression");data("IMspecimen")
+> # sample expression matrix and specimen data for binary classification,
+> # only "NORM" and "EBV" specimens are left
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis,"norm", "ebv")
+> SampleSpecimen<-MiSpecimenSample(IMspecimen$diagnosis, "norm", "ebv")
+> #Fitting, low tuning for faster running
+> ClassRes<-MiBiClassGBODT(SampleMatrix, SampleSpecimen, n.crossval = 3,
++                         ntrees = 10, shrinkage = 1, intdepth = 2)
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+Setting levels: control = ebv, case = norm
+Warning in value[[3L]](cond) :
+  Ordered predictor converted to numeric vector. Threshold values will not correspond to values in predictor.
+Setting direction: controls < cases
+> # List of influence data frames for all 3 models build using cross-validation
+> # is the 2nd element of BiClassGBODT results
+> Importances<-MiInflCount(ClassRes[[2]])
+> Importances[[1]][1:10,] # mean and sd. 0s are for low feature importance
+                names infl.mean  infl.sd
+1           AGTR2.ALL  0.000000 0.000000
+2  AGTR2.NM_000686.z1  0.000000 0.000000
+3  AGTR2.NM_000686.z2  5.669155 9.819265
+4  AGTR2.NM_000686.z3  0.000000 0.000000
+5  AGTR2.NM_000686.z4  0.000000 0.000000
+6  AGTR2.NM_000686.z5  0.000000 0.000000
+7           AIFM1.ALL  0.000000 0.000000
+8  AIFM1.NM_145812.z1  2.292400 3.970553
+9  AIFM1.NM_145812.z2  2.812168 4.870818
+10 AIFM1.NM_145812.z3  0.000000 0.000000
+> Importances[[2]][1:10,] # original values for n.crossval = 3 models
+              probeID infl 1   infl 2   infl 3
+1           AGTR2.ALL      0 0.000000  0.00000
+2  AGTR2.NM_000686.z1      0 0.000000  0.00000
+3  AGTR2.NM_000686.z2      0 0.000000 17.00747
+4  AGTR2.NM_000686.z3      0 0.000000  0.00000
+5  AGTR2.NM_000686.z4      0 0.000000  0.00000
+6  AGTR2.NM_000686.z5      0 0.000000  0.00000
+7           AIFM1.ALL      0 0.000000  0.00000
+8  AIFM1.NM_145812.z1      0 6.877200  0.00000
+9  AIFM1.NM_145812.z2      0 8.436503  0.00000
+10 AIFM1.NM_145812.z3      0 0.000000  0.00000
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiIntDepthAjust")
+> ### * MiIntDepthAjust
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiIntDepthAjust
+> ### Title: Ajust maximum depth parameter for fitting generalized boosted
+> ###   regression models
+> ### Aliases: MiIntDepthAjust
+> 
+> ### ** Examples
+> 
+> #get gene expression and specimen data
+> data("IMexpression");data("IMspecimen")
+> #sample expression matrix and specimen data for binary classification,
+> #only "NORM" and "EBV" specimens are left
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis,"norm", "ebv")
+> SampleSpecimen<-MiSpecimenSample(IMspecimen$diagnosis, "norm", "ebv")
+> #Fitting, low tuning for faster running. Test intdepth
+> set.seed(1)
+> ClassRes<-MiIntDepthAjust(SampleMatrix, SampleSpecimen, test.frac = 5, times=3,
++                           ntrees = 10, shrinkage = 1, intdepth =  c(1,2))
+> ClassRes[[1]] # train accuracy
+               1         2
+Trial1 0.8363636        NA
+Trial2        NA 0.8909091
+Trial3 0.9272727        NA
+Median 0.8818182 0.8909091
+> ClassRes[[2]] # test accuracy
+               1         2
+Trial1 0.9230769        NA
+Trial2 0.4615385 0.6153846
+Trial3 0.6153846 0.4615385
+Median 0.6153846 0.5384615
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiNTreesAjust")
+> ### * MiNTreesAjust
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiNTreesAjust
+> ### Title: Ajust number of trees parameter for fitting generalized boosted
+> ###   regression models
+> ### Aliases: MiNTreesAjust
+> 
+> ### ** Examples
+> 
+> #get gene expression and specimen data
+> data("IMexpression");data("IMspecimen")
+> #sample expression matrix and specimen data for binary classification,
+> #only "NORM" and "EBV" specimens are left
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis,"norm", "ebv")
+> SampleSpecimen<-MiSpecimenSample(IMspecimen$diagnosis, "norm", "ebv")
+> #Fitting, low tuning for faster running. Test ntrees
+> set.seed(1)
+> ClassRes<-MiNTreesAjust(SampleMatrix, SampleSpecimen, test.frac = 5, times = 3,
++                        ntrees = c(10, 20), shrinkage = 1, intdepth = 2)
+> ClassRes[[1]] # train accuracy
+              10        20
+Trial1 0.8363636        NA
+Trial2        NA 0.9454545
+Trial3 0.9090909 0.9454545
+Median 0.8727273 0.9454545
+> ClassRes[[2]] # test accuracy
+              10        20
+Trial1 0.9230769        NA
+Trial2        NA 0.5384615
+Trial3 0.6153846        NA
+Median 0.7692308 0.5384615
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiNorm")
+> ### * MiNorm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiNorm
+> ### Title: Microarray data normalization
+> ### Aliases: MiNorm
+> 
+> ### ** Examples
+> 
+> data("IMexpression")
+> # Loess normalization
+> LoMatrix<-MiNorm(IMexpression, method="Loess")
+> par(mfrow=c(1,2))
+> boxplot(log2(IMexpression),main="Before normalization")
+> boxplot(log2(LoMatrix),main="Loess normalization")
+Warning in boxplot(log2(LoMatrix), main = "Loess normalization") :
+  NaNs produced
+> par(mfrow=c(1,1))
+> 
+> 
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("MiSelectSignif")
+> ### * MiSelectSignif
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiSelectSignif
+> ### Title: Select biological markers with high fold change and
+> ###   classification importance
+> ### Aliases: MiSelectSignif
+> 
+> ### ** Examples
+> 
+> probes<-paste("probe", 1:50, sep="") #probes
+> mean1<-rnorm(50, mean=0, sd=1) #means
+> mean2<-rnorm(50, mean=5, sd=1)
+> infl<-c(1:50) # influence
+> stat.val<-rep(c(0.05, 0.04), c(20, 30))
+> Result<-MiSelectSignif(probes, mean1, mean2, FC.method="absolute", infl, stat.val,
++                       tresh.FC=0.75, tresh.infl=0.75, tresh.stat=0.05)
+> Result[1:5,]
+  Probes FC.diff.means Stat.val Importance Marker
+1 probe1     -6.024560     0.05          1  FALSE
+2 probe2     -4.204330     0.05          2  FALSE
+3 probe3     -6.176748     0.05          3  FALSE
+4 probe4     -2.275356     0.05          4  FALSE
+5 probe5     -6.103516     0.05          5  FALSE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiShrinkAjust")
+> ### * MiShrinkAjust
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiShrinkAjust
+> ### Title: Ajust learning rate parameter for fitting generalized boosted
+> ###   regression modelsfor fitting generalized boosted regression models
+> ### Aliases: MiShrinkAjust
+> 
+> ### ** Examples
+> 
+> data("IMexpression");data("IMspecimen")
+> #sample expression matrix and specimen data for binary classification,
+> #only "NORM" and "EBV" specimens are left
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis,"norm", "ebv")
+> SampleSpecimen<-MiSpecimenSample(IMspecimen$diagnosis, "norm", "ebv")
+> #Fitting, low tuning for faster running. Test shrinkage
+> set.seed(1)
+> ClassRes<-MiShrinkAjust(SampleMatrix, SampleSpecimen, test.frac = 5, times = 3,
++                         ntrees = 10, shrinkage = c(0.1, 1), intdepth = 2)
+> ClassRes[[1]] # train accuracy
+             0.1         1
+Trial1 0.8181818        NA
+Trial2 0.7636364 0.8909091
+Trial3 0.7818182        NA
+Median 0.7818182 0.8909091
+> ClassRes[[2]] # test accuracy
+             0.1         1
+Trial1 0.9230769        NA
+Trial2 0.6153846 0.6153846
+Trial3 0.7692308 0.4615385
+Median 0.7692308 0.5384615
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiSpecimenSample")
+> ### * MiSpecimenSample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiSpecimenSample
+> ### Title: Select values from factor vector
+> ### Aliases: MiSpecimenSample
+> 
+> ### ** Examples
+> 
+> #get gene expression and specimen data
+> data("IMexpression");data("IMspecimen")
+> dim(IMexpression) # 100 columns (genes/transcripts) - 89 specimens
+[1] 100  89
+> colnames(IMexpression)[1:10] # look at first 10 columns of matrix - specimens IDs
+ [1] "X47701" "X47702" "X47703" "X48701" "X48702" "X48703" "X50101" "X50102"
+ [9] "X50103" "X50201"
+> IMspecimen[1:10,] # specimens IDs and group factor - diagnoses in attendant vector
+       ID diagnosis
+1  X47701       ebv
+2  X47702       ebv
+3  X47703       ebv
+5  X48701       ebv
+6  X48702       ebv
+7  X48703       ebv
+9  X50101      hhv6
+10 X50102      hhv6
+11 X50103      hhv6
+13 X50201      hhv6
+> # note that specimens in matrix columns are in the same order as specimens in description data
+> # select specimens with only EBV and NORM diagnoses (and sample the description data as well)
+> SampleMatrix<-MiDataSample(IMexpression, IMspecimen$diagnosis, "ebv", "norm")
+> SampleSamples<-MiSpecimenSample(IMspecimen$diagnosis, "ebv", "norm")
+> dim(SampleMatrix)# only 68 specimens with EBV and NORM diagnoses left
+[1] 100  68
+> colnames(SampleMatrix)[1:10]
+ [1] "X47701" "X47702" "X47703" "X48701" "X48702" "X48703" "X52601" "X59701"
+ [9] "X59702" "X59703"
+> SampleSamples[1:10] # corresponding diagnoses
+ [1] ebv  ebv  ebv  ebv  ebv  ebv  norm norm norm norm
+Levels: ebv norm
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiStatCount")
+> ### * MiStatCount
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiStatCount
+> ### Title: FDR for microarray gene expression data
+> ### Aliases: MiStatCount
+> 
+> ### ** Examples
+> 
+> data("IMexpression"); data("IMspecimen") # load data and specimen information
+> #sampling data and specimen information
+> ExpData<-MiDataSample(IMexpression, IMspecimen$diagnosis,"ebv", "norm")
+> Specimens<-MiSpecimenSample(IMspecimen$diagnosis, "ebv", "norm")
+> #Counting statistics
+> StatRes<-MiStatCount(ExpData, Specimens)
+> head(StatRes)
+                                names  mean.ebv   sd.ebv mean.norm  sd.norm
+AGTR2.ALL                   AGTR2.ALL  867.6674 321.7706  753.6176 302.4845
+AGTR2.NM_000686.z1 AGTR2.NM_000686.z1 1005.4174 492.8293  743.9342 338.8496
+AGTR2.NM_000686.z2 AGTR2.NM_000686.z2  930.8172 428.8985  674.2181 274.6915
+AGTR2.NM_000686.z3 AGTR2.NM_000686.z3  780.1725 382.0635  564.5317 247.4252
+AGTR2.NM_000686.z4 AGTR2.NM_000686.z4  692.1506 235.6655  591.0102 302.9066
+AGTR2.NM_000686.z5 AGTR2.NM_000686.z5  977.4278 449.0249  764.2227 341.0210
+                   diff.means.ebv-norm ttest.p   FDR.q
+AGTR2.ALL                     114.0498 0.18194 0.23939
+AGTR2.NM_000686.z1            261.4832 0.01592 0.03438
+AGTR2.NM_000686.z2            256.5992 0.00502 0.01659
+AGTR2.NM_000686.z3            215.6408 0.00828 0.02073
+AGTR2.NM_000686.z4            101.1404 0.20446 0.26213
+AGTR2.NM_000686.z5            213.2050 0.04086 0.07045
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MiSummarize")
+> ### * MiSummarize
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MiSummarize
+> ### Title: Microarray data summarization
+> ### Aliases: MiSummarize
+> 
+> ### ** Examples
+> 
+> data("IMexpression") # load data
+> # See 5 zonds to AGTR2.NM_000686
+> IMexpression [1:10, 1:5]
+                      X47701    X47702    X47703   X48701   X48702
+AGTR2.ALL          1050.4595 1556.7163 1331.8485 660.5054 583.2320
+AGTR2.NM_000686.z1 1721.2308 1963.5676 1973.6292 713.3641 737.3148
+AGTR2.NM_000686.z2 1711.6104 1583.2751 1768.2405 767.5235 619.9223
+AGTR2.NM_000686.z3 1337.1566 1378.7081  870.7221 560.5786 394.8689
+AGTR2.NM_000686.z4  857.7922 1214.5947  851.3450 636.0231 522.7756
+AGTR2.NM_000686.z5 1628.5017 1873.0594 1468.7189 653.7947 662.9991
+AIFM1.ALL           849.8919  918.9259  555.6246 431.7872 338.6915
+AIFM1.NM_145812.z1 1271.4391 1538.0990 1343.9533 737.7010 489.3238
+AIFM1.NM_145812.z2 1113.4600  992.2629  847.3708 484.8350 250.6013
+AIFM1.NM_145812.z3 1881.5040 1930.4814 1705.7385 796.6207 649.2418
+> SumMatrix<-MiSummarize(IMexpression, sep=".")
+> # now there is median expression for AGTR2.NM_000686
+> SumMatrix[ 1:10, 1:5]
+                     X47701    X47702    X47703   X48701   X48702
+AGTR2.ALL         1050.4595 1556.7163 1331.8485 660.5054 583.2320
+AGTR2.NM_000686   1628.5017 1583.2751 1468.7189 653.7947 619.9223
+AIFM1.ALL          849.8919  918.9259  555.6246 431.7872 338.6915
+AIFM1.NM_145812   1271.4391 1538.0990 1343.9533 737.7010 489.3238
+AKT1.ALL          1131.7232 1382.7740 1082.0492 657.7311 640.5955
+AKT2.ALL          1114.7034  971.2150  705.6461 443.5872 229.0377
+AKT2.NM_001243027 1451.6034 1517.7954 1150.6849 584.5115 527.6734
+AKT2.NM_001243028 1775.0899 1833.5604 1645.7943 709.6489 599.1426
+AKT2.NM_001330511 1883.7398 2073.7096 1695.7961 801.8818 787.8838
+AKT2.NM_001626    1799.9791 1832.6917 1583.7679 648.3823 544.8365
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  6.88 0.655 7.861 0.002 0.007 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

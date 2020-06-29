@@ -1,0 +1,638 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "DALEXtra"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('DALEXtra')
+Loading required package: DALEX
+Welcome to DALEX (version: 1.2.1).
+Find examples and detailed introduction at: https://pbiecek.github.io/ema/
+Additional features will be available after installation of: ggpubr.
+Use 'install_dependencies()' to get all suggested dependencies
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("aspect_importance")
+> ### * aspect_importance
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aspect_importance
+> ### Title: Calculates the feature groups importance (called aspects
+> ###   importance) for a selected observation
+> ### Aliases: aspect_importance aspect_importance.explainer
+> ###   aspect_importance.default lime
+> 
+> ### ** Examples
+> 
+> library("DALEX")
+> 
+> model_titanic_glm <- glm(survived == 1 ~
++                          class+gender+age+sibsp+parch+fare+embarked,
++                          data = titanic_imputed,
++                          family = "binomial")
+> 
+> explain_titanic_glm <- explain(model_titanic_glm,
++                                data = titanic_imputed[,-8],
++                                y = titanic_imputed$survived == 1,
++                                verbose = FALSE)
+> 
+> aspects <- list(wealth = c("class", "fare"),
++                 family = c("sibsp", "parch"),
++                 personal = c("gender", "age"),
++                 embarked = "embarked")
+> 
+> aspect_importance(explain_titanic_glm,
++                   new_observation = titanic_imputed[1,],
++                   aspects = aspects)
+   aspects importance     features
+3   family    0.09559 sibsp, parch
+5 embarked    0.07390     embarked
+4 personal   -0.07312  gender, age
+2   wealth   -0.04942  class, fare
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("aspect_importance_single")
+> ### * aspect_importance_single
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aspect_importance_single
+> ### Title: Aspects importance for single aspects
+> ### Aliases: aspect_importance_single aspect_importance_single.explainer
+> ###   aspect_importance_single.default
+> 
+> ### ** Examples
+> 
+> library("DALEX")
+> 
+> model_titanic_glm <- glm(survived == 1 ~ class + gender + age +
++                          sibsp + parch + fare + embarked,
++                          data = titanic_imputed,
++                          family = "binomial")
+> 
+> aspect_importance_single(model_titanic_glm, data = titanic_imputed[,-8],
++                          new_observation = titanic_imputed[1,-8])
+   aspects importance        new observation
+4    class   -0.49881            class = 3rd
+2   gender   -0.31263          gender = male
+3      age   -0.25447               age = 42
+7    sibsp    0.18191              sibsp = 0
+6     fare    0.14664            fare = 7.11
+5 embarked    0.08260 embarked = Southampton
+8    parch   -0.06596              parch = 0
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("champion_challenger")
+> ### * champion_challenger
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: champion_challenger
+> ### Title: Compare machine learning models
+> ### Aliases: champion_challenger
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("create_env")
+> ### * create_env
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: create_env
+> ### Title: Create your conda virtual env with DALEX
+> ### Aliases: create_env
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("explain_h2o")
+> ### * explain_h2o
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: explain_h2o
+> ### Title: Create explainer from your h2o model
+> ### Aliases: explain_h2o
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("explain_keras")
+> ### * explain_keras
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: explain_keras
+> ### Title: Wrapper for Python Keras Models
+> ### Aliases: explain_keras
+> 
+> ### ** Examples
+> 
+> library("DALEXtra")
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("explain_mlr")
+> ### * explain_mlr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: explain_mlr
+> ### Title: Create explainer from your mlr model
+> ### Aliases: explain_mlr
+> 
+> ### ** Examples
+> 
+> library("DALEXtra")
+> titanic_test <- read.csv(system.file("extdata", "titanic_test.csv", package = "DALEXtra"))
+> titanic_train <- read.csv(system.file("extdata", "titanic_train.csv", package = "DALEXtra"))
+> library("mlr")
+Loading required package: ParamHelpers
+'mlr' is in maintenance mode since July 2019. Future development
+efforts will go into its successor 'mlr3' (<https://mlr3.mlr-org.com>).
+> task <- mlr::makeClassifTask(
++ id = "R",
++ data = titanic_train,
++ target = "survived"
++ )
+> learner <- mlr::makeLearner(
++   "classif.gbm",
++   par.vals = list(
++     distribution = "bernoulli",
++     n.trees = 500,
++     interaction.depth = 4,
++     n.minobsinnode = 12,
++     shrinkage = 0.001,
++     bag.fraction = 0.5,
++     train.fraction = 1
++   ),
++   predict.type = "prob"
++ )
+> gbm <- mlr::train(learner, task)
+> explain_mlr(gbm, titanic_test[,1:17], titanic_test[,18])
+Preparation of a new explainer is initiated
+  -> model label       :  WrappedModel  ( [33m default [39m )
+  -> data              :  524  rows  17  cols 
+  -> target variable   :  524  values 
+  -> model_info        :  package mlr , ver. 2.17.1 , task classification ( [33m default [39m ) 
+  -> predict function  :  yhat.WrappedModel  will be used ( [33m default [39m )
+  -> predicted values  :  numerical, min =  0.4354394 , mean =  0.6680301 , max =  0.7295066  
+  -> residual function :  difference between y and yhat ( [33m default [39m )
+  -> residuals         :  numerical, min =  -0.7295066 , mean =  -0.3569614 , max =  0.5645606  
+ [32m A new explainer has been created! [39m 
+Model label:  WrappedModel 
+Model class:  WrappedModel 
+Data head  :
+  gender.female gender.male age class.1st class.2nd class.3rd class.deck.crew
+1             1           0  16         0         0         1               0
+2             0           1  25         0         0         1               0
+  class.engineering.crew class.restaurant.staff class.victualling.crew
+1                      0                      0                      0
+2                      0                      0                      0
+  embarked.Belfast embarked.Cherbourg embarked.Queenstown embarked.Southampton
+1                0                  0                   0                    1
+2                0                  0                   0                    1
+  fare sibsp parch
+1 7.13     0     0
+2 7.13     0     0
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr’, ‘package:ParamHelpers’
+
+> nameEx("explain_mlr3")
+> ### * explain_mlr3
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: explain_mlr3
+> ### Title: Create explainer from your mlr model
+> ### Aliases: explain_mlr3
+> 
+> ### ** Examples
+> 
+> library("DALEXtra")
+> library(mlr3)
+> titanic_imputed$survived <- as.factor(titanic_imputed$survived)
+> task_classif <- TaskClassif$new(id = "1", backend = titanic_imputed, target = "survived")
+> learner_classif <- lrn("classif.rpart", predict_type = "prob")
+> learner_classif$train(task_classif)
+> explain_mlr3(learner_classif, data = titanic_imputed,
++              y = as.numeric(as.character(titanic_imputed$survived)))
+Preparation of a new explainer is initiated
+  -> model label       :  R6  ( [33m default [39m )
+  -> data              :  2207  rows  8  cols 
+  -> target variable   :  2207  values 
+  -> model_info        :  package mlr3 , ver. 0.3.0 , task classification ( [33m default [39m ) 
+  -> predict function  :  yhat.LearnerClassif  will be used ( [33m default [39m )
+  -> predicted values  :  numerical, min =  0.05555556 , mean =  0.3221568 , max =  0.9267399  
+  -> residual function :  difference between y and yhat ( [33m default [39m )
+  -> residuals         :  numerical, min =  -0.9267399 , mean =  1.858834e-17 , max =  0.9444444  
+ [32m A new explainer has been created! [39m 
+Model label:  R6 
+Model class:  LearnerClassifRpart,LearnerClassif,Learner,R6 
+Data head  :
+  gender age class    embarked  fare sibsp parch survived
+1   male  42   3rd Southampton  7.11     0     0        0
+2   male  13   3rd Southampton 20.05     0     2        0
+> 
+> 
+> task_regr <- TaskRegr$new(id = "2", backend = apartments, target = "m2.price")
+> learner_regr <- lrn("regr.rpart")
+> learner_regr$train(task_regr)
+> explain_mlr3(learner_regr, data = apartments, apartments$m2.price)
+Preparation of a new explainer is initiated
+  -> model label       :  R6  ( [33m default [39m )
+  -> data              :  1000  rows  6  cols 
+  -> target variable   :  1000  values 
+  -> model_info        :  package mlr3 , ver. 0.3.0 , task regression ( [33m default [39m ) 
+  -> predict function  :  yhat.LearnerRegr  will be used ( [33m default [39m )
+  -> predicted values  :  numerical, min =  2289.664 , mean =  3487.019 , max =  5737.175  
+  -> residual function :  difference between y and yhat ( [33m default [39m )
+  -> residuals         :  numerical, min =  -1044.133 , mean =  4.321552e-14 , max =  1080.867  
+ [32m A new explainer has been created! [39m 
+Model label:  R6 
+Model class:  LearnerRegrRpart,LearnerRegr,Learner,R6 
+Data head  :
+  m2.price construction.year surface floor no.rooms    district
+1     5897              1953      25     3        1 Srodmiescie
+2     1818              1992     143     9        5     Bielany
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("explain_scikitlearn")
+> ### * explain_scikitlearn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: explain_scikitlearn
+> ### Title: Wrapper for Python Scikit-Learn Models
+> ### Aliases: explain_scikitlearn
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("funnel_measure")
+> ### * funnel_measure
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: funnel_measure
+> ### Title: Caluculate difference in performance in models across different
+> ###   categories
+> ### Aliases: funnel_measure
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_sample")
+> ### * get_sample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_sample
+> ### Title: Function for getting binary matrix
+> ### Aliases: get_sample
+> 
+> ### ** Examples
+> 
+>  ## Not run: 
+> ##D  get_sample(100,6,"binom",3)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("group_variables")
+> ### * group_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: group_variables
+> ### Title: Groups numeric features into aspects
+> ### Aliases: group_variables
+> 
+> ### ** Examples
+> 
+> library("DALEX")
+> dragons_data <- dragons[,c(2,3,4,7,8)]
+> group_variables(dragons_data, p = 0.7, clust_method = "complete")
+$aspect.group1
+[1] "height" "weight"
+
+$aspect.group2
+[1] "scars"       "life_length"
+
+$aspect.group3
+[1] "number_of_lost_teeth"
+
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("overall_comparison")
+> ### * overall_comparison
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: overall_comparison
+> ### Title: Compare champion with challengers globally
+> ### Aliases: overall_comparison
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.aspect_importance")
+> ### * plot.aspect_importance
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.aspect_importance
+> ### Title: Function for plotting aspect_importance results
+> ### Aliases: plot.aspect_importance
+> 
+> ### ** Examples
+> 
+> library("DALEX")
+> 
+> model_titanic_glm <- glm(survived == 1 ~
++                          class+gender+age+sibsp+parch+fare+embarked,
++                          data = titanic_imputed,
++                          family = "binomial")
+> 
+> explain_titanic_glm <- explain(model_titanic_glm,
++                                data = titanic_imputed[,-8],
++                                y = titanic_imputed$survived == 1,
++                                verbose = FALSE)
+> 
+> aspects <- list(wealth = c("class", "fare"),
++                 family = c("sibsp", "parch"),
++                 personal = c("gender", "age"),
++                 embarked = "embarked")
+> 
+> plot(aspect_importance(explain_titanic_glm,
++                   new_observation = titanic_imputed[1,],
++                   aspects = aspects))
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.funnel_measure")
+> ### * plot.funnel_measure
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.funnel_measure
+> ### Title: Funnel plot for difference in measures
+> ### Aliases: plot.funnel_measure
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.overall_comparison")
+> ### * plot.overall_comparison
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.overall_comparison
+> ### Title: Plot function for overall_comparison
+> ### Aliases: plot.overall_comparison
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.trainig_test_comparison")
+> ### * plot.trainig_test_comparison
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.training_test_comparison
+> ### Title: Plot and compare performance of model between training and test
+> ###   set
+> ### Aliases: plot.training_test_comparison
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot_aspects_importance_grouping")
+> ### * plot_aspects_importance_grouping
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot_aspects_importance_grouping
+> ### Title: Function plots tree with aspect importance values
+> ### Aliases: plot_aspects_importance_grouping
+> 
+> ### ** Examples
+> 
+> library(DALEX)
+> apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
+> apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
+> apartments_num_new_observation <- apartments_num[2,-1]
+> apartments_num_mod <- apartments_num[,-1]
+> plot_aspects_importance_grouping(x = apartments_num_lm_model,
++ data = apartments_num_mod, new_observation = apartments_num_new_observation)
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot_group_variables")
+> ### * plot_group_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot_group_variables
+> ### Title: Plots tree with correlation values
+> ### Aliases: plot_group_variables
+> 
+> ### ** Examples
+> 
+> library("DALEX")
+> dragons_data <- dragons[,c(2,3,4,7,8)]
+> group_variables(dragons_data, p = 0.7, clust_method = "complete",
++                 draw_tree = TRUE)
+$aspect.group1
+[1] "height" "weight"
+
+$aspect.group2
+[1] "scars"       "life_length"
+
+$aspect.group3
+[1] "number_of_lost_teeth"
+
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("print.funnel_measure")
+> ### * print.funnel_measure
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.funnel_measure
+> ### Title: Print funnel_measure object
+> ### Aliases: print.funnel_measure
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("print.overall_comparison")
+> ### * print.overall_comparison
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.overall_comparison
+> ### Title: Print overall_comparison object
+> ### Aliases: print.overall_comparison
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("print.training_test_comparison")
+> ### * print.training_test_comparison
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.training_test_comparison
+> ### Title: Print funnel_measure object
+> ### Aliases: print.training_test_comparison
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("trainig_test_comparison")
+> ### * trainig_test_comparison
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: training_test_comparison
+> ### Title: Compare performance of model between training and test set
+> ### Aliases: training_test_comparison
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("triplot")
+> ### * triplot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: triplot
+> ### Title: Three plots that sum up automatic aspect importance grouping
+> ### Aliases: triplot triplot.explainer triplot.default
+> 
+> ### ** Examples
+> 
+> library(DALEX)
+> apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
+> apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
+> apartments_num_new_observation <- apartments_num[30,-1]
+> apartments_num_mod <- apartments_num[,-1]
+> triplot(x = apartments_num_lm_model,
++   data = apartments_num_mod,
++   new_observation = apartments_num_new_observation,
++   add_importance_labels = FALSE)
+Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+> 
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  4.678 0.461 5.473 0.004 0.012 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

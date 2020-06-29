@@ -1,7 +1,7 @@
 
-R version 3.5.1 (2018-07-02) -- "Feather Spray"
-Copyright (C) 2018 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1563,10 +1563,310 @@ $rollback
 > 
 > # from a local path, must be wrapped in "file" command to create a connection
 > local_model <- read_pfa(file(system.file("extdata", "my-model.pfa", package = "aurelius")))
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
 > 
 > # from a url (split on two lines so not to exceed 100 char wide during install)
 > url_model <- read_pfa(url(paste0('https://raw.githubusercontent.com/ReportMort/hadrian', 
 +                      '/feature/add-r-package-structure/aurelius/inst/extdata/my-model.pfa')))
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
+Warning in readChar(x, 1, useBytes = TRUE) :
+  text connection used with readChar(), results may be incorrect
 > 
 > 
 > 
@@ -1595,7 +1895,7 @@ $rollback
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.287 1.123 8.215 0.003 0.003 
+Time elapsed:  6.938 0.86 8.517 0.002 0.006 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,0 +1,31 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(triplot)
+> 
+> test_check("triplot")
+Welcome to DALEX (version: 1.2.1).
+Find examples and detailed introduction at: https://pbiecek.github.io/ema/
+Additional features will be available after installation of: ggpubr.
+Use 'install_dependencies()' to get all suggested dependencies
+══ testthat results  ═══════════════════════════════════════════════════════════
+[ OK: 76 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
+> 
+> proc.time()
+   user  system elapsed 
+  6.577   0.494   7.365 

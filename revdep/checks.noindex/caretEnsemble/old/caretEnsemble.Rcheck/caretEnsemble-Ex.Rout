@@ -1,0 +1,411 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "caretEnsemble"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('caretEnsemble')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("autoplot")
+> ### * autoplot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: autoplot
+> ### Title: Convenience function for more in-depth diagnostic plots of
+> ###   caretEnsemble objects
+> ### Aliases: autoplot
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set.seed(42)
+> ##D models <- caretList(
+> ##D  iris[1:50,1:2],
+> ##D  iris[1:50,3],
+> ##D  trControl=trainControl(method="cv"),
+> ##D  methodList=c("glm", "rpart"))
+> ##D ens <- caretEnsemble(models)
+> ##D autoplot(ens)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("c.caretList")
+> ### * c.caretList
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: c.caretList
+> ### Title: S3 definition for concatenating caretList
+> ### Aliases: c.caretList
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D  model_list1 <- caretList(Class ~ .,
+> ##D   data=Sonar, trControl = ctrl1,
+> ##D   tuneList = list(
+> ##D                  glm=caretModelSpec(method='glm', family='binomial'),
+> ##D                  rpart=caretModelSpec(method='rpart')
+> ##D                  ),
+> ##D    metric='ROC')
+> ##D 
+> ##D model_list2 <- caretList(Class ~ .,
+> ##D                          data=Sonar,
+> ##D                          trControl = ctrl1,
+> ##D                          tuneList = list(
+> ##D                            glm=caretModelSpec(method='rpart'),
+> ##D                            rpart=caretModelSpec(method='rf')
+> ##D                          ),
+> ##D                          metric='ROC')
+> ##D 
+> ##D  bigList <- c(model_list1, model_list2)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("c.train")
+> ### * c.train
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: c.train
+> ### Title: S3 definition for concatenating train objects
+> ### Aliases: c.train
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D rpartTrain <- train(Class ~ .,
+> ##D                     data=Sonar,
+> ##D                     trControl = ctrl1,
+> ##D                     method='rpart')
+> ##D 
+> ##D rfTrain <- train(Class ~ .,
+> ##D                  data=Sonar,
+> ##D                  trControl = ctrl1,
+> ##D                  method='rf')
+> ##D 
+> ##D  bigList <- c(model_list1, model_list2)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("caretEnsemble")
+> ### * caretEnsemble
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: caretEnsemble
+> ### Title: caretEnsemble: Make ensembles of caret models.
+> ### Aliases: caretEnsemble caretEnsemble-package
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set.seed(42)
+> ##D models <- caretList(iris[1:50,1:2], iris[1:50,3], methodList=c("glm", "lm"))
+> ##D ens <- caretEnsemble(models)
+> ##D summary(ens)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("caretList")
+> ### * caretList
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: caretList
+> ### Title: Create a list of several train models from the caret package
+> ###   Build a list of train objects suitable for ensembling using the
+> ###   'caretEnsemble' function.
+> ### Aliases: caretList
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D myControl <- trainControl(method="cv", number=5)
+> ##D caretList(
+> ##D   Sepal.Length ~ Sepal.Width,
+> ##D   head(iris, 50),
+> ##D   methodList=c("glm", "lm"),
+> ##D   trControl=myControl
+> ##D   )
+> ##D caretList(
+> ##D   Sepal.Length ~ Sepal.Width,
+> ##D   head(iris, 50), methodList=c("lm"),
+> ##D   tuneList=list(
+> ##D     nnet=caretModelSpec(method="nnet", trace=FALSE, tuneLength=1)
+> ##D  ),
+> ##D   trControl=myControl
+> ##D   )
+> ##D   
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("caretModelSpec")
+> ### * caretModelSpec
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: caretModelSpec
+> ### Title: Generate a specification for fitting a caret model
+> ### Aliases: caretModelSpec
+> 
+> ### ** Examples
+> 
+> caretModelSpec("rf", tuneLength=5, preProcess="ica")
+$method
+[1] "rf"
+
+$tuneLength
+[1] 5
+
+$preProcess
+[1] "ica"
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("caretStack")
+> ### * caretStack
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: caretStack
+> ### Title: Combine several predictive models via stacking
+> ### Aliases: caretStack
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library("rpart")
+> ##D models <- caretList(
+> ##D   x=iris[1:50,1:2],
+> ##D   y=iris[1:50,3],
+> ##D   trControl=trainControl(method="cv"),
+> ##D   methodList=c("rpart", "glm")
+> ##D )
+> ##D caretStack(models, method="glm")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dotplot.caretStack")
+> ### * dotplot.caretStack
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dotplot.caretStack
+> ### Title: Comparison dotplot for a caretStack object
+> ### Aliases: dotplot.caretStack
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set.seed(42)
+> ##D library("rpart")
+> ##D models <- caretList(
+> ##D   x=iris[1:100,1:2],
+> ##D   y=iris[1:100,3],
+> ##D   trControl=trainControl(method="cv"),
+> ##D   methodList=c("rpart", "glm")
+> ##D )
+> ##D meta_model <- caretStack(models, method="lm", trControl=trainControl(method="cv"))
+> ##D dotplot.caretStack(meta_model)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.caretEnsemble")
+> ### * plot.caretEnsemble
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.caretEnsemble
+> ### Title: Plot Diagnostics for an caretEnsemble Object
+> ### Aliases: plot.caretEnsemble
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set.seed(42)
+> ##D models <- caretList(iris[1:50,1:2], iris[1:50,3], methodList=c("glm", "rpart"))
+> ##D ens <- caretEnsemble(models)
+> ##D plot(ens)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.caretStack")
+> ### * plot.caretStack
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.caretStack
+> ### Title: Plot a caretStack object
+> ### Aliases: plot.caretStack
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library("rpart")
+> ##D models <- caretList(
+> ##D   x=iris[1:100,1:2],
+> ##D   y=iris[1:100,3],
+> ##D   trControl=trainControl(method="cv"),
+> ##D   methodList=c("rpart", "glm")
+> ##D )
+> ##D meta_model <- caretStack(models, method="rpart", tuneLength=2)
+> ##D plot(meta_model)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("predict.caretStack")
+> ### * predict.caretStack
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: predict.caretStack
+> ### Title: Make predictions from a caretStack
+> ### Aliases: predict.caretStack
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library("rpart")
+> ##D models <- caretList(
+> ##D   x=iris[1:100,1:2],
+> ##D   y=iris[1:100,3],
+> ##D   trControl=trainControl(method="cv"),
+> ##D   methodList=c("rpart", "glm")
+> ##D )
+> ##D meta_model <- caretStack(models, method="lm")
+> ##D RMSE(predict(meta_model, iris[101:150,1:2]), iris[101:150,3])
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("print.caretStack")
+> ### * print.caretStack
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.caretStack
+> ### Title: Print a caretStack object
+> ### Aliases: print.caretStack
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library("rpart")
+> ##D models <- caretList(
+> ##D   x=iris[1:100,1:2],
+> ##D   y=iris[1:100,3],
+> ##D   trControl=trainControl(method="cv"),
+> ##D   methodList=c("rpart", "glm")
+> ##D )
+> ##D meta_model <- caretStack(models, method="lm")
+> ##D print(meta_model)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.caretEnsemble")
+> ### * summary.caretEnsemble
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.caretEnsemble
+> ### Title: Summarize the results of caretEnsemble for the user.
+> ### Aliases: summary.caretEnsemble
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set.seed(42)
+> ##D models <- caretList(iris[1:50,1:2], iris[1:50,3], methodList=c("glm", "lm"))
+> ##D ens <- caretEnsemble(models)
+> ##D summary(ens)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.caretStack")
+> ### * summary.caretStack
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.caretStack
+> ### Title: Summarize a caretStack object
+> ### Aliases: summary.caretStack
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library("rpart")
+> ##D models <- caretList(
+> ##D   x=iris[1:100,1:2],
+> ##D   y=iris[1:100,3],
+> ##D   trControl=trainControl(method="cv"),
+> ##D   methodList=c("rpart", "glm")
+> ##D )
+> ##D meta_model <- caretStack(models, method="lm")
+> ##D summary(meta_model)
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  2.212 0.306 2.687 0.002 0.004 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

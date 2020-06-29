@@ -1,0 +1,632 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "imputeR"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('imputeR')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("CubistR")
+> ### * CubistR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CubistR
+> ### Title: Cubist method for imputation
+> ### Aliases: CubistR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Detect")
+> ### * Detect
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Detect
+> ### Title: Detect variable type in a data matrix
+> ### Aliases: Detect
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> Detect(parkinson)
+     MDVP.Fo.Hz.     MDVP.Fhi.Hz.     MDVP.Flo.Hz.   MDVP.Jitter... 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+MDVP.Jitter.Abs.         MDVP.RAP         MDVP.PPQ       Jitter.DDP 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+    MDVP.Shimmer MDVP.Shimmer.dB.     Shimmer.APQ3     Shimmer.APQ5 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+        MDVP.APQ      Shimmer.DDA              NHR              HNR 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+            RPDE              DFA          spread1          spread2 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+              D2              PPE 
+       "numeric"        "numeric" 
+> data(spect)
+> Detect(spect)
+         X1          X0        X0.1        X0.2        X1.1        X0.3 
+"character" "character" "character" "character" "character" "character" 
+       X0.4        X0.5        X1.2        X1.3        X0.6        X0.7 
+"character" "character" "character" "character" "character" "character" 
+       X0.8        X1.4        X1.5        X0.9       X0.10       X0.11 
+"character" "character" "character" "character" "character" "character" 
+      X0.12       X0.13       X0.14       X0.15       X0.16 
+"character" "character" "character" "character" "character" 
+> data(tic)
+> table(Detect(tic))
+
+character   numeric 
+       31        55 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Rmse")
+> ### * Rmse
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Rmse
+> ### Title: calculate the RMSE or NRMSE
+> ### Aliases: Rmse
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> # introduce 10% random missing values into the parkinson data
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> # impute the missing values by LASSO
+> 
+> 
+> 
+> cleanEx()
+> nameEx("SimEval")
+> ### * SimEval
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SimEval
+> ### Title: Evaluate imputation performance by simulation
+> ### Aliases: SimEval
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> # WARNING: simulation may take considerable time.
+> 
+> 
+> 
+> cleanEx()
+> nameEx("SimIm")
+> ### * SimIm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SimIm
+> ### Title: Introduce some missing values into a data matrix
+> ### Aliases: SimIm
+> 
+> ### ** Examples
+> 
+> # Create data without missing values as example
+> simdata <- matrix(rnorm(100), 10, 10)
+> 
+> # Now let's introduce some missing values into the dataset
+> missingdata <- SimIm(simdata, p = 0.15)
+> 
+> # count the number of missing values afterwards
+> sum(is.na(missingdata))
+[1] 13
+> 
+> #------------------
+> 
+> # There is no missing values in the original parkinson data
+> data(parkinson)
+> 
+> # Let's introduce some missing values into the dataset
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> # count the number of missing values afterwards
+> sum(is.na(missdata))
+[1] 463
+> 
+> 
+> 
+> cleanEx()
+> nameEx("gbmC")
+> ### * gbmC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gbmC
+> ### Title: boosting tree for imputation
+> ### Aliases: gbmC
+> 
+> ### ** Examples
+> 
+> data(spect)
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("glmboostR")
+> ### * glmboostR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: glmboostR
+> ### Title: Boosting for regression
+> ### Aliases: glmboostR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("guess")
+> ### * guess
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: guess
+> ### Title: Impute by (educated) guessing
+> ### Aliases: guess
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> # introduce some random missing values
+> missdata <- SimIm(parkinson, 0.1)
+> # impute by mean imputation
+> impdata <- guess(missdata)
+> # caculate the NRMSE
+> Rmse(impdata, missdata, parkinson, norm = TRUE)
+[1] 0.2824676
+> # by random guessing, the NRMSE should be much bigger
+> impdata2 <- guess(missdata, "random")
+> Rmse(impdata2, missdata, parkinson, norm = TRUE)
+[1] 0.40052
+> 
+> 
+> 
+> cleanEx()
+> nameEx("impute")
+> ### * impute
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: impute
+> ### Title: General Imputation Framework in R
+> ### Aliases: impute
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> # introduce 10% random missing values into the parkinson data
+> missdata <- SimIm(parkinson, 0.1)
+> # impute the missing values by LASSO
+> 
+> 
+> 
+> cleanEx()
+> nameEx("lassoC")
+> ### * lassoC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: lassoC
+> ### Title: logistic regression with lasso for imputation
+> ### Aliases: lassoC
+> 
+> ### ** Examples
+> 
+> data(spect)
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("lassoR")
+> ### * lassoR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: lassoR
+> ### Title: LASSO for regression
+> ### Aliases: lassoR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("major")
+> ### * major
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: major
+> ### Title: Majority imputation for a vector
+> ### Aliases: major
+> 
+> ### ** Examples
+> 
+> a <- c(rep(0, 10), rep(1, 15), rep(2, 5))
+> a[sample(seq_along(a), 5)] <- NA
+> a
+ [1] NA NA  0 NA  0  0 NA  0  0  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1 NA
+[26]  2  2  2  2  2
+> b <- major(a)
+> b
+ [1] "1" "1" "0" "1" "0" "0" "1" "0" "0" "0" "1" "1" "1" "1" "1" "1" "1" "1" "1"
+[20] "1" "1" "1" "1" "1" "1" "2" "2" "2" "2" "2"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mixError")
+> ### * mixError
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mixError
+> ### Title: Calculate mixed error when the imputed matrix is mixed type
+> ### Aliases: mixError
+> 
+> ### ** Examples
+> 
+> data(tic)
+> Detect(tic)
+         V1          V2          V3          V4          V5          V6 
+  "numeric"   "numeric" "character"   "numeric"   "numeric"   "numeric" 
+         V7          V8          V9         V10         V11         V12 
+  "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+        V13         V14         V15         V16         V17         V18 
+  "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+        V19         V20         V21         V22         V23         V24 
+  "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+        V25         V26         V27         V28         V29         V30 
+  "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+        V31         V32         V33         V34         V35         V36 
+  "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+        V37         V38         V39         V40         V41         V42 
+  "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+        V43         V44         V45         V46         V47         V48 
+  "numeric" "character"   "numeric" "character"   "numeric" "character" 
+        V49         V50         V51         V52         V53         V54 
+  "numeric" "character"   "numeric" "character" "character"   "numeric" 
+        V55         V56         V57         V58         V59         V60 
+  "numeric"   "numeric" "character" "character"   "numeric" "character" 
+        V61         V62         V63         V64         V65         V66 
+  "numeric" "character"   "numeric" "character" "character" "character" 
+        V67         V68         V69         V70         V71         V72 
+"character"   "numeric" "character" "character" "character" "character" 
+        V73         V74         V75         V76         V77         V78 
+"character" "character" "character"   "numeric" "character" "character" 
+        V79         V80         V81         V82         V83         V84 
+"character"   "numeric" "character" "character" "character" "character" 
+        V85         V86 
+"character" "character" 
+> missdata <- SimIm(tic, 0.3)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mixGuess")
+> ### * mixGuess
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mixGuess
+> ### Title: Naive imputation for mixed type data
+> ### Aliases: mixGuess
+> 
+> ### ** Examples
+> 
+> data(tic)
+> missdata <- SimIm(tic, 0.1)
+> sum(is.na(missdata))
+[1] 49788
+> impdata <- mixGuess(missdata)
+> sum(is.na(impdata))
+[1] 0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mr")
+> ### * mr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mr
+> ### Title: calculate miss-classification error
+> ### Aliases: mr
+> 
+> ### ** Examples
+> 
+> data(spect)
+> Detect(spect)
+         X1          X0        X0.1        X0.2        X1.1        X0.3 
+"character" "character" "character" "character" "character" "character" 
+       X0.4        X0.5        X1.2        X1.3        X0.6        X0.7 
+"character" "character" "character" "character" "character" "character" 
+       X0.8        X1.4        X1.5        X0.9       X0.10       X0.11 
+"character" "character" "character" "character" "character" "character" 
+      X0.12       X0.13       X0.14       X0.15       X0.16 
+"character" "character" "character" "character" "character" 
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("orderbox")
+> ### * orderbox
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: orderbox
+> ### Title: Ordered boxplot for a data matrix
+> ### Aliases: orderbox
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pcrR")
+> ### * pcrR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pcrR
+> ### Title: Principle component regression for imputation
+> ### Aliases: pcrR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotIm")
+> ### * plotIm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotIm
+> ### Title: Plot function for imputation
+> ### Aliases: plotIm
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> # introduce 10% random missing values into the parkinson data
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> # impute the missing values by LASSO
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plsR")
+> ### * plsR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plsR
+> ### Title: Partial Least Square regression for imputation
+> ### Aliases: plsR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ridgeC")
+> ### * ridgeC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ridgeC
+> ### Title: Ridge regression with lasso for imputation
+> ### Aliases: ridgeC
+> 
+> ### ** Examples
+> 
+> data(spect)
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ridgeR")
+> ### * ridgeR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ridgeR
+> ### Title: Ridge shrinkage for regression
+> ### Aliases: ridgeR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rpartC")
+> ### * rpartC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rpartC
+> ### Title: classification tree for imputation
+> ### Aliases: rpartC
+> 
+> ### ** Examples
+> 
+> data(spect)
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("stepBackC")
+> ### * stepBackC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stepBackC
+> ### Title: Best subset for classification (backward)
+> ### Aliases: stepBackC
+> 
+> ### ** Examples
+> 
+> data(spect)
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("stepBackR")
+> ### * stepBackR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stepBackR
+> ### Title: Best subset (backward direction) for regression
+> ### Aliases: stepBackR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("stepBothC")
+> ### * stepBothC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stepBothC
+> ### Title: Best subset for classification (both direction)
+> ### Aliases: stepBothC
+> 
+> ### ** Examples
+> 
+> data(spect)
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("stepBothR")
+> ### * stepBothR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stepBothR
+> ### Title: Best subset for regression (both direction)
+> ### Aliases: stepBothR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("stepForC")
+> ### * stepForC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stepForC
+> ### Title: Best subset for classification (forward direction)
+> ### Aliases: stepForC
+> 
+> ### ** Examples
+> 
+> data(spect)
+> missdata <- SimIm(spect, 0.1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("stepForR")
+> ### * stepForR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stepForR
+> ### Title: Best subset (forward direction) for regression
+> ### Aliases: stepForR
+> 
+> ### ** Examples
+> 
+> data(parkinson)
+> missdata <- SimIm(parkinson, 0.1)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.149 0.221 1.458 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

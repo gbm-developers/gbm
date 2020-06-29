@@ -1,0 +1,678 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "mlr3proba"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('mlr3proba')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("LearnerDens")
+> ### * LearnerDens
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LearnerDens
+> ### Title: Density Learner
+> ### Aliases: LearnerDens
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> # get all density learners from mlr_learners:
+> lrns = mlr_learners$mget(mlr_learners$keys("^dens"))
+> names(lrns)
+[1] "dens.hist" "dens.kde" 
+> 
+> # get a specific learner from mlr_learners:
+> mlr_learners$get("dens.hist")
+<LearnerDensHistogram:dens.hist>
+* Model: -
+* Parameters: list()
+* Packages: distr6
+* Predict Type: pdf
+* Feature types: logical, integer, numeric, character, factor, ordered
+* Properties: -
+> lrn("dens.hist")
+<LearnerDensHistogram:dens.hist>
+* Model: -
+* Parameters: list()
+* Packages: distr6
+* Predict Type: pdf
+* Feature types: logical, integer, numeric, character, factor, ordered
+* Properties: -
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("LearnerSurv")
+> ### * LearnerSurv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LearnerSurv
+> ### Title: Survival Learner
+> ### Aliases: LearnerSurv
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> # get all survival learners from mlr_learners:
+> lrns = mlr_learners$mget(mlr_learners$keys("^surv"))
+> names(lrns)
+ [1] "surv.blackboost" "surv.coxph"      "surv.cvglmnet"   "surv.gamboost"  
+ [5] "surv.gbm"        "surv.glmboost"   "surv.glmnet"     "surv.kaplan"    
+ [9] "surv.mboost"     "surv.ranger"     "surv.rpart"      "surv.xgboost"   
+> 
+> # get a specific learner from mlr_learners:
+> mlr_learners$get("surv.coxph")
+<LearnerSurvCoxPH:surv.coxph>
+* Model: -
+* Parameters: list()
+* Packages: survival, distr6
+* Predict Type: distr
+* Feature types: logical, integer, numeric, factor
+* Properties: weights
+> lrn("surv.coxph")
+<LearnerSurvCoxPH:surv.coxph>
+* Model: -
+* Parameters: list()
+* Packages: survival, distr6
+* Predict Type: distr
+* Feature types: logical, integer, numeric, factor
+* Properties: weights
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("LearnerSurvBlackboost")
+> ### * LearnerSurvBlackboost
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LearnerSurvBlackboost
+> ### Title: Gradient Boosting with Regression Trees Survival Learner
+> ### Aliases: LearnerSurvBlackboost mlr_learners_surv.blackboost
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> task = tgen("simsurv")$generate(20)
+> learner = lrn("surv.blackboost")
+> resampling = rsmp("cv", folds = 2)
+> resample(task, learner, resampling)
+INFO  [12:10:35.842] Applying learner 'surv.blackboost' on task 'simsurv' (iter 2/2) 
+INFO  [12:10:36.415] Applying learner 'surv.blackboost' on task 'simsurv' (iter 1/2) 
+<ResampleResult> of 2 iterations
+* Task: simsurv
+* Learner: surv.blackboost
+* Warnings: 0 in 0 iterations
+* Errors: 0 in 0 iterations
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("LearnerSurvGamboost")
+> ### * LearnerSurvGamboost
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LearnerSurvGamboost
+> ### Title: Gradient Boosting for Additive Models Survival Learner
+> ### Aliases: LearnerSurvGamboost mlr_learners_surv.gamboost
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> task = tgen("simsurv")$generate(20)
+> learner = lrn("surv.gamboost")
+> learner$param_set$values = mlr3misc::insert_named(
++   learner$param_set$values,
++   list(dfbase = 3, center = TRUE, baselearner = "bols"))
+> resampling = rsmp("cv", folds = 2)
+> resample(task, learner, resampling)
+INFO  [12:10:36.927] Applying learner 'surv.gamboost' on task 'simsurv' (iter 2/2) 
+INFO  [12:10:37.036] Applying learner 'surv.gamboost' on task 'simsurv' (iter 1/2) 
+<ResampleResult> of 2 iterations
+* Task: simsurv
+* Learner: surv.gamboost
+* Warnings: 0 in 0 iterations
+* Errors: 0 in 0 iterations
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:stabs’, ‘package:parallel’, ‘package:mlr3’
+
+> nameEx("LearnerSurvGlmboost")
+> ### * LearnerSurvGlmboost
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LearnerSurvGlmboost
+> ### Title: Gradient Boosting with Component-wise Linear Models Survival
+> ###   Learner
+> ### Aliases: LearnerSurvGlmboost mlr_learners_surv.glmboost
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> task = tgen("simsurv")$generate(20)
+> learner = lrn("surv.glmboost")
+> resampling = rsmp("cv", folds = 3)
+> resample(task, learner, resampling)
+INFO  [12:10:37.224] Applying learner 'surv.glmboost' on task 'simsurv' (iter 3/3) 
+INFO  [12:10:37.292] Applying learner 'surv.glmboost' on task 'simsurv' (iter 2/3) 
+INFO  [12:10:37.335] Applying learner 'surv.glmboost' on task 'simsurv' (iter 1/3) 
+<ResampleResult> of 3 iterations
+* Task: simsurv
+* Learner: surv.glmboost
+* Warnings: 0 in 0 iterations
+* Errors: 0 in 0 iterations
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("LearnerSurvMboost")
+> ### * LearnerSurvMboost
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LearnerSurvMboost
+> ### Title: Gradient Boosting for Generalized Additive Models Survival
+> ###   Learner
+> ### Aliases: LearnerSurvMboost mlr_learners_surv.mboost
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> task = tgen("simsurv")$generate(20)
+> learner = lrn("surv.mboost")
+> learner$param_set$values = mlr3misc::insert_named(
++   learner$param_set$values,
++   list(center = TRUE, baselearner = "bols"))
+> resampling = rsmp("cv", folds = 2)
+> resample(task, learner, resampling)
+INFO  [12:10:37.485] Applying learner 'surv.mboost' on task 'simsurv' (iter 2/2) 
+INFO  [12:10:37.609] Applying learner 'surv.mboost' on task 'simsurv' (iter 1/2) 
+<ResampleResult> of 2 iterations
+* Task: simsurv
+* Learner: surv.mboost
+* Warnings: 0 in 0 iterations
+* Errors: 0 in 0 iterations
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:stabs’, ‘package:parallel’, ‘package:mlr3’
+
+> nameEx("PipeOpCrankCompositor")
+> ### * PipeOpCrankCompositor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: PipeOpCrankCompositor
+> ### Title: PipeOpCrankCompositor
+> ### Aliases: PipeOpCrankCompositor mlr_pipeops_crankcompose
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(mlr3pipelines)
+> set.seed(1)
+> 
+> # Three methods to predict a `crank` from `surv.rpart`
+> task = tgen("simsurv")$generate(30)
+> 
+> # Method 1 - Train and predict separately then compose
+> learn = lrn("surv.coxph")$train(task)$predict(task)
+> poc = po("crankcompose", param_vals = list(method = "mean"))
+> poc$predict(list(learn))
+$output
+<PredictionSurv> for 30 observations:
+    row_id      time status     crank                distr          lp
+         1 5.0000000  FALSE 1.4326828 <VectorDistribution>  0.01031299
+         2 0.8433684   TRUE 1.6398177 <VectorDistribution>  0.26069368
+         3 0.8070400   TRUE 1.0110342 <VectorDistribution> -0.50690465
+---                                                                   
+        28 5.0000000  FALSE 1.3719301 <VectorDistribution> -0.06157584
+        29 5.0000000  FALSE 0.8572003 <VectorDistribution> -0.72098848
+        30 4.1997027   TRUE 1.6078754 <VectorDistribution>  0.22093276
+
+> 
+> # Examples not run to save run-time.
+> ## Not run: 
+> ##D # Method 2 - Create a graph manually
+> ##D gr = Graph$new()$
+> ##D   add_pipeop(po("learner", lrn("surv.ranger")))$
+> ##D   add_pipeop(po("crankcompose"))$
+> ##D   add_edge("surv.ranger", "crankcompose")
+> ##D gr$train(task)
+> ##D gr$predict(task)
+> ##D 
+> ##D # Method 3 - Syntactic sugar: Wrap the learner in a graph
+> ##D ranger.crank = crankcompositor(
+> ##D   learner = lrn("surv.ranger"),
+> ##D   method = "median")
+> ##D resample(task, ranger.crank, rsmp("cv", folds = 2))$predictions()
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3pipelines’, ‘package:mlr3’
+
+> nameEx("PipeOpDistrCompositor")
+> ### * PipeOpDistrCompositor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: PipeOpDistrCompositor
+> ### Title: PipeOpDistrCompositor
+> ### Aliases: PipeOpDistrCompositor mlr_pipeops_distrcompose
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(mlr3pipelines)
+> set.seed(42)
+> 
+> # Three methods to transform the cox ph predicted `distr` to an
+> #  accelerated failure time model
+> task = tgen("simsurv")$generate(30)
+> 
+> # Method 1 - Train and predict separately then compose
+> base = lrn("surv.kaplan")$train(task)$predict(task)
+> pred = lrn("surv.coxph")$train(task)$predict(task)
+> pod = po("distrcompose", param_vals = list(form = "aft", overwrite = TRUE))
+> pod$predict(list(base = base, pred = pred))
+$output
+<PredictionSurv> for 30 observations:
+    row_id      time status       crank                distr          lp
+         1 3.3190202   TRUE -0.17372647 <VectorDistribution> -0.17372647
+         2 0.1632683   TRUE -0.15401996 <VectorDistribution> -0.15401996
+         3 3.0805302   TRUE  0.52964550 <VectorDistribution>  0.52964550
+---                                                                     
+        28 2.7789159   TRUE -0.17421424 <VectorDistribution> -0.17421424
+        29 3.3710556   TRUE  0.06947420 <VectorDistribution>  0.06947420
+        30 4.1414291   TRUE  0.01427538 <VectorDistribution>  0.01427538
+
+> 
+> # Examples not run to save run-time.
+> ## Not run: 
+> ##D # Method 2 - Create a graph manually
+> ##D gr = Graph$new()$
+> ##D   add_pipeop(po("learner", lrn("surv.kaplan")))$
+> ##D   add_pipeop(po("learner", lrn("surv.glmnet")))$
+> ##D   add_pipeop(po("distrcompose"))$
+> ##D   add_edge("surv.kaplan", "distrcompose", dst_channel = "base")$
+> ##D   add_edge("surv.glmnet", "distrcompose", dst_channel = "pred")
+> ##D gr$train(task)$gr$predict(task)
+> ##D 
+> ##D # Method 3 - Syntactic sugar: Wrap the learner in a graph.
+> ##D cvglm.distr = distrcompositor(
+> ##D   learner = lrn("surv.cvglmnet"),
+> ##D   estimator = "kaplan",
+> ##D   form = "aft")
+> ##D cvglm.distr$fit(task)$predict(task)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3pipelines’, ‘package:mlr3’
+
+> nameEx("PredictionDens")
+> ### * PredictionDens
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: PredictionDens
+> ### Title: Prediction Object for Density
+> ### Aliases: PredictionDens
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> task = mlr_tasks$get("precip")
+> learner = mlr_learners$get("dens.hist")
+> p = learner$train(task)$predict(task)
+> head(as.data.table(p))
+   row_id truth         pdf       cdf
+1:      1  67.0 0.001428571 0.9957143
+2:      2  54.7 0.007142857 0.9478571
+3:      3   7.0 0.005714286 0.0400000
+4:      4  48.5 0.030000000 0.8692857
+5:      5  14.0 0.012857143 0.1085714
+6:      6  17.2 0.012857143 0.1497143
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("PredictionSurv")
+> ### * PredictionSurv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: PredictionSurv
+> ### Title: Prediction Object for Survival
+> ### Aliases: PredictionSurv
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> task = tgen("simsurv")$generate(20)
+> learner = mlr_learners$get("surv.rpart")
+> p = learner$train(task)$predict(task)
+> head(as.data.table(p))
+   row_id     time status     crank
+1:      1 3.539831   TRUE 0.5980462
+2:      2 1.691009   TRUE 1.5787970
+3:      3 5.000000  FALSE 0.5980462
+4:      4 1.784562   TRUE 1.5787970
+5:      5 2.627887   TRUE 1.5787970
+6:      6 2.429627   TRUE 1.5787970
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("TaskDens")
+> ### * TaskDens
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TaskDens
+> ### Title: Density Task
+> ### Aliases: TaskDens
+> 
+> ### ** Examples
+> 
+> task = TaskDens$new("precip", backend = data.frame(target = precip), target = "target")
+> task$task_type
+[1] "dens"
+> task$truth()
+ [1] 67.0 54.7  7.0 48.5 14.0 17.2 20.7 13.0 43.4 40.2 38.9 54.5 59.8 48.3 22.9
+[16] 11.5 34.4 35.1 38.7 30.8 30.6 43.1 56.8 40.8 41.8 42.5 31.0 31.7 30.2 25.9
+[31] 49.2 37.0 35.9 15.0 30.2  7.2 36.2 45.5  7.8 33.4 36.1 40.2 42.7 42.5 16.2
+[46] 39.0 35.0 37.0 31.4 37.6 39.9 36.2 42.8 46.4 24.7 49.1 46.0 35.9  7.8 48.2
+[61] 15.2 32.5 44.7 42.6 38.8 17.4 40.8 29.1 14.6 59.2
+> 
+> 
+> 
+> cleanEx()
+> nameEx("TaskSurv")
+> ### * TaskSurv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TaskSurv
+> ### Title: Survival Task
+> ### Aliases: TaskSurv
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> lung = mlr3misc::load_dataset("lung", package = "survival")
+> lung$status = (lung$status == 2L)
+> b = as_data_backend(lung)
+> task = TaskSurv$new("lung",
++   backend = b, time = "time",
++   event = "status")
+> 
+> task$target_names
+[1] "time"   "status"
+> task$feature_names
+[1] "age"       "inst"      "meal.cal"  "pat.karno" "ph.ecog"   "ph.karno" 
+[7] "sex"       "wt.loss"  
+> task$formula()
+Surv(time, status, type = "right") ~ .
+<environment: namespace:survival>
+> task$truth()
+  [1]  306   455  1010+  210   883  1022+  310   361   218   166   170   654 
+ [13]  728    71   567   144   613   707    61    88   301    81   624   371 
+ [25]  394   520   574   118   390    12   473    26   533   107    53   122 
+ [37]  814   965+   93   731   460   153   433   145   583    95   303   519 
+ [49]  643   765   735   189    53   246   689    65     5   132   687   345 
+ [61]  444   223   175    60   163    65   208   821+  428   230   840+  305 
+ [73]   11   132   226   426   705   363    11   176   791    95   196+  167 
+ [85]  806+  284   641   147   740+  163   655   239    88   245   588+   30 
+ [97]  179   310   477   166   559+  450   364   107   177   156   529+   11 
+[109]  429   351    15   181   283   201   524    13   212   524   288   363 
+[121]  442   199   550    54   558   207    92    60   551+  543+  293   202 
+[133]  353   511+  267   511+  371   387   457   337   201   404+  222    62 
+[145]  458+  356+  353   163    31   340   229   444+  315+  182   156   329 
+[157]  364+  291   179   376+  384+  268   292+  142   413+  266+  194   320 
+[169]  181   285   301+  348   197   382+  303+  296+  180   186   145   269+
+[181]  300+  284+  350   272+  292+  332+  285   259+  110   286   270    81 
+[193]  131   225+  269   225+  243+  279+  276+  135    79    59   240+  202+
+[205]  235+  105   224+  239   237+  173+  252+  221+  185+   92+   13   222+
+[217]  192+  183   211+  175+  197+  203+  116   188+  191+  105+  174+  177+
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> nameEx("crankcompositor")
+> ### * crankcompositor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: crankcompositor
+> ### Title: Compose a Crank Predict Type for Survival Learners
+> ### Aliases: crankcompositor
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(mlr3)
+> ##D library(mlr3pipelines)
+> ##D 
+> ##D task = tgen("simsurv")$generate(20)
+> ##D ranger.crank = crankcompositor(
+> ##D   learner = lrn("surv.coxph"),
+> ##D   method = "median")
+> ##D resample(task, ranger.crank, rsmp("cv", folds = 2))$predictions()
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("distrcompositor")
+> ### * distrcompositor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: distrcompositor
+> ### Title: Compose a Distr Predict Type for Survival Learners
+> ### Aliases: distrcompositor
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library("mlr3")
+> ##D library("mlr3pipelines")
+> ##D 
+> ##D task = tgen("simsurv")$generate(20)
+> ##D cvglm.distr = distrcompositor(
+> ##D   learner = lrn("surv.cvglmnet"),
+> ##D   estimator = "kaplan",
+> ##D   form = "aft")
+> ##D 
+> ##D resample(task, cvglm.distr, rsmp("cv", folds = 2))$predictions()
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mlr_task_generators_simdens")
+> ### * mlr_task_generators_simdens
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_task_generators_simdens
+> ### Title: Density Task Generator for Package 'distr6'
+> ### Aliases: mlr_task_generators_simdens TaskGeneratorSimdens
+> 
+> ### ** Examples
+> 
+> generator = mlr3::mlr_task_generators$get("simdens")
+> task = generator$generate(20)
+> task$head()
+            y unimportant
+1: -0.6264538   0.8209463
+2:  0.1836433   0.6470602
+3: -0.8356286   0.7829328
+4:  1.5952808   0.5530363
+5:  0.3295078   0.5297196
+6: -0.8204684   0.7893562
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mlr_task_generators_simsurv")
+> ### * mlr_task_generators_simsurv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_task_generators_simsurv
+> ### Title: Survival Task Generator for Package 'simsurv'
+> ### Aliases: mlr_task_generators_simsurv TaskGeneratorSimsurv
+> 
+> ### ** Examples
+> 
+> generator = mlr3::mlr_task_generators$get("simsurv")
+> task = generator$generate(20)
+> task$head()
+   eventtime status   height treatment   weight
+1:  3.539831      1 202.6767         0 93.58680
+2:  1.691009      1 185.8476         0 78.97212
+3:  5.000000      0 170.6814         1 83.87672
+4:  1.784562      1 146.7795         1 79.46195
+5:  2.627887      1 196.8740         0 66.22940
+6:  2.429627      1 179.3260         1 75.85005
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pecs")
+> ### * pecs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pecs
+> ### Title: Prediction Error Curves for PredictionSurv and LearnerSurv
+> ### Aliases: pecs pecs.list pecs.PredictionSurv
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(mlr3)
+> ##D task = tsk("rats")
+> ##D 
+> ##D # Prediction Error Curves for prediction object
+> ##D learn = lrn("surv.coxph")
+> ##D p = learn$train(task)$predict(task)
+> ##D pecs(p)
+> ##D pecs(p, measure = "logloss", times = c(20, 40, 60, 80)) +
+> ##D   ggplot2::geom_point() +
+> ##D   ggplot2::ggtitle("Logloss Prediction Error Curve for Cox PH")
+> ##D 
+> ##D # Access underlying data
+> ##D x = pecs(p)
+> ##D x$data
+> ##D 
+> ##D # Prediction Error Curves for fitted learners
+> ##D learns = lrns(c("surv.kaplan", "surv.coxph", "surv.ranger"))
+> ##D lapply(learns, function(x) x$train(task))
+> ##D pecs(learns, task = task, measure = "logloss", times = c(20, 90), n = 10)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.LearnerSurv")
+> ### * plot.LearnerSurv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.LearnerSurv
+> ### Title: Visualization of fitted 'LearnerSurv' objects
+> ### Aliases: plot.LearnerSurv
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> task = tsk("rats")
+> 
+> # Prediction Error Curves for prediction object
+> learn = lrn("surv.coxph")
+> learn$train(task)
+> 
+> plot(learn, task, "survival", ind = 10)
+> plot(learn, task, "survival", row_ids = 1:5)
+> plot(learn, task, "survival", newdata = task$data()[1:5, ])
+> plot(learn, task, "survival", newdata = task$data()[1:5, ], ylim = c(0, 1))
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:mlr3’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  5.651 0.53 6.485 0.003 0.008 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

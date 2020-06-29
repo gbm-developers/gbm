@@ -19,19 +19,19 @@ Authors@R: c(
   )
 Depends: R (>= 2.9.0)
 Imports: 
-  lattice,
-  parallel,
-  survival
+    lattice,
+    parallel,
+    survival
 Suggests: 
+    covr,
     gridExtra,
     knitr,
     pdp,
     RUnit,
     splines,
-    vip,
-    viridis,
     tinytest,
-    covr
+    vip,
+    viridis
 Description: An implementation of extensions to Freund and Schapire's AdaBoost 
   algorithm and Friedman's gradient boosting machine. Includes regression 
   methods for least squares, absolute loss, t-distribution loss, quantile 
@@ -39,9 +39,8 @@ Description: An implementation of extensions to Freund and Schapire's AdaBoost
   partial likelihood, AdaBoost exponential loss, Huberized hinge loss, and 
   Learning to Rank measures (LambdaMart). Originally developed by Greg Ridgeway.
 License: GPL (>= 2) | file LICENSE
-URL:
-    https://github.com/gbm-developers/gbm
-BugReports:
-    https://github.com/gbm-developers/gbm/issues
-RoxygenNote: 7.1.0
+URL: https://github.com/gbm-developers/gbm
+BugReports: https://github.com/gbm-developers/gbm/issues
+Encoding: UTF-8
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

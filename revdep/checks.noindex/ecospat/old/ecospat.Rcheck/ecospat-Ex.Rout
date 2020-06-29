@@ -1,0 +1,1790 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "ecospat"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('ecospat')
+Loading required package: ade4
+Loading required package: ape
+Loading required package: gbm
+Loaded gbm 2.1.5
+Loading required package: sp
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("ecospat.CCV.communityEvaluation.bin")
+> ### * ecospat.CCV.communityEvaluation.bin
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.CCV.communityEvaluation.bin
+> ### Title: Calculates a range of community evaluation metrics based on
+> ###   different thresholding techniques.
+> ### Aliases: ecospat.CCV.communityEvaluation.bin
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.CCV.communityEvaluation.prob")
+> ### * ecospat.CCV.communityEvaluation.prob
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.CCV.communityEvaluation.prob
+> ### Title: Evaluates community predictions directly on the probabilities
+> ###   (i.e., threshold independent)
+> ### Aliases: ecospat.CCV.communityEvaluation.prob
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.CCV.createDataSplitTable")
+> ### * ecospat.CCV.createDataSplitTable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.CCV.createDataSplitTable
+> ### Title: Creates a DataSplitTable for usage in ecospat.ccv.modeling.
+> ### Aliases: ecospat.CCV.createDataSplitTable
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.CCV.modeling")
+> ### * ecospat.CCV.modeling
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.CCV.modeling
+> ### Title: Runs indivudual species distribuion models with SDMs or ESMs
+> ### Aliases: ecospat.CCV.modeling
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.CommunityEval")
+> ### * ecospat.CommunityEval
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.CommunityEval
+> ### Title: Community Evaluation
+> ### Aliases: ecospat.CommunityEval
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.Cscore")
+> ### * ecospat.Cscore
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.Cscore
+> ### Title: Pairwise co-occurrence Analysis with calculation of the C-score
+> ###   index.
+> ### Aliases: ecospat.Cscore
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D data<- ecospat.testData[c(53,62,58,70,61,66,65,71,69,43,63,56,68,57,55,60,54,67,59,64)]
+> ##D nperm <- 10000
+> ##D outpath <- getwd()
+> ##D Cscore<-ecospat.Cscore(data, nperm, outpath)
+> ##D 
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.ESM.EnsembleModeling")
+> ### * ecospat.ESM.EnsembleModeling
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.ESM.EnsembleModeling
+> ### Title: Ensamble of Small Models: Evaluates and Averages Simple
+> ###   Bivariate Models To ESMs
+> ### Aliases: ecospat.ESM.EnsembleModeling
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.ESM.EnsembleProjection")
+> ### * ecospat.ESM.EnsembleProjection
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.ESM.EnsembleProjection
+> ### Title: Ensamble of Small Models: Projects Calibrated ESMs Into New
+> ###   Space Or Time.
+> ### Aliases: ecospat.ESM.EnsembleProjection
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.ESM.Modeling")
+> ### * ecospat.ESM.Modeling
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.ESM.Modeling
+> ### Title: Ensamble of Small Models: Calibration of Simple Bivariate Models
+> ### Aliases: ecospat.ESM.Modeling
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.ESM.Projection")
+> ### * ecospat.ESM.Projection
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.ESM.Projection
+> ### Title: Ensamble of Small Models: Projects Simple Bivariate Models Into
+> ###   New Space Or Time
+> ### Aliases: ecospat.ESM.Projection
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.ESM.VarContrib")
+> ### * ecospat.ESM.VarContrib
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.ESM.VarContrib
+> ### Title: Variable contribution in ESM
+> ### Aliases: ecospat.ESM.VarContrib
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.ESM.responsePlot")
+> ### * ecospat.ESM.responsePlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.ESM.responsePlot
+> ### Title: Produce response plots for ESMs
+> ### Aliases: ecospat.ESM.responsePlot
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.ESM.threshold")
+> ### * ecospat.ESM.threshold
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.ESM.threshold
+> ### Title: Thresholds for Ensamble of Small Models
+> ### Aliases: ecospat.ESM.threshold
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.Epred")
+> ### * ecospat.Epred
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.Epred
+> ### Title: Prediction Mean
+> ### Aliases: ecospat.Epred
+> 
+> ### ** Examples
+> 
+> x <- ecospat.testData[c(92,96)]
+> mean <- ecospat.Epred (x, w=rep(1,ncol(x)), th=0.5)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.SESAM.prr")
+> ### * ecospat.SESAM.prr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.SESAM.prr
+> ### Title: SESAM Probability Ranking Rule
+> ### Aliases: ecospat.SESAM.prr
+> 
+> ### ** Examples
+> 
+> proba <- ecospat.testData[,73:92]
+> sr <- as.data.frame(rowSums(proba))
+> ppr<-ecospat.SESAM.prr(proba, sr)
+> head(ppr)
+  glm_Agrostis_capillaris glm_Leontodon_hispidus_sl glm_Dactylis_glomerata
+1                       0                         1                      1
+2                       1                         0                      1
+3                       1                         0                      1
+4                       1                         0                      1
+5                       1                         0                      1
+6                       1                         0                      1
+  glm_Trifolium_repens_sstr glm_Geranium_sylvaticum glm_Ranunculus_acris_sl
+1                         0                       0                       0
+2                         1                       1                       1
+3                         1                       1                       1
+4                         1                       1                       1
+5                         1                       1                       1
+6                         1                       1                       1
+  glm_Prunella_vulgaris glm_Veronica_chamaedrys glm_Taraxacum_officinale_aggr
+1                     0                       0                             0
+2                     1                       1                             1
+3                     1                       1                             1
+4                     1                       1                             1
+5                     1                       1                             1
+6                     1                       1                             1
+  glm_Plantago_lanceolata glm_Potentilla_erecta glm_Carex_sempervirens
+1                       0                     1                      1
+2                       1                     0                      0
+3                       1                     0                      0
+4                       1                     0                      0
+5                       1                     0                      0
+6                       1                     0                      0
+  glm_Soldanella_alpina glm_Cynosurus_cristatus glm_Campanula_scheuchzeri
+1                     0                       0                         0
+2                     0                       1                         0
+3                     0                       1                         0
+4                     0                       1                         0
+5                     0                       1                         0
+6                     0                       1                         0
+  glm_Festuca_pratensis_sl glm_Bromus_erectus_sstr glm_Saxifraga_oppositifolia
+1                        0                       0                           0
+2                        0                       0                           0
+3                        0                       0                           0
+4                        0                       0                           0
+5                        0                       0                           0
+6                        1                       0                           0
+  glm_Daucus_carota glm_Pritzelago_alpina_sstr
+1                 0                          0
+2                 0                          0
+3                 0                          0
+4                 0                          0
+5                 0                          0
+6                 0                          0
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.adj.D2")
+> ### * ecospat.adj.D2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.adj.D2.glm
+> ### Title: Calculate An Adjusted D2
+> ### Aliases: ecospat.adj.D2.glm
+> 
+> ### ** Examples
+> 
+> 
+> data(ecospat.testData)
+> glm.obj<-glm(Achillea_millefolium~ddeg+mind+srad+slp+topo, 
++ family = binomial, data=ecospat.testData)
+> 
+> ecospat.adj.D2.glm(glm.obj)
+[1] 0.1274509
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.binary.model")
+> ### * ecospat.binary.model
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.binary.model
+> ### Title: Generate Binary Models
+> ### Aliases: ecospat.binary.model
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.boyce")
+> ### * ecospat.boyce
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.boyce
+> ### Title: Calculate Boyce Index
+> ### Aliases: ecospat.boyce
+> 
+> ### ** Examples
+> 
+> obs <- (ecospat.testData$glm_Saxifraga_oppositifolia
++ [which(ecospat.testData$Saxifraga_oppositifolia==1)])
+> 
+> ecospat.boyce (fit = ecospat.testData$glm_Saxifraga_oppositifolia , obs, nclass=0, 
++ window.w="default", res=100, PEplot = TRUE)
+$F.ratio
+ [1]  0.1457490  0.5454545  0.8181818  1.2972973  1.6000000  1.2857143
+ [7]  1.3846154  1.6363636  1.2631579  1.3333333  1.4117647  1.4117647
+[13]  1.7142857  1.7142857  1.0909091  1.2000000  1.0909091  2.0000000
+[19]  1.8461538  1.0909091  1.2000000  1.5000000  1.5000000  1.7142857
+[25]  2.6666667  3.4285714  3.4285714  6.0000000  4.0000000  3.0000000
+[31]  6.0000000  6.0000000  4.8000000  4.8000000  4.8000000  6.0000000
+[37]  6.0000000  6.0000000  4.8000000  4.0000000  4.0000000  2.0000000
+[43]  3.0000000  3.4285714  4.5000000  4.5000000  3.4285714  3.4285714
+[49]  4.5000000  5.1428571  6.0000000  7.2000000  9.0000000  8.0000000
+[55] 12.0000000 12.0000000 12.0000000 12.0000000 12.0000000 12.0000000
+[61] 12.0000000 12.0000000 12.0000000 12.0000000 12.0000000 12.0000000
+[67] 12.0000000 12.0000000 12.0000000 12.0000000 12.0000000 12.0000000
+[73] 12.0000000 12.0000000 12.0000000 12.0000000 12.0000000  8.0000000
+[79]  8.0000000  6.0000000  6.0000000  6.0000000  8.0000000  6.0000000
+[85]  7.2000000  7.2000000  7.2000000  7.2000000  9.0000000  9.0000000
+[91]  9.6000000 10.2857143 10.0000000 10.0000000 10.0000000
+
+$Spearman.cor
+[1] 0.91
+
+$HS
+ [1] 0.0490350 0.0578613 0.0666876 0.0755139 0.0843402 0.0931665 0.1019928
+ [8] 0.1108191 0.1196454 0.1284717 0.1372980 0.1461243 0.1549506 0.1637769
+[15] 0.1726032 0.1814295 0.1902558 0.1990821 0.2079084 0.2167347 0.2255610
+[22] 0.2343873 0.2432136 0.2520399 0.2608662 0.2696925 0.2785188 0.2873451
+[29] 0.2961714 0.3049977 0.3138240 0.3226503 0.3314766 0.3403029 0.3491292
+[36] 0.3579555 0.3667818 0.3756081 0.3844344 0.3932607 0.4020870 0.4109133
+[43] 0.4197396 0.4285659 0.4373922 0.4462185 0.4550448 0.4638711 0.4726974
+[50] 0.4815237 0.4903500 0.4991763 0.5080026 0.5168289 0.5256552 0.5344815
+[57] 0.5433078 0.5521341 0.5609604 0.5697867 0.6227445 0.6315708 0.6403971
+[64] 0.6492234 0.6580497 0.6668760 0.6757023 0.6845286 0.6933549 0.7021812
+[71] 0.7110075 0.7198338 0.7286601 0.7374864 0.7463127 0.7551390 0.7639653
+[78] 0.7727916 0.7816179 0.7904442 0.7992705 0.8080968 0.8169231 0.8257494
+[85] 0.8345757 0.8434020 0.8522283 0.8610546 0.8698809 0.8787072 0.8875335
+[92] 0.8963598 0.9051861 0.9140124 0.9228387
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.calculate.pd")
+> ### * ecospat.calculate.pd
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.calculate.pd
+> ### Title: Calculate Phylogenetic Diversity Measures
+> ### Aliases: ecospat.calculate.pd
+> 
+> ### ** Examples
+> 
+> fpath <- system.file("extdata", "ecospat.testTree.tre", package="ecospat")
+> tree <-read.tree(fpath)
+> data <- ecospat.testData[9:52] 
+> 
+> pd <- ecospat.calculate.pd(tree, data, method = "spanning", type = "species", root = FALSE, 
++ average = FALSE, verbose = TRUE )
+Progress (. = 100 pixels calculated):
+... [300]
+All 300 pixels done.
+
+> 
+> plot(pd)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.caleval")
+> ### * ecospat.caleval
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.caleval
+> ### Title: Calibration And Evaluation Dataset
+> ### Aliases: ecospat.caleval
+> 
+> ### ** Examples
+> 
+> data <- ecospat.testData
+> caleval <- ecospat.caleval (data = ecospat.testData[53], xy = data[2:3], row.num = 1:nrow(data), 
++ nrep = 2, ratio = 0.7, disaggregate = 0.2, pseudoabs = 100, npres = 10, replace = FALSE)
+> caleval
+$eval
+   yeval yeval
+1     NA   163
+2     NA    NA
+3    287    NA
+4    201   228
+5    224    22
+6    222    23
+7    198   299
+8    251   288
+9     33    79
+10   252   264
+11   115    53
+12   279   168
+13   185   234
+14   133   246
+15    55   193
+16   266   212
+17   217   294
+18   206   157
+19   140   291
+20   203   272
+21   265   145
+22   241   171
+23   120    15
+24   166   154
+25   223    18
+26    95   232
+27   235   229
+28   155   115
+29   263   120
+30   300   134
+31   290    11
+32   169   230
+33    11   242
+
+$cal
+   ycal ycal
+1    10   72
+2    NA   52
+3   124   NA
+4   165  129
+5   282  179
+6    NA  102
+7    NA   NA
+8   260  268
+9   281  123
+10  220    2
+11  249  266
+12   85  245
+13  297  244
+14    5  169
+15  189  293
+16  240  225
+17  196  283
+18  237   14
+19  295    4
+20   71  113
+21  188   34
+22  221  267
+23  254  166
+24  243  221
+25   30  106
+26  100  255
+27  150  219
+28  180  296
+29   44  206
+30   94  278
+31  156  139
+32  200   84
+33  106  276
+34   31  292
+35   37   57
+36   43   37
+37  233  205
+38  205  196
+39  250  121
+40  199  152
+41  255  214
+42  210  210
+43   36  184
+44   49  233
+45   67  178
+46  258  239
+47    8  275
+48  134  269
+49  261  290
+50  186   20
+51  211   17
+52  114  243
+53  110   24
+54  177  147
+55  262  238
+56  121   45
+57   27    5
+58  113  248
+59  242   16
+60  230  185
+61  182  211
+62   21  198
+63  116  256
+64   75  220
+65  274  289
+66   51  297
+67   56  192
+68  271   95
+69  247  231
+70  293  236
+71  152  286
+72  273  181
+73  278    3
+74  270  265
+75  259  155
+76  204  253
+77  267  189
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.climan")
+> ### * ecospat.climan
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.climan
+> ### Title: A climate analogy setection tool for the modeling of species
+> ###   distributions
+> ### Aliases: ecospat.climan
+> 
+> ### ** Examples
+> 
+> x <- ecospat.testData[c(4:8)]
+> p<- x[1:90,] #A projection dataset.
+> ref<- x[91:300,] #A reference dataset
+> ecospat.climan(ref,p)
+ [1]  0.185415746 -0.028290993 -0.032909931 -0.009237875 -0.034642032
+ [6] -0.209006928 -0.084295612 -0.103622863  0.355220600 -0.136258661
+[11] -0.087182448 -0.209006928 -0.143187067 -0.124711316 -0.114844720
+[16] -0.230596451  0.276046242  0.249093277 -0.125288684 -0.101226337
+[21] -0.113883908 -0.204653076 -0.001154734 -0.132217090 -0.100461894
+[26]  0.464738681 -0.416578541 -0.044457275 -0.018475751 -0.122225532
+[31] -0.137611720 -0.050808314  0.254605027 -0.062012319  0.238294633
+[36] -0.159141330 -0.147806005  0.277670365 -0.071593533 -0.019053118
+[41]  0.390781314  0.175132571  0.401892929  0.843703731  0.286155800
+[46]  0.321142114  0.668511130  0.252253209  0.440050672  0.177247206
+[51]  0.831525456  0.303710525  0.197182304  0.219273698  0.196637663
+[56]  0.195300816  0.142395786  0.176988160 -0.051991905  0.265163111
+[61] -0.020785219 -0.017898383  0.553965995  0.409635110  0.323633285
+[66]  0.468693064  0.124983005 -0.032909931  0.165642783  0.147046687
+[71]  0.202895471  0.341992334  0.225508458  0.133254065  0.485295264
+[76] -0.047344111 -0.012282931  0.165429659  0.134199992  0.216655251
+[81]  0.139419127  0.121254775  0.098782992  0.591393741  0.110866239
+[86]  0.146010655  0.095562156  0.093353356  0.081712342  0.160531262
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.co_occurrences")
+> ### * ecospat.co_occurrences
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.co_occurrences
+> ### Title: Species Co-Occurrences
+> ### Aliases: ecospat.co_occurrences
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.cohen.kappa")
+> ### * ecospat.cohen.kappa
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.cohen.kappa
+> ### Title: Cohen's Kappa
+> ### Aliases: ecospat.cohen.kappa
+> 
+> ### ** Examples
+> 
+> Pred <- ecospat.testData$glm_Agrostis_capillaris
+> Sp.occ <- ecospat.testData$Agrostis_capillaris
+> th <- 0.39 # threshold
+> xtab <- table(Pred >= th, Sp.occ)
+> 
+> ecospat.cohen.kappa(xtab)
+$kap
+[1] 0.3190661
+
+$vark
+[1] 0.003394434
+
+$totn
+[1] 300
+
+$ci
+[1] 0.2048731 0.4332592
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.cons_Cscore")
+> ### * ecospat.cons_Cscore
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.cons_Cscore
+> ### Title: Constrained Co-Occurrence Analysis.
+> ### Aliases: ecospat.cons_Cscore
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.cor.plot")
+> ### * ecospat.cor.plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.cor.plot
+> ### Title: Correlation Plot
+> ### Aliases: ecospat.cor.plot
+> 
+> ### ** Examples
+> 
+> data <- ecospat.testData[,4:8]
+> ecospat.cor.plot(data)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.cv.gbm")
+> ### * ecospat.cv.gbm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.cv.gbm
+> ### Title: GBM Cross Validation
+> ### Aliases: ecospat.cv.gbm
+> 
+> ### ** Examples
+> 
+> data('ecospat.testData')
+> 
+> # data for Soldanella alpina
+> data.Solalp<- ecospat.testData[c("Soldanella_alpina","ddeg","mind","srad","slp","topo")] 
+> 
+> # gbm model for Soldanella alpina
+> gbm.Solalp <- gbm(Soldanella_alpina ~ ., data = data.Solalp,
++                   distribution = "bernoulli", cv.folds = 10, n.cores=2)
+> 
+> # cross-validated predictions
+> gbm.pred <- ecospat.cv.gbm (gbm.obj= gbm.Solalp,data.Solalp, 
++                             K=10, cv.lim=10, jack.knife=FALSE)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.cv.glm")
+> ### * ecospat.cv.glm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.cv.glm
+> ### Title: GLM Cross Validation
+> ### Aliases: ecospat.cv.glm
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.cv.me")
+> ### * ecospat.cv.me
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.cv.me
+> ### Title: Maxent Cross Validation
+> ### Aliases: ecospat.cv.me
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.cv.rf")
+> ### * ecospat.cv.rf
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.cv.rf
+> ### Title: RandomForest Cross Validation
+> ### Aliases: ecospat.cv.rf
+> 
+> ### ** Examples
+> 
+> data('ecospat.testData')
+> 
+> # data for Soldanella alpina
+> data.Solalp<- ecospat.testData[c("Soldanella_alpina","ddeg","mind","srad","slp","topo")] 
+> 
+> library(randomForest)
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+> rf.Solalp <- randomForest(x = data.Solalp[,-1], y = as.factor(data.Solalp[,1]))
+> rf.pred <- ecospat.cv.rf(rf.Solalp, data.Solalp, K = 10, cv.lim = 10, 
++                          jack.knife = FALSE, verbose = FALSE)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:randomForest’
+
+> nameEx("ecospat.grid.clim.dyn")
+> ### * ecospat.grid.clim.dyn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.grid.clim.dyn
+> ### Title: Dynamic Occurrence Densities Grid
+> ### Aliases: ecospat.grid.clim.dyn
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.makeDataFrame")
+> ### * ecospat.makeDataFrame
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.makeDataFrame
+> ### Title: Make Data Frame
+> ### Aliases: ecospat.makeDataFrame
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.mantel.correlogram")
+> ### * ecospat.mantel.correlogram
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.mantel.correlogram
+> ### Title: Mantel Correlogram
+> ### Aliases: ecospat.mantel.correlogram
+> 
+> ### ** Examples
+> 
+> ecospat.mantel.correlogram(dfvar=ecospat.testData[c(2:16)],colxy=1:2, n=100, colvar=3:7, 
++ max=1000, nclass=10, nperm=100)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.max.kappa")
+> ### * ecospat.max.kappa
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.max.kappa
+> ### Title: Maximum Kappa
+> ### Aliases: ecospat.max.kappa
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.max.tss")
+> ### * ecospat.max.tss
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.max.tss
+> ### Title: Maximum TSS
+> ### Aliases: ecospat.max.tss
+> ### Keywords: file
+> 
+> ### ** Examples
+> 
+> 
+> data(ecospat.testData)
+> Pred <- ecospat.testData$glm_Agrostis_capillaris
+> Sp.occ <- ecospat.testData$Agrostis_capillaris
+> TSS100 <- ecospat.max.tss(Pred, Sp.occ)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.maxentvarimport")
+> ### * ecospat.maxentvarimport
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.maxentvarimport
+> ### Title: Maxent Variable Importance
+> ### Aliases: ecospat.maxentvarimport
+> 
+> ### ** Examples
+> 
+> library(dismo)
+Loading required package: raster
+
+Attaching package: ‘raster’
+
+The following objects are masked from ‘package:ape’:
+
+    rotate, zoom
+
+> data('ecospat.testData')
+> 
+> # data for Soldanella alpina
+> data.Solalp<- ecospat.testData[c("Soldanella_alpina","ddeg","mind","srad","slp","topo")]
+> 
+> # copy maxent.jar file in the right folder
+> path.from<-system.file("extdata", "maxent.txt", package="ecospat")
+> path.to <- paste0(system.file(package="dismo"), "/java/maxent.txt")
+> path.to.renamed <- paste0(system.file(package="dismo"), "/java/maxent.jar")
+> file.copy(path.from,path.to,overwrite = TRUE)
+[1] TRUE
+> file.rename(path.to, path.to.renamed)
+[1] TRUE
+> 
+> if (file.exists(path.to.renamed) & require(rJava)) {
++   me <- maxent(data.Solalp[,-1],data.Solalp[,1])
++   ecospat.maxentvarimport (model=me, dfvar=data.Solalp[,-1], nperm=5)
++   }
+Loading required package: rJava
+[1] "ddeg"
+[1] "mind"
+[1] "srad"
+[1] "slp"
+[1] "topo"
+ ddeg  mind  srad   slp  topo 
+0.629 0.148 0.135 0.055 0.004 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:rJava’, ‘package:dismo’, ‘package:raster’
+
+> nameEx("ecospat.mdr")
+> ### * ecospat.mdr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.mdr
+> ### Title: Minimum Dispersal Routes)
+> ### Aliases: ecospat.mdr
+> 
+> ### ** Examples
+> 
+> library(maps)
+> 
+> data(ecospat.testMdr)
+> data<- ecospat.testMdr
+> intros<-order(data$date)[1:2] # rows corresponding to first introductions
+> 
+> # plot observed situation
+> 
+> plot(data[,2:1],pch=15,cex=0.5)
+> points(data[intros,2:1],pch=19,col="red")
+> text(data[,2]+0.5,data[,1]+0.5,data[,3],cex=0.5)
+> map(add=TRUE)
+> 
+> # calculate minimum cost arborescence (MCA) of dispersal routes
+> 
+> obs<-ecospat.mdr(data=data,xcol=2,ycol=1,datecol=3,mode="min",rep=100,
++                   mean.date.error=1,fixed.sources.rows=intros)
+> 
+> # plot MCA results
+> # arrows' thickness indicate support for the routes
+> 
+> mca<-obs[[1]]
+> plot(mca[,3:4],type="n",xlab="longitude",ylab="latitude")
+> arrows(mca[,1],mca[,2],mca[,3],mca[,4],length = 0.05,lwd=mca$bootstrap.value*2)
+> map(add=TRUE)
+> 
+> # plot intros
+> 
+> points(data[intros,2:1],pch=19,col="red")
+> text(data[intros,2]+0.5,data[intros,1]+0.5,data[intros,3],cex=1,col="red")
+> 
+> # dispersal routes statistics
+> 
+> obs[[2]] # total routes length in DD
+[1] 255.0182
+> obs[[3]] # median dispersal rate in DD/yr
+[1] 0.08978612
+> obs[[4]] # number of outcoming nodes
+[1] 58
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:maps’
+
+> nameEx("ecospat.mess")
+> ### * ecospat.mess
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.mess
+> ### Title: MESS
+> ### Aliases: ecospat.mess
+> 
+> ### ** Examples
+> 
+> x <- ecospat.testData[c(2,3,4:8)]
+> proj <- x[1:90,] #A projection dataset.
+> cal <- x[91:300,] #A calibration dataset
+> 
+> #Create a MESS object 
+> mess.object <- ecospat.mess (proj, cal, w="default")
+> 
+> #Plot MESS 
+> ecospat.plot.mess (mess.object, cex=1, pch=15)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.meva.table")
+> ### * ecospat.meva.table
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.meva.table
+> ### Title: Model Evaluation For A Given Threshold Value
+> ### Aliases: ecospat.meva.table
+> ### Keywords: file
+> 
+> ### ** Examples
+> 
+> 
+> Pred <- ecospat.testData$glm_Agrostis_capillaris
+> Sp.occ <- ecospat.testData$Agrostis_capillaris
+> 
+> meva <- ecospat.meva.table (Pred, Sp.occ, 0.39)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.mpa")
+> ### * ecospat.mpa
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.mpa
+> ### Title: Minimal Predicted Area
+> ### Aliases: ecospat.mpa
+> 
+> ### ** Examples
+> 
+> data(ecospat.testData)
+> obs <- (ecospat.testData$glm_Saxifraga_oppositifolia
++ [which(ecospat.testData$Saxifraga_oppositifolia==1)])
+> 
+> ecospat.mpa(obs)
+  10% 
+0.087 
+> ecospat.mpa(obs,perc=1) ## 100 percent of the presences encompassed
+   0% 
+0.037 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.niche.dynIndexProjGeo")
+> ### * ecospat.niche.dynIndexProjGeo
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.niche.dynIndexProjGeo
+> ### Title: Projection of niche dynamic indices to the Geography
+> ### Aliases: ecospat.niche.dynIndexProjGeo
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.niche.zProjGeo")
+> ### * ecospat.niche.zProjGeo
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.niche.zProjGeo
+> ### Title: Projection of Occurrence Densities to the Geography
+> ### Aliases: ecospat.niche.zProjGeo
+> 
+> ### ** Examples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.npred")
+> ### * ecospat.npred
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.npred
+> ### Title: Number Of Predictors
+> ### Aliases: ecospat.npred
+> 
+> ### ** Examples
+> 
+> colvar <- ecospat.testData[c(4:8)]
+> x <- cor(colvar, method="pearson")
+> ecospat.npred (x, th=0.75)
+[1] 4
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.occ.desaggregation")
+> ### * ecospat.occ.desaggregation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.occ.desaggregation
+> ### Title: Species Occurrences Desaggregation
+> ### Aliases: ecospat.occ.desaggregation
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.occupied.patch")
+> ### * ecospat.occupied.patch
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.occupied.patch
+> ### Title: Extract occupied patches of a species in geographic space.)
+> ### Aliases: ecospat.occupied.patch
+> ### Keywords: file
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.permut.glm")
+> ### * ecospat.permut.glm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.permut.glm
+> ### Title: GLM Permutation Function
+> ### Aliases: ecospat.permut.glm
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.plot.kappa")
+> ### * ecospat.plot.kappa
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.plot.kappa
+> ### Title: Plot Kappa
+> ### Aliases: ecospat.plot.kappa
+> ### Keywords: file
+> 
+> ### ** Examples
+> 
+> 
+> 
+> Pred <- ecospat.testData$glm_Agrostis_capillaris
+> Sp.occ <- ecospat.testData$Agrostis_capillaris
+> ecospat.plot.kappa(Pred, Sp.occ)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.plot.mess")
+> ### * ecospat.plot.mess
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.plot.mess
+> ### Title: Plot MESS
+> ### Aliases: ecospat.plot.mess
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.plot.tss")
+> ### * ecospat.plot.tss
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.plot.tss
+> ### Title: Plot True skill statistic (TSS)
+> ### Aliases: ecospat.plot.tss
+> ### Keywords: file
+> 
+> ### ** Examples
+> 
+> Pred <- ecospat.testData$glm_Agrostis_capillaris
+> Sp.occ <- ecospat.testData$Agrostis_capillaris
+> ecospat.plot.tss(Pred, Sp.occ)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.rand.pseudoabsences")
+> ### * ecospat.rand.pseudoabsences
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.rand.pseudoabsences
+> ### Title: Sample Pseudo-Absences
+> ### Aliases: ecospat.rand.pseudoabsences
+> 
+> ### ** Examples
+> 
+> glob <- ecospat.testData[2:8]
+> presence <- ecospat.testData[c(2:3,9)]
+> presence <- presence[presence[,3]==1,1:2]
+> ecospat.rand.pseudoabsences (nbabsences=10, glob=glob, colxyglob=1:2, colvar = "all", 
++ presence= presence, colxypresence=1:2, mindist=20)
+        long      lat ddeg mind   srad slp topo
+167 574207.2 130257.2 1264  819 230918  17   62
+129 579525.0 140325.0 1361 1544 160530  20   49
+299 582774.8 130479.7  466 3358 227865   3  104
+270 574133.0 117732.0  336 4181  75916  60  884
+187 571250.6 131047.4 1101  920 246392  31  166
+85  570469.3 140698.1 1660  593 169230  21    5
+277 572793.0 124557.0 1874  666 141183  28   -8
+263 582275.0 130200.0  471 3409 241044  33  184
+79  573769.5 138667.8 1591  342 214504   3  -76
+213 581176.0 136034.0  981 1468 259257  18   97
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.rangesize")
+> ### * ecospat.rangesize
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.rangesize
+> ### Title: Quantification of the range size of a species using habitat
+> ###   suitability maps and IUCN criteria)
+> ### Aliases: ecospat.rangesize
+> ### Keywords: file
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.rcls.grd")
+> ### * ecospat.rcls.grd
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.rcls.grd
+> ### Title: Reclassifying grids function
+> ### Aliases: ecospat.rcls.grd
+> 
+> ### ** Examples
+> 
+> 
+> library(raster)
+
+Attaching package: ‘raster’
+
+The following objects are masked from ‘package:ape’:
+
+    rotate, zoom
+
+> library(classInt)
+> 
+> bio3<- raster(system.file("external/bioclim/current/bio3.grd",package="biomod2"))
+> bio12<- raster(system.file("external/bioclim/current/bio12.grd",package="biomod2"))
+> 
+> B3.rcl<-ecospat.rcls.grd(bio3,9) 
+Warning in classIntervals(getValues(in_grid), no.classes, style = "equal") :
+  var has missing values, omitted in finding classes
+> B12.rcl<-ecospat.rcls.grd(bio12,9)
+Warning in classIntervals(getValues(in_grid), no.classes, style = "equal") :
+  var has missing values, omitted in finding classes
+> B3B12.comb <- B12.rcl+B3.rcl*10
+> 
+> # Plotting a histogram of the classes
+> hist(B3B12.comb,breaks=100,col=heat.colors(88)) 
+> # Plotting the new RasterLayer (9x9 classes)
+> plot(B3B12.comb,col=rev(rainbow(88)),main="Stratified map") 
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:classInt’, ‘package:raster’
+
+> nameEx("ecospat.recstrat_prop")
+> ### * ecospat.recstrat_prop
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.recstrat_prop
+> ### Title: Random Ecologically Stratified Sampling of propotional numbers
+> ### Aliases: ecospat.recstrat_prop
+> 
+> ### ** Examples
+> 
+>     library(raster)
+
+Attaching package: ‘raster’
+
+The following objects are masked from ‘package:ape’:
+
+    rotate, zoom
+
+>     library(classInt)
+>     
+>     bio3<- raster(system.file("external/bioclim/current/bio3.grd",package="biomod2"))
+>     bio12<- raster(system.file("external/bioclim/current/bio12.grd",package="biomod2"))
+>     
+>     B3.rcl<-ecospat.rcls.grd(bio3,9) 
+Warning in classIntervals(getValues(in_grid), no.classes, style = "equal") :
+  var has missing values, omitted in finding classes
+>     B12.rcl<-ecospat.rcls.grd(bio12,9)
+Warning in classIntervals(getValues(in_grid), no.classes, style = "equal") :
+  var has missing values, omitted in finding classes
+>     B3B12.comb <- B12.rcl+B3.rcl*10
+>     
+>     B3B12.prop_samples <- ecospat.recstrat_prop(B3B12.comb,100)
+>     
+>     plot(B3B12.comb)
+>     points(B3B12.prop_samples$x,B3B12.prop_samples$y,pch=16,cex=0.6,col=B3B12.prop_samples$class)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:classInt’, ‘package:raster’
+
+> nameEx("ecospat.recstrat_regl")
+> ### * ecospat.recstrat_regl
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.recstrat_regl
+> ### Title: Random Ecologically Stratified Sampling of equal numbers
+> ### Aliases: ecospat.recstrat_regl
+> 
+> ### ** Examples
+> 
+> 
+>   library(raster)
+
+Attaching package: ‘raster’
+
+The following objects are masked from ‘package:ape’:
+
+    rotate, zoom
+
+>   library(classInt)
+> 
+>   bio3<- raster(system.file("external/bioclim/current/bio3.grd",package="biomod2"))
+>   bio12<- raster(system.file("external/bioclim/current/bio12.grd",package="biomod2"))
+>     
+>   B3.rcl<-ecospat.rcls.grd(bio3,9) 
+Warning in classIntervals(getValues(in_grid), no.classes, style = "equal") :
+  var has missing values, omitted in finding classes
+>   B12.rcl<-ecospat.rcls.grd(bio12,9)
+Warning in classIntervals(getValues(in_grid), no.classes, style = "equal") :
+  var has missing values, omitted in finding classes
+>   B3B12.comb <- B12.rcl+B3.rcl*10
+>     
+>   B3B12.regl_samples <- ecospat.recstrat_prop(B3B12.comb,100)
+>   
+>   plot(B3B12.comb)
+>   points(B3B12.regl_samples$x,B3B12.regl_samples$y,pch=16,cex=0.6,col=B3B12.regl_samples$class)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:classInt’, ‘package:raster’
+
+> nameEx("ecospat.sample.envar")
+> ### * ecospat.sample.envar
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.sample.envar
+> ### Title: Sample Environmental Variables
+> ### Aliases: ecospat.sample.envar
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.testData")
+> ### * ecospat.testData
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.testData
+> ### Title: Test Data For The Ecospat package
+> ### Aliases: ecospat.testData
+> 
+> ### ** Examples
+> 
+> data(ecospat.testData)
+> str(ecospat.testData)
+'data.frame':	300 obs. of  96 variables:
+ $ numplots                     : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ long                         : num  578627 574267 574875 576248 575126 ...
+ $ lat                          : num  127191 145242 145400 146648 146214 ...
+ $ ddeg                         : int  1238 2103 2111 2070 2114 2416 2200 2210 1889 2290 ...
+ $ mind                         : int  1131 -379 -436 -264 -464 -21 339 -589 958 550 ...
+ $ srad                         : int  265581 212738 216155 213638 227280 217664 132601 188661 154911 173313 ...
+ $ slp                          : int  31 4 1 1 6 4 25 5 25 13 ...
+ $ topo                         : int  -175 -77 -87 -91 -113 -15 -169 -137 -128 -26 ...
+ $ Achillea_atrata              : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Achillea_millefolium         : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Acinos_alpinus               : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Adenostyles_glabra           : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Aposeris_foetida             : int  0 0 0 0 0 0 1 0 0 0 ...
+ $ Arnica_montana               : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Aster_bellidiastrum          : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Bartsia_alpina               : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Bellis_perennis              : int  0 1 0 0 0 0 0 0 0 0 ...
+ $ Campanula_rotundifolia       : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Centaurea_montana            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Cerastium_latifolium         : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Cruciata_laevipes            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Doronicum_grandiflorum       : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Galium_album                 : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Galium_anisophyllon          : int  1 0 0 0 0 0 0 0 0 0 ...
+ $ Galium_megalospermum         : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Gentiana_bavarica            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Gentiana_lutea               : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Gentiana_purpurea            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Gentiana_verna               : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Globularia_cordifolia        : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Globularia_nudicaulis        : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Gypsophila_repens            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Hieracium_lactucella         : int  0 0 0 0 0 0 1 0 0 0 ...
+ $ Homogyne_alpina              : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Hypochaeris_radicata         : int  0 0 0 0 0 1 0 0 0 0 ...
+ $ Leontodon_autumnalis         : int  0 1 0 0 0 0 0 0 0 0 ...
+ $ Leontodon_helveticus         : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Myosotis_alpestris           : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Myosotis_arvensis            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Phyteuma_orbiculare          : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Phyteuma_spicatum            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Plantago_alpina              : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Plantago_lanceolata          : int  0 0 0 0 0 1 1 0 1 0 ...
+ $ Polygonum_bistorta           : int  0 0 0 0 0 0 0 1 1 1 ...
+ $ Polygonum_viviparum          : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Prunella_grandiflora         : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Rhinanthus_alectorolophus    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Rumex_acetosa                : int  0 0 1 1 1 1 1 1 1 0 ...
+ $ Rumex_crispus                : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Vaccinium_gaultherioides     : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Veronica_alpina              : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Veronica_aphylla             : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Agrostis_capillaris          : int  1 0 0 0 0 1 1 0 1 1 ...
+ $ Bromus_erectus_sstr          : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Campanula_scheuchzeri        : int  1 0 0 0 0 0 0 0 0 0 ...
+ $ Carex_sempervirens           : int  1 0 0 0 0 0 0 0 0 0 ...
+ $ Cynosurus_cristatus          : int  0 0 0 0 0 1 0 0 1 1 ...
+ $ Dactylis_glomerata           : int  0 1 1 1 0 1 0 1 1 0 ...
+ $ Daucus_carota                : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Festuca_pratensis_sl         : int  0 0 1 0 0 1 0 0 0 1 ...
+ $ Geranium_sylvaticum          : int  0 1 0 1 0 0 0 1 1 0 ...
+ $ Leontodon_hispidus_sl        : int  0 0 0 0 0 0 0 0 1 0 ...
+ $ Potentilla_erecta            : int  0 0 0 0 0 0 1 0 1 0 ...
+ $ Pritzelago_alpina_sstr       : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Prunella_vulgaris            : int  0 0 0 0 0 1 1 0 0 0 ...
+ $ Ranunculus_acris_sl          : int  0 0 1 1 0 1 1 1 1 1 ...
+ $ Saxifraga_oppositifolia      : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Soldanella_alpina            : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Taraxacum_officinale_aggr    : int  0 1 1 1 1 1 0 1 0 0 ...
+ $ Trifolium_repens_sstr        : int  0 1 1 1 1 1 0 1 1 1 ...
+ $ Veronica_chamaedrys          : int  0 0 0 0 0 1 0 0 1 0 ...
+ $ Parnassia_palustris          : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ glm_Agrostis_capillaris      : num  0.331 0.722 0.73 0.709 0.715 ...
+ $ glm_Leontodon_hispidus_sl    : num  0.466 0.508 0.51 0.484 0.52 ...
+ $ glm_Dactylis_glomerata       : num  0.419 0.922 0.924 0.899 0.937 ...
+ $ glm_Trifolium_repens_sstr    : num  0.11 0.95 0.961 0.949 0.945 ...
+ $ glm_Geranium_sylvaticum      : num  0.182 0.7 0.71 0.671 0.685 ...
+ $ glm_Ranunculus_acris_sl      : num  0.146 0.862 0.88 0.869 0.854 ...
+ $ glm_Prunella_vulgaris        : num  0.182 0.703 0.71 0.691 0.692 ...
+ $ glm_Veronica_chamaedrys      : num  0.193 0.77 0.772 0.733 0.787 ...
+ $ glm_Taraxacum_officinale_aggr: num  0.159 0.911 0.93 0.913 0.916 ...
+ $ glm_Plantago_lanceolata      : num  0.275 0.817 0.821 0.77 0.858 ...
+ $ glm_Potentilla_erecta        : num  0.34 0.465 0.458 0.429 0.496 ...
+ $ glm_Carex_sempervirens       : num  0.3458 0.0512 0.0497 0.0472 0.0553 ...
+ $ glm_Soldanella_alpina        : num  0.0742 0.121 0.1282 0.1229 0.0921 ...
+ $ glm_Cynosurus_cristatus      : num  0.162 0.699 0.718 0.696 0.7 ...
+ $ glm_Campanula_scheuchzeri    : num  0.2253 0.0444 0.0453 0.0444 0.0424 ...
+ $ glm_Festuca_pratensis_sl     : num  0.127 0.672 0.679 0.648 0.673 ...
+ $ glm_Bromus_erectus_sstr      : num  0.0528 0.1587 0.1412 0.1039 0.2654 ...
+ $ glm_Saxifraga_oppositifolia  : num  0.0031 0 0 0 0 0 0 0 0.0001 0 ...
+ $ glm_Daucus_carota            : num  0.0162 0.0651 0.0554 0.0354 0.1163 ...
+ $ glm_Pritzelago_alpina_sstr   : num  0.0082 0.0001 0.0001 0.0002 0.0001 0 0.0002 0.0001 0.001 0.0001 ...
+ $ gbm_Bromus_erectus_sstr      : num  0.0498 0.0847 0.1292 0.0488 0.2069 ...
+ $ gbm_Saxifraga_oppositifolia  : num  0.0048 0.0064 0.0065 0.0064 0.0046 0.0067 0.0063 0.0058 0.0044 0.0044 ...
+ $ gbm_Daucus_carota            : num  0.0532 0.0326 0.0448 0.0198 0.0497 ...
+ $ gbm_Pritzelago_alpina_sstr   : num  0.0101 0.0122 0.0122 0.0122 0.0093 0.0122 0.023 0.0112 0.0103 0.0094 ...
+> dim(ecospat.testData)
+[1] 300  96
+> names(ecospat.testData)
+ [1] "numplots"                      "long"                         
+ [3] "lat"                           "ddeg"                         
+ [5] "mind"                          "srad"                         
+ [7] "slp"                           "topo"                         
+ [9] "Achillea_atrata"               "Achillea_millefolium"         
+[11] "Acinos_alpinus"                "Adenostyles_glabra"           
+[13] "Aposeris_foetida"              "Arnica_montana"               
+[15] "Aster_bellidiastrum"           "Bartsia_alpina"               
+[17] "Bellis_perennis"               "Campanula_rotundifolia"       
+[19] "Centaurea_montana"             "Cerastium_latifolium"         
+[21] "Cruciata_laevipes"             "Doronicum_grandiflorum"       
+[23] "Galium_album"                  "Galium_anisophyllon"          
+[25] "Galium_megalospermum"          "Gentiana_bavarica"            
+[27] "Gentiana_lutea"                "Gentiana_purpurea"            
+[29] "Gentiana_verna"                "Globularia_cordifolia"        
+[31] "Globularia_nudicaulis"         "Gypsophila_repens"            
+[33] "Hieracium_lactucella"          "Homogyne_alpina"              
+[35] "Hypochaeris_radicata"          "Leontodon_autumnalis"         
+[37] "Leontodon_helveticus"          "Myosotis_alpestris"           
+[39] "Myosotis_arvensis"             "Phyteuma_orbiculare"          
+[41] "Phyteuma_spicatum"             "Plantago_alpina"              
+[43] "Plantago_lanceolata"           "Polygonum_bistorta"           
+[45] "Polygonum_viviparum"           "Prunella_grandiflora"         
+[47] "Rhinanthus_alectorolophus"     "Rumex_acetosa"                
+[49] "Rumex_crispus"                 "Vaccinium_gaultherioides"     
+[51] "Veronica_alpina"               "Veronica_aphylla"             
+[53] "Agrostis_capillaris"           "Bromus_erectus_sstr"          
+[55] "Campanula_scheuchzeri"         "Carex_sempervirens"           
+[57] "Cynosurus_cristatus"           "Dactylis_glomerata"           
+[59] "Daucus_carota"                 "Festuca_pratensis_sl"         
+[61] "Geranium_sylvaticum"           "Leontodon_hispidus_sl"        
+[63] "Potentilla_erecta"             "Pritzelago_alpina_sstr"       
+[65] "Prunella_vulgaris"             "Ranunculus_acris_sl"          
+[67] "Saxifraga_oppositifolia"       "Soldanella_alpina"            
+[69] "Taraxacum_officinale_aggr"     "Trifolium_repens_sstr"        
+[71] "Veronica_chamaedrys"           "Parnassia_palustris"          
+[73] "glm_Agrostis_capillaris"       "glm_Leontodon_hispidus_sl"    
+[75] "glm_Dactylis_glomerata"        "glm_Trifolium_repens_sstr"    
+[77] "glm_Geranium_sylvaticum"       "glm_Ranunculus_acris_sl"      
+[79] "glm_Prunella_vulgaris"         "glm_Veronica_chamaedrys"      
+[81] "glm_Taraxacum_officinale_aggr" "glm_Plantago_lanceolata"      
+[83] "glm_Potentilla_erecta"         "glm_Carex_sempervirens"       
+[85] "glm_Soldanella_alpina"         "glm_Cynosurus_cristatus"      
+[87] "glm_Campanula_scheuchzeri"     "glm_Festuca_pratensis_sl"     
+[89] "glm_Bromus_erectus_sstr"       "glm_Saxifraga_oppositifolia"  
+[91] "glm_Daucus_carota"             "glm_Pritzelago_alpina_sstr"   
+[93] "gbm_Bromus_erectus_sstr"       "gbm_Saxifraga_oppositifolia"  
+[95] "gbm_Daucus_carota"             "gbm_Pritzelago_alpina_sstr"   
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.testEnvRaster")
+> ### * ecospat.testEnvRaster
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.testEnvRaster
+> ### Title: Test Environmental Rasters for The Ecospat package
+> ### Aliases: ecospat.testEnvRaster
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D fpath <- system.file("extdata", "ecospat.testEnvRaster.RData", package="ecospat")
+> ##D load(fpath)
+> ##D plot(env)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.testMdr")
+> ### * ecospat.testMdr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.testMdr
+> ### Title: Test Data For The ecospat.mdr function
+> ### Aliases: ecospat.testMdr
+> 
+> ### ** Examples
+> 
+> data(ecospat.testMdr)
+> str(ecospat.testMdr)
+'data.frame':	102 obs. of  3 variables:
+ $ latitude : num  42.6 48.5 41.9 54.4 45.7 47 39.6 45.1 40 47.3 ...
+ $ longitude: num  -71.5 -123 -74 -128.5 -108.2 ...
+ $ date     : int  1884 1887 1956 1991 1989 1965 1992 1976 1962 1987 ...
+> dim(ecospat.testMdr)
+[1] 102   3
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.testNiche")
+> ### * ecospat.testNiche
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.testNiche
+> ### Title: Test Data For The Niche Overlap Analysis
+> ### Aliases: ecospat.testNiche
+> 
+> ### ** Examples
+> 
+> data(ecospat.testNiche)
+> dim(ecospat.testNiche)
+[1] 99  4
+> names(ecospat.testNiche)
+[1] "species" "long"    "lat"     "Spp"    
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.testNiche.inv")
+> ### * ecospat.testNiche.inv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.testNiche.inv
+> ### Title: Test Data For The Niche Dynamics Analysis In The Invaded Range
+> ###   Of A Hypothetical Species
+> ### Aliases: ecospat.testNiche.inv
+> 
+> ### ** Examples
+> 
+> data(ecospat.testNiche.inv)
+> str(ecospat.testNiche.inv)
+'data.frame':	2823 obs. of  12 variables:
+ $ x          : num  142 142 131 132 142 ...
+ $ y          : num  -10.2 -10.8 -11.2 -11.2 -11.2 ...
+ $ aetpet     : num  0.318 0.281 0.264 0.279 0.303 ...
+ $ gdd        : num  7965 7889 8165 8196 7858 ...
+ $ p          : num  1596 1694 1595 1346 1711 ...
+ $ pet        : num  1950 1991 2180 1920 1795 ...
+ $ stdp       : num  138 156 127 115 158 ...
+ $ tmax       : num  31.4 31.2 32.9 33.4 31.7 ...
+ $ tmin       : num  22.5 22.2 20.5 20.5 21.4 ...
+ $ tmp        : num  26.8 26.6 27.4 27.5 26.5 ...
+ $ species_occ: int  0 0 0 0 0 0 0 0 0 0 ...
+ $ predictions: int  368 366 522 392 291 345 451 478 522 368 ...
+> dim(ecospat.testNiche.inv)
+[1] 2823   12
+> names(ecospat.testNiche.inv)
+ [1] "x"           "y"           "aetpet"      "gdd"         "p"          
+ [6] "pet"         "stdp"        "tmax"        "tmin"        "tmp"        
+[11] "species_occ" "predictions"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.testNiche.nat")
+> ### * ecospat.testNiche.nat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.testNiche.nat
+> ### Title: Test Data For The Niche Dynamics Analysis In The Native Range Of
+> ###   A Hypothetical Species
+> ### Aliases: ecospat.testNiche.nat
+> 
+> ### ** Examples
+> 
+> data(ecospat.testNiche.nat)
+> str(ecospat.testNiche.nat)
+'data.frame':	10809 obs. of  12 variables:
+ $ x          : num  -95.2 -94.8 -94.2 -93.8 -93.2 ...
+ $ y          : num  73.8 73.8 73.8 73.8 73.8 ...
+ $ aetpet     : num  4.10e-05 4.86e-05 4.95e-05 4.96e-05 4.93e-05 4.95e-05 4.96e-05 4.98e-05 4.99e-05 4.91e-05 ...
+ $ gdd        : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ p          : num  128 146 160 161 158 ...
+ $ pet        : num  244 206 202 202 203 ...
+ $ stdp       : num  8.48 8.8 9.02 8.97 8.86 ...
+ $ tmax       : num  7.65 7.25 6.95 6.95 7.2 7.2 7.2 7.25 7.25 7.65 ...
+ $ tmin       : num  -37 -37.2 -37.5 -37.5 -37.5 ...
+ $ tmp        : num  -16.4 -16.7 -17 -17.1 -17 ...
+ $ species_occ: int  0 0 0 0 0 0 0 0 0 0 ...
+ $ predictions: int  0 0 0 0 0 0 0 0 0 0 ...
+> dim(ecospat.testNiche.nat)
+[1] 10809    12
+> names(ecospat.testNiche.nat)
+ [1] "x"           "y"           "aetpet"      "gdd"         "p"          
+ [6] "pet"         "stdp"        "tmax"        "tmin"        "tmp"        
+[11] "species_occ" "predictions"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.testTree")
+> ### * ecospat.testTree
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.testTree
+> ### Title: Test Tree For The Ecospat package
+> ### Aliases: ecospat.testTree
+> 
+> ### ** Examples
+> 
+> fpath <- system.file("extdata", "ecospat.testTree.tre", package="ecospat")
+> tree <- read.tree(fpath)
+> plot(tree)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ecospat.varpart")
+> ### * ecospat.varpart
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ecospat.varpart
+> ### Title: Variation Partitioning For GLM Or GAM
+> ### Aliases: ecospat.varpart
+> 
+> ### ** Examples
+> 
+> library(rms)
+Loading required package: Hmisc
+Loading required package: lattice
+Loading required package: survival
+Loading required package: Formula
+Loading required package: ggplot2
+
+Attaching package: ‘Hmisc’
+
+The following object is masked from ‘package:ape’:
+
+    zoom
+
+The following objects are masked from ‘package:base’:
+
+    format.pval, units
+
+Loading required package: SparseM
+
+Attaching package: ‘SparseM’
+
+The following object is masked from ‘package:base’:
+
+    backsolve
+
+> data('ecospat.testData')
+> 
+> # data for Soldanella alpina and Achillea millefolium
+> data.Solalp<- ecospat.testData[c("Soldanella_alpina","ddeg","mind","srad","slp","topo")]
+> 
+> # glm models for Soldanella alpina
+> 
+> glm.Solalp1 <- glm("Soldanella_alpina ~ pol(ddeg,2) + pol(mind,2) + pol(srad,2)", 
++                   data = data.Solalp, family = binomial)
+> glm.Solalp2 <- glm("Soldanella_alpina ~ pol(slp,2) + pol(topo,2)", 
++                   data = data.Solalp, family = binomial)
+>                   
+> ecospat.varpart (model.1= glm.Solalp1, model.2= glm.Solalp2, model.12= glm.Solalp2)
+                       Deviance
+D2.model.1                0.000
+D2.model.2               -0.379
+D2.Joined.Contrib.1.2.    0.475
+D2.Unexplained            0.904
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:rms’, ‘package:SparseM’, ‘package:Hmisc’,
+  ‘package:ggplot2’, ‘package:Formula’, ‘package:survival’,
+  ‘package:lattice’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  36.061 4.152 46.055 0.013 0.021 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

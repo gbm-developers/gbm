@@ -1,0 +1,1089 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "featurefinder"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('featurefinder')
+
+Attaching package: ‘featurefinder’
+
+The following object is masked from ‘package:datasets’:
+
+    trees
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("addFeatures")
+> ### * addFeatures
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: addFeatures
+> ### Title: addFeatures
+> ### Aliases: addFeatures
+> ### Keywords: addFeatures
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(futuresdata)
+> data=futuresdata
+> data$SMIfactor=paste("smi",as.matrix(data$SMIfactor),sep="")
+> n=length(data$DAX)
+> nn=floor(length(data$DAX)/2)
+> 
+> # Can we predict the relative movement of DAX and SMI?
+> data$y=data$DAX*0 # initialise the target to 0
+> data$y[1:(n-1)]=((data$DAX[2:n])-(data$DAX[1:(n-1)]))/
++   (data$DAX[1:(n-1)])-(data$SMI[2:n]-(data$SMI[1:(n-1)]))/(data$SMI[1:(n-1)])
+> 
+> # Fit a simple model
+> thismodel=lm(formula=y ~ .,data=data)
+> expected=predict(thismodel,data)
+> actual=data$y
+> residual=actual-expected
+> data=cbind(data,expected, actual, residual)
+> 
+> CSVPath=tempdir()
+> fcsv=paste(CSVPath,"/futuresdata.csv",sep="")
+> write.csv(data[(nn+1):(length(data$y)),],file=fcsv,row.names=FALSE)
+> exclusionVars="\"residual\",\"expected\", \"actual\",\"y\""
+> factorToNumericList=c()
+> 
+> # Now the dataset is prepared, try to find new features
+> tempDir=findFeatures(outputPath="NoPath", fcsv, exclusionVars,
++ factorToNumericList,                     
++ treeGenerationMinBucket=50,
++ treeSummaryMinBucket=20,
++ useSubDir=FALSE)  
+[1] 50
+[1] 20
+[1] 0
+[1] 0
+[1] TRUE
+[1] 20
+Warning in dir.create(path = outputPath) :
+  '/var/folders/24/k1n3dpcd2p5glqf8r4232qqc8k86md/T//RtmpFFr10E' already exists
+[1] "Doing level 1: ALL"
+[1] 50
+
+ node number: 1 
+   root
+[1] 1
+[1] "RESIDUAL:: ALL:ALL :: 3.66e-05(100%: 930 of 930 in tree, E=0, A=0, residual=0) :: NA and root"
+[1] 1
+>          
+> newfeat1=((data$SMIfactor==0) & (data$CAC < 2253) & (data$CAC< 1998) & (data$CAC>=1882)) * 1.0
+> newfeat2=((data$SMIfactor==1) & (data$SMI < 7837) & (data$SMI >= 7499)) * 1.0
+> newfeatures=cbind(newfeat1, newfeat2) # create columns for the newly found features
+> datanew=cbind(data,newfeatures)
+> thismodel=lm(formula=y ~ .,data=datanew)
+> expectednew=predict(thismodel,datanew)
+Warning in predict.lm(thismodel, datanew) :
+  prediction from a rank-deficient fit may be misleading
+> 
+> requireNamespace("Metrics")
+Loading required namespace: Metrics
+> OriginalRMSE = Metrics::rmse(data$y,expected)
+> NewRMSE = Metrics::rmse(data$y,expectednew)
+> 
+> print(paste("OriginalRMSE = ",OriginalRMSE))
+[1] "OriginalRMSE =  0.00756265208556726"
+> print(paste("NewRMSE = ",NewRMSE))
+[1] "NewRMSE =  2.69749274149163e-18"
+> 
+> # Append new features to a dataframe automatically
+> dataWithNewFeatures = addFeatures(df=data, path=tempDir, prefix="auto_")
+> head(df)
+                                              
+1 function (x, df1, df2, ncp, log = FALSE)    
+2 {                                           
+3     if (missing(ncp))                       
+4         .Call(C_df, x, df1, df2, log)       
+5     else .Call(C_dnf, x, df1, df2, ncp, log)
+6 }                                           
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dat")
+> ### * dat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dat
+> ### Title: dat
+> ### Aliases: dat
+> ### Keywords: dat
+> 
+> ### ** Examples
+> 
+> data(dat)
+Warning in data(dat) : data set ‘dat’ not found
+> head(dat)
+        DAX    SMI    CAC   FTSE SMIfactor             y     expected
+519 2996.12 4007.1 2407.8 4197.5      smi1  3.936437e-04 -0.001908813
+520 3006.87 4019.9 2425.1 4207.7      smi1  3.297804e-05 -0.001911471
+521 2999.19 4009.5 2406.1 4194.0      smi1 -2.901812e-03 -0.001902943
+522 3000.66 4023.1 2409.9 4195.5      smi1 -1.428774e-02 -0.001838849
+523 3026.63 4115.4 2442.5 4219.1      smi1 -7.561567e-03 -0.001526245
+524 3037.28 4161.0 2461.3 4219.1      smi1 -9.461470e-03 -0.001318010
+           actual      residual ttd_flag mainfac
+519  3.936437e-04  0.0023024565        1    smi1
+520  3.297804e-05  0.0019444493        1    smi1
+521 -2.901812e-03 -0.0009988688        1    smi1
+522 -1.428774e-02 -0.0124488953        1    smi1
+523 -7.561567e-03 -0.0060353222        1    smi1
+524 -9.461470e-03 -0.0081434601        1    smi1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dat0")
+> ### * dat0
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dat0
+> ### Title: dat0
+> ### Aliases: dat0
+> ### Keywords: dat0
+> 
+> ### ** Examples
+> 
+> data(dat0)
+Warning in data(dat0) : data set ‘dat0’ not found
+> head(dat0)
+      DAX    SMI    CAC   FTSE SMIfactor             y      expected
+1 2013.03 2525.3 1772.8 2954.2      smi0  0.0035106896 -0.0002121912
+2 2027.67 2534.8 1780.2 2969.0      smi0  0.0033237047 -0.0002806198
+3 2026.97 2525.5 1802.5 2982.2      smi0 -0.0047440084 -0.0003433080
+4 2040.79 2554.7 1826.3 3007.3      smi0 -0.0041124633 -0.0003169117
+5 2030.56 2552.4 1814.1 3022.2      smi0  0.0028690121 -0.0003385513
+6 2026.68 2540.2 1813.4 2995.9      smi0  0.0003813532 -0.0002959225
+         actual      residual ttd_flag mainfac
+1  0.0035106896  0.0037228808        1     ALL
+2  0.0033237047  0.0036043245        1     ALL
+3 -0.0047440084 -0.0044007005        1     ALL
+4 -0.0041124633 -0.0037955516        1     ALL
+5  0.0028690121  0.0032075635        1     ALL
+6  0.0003813532  0.0006772756        1     ALL
+> 
+> 
+> 
+> cleanEx()
+> nameEx("data")
+> ### * data
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: data
+> ### Title: data
+> ### Aliases: data
+> ### Keywords: data
+> 
+> ### ** Examples
+> 
+> data(data)
+Warning in data(data) : data set ‘data’ not found
+> head(data)
+      DAX    SMI    CAC   FTSE SMIfactor             y      expected
+1 2013.03 2525.3 1772.8 2954.2      smi0  0.0035106896 -0.0002121912
+2 2027.67 2534.8 1780.2 2969.0      smi0  0.0033237047 -0.0002806198
+3 2026.97 2525.5 1802.5 2982.2      smi0 -0.0047440084 -0.0003433080
+4 2040.79 2554.7 1826.3 3007.3      smi0 -0.0041124633 -0.0003169117
+5 2030.56 2552.4 1814.1 3022.2      smi0  0.0028690121 -0.0003385513
+6 2026.68 2540.2 1813.4 2995.9      smi0  0.0003813532 -0.0002959225
+         actual      residual ttd_flag mainfac
+1  0.0035106896  0.0037228808        1     ALL
+2  0.0033237047  0.0036043245        1     ALL
+3 -0.0047440084 -0.0044007005        1     ALL
+4 -0.0041124633 -0.0037955516        1     ALL
+5  0.0028690121  0.0032075635        1     ALL
+6  0.0003813532  0.0006772756        1     ALL
+> 
+> 
+> 
+> cleanEx()
+> nameEx("doAllFactors")
+> ### * doAllFactors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: doAllFactors
+> ### Title: doAllFactors
+> ### Aliases: doAllFactors
+> ### Keywords: doAllFactors
+> 
+> ### ** Examples
+> 
+> data(doAllFactors)
+Warning in data(doAllFactors) : data set ‘doAllFactors’ not found
+> head(doAllFactors)
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("expr")
+> ### * expr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: expr
+> ### Title: expr
+> ### Aliases: expr
+> ### Keywords: expr
+> 
+> ### ** Examples
+> 
+> data(expr)
+Warning in data(expr) : data set ‘expr’ not found
+> head(expr)
+residual ~ DAX + SMI + CAC + FTSE + SMIfactor
+<environment: 0x7f915682ddf0>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fileConn")
+> ### * fileConn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fileConn
+> ### Title: fileConn
+> ### Aliases: fileConn
+> ### Keywords: fileConn
+> 
+> ### ** Examples
+> 
+> data(fileConn)
+Warning in data(fileConn) : data set ‘fileConn’ not found
+> head(fileConn)
+[1] ""
+> 
+> 
+> 
+> cleanEx()
+> nameEx("filename")
+> ### * filename
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: filename
+> ### Title: filename
+> ### Aliases: filename
+> ### Keywords: filename
+> 
+> ### ** Examples
+> 
+> data(filename)
+Warning in data(filename) : data set ‘filename’ not found
+> head(filename)
+[1] "treesSMIfactor.txt"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("findFeatures")
+> ### * findFeatures
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: findFeatures
+> ### Title: findFeatures
+> ### Aliases: findFeatures
+> ### Keywords: findFeatures
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(futuresdata)
+> data=futuresdata
+> data$SMIfactor=paste("smi",as.matrix(data$SMIfactor),sep="")
+> n=length(data$DAX)
+> nn=floor(length(data$DAX)/2)
+> 
+> # Can we predict the relative movement of DAX and SMI?
+> data$y=data$DAX*0 # initialise the target to 0
+> data$y[1:(n-1)]=((data$DAX[2:n])-(data$DAX[1:(n-1)]))/
++   (data$DAX[1:(n-1)])-(data$SMI[2:n]-(data$SMI[1:(n-1)]))/(data$SMI[1:(n-1)])
+> 
+> # Fit a simple model
+> thismodel=lm(formula=y ~ .,data=data)
+> expected=predict(thismodel,data)
+> actual=data$y
+> residual=actual-expected
+> data=cbind(data,expected, actual, residual)
+> 
+> CSVPath=tempdir()
+> fcsv=paste(CSVPath,"/futuresdata.csv",sep="")
+> write.csv(data[(nn+1):(length(data$y)),],file=fcsv,row.names=FALSE)
+> exclusionVars="\"residual\",\"expected\", \"actual\",\"y\""
+> factorToNumericList=c()
+> 
+> # Now the dataset is prepared, try to find new features
+> findFeatures(outputPath="NoPath", fcsv, exclusionVars,factorToNumericList,                     
++          treeGenerationMinBucket=50,
++          treeSummaryMinBucket=20,
++          useSubDir=FALSE)  
+[1] 50
+[1] 20
+[1] 0
+[1] 0
+[1] TRUE
+[1] 20
+Warning in dir.create(path = outputPath) :
+  '/var/folders/24/k1n3dpcd2p5glqf8r4232qqc8k86md/T//RtmpFFr10E' already exists
+[1] "Doing level 1: ALL"
+[1] 50
+
+ node number: 1 
+   root
+[1] 1
+[1] "RESIDUAL:: ALL:ALL :: 3.66e-05(100%: 930 of 930 in tree, E=0, A=0, residual=0) :: NA and root"
+[1] 1
+[1] 2
+[1] "/var/folders/24/k1n3dpcd2p5glqf8r4232qqc8k86md/T//RtmpFFr10E"
+>          
+> newfeat1=((data$SMIfactor==0) & (data$CAC < 2253) & (data$CAC< 1998) & (data$CAC>=1882)) * 1.0
+> newfeat2=((data$SMIfactor==1) & (data$SMI < 7837) & (data$SMI >= 7499)) * 1.0
+> newfeatures=cbind(newfeat1, newfeat2) # create columns for the newly found features
+> datanew=cbind(data,newfeatures)
+> thismodel=lm(formula=y ~ .,data=datanew)
+> expectednew=predict(thismodel,datanew)
+Warning in predict.lm(thismodel, datanew) :
+  prediction from a rank-deficient fit may be misleading
+> 
+> requireNamespace("Metrics")
+> OriginalRMSE = Metrics::rmse(data$y,expected)
+> NewRMSE = Metrics::rmse(data$y,expectednew)
+> 
+> print(paste("OriginalRMSE = ",OriginalRMSE))
+[1] "OriginalRMSE =  0.00756265208556726"
+> print(paste("NewRMSE = ",NewRMSE))
+[1] "NewRMSE =  2.69749274149163e-18"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("futuresdata")
+> ### * futuresdata
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: futuresdata
+> ### Title: futuresdata
+> ### Aliases: futuresdata
+> ### Keywords: futuresdata
+> 
+> ### ** Examples
+> 
+> data(futuresdata)
+> head(futuresdata)
+      DAX    SMI    CAC   FTSE SMIfactor
+1 1628.75 1678.1 1772.8 2443.6         0
+2 1613.63 1688.5 1750.5 2460.2         0
+3 1606.51 1678.6 1718.0 2448.2         0
+4 1621.04 1684.1 1708.1 2470.4         0
+5 1618.16 1686.6 1723.1 2484.7         0
+6 1610.61 1671.6 1714.3 2466.8         0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("generateResidualCutoffCode")
+> ### * generateResidualCutoffCode
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: generateResidualCutoffCode
+> ### Title: generateResidualCutoffCode
+> ### Aliases: generateResidualCutoffCode
+> ### Keywords: saveTree
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(examples)
+> generateResidualCutoffCode(data=dat0,"treesAll.txt",treesAll,mainfaclevels, runname,
++   treeGenerationMinBucket=treeGenerationMinBucket,
++   treeSummaryMinBucket=treeSummaryMinBucket,
++   treeSummaryResidualThreshold=treeSummaryResidualThreshold,
++   treeSummaryResidualMagnitudeThreshold=treeSummaryResidualMagnitudeThreshold,
++   doAllFactors=doAllFactors,
++   maxFactorLevels=maxFactorLevels)
+
+ node number: 1 
+   root
+[1] 1
+[1] "RESIDUAL:: SMIfactor:ALL :: 3.66e-05(100%: 930 of 930 in tree, E=0, A=0, residual=0) :: NA and root"
+[[1]]
+  allpaths allresiduals allvolumes allnumbers totalvol
+1 "root"   3.663361e-05 1          930        930     
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("generateTrees")
+> ### * generateTrees
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: generateTrees
+> ### Title: generateTrees
+> ### Aliases: generateTrees
+> ### Keywords: generateTrees
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(examples)
+> treesThisvar=generateTrees(data=dat0,vars,expr,outputPath=tempdir(),runname,
++   treeGenerationMinBucket=treeGenerationMinBucket,
++   treeSummaryMinBucket=treeSummaryMinBucket,
++   treeSummaryResidualThreshold=treeSummaryResidualThreshold,
++   treeSummaryResidualMagnitudeThreshold=treeSummaryResidualMagnitudeThreshold,
++   doAllFactors=doAllFactors,
++   maxFactorLevels=maxFactorLevels)
+[1] "Doing level 1: ALL"
+[1] 50
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getVarAv")
+> ### * getVarAv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getVarAv
+> ### Title: getVarAv
+> ### Aliases: getVarAv
+> ### Keywords: saveTree
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(examples)
+> av=getVarAv(dat,"expected",pathterms)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("i")
+> ### * i
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: i
+> ### Title: i
+> ### Aliases: i
+> ### Keywords: i
+> 
+> ### ** Examples
+> 
+> data(i)
+Warning in data(i) : data set ‘i’ not found
+> head(i)
+[1] 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mainfaclevels")
+> ### * mainfaclevels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mainfaclevels
+> ### Title: mainfaclevels
+> ### Aliases: mainfaclevels
+> ### Keywords: mainfaclevels
+> 
+> ### ** Examples
+> 
+> data(mainfaclevels)
+Warning in data(mainfaclevels) : data set ‘mainfaclevels’ not found
+> head(mainfaclevels)
+[1] "ALL"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("maxFactorLevels")
+> ### * maxFactorLevels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: maxFactorLevels
+> ### Title: maxFactorLevels
+> ### Aliases: maxFactorLevels
+> ### Keywords: maxFactorLevels
+> 
+> ### ** Examples
+> 
+> data(maxFactorLevels)
+Warning in data(maxFactorLevels) : data set ‘maxFactorLevels’ not found
+> head(maxFactorLevels)
+[1] 20
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mpgdata")
+> ### * mpgdata
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mpgdata
+> ### Title: mpgdata
+> ### Aliases: mpgdata
+> ### Keywords: mpgdata
+> 
+> ### ** Examples
+> 
+> data(mpgdata)
+> head(mpgdata)
+  manufacturer model displ year cyl      trans drv cty hwy fl   class
+1         audi    a4   1.8 1999   4   auto(l5)   f  18  29  p compact
+2         audi    a4   1.8 1999   4 manual(m5)   f  21  29  p compact
+3         audi    a4   2.0 2008   4 manual(m6)   f  20  31  p compact
+4         audi    a4   2.0 2008   4   auto(av)   f  21  30  p compact
+5         audi    a4   2.8 1999   6   auto(l5)   f  16  26  p compact
+6         audi    a4   2.8 1999   6 manual(m5)   f  18  26  p compact
+> 
+> 
+> 
+> cleanEx()
+> nameEx("names")
+> ### * names
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: names
+> ### Title: names
+> ### Aliases: names
+> ### Keywords: names
+> 
+> ### ** Examples
+> 
+> data(names)
+Warning in data(names) : data set ‘names’ not found
+> head(names)
+[1] "smi0" "smi1"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("parseSplits")
+> ### * parseSplits
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: parseSplits
+> ### Title: parseSplits
+> ### Aliases: parseSplits
+> ### Keywords: saveTree
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(examples)
+> parseSplits(treesAll[[1]][[2]])
+
+ node number: 1 
+   root
+  allpaths allresiduals allvolumes allnumbers totalvol
+1 "root"   3.663361e-05 1          930        930     
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pathterms")
+> ### * pathterms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pathterms
+> ### Title: pathterms
+> ### Aliases: pathterms
+> ### Keywords: pathterms
+> 
+> ### ** Examples
+> 
+> data(pathterms)
+Warning in data(pathterms) : data set ‘pathterms’ not found
+> head(pathterms)
+[1] "CAC>=1743" "SMI>=2495"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("printResiduals")
+> ### * printResiduals
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: printResiduals
+> ### Title: printResiduals
+> ### Aliases: printResiduals
+> ### Keywords: saveTree
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(examples)
+> printResiduals(fileConn,splitlist[t][[1]],dat, runname, names[t],
++   treeSummaryResidualThreshold,treeSummaryMinBucket,
++   treeSummaryResidualMagnitudeThreshold)
+[1] 11
+[1] "RESIDUAL:: SMIfactor:smi1 :: 0.00307(12.4%: 51 of 412 in tree, E=0.000393, A=0.00346, residual=0.00307) :: SMI< 7837 and SMI>=7499"
+Warning in file(con, "w") :
+  file("") only supports open = "w+" and open = "w+b": using the former
+> 
+> 
+> 
+> cleanEx()
+> nameEx("runname")
+> ### * runname
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: runname
+> ### Title: runname
+> ### Aliases: runname
+> ### Keywords: runname
+> 
+> ### ** Examples
+> 
+> data(runname)
+Warning in data(runname) : data set ‘runname’ not found
+> head(runname)
+[1] "SMIfactor"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("saveTree")
+> ### * saveTree
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: saveTree
+> ### Title: saveTree
+> ### Aliases: saveTree
+> ### Keywords: saveTree
+> 
+> ### ** Examples
+> 
+> 
+> require(featurefinder)
+> data(examples)
+> fit1=saveTree(data,vars,expr,i,outputPath=tempdir(),runname,mainfaclevels[1],
++      treeGenerationMinBucket)
+[1] 50
+> 
+> 
+> 
+> cleanEx()
+> nameEx("splitlist")
+> ### * splitlist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: splitlist
+> ### Title: splitlist
+> ### Aliases: splitlist
+> ### Keywords: splitlist
+> 
+> ### ** Examples
+> 
+> data(splitlist)
+Warning in data(splitlist) : data set ‘splitlist’ not found
+> head(splitlist)
+[[1]]
+    allpaths    allresiduals  allvolumes allnumbers totalvol
+4   Character,3 -0.01253596   0.00965251 5          518     
+40  Character,6 -0.008174502  0.02509653 13         518     
+41  Character,6 -0.0004621345 0.3030888  157        518     
+84  Character,7 -0.003585803  0.05405405 28         518     
+340 Character,9 -0.002538409  0.05791506 30         518     
+341 Character,9 0.0007393786  0.3185328  165        518     
+171 Character,8 0.006044596   0.01544402 8          518     
+86  Character,7 0.0003964504  0.1081081  56         518     
+87  Character,7 0.006825831   0.03667954 19         518     
+22  Character,5 -0.001686302  0.02123552 11         518     
+23  Character,5 0.00522424    0.03667954 19         518     
+3   Character,2 0.007024278   0.01351351 7          518     
+
+[[2]]
+    allpaths    allresiduals  allvolumes allnumbers totalvol
+4   Character,3 -0.00660261   0.0315534  13         412     
+10  Character,4 -0.004017717  0.02184466 9          412     
+11  Character,4 0.004777436   0.01941748 8          412     
+24  Character,5 -0.01100491   0.01456311 6          412     
+50  Character,6 -0.001587026  0.3276699  135        412     
+102 Character,7 -0.006027398  0.01699029 7          412     
+103 Character,7 0.008985219   0.02912621 12         412     
+26  Character,5 -6.974885e-05 0.3567961  147        412     
+54  Character,6 0.003850151   0.0461165  19         412     
+55  Character,6 0.01577466    0.01213592 5          412     
+7   Character,3 0.003071528   0.1237864  51         412     
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("t")
+> ### * t
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: t
+> ### Title: t
+> ### Aliases: t
+> ### Keywords: t
+> 
+> ### ** Examples
+> 
+> data(t)
+Warning in data(t) : data set ‘t’ not found
+> head(t)
+[1] 2
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tree")
+> ### * tree
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tree
+> ### Title: tree
+> ### Aliases: tree
+> ### Keywords: tree
+> 
+> ### ** Examples
+> 
+> data(tree)
+Warning in data(tree) : data set ‘tree’ not found
+> head(tree)
+$frame
+       var   n  wt          dev          yval  complexity ncompete nsurrogate
+1      SMI 412 412 3.062711e-02 -2.578927e-18 0.018511052        3          3
+2      SMI  30  30 1.488888e-03 -2.792463e-03 0.010874097        3          3
+4   <leaf>  13  13 4.415193e-04 -6.602610e-03 0.010000000        0          0
+5      SMI  17  17 7.143266e-04  1.211788e-04 0.010697058        3          3
+10  <leaf>   9   9 2.945273e-04 -4.017717e-03 0.010000000        0          0
+11  <leaf>   8   8 9.217935e-05  4.777436e-03 0.010000000        0          0
+3      SMI 382 382 2.888591e-02  2.193034e-04 0.018511052        3          3
+6     FTSE 331 331 2.598803e-02 -2.201632e-04 0.018511052        3          3
+12     SMI 160 160 1.311255e-02 -1.341544e-03 0.018511052        3          1
+24  <leaf>   6   6 1.158879e-03 -1.100491e-02 0.010000000        0          0
+25     DAX 154 154 1.137156e-02 -9.650497e-04 0.018511052        3          3
+50  <leaf> 135 135 9.244220e-03 -1.587026e-03 0.008235142        0          0
+51     DAX  19  19 1.704037e-03  3.454255e-03 0.018511052        3          3
+102 <leaf>   7   7 1.751302e-04 -6.027398e-03 0.010000000        0          0
+103 <leaf>  12  12 5.324958e-04  8.985219e-03 0.010000000        0          0
+13     DAX 171 171 1.248602e-02  8.290823e-04 0.018511052        3          3
+26  <leaf> 147 147 8.505378e-03 -6.974885e-05 0.009505321        0          0
+27    FTSE  24  24 3.134473e-03  6.334423e-03 0.018377532        3          1
+54  <leaf>  19  19 1.870114e-03  3.850151e-03 0.007672874        0          0
+55  <leaf>   5   5 7.015084e-04  1.577466e-02 0.010000000        0          0
+7   <leaf>  51  51 2.419064e-03  3.071528e-03 0.003458232        0          0
+
+$where
+519 520 521 522 523 524 525 526 527 528 529 530 531 532 533 534 535 536 537 538 
+ 17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17 
+539 540 541 542 543 544 545 546 547 548 549 550 551 552 553 554 555 556 557 558 
+ 17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17 
+559 560 561 562 563 564 565 566 567 568 569 570 571 572 573 574 575 576 577 578 
+ 17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17 
+579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 
+ 17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17 
+599 600 601 602 603 604 605 606 607 608 609 610 611 612 613 614 615 616 617 618 
+ 17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17 
+619 620 621 622 623 624 625 626 627 628 629 630 631 632 633 634 635 636 637 638 
+ 17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17  17 
+639 640 641 642 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 
+ 17  17  19  20  20  20  20  19  19  12  12  19  20  19  19  19  19  19  19  12 
+659 660 661 662 663 664 665 666 667 668 669 670 671 672 673 674 675 676 677 678 
+ 12  19  19  12  12  12  12  12  12  12  12  19  19  12  12  12  19  19  19  10 
+679 680 681 682 683 684 685 686 687 688 689 690 691 692 693 694 695 696 697 698 
+ 17  17  19  10  15  10  15  12  10  10  17  17  17  10  14  15  15  12  15  12 
+699 700 701 702 703 704 705 706 707 708 709 710 711 712 713 714 715 716 717 718 
+ 12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  15  15  12  12 
+719 720 721 722 723 724 725 726 727 728 729 730 731 732 733 734 735 736 737 738 
+ 14  14  17  17  17  17  17  14  17  14  17  17  17  17  17  17  17  17  17  17 
+739 740 741 742 743 744 745 746 747 748 749 750 751 752 753 754 755 756 757 758 
+ 14  14  17  17  17  17  19  12  12  15  12  12  12  12  12  15  15  15  12  12 
+759 760 761 762 763 764 765 766 767 768 769 770 771 772 773 774 775 776 777 778 
+ 12  15  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12 
+779 780 781 782 783 784 785 786 787 788 789 790 791 792 793 794 795 796 797 798 
+ 12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12 
+799 800 801 802 803 804 805 806 807 808 809 810 811 812 813 814 815 816 817 818 
+ 12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12 
+819 820 821 822 823 824 825 826 827 828 829 830 831 832 833 834 835 836 837 838 
+ 12  12  12  12  12  12  12  12  12  12  12  21  21  21  21  21  21  21  21  21 
+839 840 841 842 843 844 845 846 847 848 849 850 851 852 853 854 855 856 857 858 
+ 21  21  21  21  21  21  12  21  12  12  12  12  12  12  12  12  12  21  21  21 
+859 860 861 862 863 864 865 866 867 868 869 870 871 872 873 874 875 876 877 878 
+ 21  21  21  21  21  21  21  12  12  12  12  21  21  21  21  21  21  21  21  21 
+879 880 881 882 883 884 885 886 887 888 889 890 891 892 893 894 895 896 897 898 
+ 21  21  21  21  21  12  12  12  12  21  12  21  21  21  21  21  21   3   3   3 
+899 900 901 902 903 904 905 906 907 908 909 910 911 912 913 914 915 916 917 918 
+  3   3   6   6   5   6   6   6   6   6   3   5   5   5   5   5   5   3   3   3 
+919 920 921 922 923 924 925 926 927 928 929 930 
+  5   5   3   6   3   3   3  21  12  21  21  21 
+
+$call
+rpart::rpart(formula = expr, data = dat_test, control = rpart::rpart.control(minbucket = treeGenerationMinBucket))
+
+$terms
+residual ~ DAX + SMI + CAC + FTSE + SMIfactor
+attr(,"variables")
+list(residual, DAX, SMI, CAC, FTSE, SMIfactor)
+attr(,"factors")
+          DAX SMI CAC FTSE SMIfactor
+residual    0   0   0    0         0
+DAX         1   0   0    0         0
+SMI         0   1   0    0         0
+CAC         0   0   1    0         0
+FTSE        0   0   0    1         0
+SMIfactor   0   0   0    0         1
+attr(,"term.labels")
+[1] "DAX"       "SMI"       "CAC"       "FTSE"      "SMIfactor"
+attr(,"order")
+[1] 1 1 1 1 1
+attr(,"intercept")
+[1] 1
+attr(,"response")
+[1] 1
+attr(,".Environment")
+<environment: 0x7f91556fc2c8>
+attr(,"predvars")
+list(residual, DAX, SMI, CAC, FTSE, SMIfactor)
+attr(,"dataClasses")
+ residual       DAX       SMI       CAC      FTSE SMIfactor 
+"numeric" "numeric" "numeric" "numeric" "numeric"  "factor" 
+
+$cptable
+          CP nsplit rel error   xerror       xstd
+1 0.01851105      0 1.0000000 1.008035 0.08459710
+2 0.01837753      7 0.8704226 1.118630 0.09895601
+3 0.01087410      8 0.8520451 1.224641 0.10889982
+4 0.01069706      9 0.8411710 1.319957 0.11415244
+5 0.01000000     10 0.8304739 1.349641 0.11467405
+
+$method
+[1] "anova"
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("treeGenerationMinBucket")
+> ### * treeGenerationMinBucket
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: treeGenerationMinBucket
+> ### Title: treeGenerationMinBucket
+> ### Aliases: treeGenerationMinBucket
+> ### Keywords: treeGenerationMinBucket
+> 
+> ### ** Examples
+> 
+> data(treeGenerationMinBucket)
+Warning in data(treeGenerationMinBucket) :
+  data set ‘treeGenerationMinBucket’ not found
+> head(treeGenerationMinBucket)
+[1] 50
+> 
+> 
+> 
+> cleanEx()
+> nameEx("treeSummaryMinBucket")
+> ### * treeSummaryMinBucket
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: treeSummaryMinBucket
+> ### Title: treeSummaryMinBucket
+> ### Aliases: treeSummaryMinBucket
+> ### Keywords: treeSummaryMinBucket
+> 
+> ### ** Examples
+> 
+> data(treeSummaryMinBucket)
+Warning in data(treeSummaryMinBucket) :
+  data set ‘treeSummaryMinBucket’ not found
+> head(treeSummaryMinBucket)
+[1] 20
+> 
+> 
+> 
+> cleanEx()
+> nameEx("treeSummaryResidualMagnitudeThreshold")
+> ### * treeSummaryResidualMagnitudeThreshold
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: treeSummaryResidualMagnitudeThreshold
+> ### Title: treeSummaryResidualMagnitudeThreshold
+> ### Aliases: treeSummaryResidualMagnitudeThreshold
+> ### Keywords: treeSummaryResidualMagnitudeThreshold
+> 
+> ### ** Examples
+> 
+> data(treeSummaryResidualMagnitudeThreshold)
+Warning in data(treeSummaryResidualMagnitudeThreshold) :
+  data set ‘treeSummaryResidualMagnitudeThreshold’ not found
+> head(treeSummaryResidualMagnitudeThreshold)
+[1] 0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("treeSummaryResidualThreshold")
+> ### * treeSummaryResidualThreshold
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: treeSummaryResidualThreshold
+> ### Title: treeSummaryResidualThreshold
+> ### Aliases: treeSummaryResidualThreshold
+> ### Keywords: treeSummaryResidualThreshold
+> 
+> ### ** Examples
+> 
+> data(treeSummaryResidualThreshold)
+Warning in data(treeSummaryResidualThreshold) :
+  data set ‘treeSummaryResidualThreshold’ not found
+> head(treeSummaryResidualThreshold)
+[1] 0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("trees")
+> ### * trees
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: trees
+> ### Title: trees
+> ### Aliases: trees
+> ### Keywords: trees
+> 
+> ### ** Examples
+> 
+> data(trees)
+> head(trees)
+  Girth Height Volume
+1   8.3     70   10.3
+2   8.6     65   10.3
+3   8.8     63   10.2
+4  10.5     72   16.4
+5  10.7     81   18.8
+6  10.8     83   19.7
+> 
+> 
+> 
+> cleanEx()
+> nameEx("treesAll")
+> ### * treesAll
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: treesAll
+> ### Title: treesAll
+> ### Aliases: treesAll
+> ### Keywords: treesAll
+> 
+> ### ** Examples
+> 
+> data(treesAll)
+Warning in data(treesAll) : data set ‘treesAll’ not found
+> head(treesAll)
+[[1]]
+[[1]][[1]]
+data frame with 0 columns and 0 rows
+
+[[1]][[2]]
+n= 930 
+
+node), split, n, deviance, yval
+      * denotes terminal node
+
+1) root 930 0.0545607 3.663361e-05 *
+
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vars")
+> ### * vars
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vars
+> ### Title: vars
+> ### Aliases: vars
+> ### Keywords: vars
+> 
+> ### ** Examples
+> 
+> data(vars)
+Warning in data(vars) : data set ‘vars’ not found
+> head(vars)
+[1] "DAX"       "SMI"       "CAC"       "FTSE"      "SMIfactor"
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.1 0.304 1.532 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

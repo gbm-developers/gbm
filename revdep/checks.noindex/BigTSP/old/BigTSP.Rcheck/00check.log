@@ -1,7 +1,8 @@
 * using log directory ‘/Users/b780620/Desktop/devel/gbm/revdep/checks.noindex/BigTSP/old/BigTSP.Rcheck’
-* using R version 3.5.1 (2018-07-02)
-* using platform: x86_64-apple-darwin15.6.0 (64-bit)
+* using R version 4.0.0 (2020-04-24)
+* using platform: x86_64-apple-darwin17.0 (64-bit)
 * using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘BigTSP/DESCRIPTION’ ... OK
 * checking extension type ... Package
 * this is package ‘BigTSP’ version ‘1.0’
@@ -65,6 +66,5 @@ to your NAMESPACE file.
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
 * checking examples ... OK
-* checking PDF version of manual ... OK
 * DONE
 Status: 2 NOTEs

@@ -1,0 +1,1385 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "OmicsMarkeR"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('OmicsMarkeR')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("RPT")
+> ### * RPT
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RPT
+> ### Title: Robustness-Performance Trade-Off
+> ### Aliases: RPT
+> 
+> ### ** Examples
+> 
+> # RPT demo
+> RPT(stability=0.85, performance=0.90, beta=1)
+[1] 0.8742857
+> 
+> 
+> 
+> cleanEx()
+> nameEx("aggregation")
+> ### * aggregation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aggregation
+> ### Title: Feature Aggregation
+> ### Aliases: aggregation
+> 
+> ### ** Examples
+> 
+> # test data
+> ranks <- replicate(5, sample(seq(50), 50))
+> row.names(ranks) <- paste0("V", seq(50))
+> 
+> aggregation(ranks, "CLA")
+    [,1]
+V20  2.0
+V24  2.0
+V45  2.0
+V26  4.0
+V13  5.0
+V44  6.0
+V32  7.0
+V48  8.0
+V17  9.0
+V1  10.5
+V30 10.5
+V46 12.0
+V3  13.0
+V5  15.0
+V31 15.0
+V42 15.0
+V33 17.0
+V23 18.0
+V47 19.0
+V34 20.0
+V37 21.5
+V50 21.5
+V7  23.0
+V9  24.0
+V10 25.0
+V4  26.0
+V36 27.5
+V40 27.5
+V11 29.0
+V12 30.0
+V38 31.0
+V41 32.0
+V8  33.5
+V15 33.5
+V19 35.0
+V27 36.0
+V16 37.0
+V43 38.0
+V25 39.0
+V2  40.0
+V18 41.0
+V39 42.0
+V49 43.0
+V22 44.0
+V14 45.0
+V35 46.0
+V6  47.0
+V21 48.0
+V29 49.0
+V28 50.0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("canberra")
+> ### * canberra
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: canberra
+> ### Title: Canberra Distance
+> ### Aliases: canberra
+> 
+> ### ** Examples
+> 
+> # Canberra demo
+> v1 <- seq(10)
+> v2 <- sample(v1, 10)
+> canberra(v1, v2)
+[1] 3.475036
+> 
+> canberra_stability(v1, v2)
+[1] 0.2354921
+> 
+> 
+> 
+> cleanEx()
+> nameEx("canberra_stability")
+> ### * canberra_stability
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: canberra_stability
+> ### Title: Canberra Stability
+> ### Aliases: canberra_stability
+> 
+> ### ** Examples
+> 
+> # Canberra demo
+> v1 <- seq(10)
+> v2 <- sample(v1, 10)
+> canberra(v1, v2)
+[1] 3.475036
+> 
+> canberra_stability(v1, v2)
+[1] 0.2354921
+> 
+> 
+> 
+> cleanEx()
+> nameEx("create.corr.matrix")
+> ### * create.corr.matrix
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: create.corr.matrix
+> ### Title: Correlated Multivariate Data Generator
+> ### Aliases: create.corr.matrix
+> 
+> ### ** Examples
+> 
+> # Create Multivariate Matrices
+> 
+> # Random Multivariate Matrix
+> 
+> # 50 variables, 100 samples, 1 standard devation, 0.2 noise factor
+> 
+> rand.mat <- create.random.matrix(nvar = 50, 
++                                  nsamp = 100, 
++                                  st.dev = 1, 
++                                  perturb = 0.2)
+> 
+> 
+> # Induce correlations in a numeric matrix
+> 
+> # Default settings
+> # minimum and maximum block sizes (min.block.size = 2, max.block.size = 5)
+> # default correlation purturbation (k=4)
+> # see ?create.corr.matrix for citation for methods
+> 
+> corr.mat <- create.corr.matrix(rand.mat)
+solo last variable> 
+> 
+> # Induce Discriminatory Variables
+> 
+> # 10 discriminatory variables (D = 10)
+> # default discrimination level (l = 1.5)
+> # default number of groups (num.groups=2)
+> # default correlation purturbation (k = 4)
+> 
+> dat.discr <- create.discr.matrix(corr.mat, D=10)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("create.discr.matrix")
+> ### * create.discr.matrix
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: create.discr.matrix
+> ### Title: Discriminatory Multivariate Data Generator
+> ### Aliases: create.discr.matrix
+> 
+> ### ** Examples
+> 
+> # Create Multivariate Matrices
+> 
+> # Random Multivariate Matrix
+> 
+> # 50 variables, 100 samples, 1 standard devation, 0.2 noise factor
+> 
+> rand.mat <- create.random.matrix(nvar = 50, 
++                                  nsamp = 100, 
++                                  st.dev = 1, 
++                                  perturb = 0.2)
+> 
+> 
+> # Induce correlations in a numeric matrix
+> 
+> # Default settings
+> # minimum and maximum block sizes (min.block.size = 2, max.block.size = 5)
+> # default correlation purturbation (k=4)
+> # see ?create.corr.matrix for citation for methods
+> 
+> corr.mat <- create.corr.matrix(rand.mat)
+solo last variable> 
+> 
+> # Induce Discriminatory Variables
+> 
+> # 10 discriminatory variables (D = 10)
+> # default discrimination level (l = 1.5)
+> # default number of groups (num.groups=2)
+> # default correlation purturbation (k = 4)
+> 
+> dat.discr <- create.discr.matrix(corr.mat, D=10)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("create.random.matrix")
+> ### * create.random.matrix
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: create.random.matrix
+> ### Title: Random Multivariate Data Generator
+> ### Aliases: create.random.matrix
+> 
+> ### ** Examples
+> 
+> # Create Multivariate Matrices
+> 
+> # Random Multivariate Matrix
+> 
+> # 50 variables, 100 samples, 1 standard devation, 0.2 noise factor
+> 
+> rand.mat <- create.random.matrix(nvar = 50, 
++                                  nsamp = 100, 
++                                  st.dev = 1, 
++                                  perturb = 0.2)
+> 
+> 
+> # Induce correlations in a numeric matrix
+> 
+> # Default settings
+> # minimum and maximum block sizes (min.block.size = 2, max.block.size = 5)
+> # default correlation purturbation (k=4)
+> # see ?create.corr.matrix for citation for methods
+> 
+> corr.mat <- create.corr.matrix(rand.mat)
+solo last variable> 
+> 
+> # Induce Discriminatory Variables
+> 
+> # 10 discriminatory variables (D = 10)
+> # default discrimination level (l = 1.5)
+> # default number of groups (num.groups=2)
+> # default correlation purturbation (k = 4)
+> 
+> dat.discr <- create.discr.matrix(corr.mat, D=10)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("denovo.grid")
+> ### * denovo.grid
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: denovo.grid
+> ### Title: Denovo Grid Generation
+> ### Aliases: denovo.grid
+> 
+> ### ** Examples
+> 
+> 
+> # random test data
+> set.seed(123)
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+> 
+> df <- data.frame(dat.discr$discr.mat, .classes = dat.discr$classes)
+> 
+> # create tuning grid
+> denovo.grid(df, "gbm", 3)
+$gbm
+   .interaction.depth .n.trees .shrinkage
+1                   1      500 0.10000000
+2                   2      500 0.10000000
+3                   3      500 0.10000000
+4                   1     1000 0.10000000
+5                   2     1000 0.10000000
+6                   3     1000 0.10000000
+7                   1     2000 0.10000000
+8                   2     2000 0.10000000
+9                   3     2000 0.10000000
+10                  1      500 0.05000000
+11                  2      500 0.05000000
+12                  3      500 0.05000000
+13                  1     1000 0.05000000
+14                  2     1000 0.05000000
+15                  3     1000 0.05000000
+16                  1     2000 0.05000000
+17                  2     2000 0.05000000
+18                  3     2000 0.05000000
+19                  1      500 0.03333333
+20                  2      500 0.03333333
+21                  3      500 0.03333333
+22                  1     1000 0.03333333
+23                  2     1000 0.03333333
+24                  3     1000 0.03333333
+25                  1     2000 0.03333333
+26                  2     2000 0.03333333
+27                  3     2000 0.03333333
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("feature.table")
+> ### * feature.table
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: feature.table
+> ### Title: Feature Consistency Table
+> ### Aliases: feature.table
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> fits <- fs.stability(vars, 
++                      groups, 
++                      method = c("plsda", "rf"), 
++                      f = 10, 
++                      k = 3, 
++                      k.folds = 10, 
++                      verbose = 'none')
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loaded gbm 2.1.6
+Loading required package: cluster
+Loading required package: survival
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+Warning in training(data = trainData, method = method[i], tuneValue = as.data.frame(bestTune[[i]]),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+> 
+> feature.table(fits, "plsda")
+   features consistency frequency
+1       V15           3         1
+2       V22           3         1
+3       V41           3         1
+4       V42           3         1
+5        V5           3         1
+6        V6           3         1
+7        V8           3         1
+8        V9           3         1
+9       V27           2     0.667
+10      V30           2     0.667
+11      V13           1     0.333
+12       V2           1     0.333
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:caTools’, ‘package:glmnet’, ‘package:Matrix’,
+  ‘package:pamr’, ‘package:survival’, ‘package:cluster’, ‘package:gbm’,
+  ‘package:e1071’, ‘package:randomForest’, ‘package:DiscriMiner’,
+  ‘package:plyr’, ‘package:foreach’
+
+> nameEx("fit.only.model")
+> ### * fit.only.model
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fit.only.model
+> ### Title: Fit Models without Feature Selection
+> ### Aliases: fit.only.model
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> fit <- fit.only.model(X=vars, 
++                       Y=groups, 
++                       method="plsda", 
++                       p = 0.9)
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loaded gbm 2.1.6
+Loading required package: cluster
+Loading required package: survival
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+Calculating Model Performance Statistics
+Warning in if (class(inTrain) == "list" & class(outTrain) == "list") { :
+  the condition has length > 1 and only the first element will be used
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:caTools’, ‘package:glmnet’, ‘package:Matrix’,
+  ‘package:pamr’, ‘package:survival’, ‘package:cluster’, ‘package:gbm’,
+  ‘package:e1071’, ‘package:randomForest’, ‘package:DiscriMiner’,
+  ‘package:plyr’, ‘package:foreach’
+
+> nameEx("fs.ensembl.stability")
+> ### * fs.ensembl.stability
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fs.ensembl.stability
+> ### Title: Ensemble Classification & Feature Selection
+> ### Aliases: fs.ensembl.stability
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D fits <- fs.ensembl.stability(vars, 
+> ##D groups, 
+> ##D method = c("plsda", "rf"), 
+> ##D f = 10,
+> ##D k = 3, 
+> ##D k.folds = 10, 
+> ##D verbose = 'none')
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fs.stability")
+> ### * fs.stability
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fs.stability
+> ### Title: Classification & Feature Selection
+> ### Aliases: fs.stability
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> fits <- fs.stability(vars, 
++                      groups, 
++                      method = c("plsda", "rf"), 
++                      f = 10, 
++                      k = 3, 
++                      k.folds = 10, 
++                      verbose = 'none')
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loaded gbm 2.1.6
+Loading required package: cluster
+Loading required package: survival
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+Warning in training(data = trainData, method = method[i], tuneValue = as.data.frame(bestTune[[i]]),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:caTools’, ‘package:glmnet’, ‘package:Matrix’,
+  ‘package:pamr’, ‘package:survival’, ‘package:cluster’, ‘package:gbm’,
+  ‘package:e1071’, ‘package:randomForest’, ‘package:DiscriMiner’,
+  ‘package:plyr’, ‘package:foreach’
+
+> nameEx("jaccard")
+> ### * jaccard
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: jaccard
+> ### Title: Jaccard Index
+> ### Aliases: jaccard
+> 
+> ### ** Examples
+> 
+> # Jaccard demo
+> v1 <- paste("Metabolite", seq(10), sep="_")
+> v2 <- sample(v1, 10)
+> jaccard(v1, v2)
+[1] 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("kuncheva")
+> ### * kuncheva
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: kuncheva
+> ### Title: Kuncheva's Index
+> ### Aliases: kuncheva
+> 
+> ### ** Examples
+> 
+> # Kuncheva demo
+> # Assuming 50 metabolites were measured
+> # But only 10 were found significant
+> 
+> # For demonstration purposes only!!!
+> some.numbers <- seq(20)
+> 
+> # Metabolites identified from one run
+> v1 <- paste("Metabolite", sample(some.numbers, 10), sep="_")
+> # Metabolites identifed from second run
+> v2 <- paste("Metabolite", sample(some.numbers, 10), sep="_")
+> kuncheva(v1, v2, 50)
+[1] 0.625
+> 
+> 
+> 
+> cleanEx()
+> nameEx("modelList")
+> ### * modelList
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: modelList
+> ### Title: Model List
+> ### Aliases: modelList
+> 
+> ### ** Examples
+> 
+> modelList()
+  methods                                 description
+1   plsda Partial Least Squares Discriminant Analysis
+2     svm                     Support Vector Machines
+3      rf                               Random Forest
+4     gbm                  Gradient Boosting Machines
+5  glmnet              Elastic-net regularized models
+6     pam         Predication Analysis of Microarrays
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ochiai")
+> ### * ochiai
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ochiai
+> ### Title: Ochiai's Index
+> ### Aliases: ochiai
+> 
+> ### ** Examples
+> 
+> # Ochiai demo
+> v1 <- paste("Metabolite", seq(10), sep="_")
+> v2 <- sample(v1, 10)
+> ochiai(v1, v2)
+[1] 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pairwise.model.stability")
+> ### * pairwise.model.stability
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pairwise.model.stability
+> ### Title: Pairwise Model Stability Metrics
+> ### Aliases: pairwise.model.stability
+> 
+> ### ** Examples
+> 
+> # pairwise.model.stability demo
+> # For demonstration purposes only!!!
+> some.numbers <- seq(20)
+> 
+> # A list containing the metabolite matrices for each algorithm
+> # As an example, let's say we have the output from two different models
+> # such as plsda and random forest.
+> # matrix of Metabolites identified (e.g. 5 trials)
+> plsda <- 
++     replicate(5, paste("Metabolite", sample(some.numbers, 10), sep="_"))
+> rf <-
++     replicate(5, paste("Metabolite", sample(some.numbers, 10), sep="_"))
+> 
+> features <- list(plsda=plsda, rf=rf)
+> 
+> # nc may be omitted unless using kuncheva
+> pairwise.model.stability(features, "kuncheva", nc=20)
+$comparisons
+            Resample.1 Resample.2 Resample.3 Resample.4 Resample.5
+plsda.vs.rf        0.5        0.5        0.3        0.3        0.6
+
+$overall
+[1] 0.44
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pairwise.stability")
+> ### * pairwise.stability
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pairwise.stability
+> ### Title: Pairwise Stability Metrics
+> ### Aliases: pairwise.stability
+> 
+> ### ** Examples
+> 
+> # pairwise.stability demo
+> 
+> # For demonstration purposes only!!!
+> some.numbers <- seq(20)
+> 
+> # matrix of Metabolites identified (e.g. 5 trials)
+> features <- 
++     replicate(5, paste("Metabolite", sample(some.numbers, 10), sep="_"))
+> 
+> # nc may be omitted unless using kuncheva
+> pairwise.stability(features, "jaccard")
+$comparisons
+           Resample.2 Resample.3 Resample.4 Resample.5
+Resample.1       0.25  0.3333333  0.3333333  0.1111111
+Resample.2       0.00  0.5384615  0.4285714  0.5384615
+Resample.3       0.00  0.0000000  0.3333333  0.3333333
+Resample.4       0.00  0.0000000  0.0000000  0.4285714
+
+$overall
+[1] 0.36
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("params")
+> ### * params
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: params
+> ### Title: Model Parameters and Properties
+> ### Aliases: params
+> 
+> ### ** Examples
+> 
+> params("plsda")
+$plsda
+  method parameter       label  seq
+7  plsda     ncomp #Components TRUE
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("performance.metrics")
+> ### * performance.metrics
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: performance.metrics
+> ### Title: Performance Metrics of fs.stability or fs.ensembl.stability
+> ###   object
+> ### Aliases: performance.metrics
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> fits <- fs.stability(vars, 
++                      groups, 
++                      method = c("plsda", "rf"), 
++                      f = 10, 
++                      k = 3, 
++                      k.folds = 10, 
++                      verbose = 'none')
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loaded gbm 2.1.6
+Loading required package: cluster
+Loading required package: survival
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+Warning in training(data = trainData, method = method[i], tuneValue = as.data.frame(bestTune[[i]]),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+> 
+> performance.metrics(fits)
+                       plsda         rf
+Accuracy          0.76666667 0.90000000
+Kappa             0.53333333 0.80000000
+ROC.AUC           0.82333333 1.00000000
+Sensitivity       0.73333333 0.86666667
+Specificity       0.80000000 0.93333333
+Pos Pred Value    0.81481481 0.94444444
+Neg Pred Value    0.74883450 0.90476190
+Accuracy SD       0.07637626 0.10000000
+Kappa SD          0.15275252 0.20000000
+ROC.AUC SD        0.09609024 0.00000000
+Sensitivity SD    0.05773503 0.23094011
+Specificity SD    0.20000000 0.11547005
+Pos Pred Value SD 0.16972503 0.09622504
+Neg Pred Value SD 0.02100329 0.16495722
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:caTools’, ‘package:glmnet’, ‘package:Matrix’,
+  ‘package:pamr’, ‘package:survival’, ‘package:cluster’, ‘package:gbm’,
+  ‘package:e1071’, ‘package:randomForest’, ‘package:DiscriMiner’,
+  ‘package:plyr’, ‘package:foreach’
+
+> nameEx("perm.class")
+> ### * perm.class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: perm.class
+> ### Title: Monte Carlo Permutation of Model Performance
+> ### Aliases: perm.class
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> fits <- fs.stability(vars, 
++                      groups, 
++                      method = c("plsda", "rf"), 
++                      f = 10, 
++                      k = 3, 
++                      k.folds = 10, 
++                      verbose = 'none')
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loaded gbm 2.1.6
+Loading required package: cluster
+Loading required package: survival
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+Warning in training(data = trainData, method = method[i], tuneValue = as.data.frame(bestTune[[i]]),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+> 
+> perm.class(fits, vars, groups, "rf", k.folds=5,
++            metric="Accuracy", nperm=10)
+
+Permutation Results
+--------------------
+
+Metric = Accuracy
+P.Value = 1.000  p.value
+1   1.000
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:caTools’, ‘package:glmnet’, ‘package:Matrix’,
+  ‘package:pamr’, ‘package:survival’, ‘package:cluster’, ‘package:gbm’,
+  ‘package:e1071’, ‘package:randomForest’, ‘package:DiscriMiner’,
+  ‘package:plyr’, ‘package:foreach’
+
+> nameEx("perm.features")
+> ### * perm.features
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: perm.features
+> ### Title: Feature Selection via Monte Carlo Permutation
+> ### Aliases: perm.features
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> fits <- fs.stability(vars, 
++                      groups, 
++                      method = c("plsda", "rf"), 
++                      f = 10, 
++                      k = 3, 
++                      k.folds = 10, 
++                      verbose = 'none')
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loaded gbm 2.1.6
+Loading required package: cluster
+Loading required package: survival
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+Warning in training(data = trainData, method = method[i], tuneValue = as.data.frame(bestTune[[i]]),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+> 
+> # permute variables/features
+> perm.features(fits, vars, groups, "rf",
++               sig.level = .05, nperm = 10)
+
+Feature Permutation Results
+------------------------------
+
+9 features were significant at significance level 0.05
+Identified features:
+    features p.val
+V13      V13 0.000
+V17      V17 0.000
+V4        V4 0.000
+V41      V41 0.000
+V42      V42 0.000
+V5        V5 0.000
+V50      V50 0.000
+V8        V8 0.000
+V9        V9 0.000
+$sig.level
+[1] 0.05
+
+$num.sig.features
+[1] 9
+
+$sig.features
+    features p.val
+V13      V13 0.000
+V17      V17 0.000
+V4        V4 0.000
+V41      V41 0.000
+V42      V42 0.000
+V5        V5 0.000
+V50      V50 0.000
+V8        V8 0.000
+V9        V9 0.000
+
+$all.features
+    features p.val
+V1        V1 0.800
+V10      V10 0.900
+V11      V11 0.400
+V12      V12 0.400
+V13      V13 0.000
+V14      V14 0.300
+V15      V15 0.100
+V16      V16 0.500
+V17      V17 0.000
+V18      V18 0.300
+V19      V19 0.700
+V2        V2 0.500
+V20      V20 0.800
+V21      V21 0.500
+V22      V22 0.200
+V23      V23 0.400
+V24      V24 1.000
+V25      V25 0.200
+V26      V26 0.400
+V27      V27 0.200
+V28      V28 0.600
+V29      V29 0.800
+V3        V3 0.300
+V30      V30 0.200
+V31      V31 0.900
+V32      V32 0.700
+V33      V33 1.000
+V34      V34 0.100
+V35      V35 0.200
+V36      V36 0.500
+V37      V37 0.600
+V38      V38 0.100
+V39      V39 0.400
+V4        V4 0.000
+V40      V40 0.200
+V41      V41 0.000
+V42      V42 0.000
+V43      V43 1.000
+V44      V44 0.400
+V45      V45 0.100
+V46      V46 0.900
+V47      V47 0.200
+V48      V48 0.100
+V49      V49 0.500
+V5        V5 0.000
+V50      V50 0.000
+V6        V6 1.000
+V7        V7 0.800
+V8        V8 0.000
+V9        V9 0.000
+
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:caTools’, ‘package:glmnet’, ‘package:Matrix’,
+  ‘package:pamr’, ‘package:survival’, ‘package:cluster’, ‘package:gbm’,
+  ‘package:e1071’, ‘package:randomForest’, ‘package:DiscriMiner’,
+  ‘package:plyr’, ‘package:foreach’
+
+> nameEx("pof")
+> ### * pof
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pof
+> ### Title: Percentage of Overlapping Features
+> ### Aliases: pof
+> 
+> ### ** Examples
+> 
+> # Percent-Overlapping Features demo
+> v1 <- paste("Metabolite", seq(10), sep="_")
+> v2 <- sample(v1, 10)
+> pof(v1, v2)
+[1] 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("predictNewClasses")
+> ### * predictNewClasses
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: predictNewClasses
+> ### Title: Class Prediction
+> ### Aliases: predictNewClasses
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> fits <- fs.stability(vars, 
++                      groups, 
++                      method = c("plsda", "rf"), 
++                      f = 10, 
++                      k = 3, 
++                      k.folds = 10, 
++                      verbose = 'none')
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loaded gbm 2.1.6
+Loading required package: cluster
+Loading required package: survival
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+Warning in training(data = trainData, method = method[i], tuneValue = as.data.frame(bestTune[[i]]),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+Warning in training(data = trainData.new[[d]], method = method[d], tuneValue = as.data.frame(t(unlist(tunedModel.new[[d]]$bestTune))),  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+> 
+> newdata <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )$discr.mat
+solo last variable> 
+> orig.df <- data.frame(vars, groups)
+> 
+> # see what the PLSDA predicts for the new data
+> # NOTE, newdata does not require a .classes column
+> predictNewClasses(fits, "plsda", orig.df, newdata)
+Warning in training(data = orig.data, method, tuneValue = tVal, obsLevels = obsLevels,  :
+  PLSDA model contained only 1 component. 
+                PLSDA requires at least 2 components.
+                
+Model fit with 2 components
+    predictedClass
+1                B
+2                B
+3                A
+4                B
+5                B
+6                A
+7                A
+8                A
+9                B
+10               A
+11               B
+12               A
+13               A
+14               A
+15               A
+16               A
+17               A
+18               B
+19               A
+20               B
+21               A
+22               B
+23               B
+24               A
+25               B
+26               A
+27               A
+28               B
+29               B
+30               A
+31               A
+32               A
+33               A
+34               A
+35               A
+36               B
+37               A
+38               B
+39               A
+40               A
+41               B
+42               A
+43               A
+44               A
+45               A
+46               A
+47               B
+48               A
+49               B
+50               B
+51               B
+52               B
+53               B
+54               B
+55               A
+56               A
+57               B
+58               B
+59               B
+60               A
+61               A
+62               A
+63               A
+64               A
+65               B
+66               B
+67               A
+68               A
+69               B
+70               A
+71               B
+72               B
+73               B
+74               B
+75               B
+76               A
+77               B
+78               B
+79               B
+80               A
+81               B
+82               B
+83               A
+84               B
+85               B
+86               B
+87               A
+88               A
+89               A
+90               B
+91               A
+92               B
+93               B
+94               A
+95               B
+96               A
+97               B
+98               B
+99               A
+100              B
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:caTools’, ‘package:glmnet’, ‘package:Matrix’,
+  ‘package:pamr’, ‘package:survival’, ‘package:cluster’, ‘package:gbm’,
+  ‘package:e1071’, ‘package:randomForest’, ‘package:DiscriMiner’,
+  ‘package:plyr’, ‘package:foreach’
+
+> nameEx("sorensen")
+> ### * sorensen
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: sorensen
+> ### Title: Dice-Sorensen's Index
+> ### Aliases: sorensen
+> 
+> ### ** Examples
+> 
+> # Dice-Sorensen demo
+> v1 <- paste("Metabolite", seq(10), sep="_")
+> v2 <- sample(v1, 10)
+> sorensen(v1, v2)
+[1] 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("spearman")
+> ### * spearman
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: spearman
+> ### Title: Spearman Rank Correlation Coefficient
+> ### Aliases: spearman
+> 
+> ### ** Examples
+> 
+> # Spearman demo
+> v1 <- seq(10)
+> v2 <- sample(v1, 10)
+> spearman(v1, v2)
+[1] 0.1757576
+> 
+> 
+> 
+> cleanEx()
+> nameEx("svmrfeFeatureRanking")
+> ### * svmrfeFeatureRanking
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: svmrfeFeatureRanking
+> ### Title: SVM Recursive Feature Extraction (Binary)
+> ### Aliases: svmrfeFeatureRanking
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> # binary class feature ranking
+> svmrfeFeatureRanking(x = vars,
++                      y = groups, 
++                      c = 0.1,
++                      perc.rem = 10)
+ [1] 15 41 22 42  5 21  3  7 30  9  4 40 32  6 46 13  2 25 31 37 29 48 14  8 36
+[26] 18 39 24 19 12 27 17 38 47  1 45 44 49 11 50 16 26 35 20 34 23 10 43 28 33
+> 
+> 
+> 
+> cleanEx()
+> nameEx("svmrfeFeatureRankingForMulticlass")
+> ### * svmrfeFeatureRankingForMulticlass
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: svmrfeFeatureRankingForMulticlass
+> ### Title: SVM Recursive Feature Extraction (Multiclass)
+> ### Aliases: svmrfeFeatureRankingForMulticlass
+> 
+> ### ** Examples
+> 
+> dat.discr <- create.discr.matrix(
++     create.corr.matrix(
++         create.random.matrix(nvar = 50, 
++                              nsamp = 100, 
++                              st.dev = 1, 
++                              perturb = 0.2)),
++     D = 10,
++     num.groups=4
++ )
+solo last variable> 
+> vars <- dat.discr$discr.mat
+> groups <- dat.discr$classes
+> 
+> # multiclass
+> svmrfeFeatureRankingForMulticlass(x = vars,
++                                   y = groups, 
++                                   c = 0.1,
++                                   perc.rem = 10)
+ [1] 41 22  8 10 33 42 32 11 19 17 45  1 13 44 29 40  6 49 14 30  9 15 31 36 39
+[26] 47 16  7 18  5 28 23 21 34 38 25 50 48 26 43 37  4 20 12  2 24  3 46 27 35
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  45.734 2.986 49.084 0.001 0.006 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

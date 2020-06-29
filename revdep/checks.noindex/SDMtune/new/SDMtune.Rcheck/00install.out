@@ -1,0 +1,80 @@
+* installing *source* package ‘SDMtune’ ...
+** package ‘SDMtune’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+g++-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I'/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include' -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c RcppExports.cpp -o RcppExports.o
+In file included from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat.h:40,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/RcppCommon.h:70,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp.h:27,
+                 from RcppExports.cpp:4:
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat/tinyformat.h:928:21: warning: conversion from 'long unsigned int' to 'int' may change value [-Wconversion]
+  928 | detail::FormatListN<sizeof...(Args)> makeFormatList(const Args&... args)
+      |                     ^~~~~~~~~~~~~~~
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat/tinyformat.h: In function 'tinyformat::detail::FormatListN<sizeof... (Args)> tinyformat::makeFormatList(const Args& ...)':
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat/tinyformat.h:930:32: warning: conversion from 'long unsigned int' to 'int' may change value [-Wconversion]
+  930 |     return detail::FormatListN<sizeof...(args)>(args...);
+      |                                ^~~~~~~~~~~~~~~
+In file included from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/Vector.h:69,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp.h:40,
+                 from RcppExports.cpp:4:
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/String.h: In member function 'SEXPREC* Rcpp::String::get_sexp_impl() const':
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/String.h:376:62: warning: conversion from 'std::__cxx11::basic_string<char>::size_type' {aka 'long unsigned int'} to 'int' may change value [-Wconversion]
+  376 |             return Rf_mkCharLenCE(buffer.c_str(), buffer.size(), enc);
+      |                                                   ~~~~~~~~~~~^~
+g++-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I'/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include' -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c utils.cpp -o utils.o
+In file included from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat.h:40,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/RcppCommon.h:70,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp.h:27,
+                 from utils.cpp:2:
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat/tinyformat.h:928:21: warning: conversion from 'long unsigned int' to 'int' may change value [-Wconversion]
+  928 | detail::FormatListN<sizeof...(Args)> makeFormatList(const Args&... args)
+      |                     ^~~~~~~~~~~~~~~
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat/tinyformat.h: In function 'tinyformat::detail::FormatListN<sizeof... (Args)> tinyformat::makeFormatList(const Args& ...)':
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/utils/tinyformat/tinyformat.h:930:32: warning: conversion from 'long unsigned int' to 'int' may change value [-Wconversion]
+  930 |     return detail::FormatListN<sizeof...(args)>(args...);
+      |                                ^~~~~~~~~~~~~~~
+In file included from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/Vector.h:69,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp.h:40,
+                 from utils.cpp:2:
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/String.h: In member function 'SEXPREC* Rcpp::String::get_sexp_impl() const':
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/String.h:376:62: warning: conversion from 'std::__cxx11::basic_string<char>::size_type' {aka 'long unsigned int'} to 'int' may change value [-Wconversion]
+  376 |             return Rf_mkCharLenCE(buffer.c_str(), buffer.size(), enc);
+      |                                                   ~~~~~~~~~~~^~
+In file included from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/functions/functions.h:48,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/sugar.h:31,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp.h:78,
+                 from utils.cpp:2:
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/functions/clamp.h: In instantiation of 'Rcpp::sugar::Clamp_Primitive_Vector_Primitive<RTYPE, NA, T>::STORAGE Rcpp::sugar::Clamp_Primitive_Vector_Primitive<RTYPE, NA, T>::operator[](R_xlen_t) const [with int RTYPE = 14; bool NA = true; T = Rcpp::MatrixColumn<14>; Rcpp::sugar::Clamp_Primitive_Vector_Primitive<RTYPE, NA, T>::STORAGE = double; R_xlen_t = long int]':
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/vector/MatrixColumn.h:69:9:   required from 'Rcpp::MatrixColumn<RTYPE>& Rcpp::MatrixColumn<RTYPE>::operator=(const Rcpp::VectorBase<RHS_RTYPE, RHS_NA, RHS_T>&) [with int RT = 14; bool NA = true; T = Rcpp::sugar::Clamp_Primitive_Vector_Primitive<14, true, Rcpp::MatrixColumn<14> >; int RTYPE = 14]'
+utils.cpp:11:52:   required from here
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/functions/clamp.h:69:18: warning: conversion from 'R_xlen_t' {aka 'long int'} to 'int' may change value [-Wconversion]
+   69 |   return op( vec[i] ) ;
+      |                  ^
+In file included from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/operators/operators.h:32,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/sugar.h:30,
+                 from /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp.h:78,
+                 from utils.cpp:2:
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/operators/minus.h: In instantiation of 'double Rcpp::sugar::Minus_Vector_Primitive<14, NA, T>::operator[](R_xlen_t) const [with bool NA = true; T = Rcpp::MatrixColumn<14>; R_xlen_t = long int]':
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/operators/divides.h:263:14:   required from 'double Rcpp::sugar::Divides_Vector_Primitive<14, NA, T>::operator[](R_xlen_t) const [with bool NA = true; T = Rcpp::sugar::Minus_Vector_Primitive<14, true, Rcpp::MatrixColumn<14> >; R_xlen_t = long int]'
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/vector/MatrixColumn.h:69:9:   required from 'Rcpp::MatrixColumn<RTYPE>& Rcpp::MatrixColumn<RTYPE>::operator=(const Rcpp::VectorBase<RHS_RTYPE, RHS_NA, RHS_T>&) [with int RT = 14; bool NA = true; T = Rcpp::sugar::Divides_Vector_Primitive<14, true, Rcpp::sugar::Minus_Vector_Primitive<14, true, Rcpp::MatrixColumn<14> > >; int RTYPE = 14]'
+utils.cpp:14:62:   required from here
+/Users/b780620/Desktop/devel/gbm/revdep/library.noindex/SDMtune/Rcpp/include/Rcpp/sugar/operators/minus.h:262:15: warning: conversion from 'R_xlen_t' {aka 'long int'} to 'int' may change value [-Wconversion]
+  262 |    return lhs[i] - rhs ;
+      |               ^
+g++-9 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o SDMtune.so RcppExports.o utils.o -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+installing to /Users/b780620/Desktop/devel/gbm/revdep/checks.noindex/SDMtune/new/SDMtune.Rcheck/00LOCK-SDMtune/00new/SDMtune/libs
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (SDMtune)

@@ -1,0 +1,2418 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "CMA"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('CMA')
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("ElasticNetCMA")
+> ### * ElasticNetCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ElasticNetCMA
+> ### Title: Classfication and variable selection by the ElasticNet
+> ### Aliases: ElasticNetCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run ElasticNet - penalized logistic regression (no tuning)
+> result <- ElasticNetCMA(X=golubX, y=golubY, learnind=learnind, norm.fraction = 0.2, alpha=0.5)
+Loaded glmnet 4.0-2
+Warning in lognet(x, is.sparse, ix, jx, y, weights, offset, alpha, nobs,  :
+  one multinomial or binomial class has fewer than 8  observations; dangerous ground
+> show(result)
+binary Classification with Elastic Net
+number of predictions: 13
+> ftable(result)
+number of missclassifications:  2 
+missclassification rate:  0.154 
+sensitivity: 0.6 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 2 3
+
+> plot(result)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:glmnet’, ‘package:Matrix’
+
+> nameEx("GeneSelection")
+> ### * GeneSelection
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: GeneSelection
+> ### Title: General method for variable selection with various methods
+> ### Aliases: GeneSelection
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> # load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,-1])
+> ### Generate five different learningsets
+> set.seed(111)
+> five <- GenerateLearningsets(y=golubY, method = "CV", fold = 5, strat = TRUE)
+> ### simple t-test:
+> selttest <- GeneSelection(golubX, golubY, learningsets = five, method = "t.test")
+GeneSelection: iteration 1 
+GeneSelection: iteration 2 
+GeneSelection: iteration 3 
+GeneSelection: iteration 4 
+GeneSelection: iteration 5 
+> ### show result:
+> show(selttest)
+gene selection performed with 't.test'
+scheme used :'pairwise'
+number of genes:  3051 
+number of different learningsets:  5 
+> toplist(selttest, k = 10, iter = 1)
+top  10  genes for iteration  1 
+ 
+   index importance
+1   2663   9.021540
+2    848   8.924611
+3   1995   8.922446
+4    988   8.743519
+5   1037   8.595477
+6    829   8.367874
+7    849   8.300285
+8   2670   7.703925
+9   2664   7.586209
+10  1417   7.381138
+> plot(selttest, iter = 1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("GenerateLearningsets")
+> ### * GenerateLearningsets
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: GenerateLearningsets
+> ### Title: Repeated Divisions into learn- and tets sets
+> ### Aliases: GenerateLearningsets
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> # LOOCV
+> loo <- GenerateLearningsets(n=40, method="LOOCV")
+> show(loo)
+learningset mode:  LOOCV 
+number of learningsets:  40 
+(maximum) number of observations per learning set:  39 
+> # five-fold-CV
+> CV5 <- GenerateLearningsets(n=40, method="CV", fold=5)
+> show(loo)
+learningset mode:  LOOCV 
+number of learningsets:  40 
+(maximum) number of observations per learning set:  39 
+> # MCCV
+> mccv <- GenerateLearningsets(n=40, method = "MCCV", niter=3, ntrain=30)
+> show(mccv)
+learningset mode:  MCCV 
+number of learningsets:  3 
+(maximum) number of observations per learning set:  30 
+> # Bootstrap
+> boot <- GenerateLearningsets(n=40, method="bootstrap", niter=3)
+> # stratified five-fold-CV
+> set.seed(113)
+> classlabels <- sample(1:3, size = 50, replace = TRUE, prob = c(0.3, 0.5, 0.2))
+> CV5strat <- GenerateLearningsets(y = classlabels, method="CV", fold=5, strat = TRUE)
+> show(CV5strat)
+learningset mode:  stratified CV 
+number of learningsets:  5 
+(maximum) number of observations per learning set:  41 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("LassoCMA")
+> ### * LassoCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LassoCMA
+> ### Title: L1 penalized logistic regression
+> ### Aliases: LassoCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run L1 penalized logistic regression (no tuning)
+> lassoresult <- LassoCMA(X=golubX, y=golubY, learnind=learnind, norm.fraction = 0.2)
+Loaded glmnet 4.0-2
+Warning in lognet(x, is.sparse, ix, jx, y, weights, offset, alpha, nobs,  :
+  one multinomial or binomial class has fewer than 8  observations; dangerous ground
+> show(lassoresult)
+binary Classification with Lasso
+number of predictions: 13
+> ftable(lassoresult)
+number of missclassifications:  1 
+missclassification rate:  0.077 
+sensitivity: 0.8 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 1 4
+
+> plot(lassoresult)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:glmnet’, ‘package:Matrix’
+
+> nameEx("Planarplot")
+> ### * Planarplot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Planarplot
+> ### Title: Visualize Separability of different classes
+> ### Aliases: Planarplot
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### simple linear discrimination for the golub data:
+> data(golub)
+> golubY <- golub[,1]
+> golubX <- as.matrix(golub[,-1])
+> golubn <- nrow(golubX)
+> set.seed(111)
+> learnind <- sample(golubn, size=floor(2/3*golubn))
+> Planarplot(X=golubX, y=golubY, learnind=learnind, predind=c(2,4),
++            classifier=ldaCMA)
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("classification")
+> ### * classification
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: classification
+> ### Title: General method for classification with various methods
+> ### Aliases: classification
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### a simple k-nearest neighbour example
+> ### datasets
+> ## Not run: 
+> ##D plot(x)
+> ##D data(golub)
+> ##D golubY <- golub[,1]
+> ##D golubX <- as.matrix(golub[,-1])
+> ##D ### learningsets
+> ##D set.seed(111)
+> ##D lset <- GenerateLearningsets(y=golubY, method = "CV", fold=5, strat =TRUE)
+> ##D ### 1. GeneSelection
+> ##D selttest <- GeneSelection(golubX, golubY, learningsets = lset, method = "t.test")
+> ##D ### 2. tuning
+> ##D tunek <- tune(golubX, golubY, learningsets = lset, genesel = selttest, nbgene = 20, classifier = knnCMA)
+> ##D ### 3. classification
+> ##D knn1 <- classification(golubX, golubY, learningsets = lset, genesel = selttest,
+> ##D                        tuneres = tunek, nbgene = 20, classifier = knnCMA)
+> ##D ### steps 1.-3. combined into one step:
+> ##D knn2 <- classification(golubX, golubY, learningsets = lset,
+> ##D                        genesellist = list(method  = "t.test"), classifier = knnCMA,
+> ##D                        tuninglist = list(grids = list(k = c(1:8))), nbgene = 20)
+> ##D ### show and analyze results:
+> ##D knnjoin <- join(knn2)
+> ##D show(knn2)
+> ##D eval <- evaluation(knn2, measure = "misclassification")
+> ##D show(eval)
+> ##D summary(eval)
+> ##D boxplot(eval)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("compBoostCMA")
+> ### * compBoostCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: compBoostCMA
+> ### Title: Componentwise Boosting
+> ### Aliases: compBoostCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+>  ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run componentwise (logit)-boosting (not tuned)
+> result <- compBoostCMA(X=golubX, y=golubY, learnind=learnind, mstop = 500)
+> ### show results
+> show(result)
+binary Classification with Componentwise Boosting
+number of predictions: 13
+> ftable(result)
+number of missclassifications:  0 
+missclassification rate:  0 
+sensitivity: 1 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 0 5
+
+> plot(result)
+> ### multiclass example:
+> ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression
+> khanX <- as.matrix(khan[,-1])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(ratio*length(khanY)))
+> ### run componentwise multivariate (logit)-boosting (not tuned)
+> result <- compBoostCMA(X=khanX, y=khanY, learnind=learnind, mstop = 1000)
+> ### show results
+> show(result)
+multiclass Classification with Componentwise Boosting
+number of predictions: 21
+> ftable(result)
+number of missclassifications:  2 
+missclassification rate:  0.095 
+    predicted
+true 0 1 2 3
+   0 2 0 0 0
+   1 0 8 1 0
+   2 0 0 5 0
+   3 0 1 0 4
+
+> plot(result)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("compare")
+> ### * compare
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: compare
+> ### Title: Compare different classifiers
+> ### Aliases: compare
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ### compare the performance of several discriminant analysis methods
+> ##D ### for the Khan dataset:
+> ##D data(khan)
+> ##D khanX <- as.matrix(khan[,-1])
+> ##D khanY <- khan[,1]
+> ##D set.seed(27611)
+> ##D fiveCV10iter <- GenerateLearningsets(y=khanY, method = "CV", fold = 5, niter = 2, strat = TRUE)
+> ##D ### candidate methods:  DLDA, LDA, QDA, pls_LDA, sclda
+> ##D class_dlda <- classification(X = khanX, y=khanY, learningsets = fiveCV10iter, classifier = dldaCMA)
+> ##D ### peform GeneSlection for LDA, FDA, QDA (using F-Tests):
+> ##D genesel_da <- GeneSelection(X=khanX, y=khanY, learningsets = fiveCV10iter, method = "f.test")
+> ##D ###
+> ##D class_lda <- classification(X = khanX, y=khanY, learningsets = fiveCV10iter, classifier = ldaCMA, genesel= genesel_da, nbgene = 10)
+> ##D 
+> ##D class_qda <- classification(X = khanX, y=khanY, learningsets = fiveCV10iter, classifier = qdaCMA, genesel = genesel_da, nbgene = 2)
+> ##D 
+> ##D ### We now make a comparison concerning the performance (sev. measures):
+> ##D ### first, collect in a list:
+> ##D dalike <- list(class_dlda, class_lda, class_qda)
+> ##D ### use pre-defined compare function:
+> ##D comparison <- compare(dalike, plot = TRUE, measure = c("misclassification", "brier score", "average probability"))
+> ##D print(comparison)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dldaCMA")
+> ### * dldaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dldaCMA
+> ### Title: Diagonal Discriminant Analysis
+> ### Aliases: dldaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run DLDA
+> dldaresult <- dldaCMA(X=golubX, y=golubY, learnind=learnind)
+> ### show results
+> show(dldaresult)
+binary Classification with diagonal discriminant analysis
+number of predictions: 13
+> ftable(dldaresult)
+number of missclassifications:  2 
+missclassification rate:  0.154 
+sensitivity: 1 
+specificity: 0.75 
+    predicted
+true 0 1
+   0 6 2
+   1 0 5
+
+> plot(dldaresult)
+> ### multiclass example:
+> ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression
+> khanX <- as.matrix(khan[,-1])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(ratio*length(khanY)))
+> ### run LDA
+> ldaresult <- dldaCMA(X=khanX, y=khanY, learnind=learnind)
+> ### show results
+> show(dldaresult)
+binary Classification with diagonal discriminant analysis
+number of predictions: 13
+> ftable(dldaresult)
+number of missclassifications:  2 
+missclassification rate:  0.154 
+sensitivity: 1 
+specificity: 0.75 
+    predicted
+true 0 1
+   0 6 2
+   1 0 5
+
+> plot(dldaresult)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("evaluation")
+> ### * evaluation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: evaluation
+> ### Title: Evaluation of classifiers
+> ### Aliases: evaluation
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### simple linear discriminant analysis example using bootstrap datasets:
+> ### datasets:
+> data(golub)
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,2:11])
+> ### generate 25 bootstrap datasets
+> set.seed(333)
+> bootds <- GenerateLearningsets(y = golubY, method = "bootstrap", ntrain = 30, niter = 10, strat = TRUE)
+> ### run classification()
+> ldalist <- classification(X=golubX, y=golubY, learningsets = bootds, classifier=ldaCMA)
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+> ### Evaluation:
+> eval_iter <- evaluation(ldalist, scheme = "iter")
+> eval_obs <- evaluation(ldalist, scheme = "obs")
+> show(eval_iter)
+evaluated method: 'LDA'
+scheme used :'iterationwise'
+peformance measure: 'misclassification'
+mean peformance is 0.354 
+with a standard error of 0.037 
+> show(eval_obs)
+evaluated method: 'LDA'
+scheme used :'observationwise'
+peformance measure: 'misclassification'
+mean peformance is 0.353 
+with a standard error of 0.061 
+> summary(eval_iter)
+evaluated method: 'LDA'
+scheme used :'iterationwise'
+peformance measure: 'misclassification'
+five-point-summary: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.1818  0.2893  0.3438  0.3539  0.4323  0.5714 
+> summary(eval_obs)
+evaluated method: 'LDA'
+scheme used :'observationwise'
+peformance measure: 'misclassification'
+five-point-summary: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+ 0.0000  0.0000  0.2500  0.3532  0.6667  1.0000       1 
+> ### auc with boxplot
+> eval_auc <- evaluation(ldalist, scheme = "iter", measure = "auc")
+> boxplot(eval_auc)
+> ### which observations have often been misclassified ?
+> obsinfo(eval_obs, threshold = 0.75)
+evaluated method: 'LDA'
+scheme used :'observationwise'
+peformance measure: 'misclassification'
+ 
+ 
+observations consistently misclassified: 
+ 
+  index average misclassification
+1     2                     1.000
+2    18                     0.833
+3    21                     1.000
+4    28                     1.000
+5    30                     0.750
+6    35                     1.000
+7    37                     0.750
+8    38                     1.000
+
+ 
+observations not classified at all: 
+ 
+3
+ 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("fdaCMA")
+> ### * fdaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fdaCMA
+> ### Title: Fisher's Linear Discriminant Analysis
+> ### Aliases: fdaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,2:11])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run FDA
+> fdaresult <- fdaCMA(X=golubX, y=golubY, learnind=learnind, comp = 1, plot = TRUE)
+> ### show results
+> show(fdaresult)
+binary Classification with Fisher's linear discriminant
+number of predictions: 13
+> ftable(fdaresult)
+number of missclassifications:  6 
+missclassification rate:  0.462 
+sensitivity: 0.8 
+specificity: 0.375 
+    predicted
+true 0 1
+   0 3 5
+   1 1 4
+
+> plot(fdaresult)
+> ### multiclass example:
+> ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression from first 10 genes
+> khanX <- as.matrix(khan[,2:11])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(ratio*length(khanY)))
+> ### run FDA
+> fdaresult <- fdaCMA(X=khanX, y=khanY, learnind=learnind, comp = 2, plot = TRUE)
+> ### show results
+> show(fdaresult)
+multiclass Classification with Fisher's linear discriminant
+number of predictions: 21
+> ftable(fdaresult)
+number of missclassifications:  7 
+missclassification rate:  0.333 
+    predicted
+true 0 1 2 3
+   0 2 0 0 0
+   1 0 5 4 0
+   2 0 1 3 1
+   3 0 1 0 4
+
+> plot(fdaresult)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flexdaCMA")
+> ### * flexdaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flexdaCMA
+> ### Title: Flexible Discriminant Analysis
+> ### Aliases: flexdaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 5 genes
+> golubX <- as.matrix(golub[,2:6])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run flexible Discriminant Analysis
+> result <- flexdaCMA(X=golubX, y=golubY, learnind=learnind, comp = 1)
+This is mgcv 1.8-31. For overview type 'help("mgcv-package")'.
+> ### show results
+> show(result)
+binary Classification with flexible discriminant analysis
+number of predictions: 13
+> ftable(result)
+number of missclassifications:  6 
+missclassification rate:  0.462 
+sensitivity: 0.8 
+specificity: 0.375 
+    predicted
+true 0 1
+   0 3 5
+   1 1 4
+
+> plot(result)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mgcv’, ‘package:nlme’
+
+> nameEx("gbmCMA")
+> ### * gbmCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gbmCMA
+> ### Title: Tree-based Gradient Boosting
+> ### Aliases: gbmCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run tree-based gradient boosting (no tuning)
+> gbmresult <- gbmCMA(X=golubX, y=golubY, learnind=learnind, n.trees = 500)
+Loaded gbm 2.1.5
+> show(gbmresult)
+binary Classification with Tree-based boosting
+number of predictions: 13
+> ftable(gbmresult)
+number of missclassifications:  3 
+missclassification rate:  0.231 
+sensitivity: 0.4 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 3 2
+
+> plot(gbmresult)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:gbm’
+
+> nameEx("golub")
+> ### * golub
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: golub
+> ### Title: ALL/AML dataset of Golub et al. (1999)
+> ### Aliases: golub
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(golub)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("khan")
+> ### * khan
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: khan
+> ### Title: Small blue round cell tumor dataset of Khan et al. (2001)
+> ### Aliases: khan
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(khan)
+> 
+> 
+> cleanEx()
+> nameEx("knnCMA")
+> ### * knnCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: knnCMA
+> ### Title: Nearest Neighbours
+> ### Aliases: knnCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run k-nearest neighbours
+> result <- knnCMA(X=golubX, y=golubY, learnind=learnind, k = 3)
+> ### show results
+> show(result)
+binary Classification with k nearest neighbours
+number of predictions: 13
+> ftable(result)
+number of missclassifications:  1 
+missclassification rate:  0.077 
+sensitivity: 1 
+specificity: 0.875 
+    predicted
+true 0 1
+   0 7 1
+   1 0 5
+
+> ### multiclass example:
+> ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression
+> khanX <- as.matrix(khan[,-1])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(ratio*length(khanY)))
+> ### run knn
+> result <- knnCMA(X=khanX, y=khanY, learnind=learnind, k = 5)
+> ### show results
+> show(result)
+multiclass Classification with k nearest neighbours
+number of predictions: 21
+> ftable(result)
+number of missclassifications:  7 
+missclassification rate:  0.333 
+    predicted
+true 0 1 2 3
+   0 2 0 0 0
+   1 2 5 0 2
+   2 0 0 4 1
+   3 0 2 0 3
+
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:class’
+
+> nameEx("ldaCMA")
+> ### * ldaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ldaCMA
+> ### Title: Linear Discriminant Analysis
+> ### Aliases: ldaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ### load Golub AML/ALL data
+> ##D data(golub)
+> ##D ### extract class labels
+> ##D golubY <- golub[,1]
+> ##D ### extract gene expression from first 10 genes
+> ##D golubX <- as.matrix(golub[,2:11])
+> ##D ### select learningset
+> ##D ratio <- 2/3
+> ##D set.seed(111)
+> ##D learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ##D ### run LDA
+> ##D ldaresult <- ldaCMA(X=golubX, y=golubY, learnind=learnind)
+> ##D ### show results
+> ##D show(ldaresult)
+> ##D ftable(ldaresult)
+> ##D plot(ldaresult)
+> ##D ### multiclass example:
+> ##D ### load Khan data
+> ##D data(khan)
+> ##D ### extract class labels
+> ##D khanY <- khan[,1]
+> ##D ### extract gene expression from first 10 genes
+> ##D khanX <- as.matrix(khan[,2:11])
+> ##D ### select learningset
+> ##D set.seed(111)
+> ##D learnind <- sample(length(khanY), size=floor(ratio*length(khanY)))
+> ##D ### run LDA
+> ##D ldaresult <- ldaCMA(X=khanX, y=khanY, learnind=learnind)
+> ##D ### show results
+> ##D show(ldaresult)
+> ##D ftable(ldaresult)
+> ##D plot(ldaresult)
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("nnetCMA")
+> ### * nnetCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: nnetCMA
+> ### Title: Feed-forward Neural Networks
+> ### Aliases: nnetCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,2:11])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run nnet (not tuned)
+> nnetresult <- nnetCMA(X=golubX, y=golubY, learnind=learnind, size = 3, decay = 0.01)
+> ### show results
+> show(nnetresult)
+binary Classification with Feed-forward neural network
+number of predictions: 13
+> ftable(nnetresult)
+number of missclassifications:  4 
+missclassification rate:  0.308 
+sensitivity: 0.8 
+specificity: 0.625 
+    predicted
+true 0 1
+   0 5 3
+   1 1 4
+
+> plot(nnetresult)
+> ### in the space of eigengenes (not tuned)
+> golubXfull <-  as.matrix(golubX[,-1])
+> nnetresult <- nnetCMA(X=golubXfull, y=golubY, learnind = learnind, eigengenes = TRUE,
++                       size = 3, decay = 0.01)
+> ### show results
+> show(nnetresult)
+binary Classification with Feed-forward neural network
+number of predictions: 13
+> ftable(nnetresult)
+number of missclassifications:  4 
+missclassification rate:  0.308 
+sensitivity: 0.6 
+specificity: 0.75 
+    predicted
+true 0 1
+   0 6 2
+   1 2 3
+
+> plot(nnetresult)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:nnet’
+
+> nameEx("pknnCMA")
+> ### * pknnCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pknnCMA
+> ### Title: Probabilistic Nearest Neighbours
+> ### Aliases: pknnCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run probabilistic k-nearest neighbours
+> result <- pknnCMA(X=golubX, y=golubY, learnind=learnind, k = 3)
+> ### show results
+> show(result)
+binary Classification with probabilistic k nearest neighbours
+number of predictions: 13
+> ftable(result)
+number of missclassifications:  0 
+missclassification rate:  0 
+sensitivity: 1 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 0 5
+
+> plot(result)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:class’
+
+> nameEx("plrCMA")
+> ### * plrCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plrCMA
+> ### Title: L2 penalized logistic regression
+> ### Aliases: plrCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run penalized logistic regression (no tuning)
+> plrresult <- plrCMA(X=golubX, y=golubY, learnind=learnind)
+> ### show results
+> show(plrresult)
+binary Classification with penalized logistic regression
+number of predictions: 13
+> ftable(plrresult)
+number of missclassifications:  0 
+missclassification rate:  0 
+sensitivity: 1 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 0 5
+
+> plot(plrresult)
+> ### multiclass example:
+> ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression from first 10 genes
+> khanX <- as.matrix(khan[,-1])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(ratio*length(khanY)))
+> ### run penalized logistic regression (no tuning)
+> plrresult <- plrCMA(X=khanX, y=khanY, learnind=learnind)
+> ### show results
+> show(plrresult)
+multiclass Classification with penalized logistic regression
+number of predictions: 21
+> ftable(plrresult)
+number of missclassifications:  0 
+missclassification rate:  0 
+    predicted
+true 0 1 2 3
+   0 2 0 0 0
+   1 0 9 0 0
+   2 0 0 5 0
+   3 0 0 0 5
+
+> plot(plrresult)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pls_ldaCMA")
+> ### * pls_ldaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pls_ldaCMA
+> ### Title: Partial Least Squares combined with Linear Discriminant Analysis
+> ### Aliases: pls_ldaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ### load Khan data
+> ##D data(khan)
+> ##D ### extract class labels
+> ##D khanY <- khan[,1]
+> ##D ### extract gene expression
+> ##D khanX <- as.matrix(khan[,-1])
+> ##D ### select learningset
+> ##D set.seed(111)
+> ##D learnind <- sample(length(khanY), size=floor(2/3*length(khanY)))
+> ##D ### run Shrunken Centroids classfier, without tuning
+> ##D plsresult <- pls_ldaCMA(X=khanX, y=khanY, learnind=learnind, comp = 4)
+> ##D ### show results
+> ##D show(plsresult)
+> ##D ftable(plsresult)
+> ##D plot(plsresult)
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("pls_lrCMA")
+> ### * pls_lrCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pls_lrCMA
+> ### Title: Partial Least Squares followed by logistic regression
+> ### Aliases: pls_lrCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run PLS, combined with logistic regression
+> result <- pls_lrCMA(X=golubX, y=golubY, learnind=learnind)
+For any news related to the 'plsgenomics' package (update, corrected bugs), please check http://thoth.inrialpes.fr/people/gdurif/
+C++ based sparse PLS routines will soon be available on the CRAN in the new 'fastPLS' package.
+> ### show results
+> show(result)
+binary Classification with partial least squares + logistic regression
+number of predictions: 13
+> ftable(result)
+number of missclassifications:  0 
+missclassification rate:  0 
+sensitivity: 1 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 0 5
+
+> plot(result)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:plsgenomics’
+
+> nameEx("pls_rfCMA")
+> ### * pls_rfCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pls_rfCMA
+> ### Title: Partial Least Squares followed by random forests
+> ### Aliases: pls_rfCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run PLS, combined with Random Forest
+> #result <- pls_rfCMA(X=golubX, y=golubY, learnind=learnind)
+> ### show results
+> #show(result)
+> #ftable(result)
+> #plot(result)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pnnCMA")
+> ### * pnnCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pnnCMA
+> ### Title: Probabilistic Neural Networks
+> ### Aliases: pnnCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 10 genes
+> golubX <- as.matrix(golub[,2:11])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run PNN
+> pnnresult <- pnnCMA(X=golubX, y=golubY, learnind=learnind, sigma = 3)
+> ### show results
+> show(pnnresult)
+binary Classification with probabilistic neural networks
+number of predictions: 13
+> ftable(pnnresult)
+number of missclassifications:  12 
+missclassification rate:  0.923 
+sensitivity: 0.2 
+specificity: 0 
+    predicted
+true 0 1
+   0 0 8
+   1 4 1
+
+> plot(pnnresult)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("prediction")
+> ### * prediction
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: prediction
+> ### Title: General method for predicting classes of new observations
+> ### Aliases: prediction
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### a simple k-nearest neighbour example
+> ### datasets
+> ## Not run: 
+> ##D plot(x)
+> ##D data(golub)
+> ##D golubY <- golub[,1]
+> ##D golubX <- as.matrix(golub[,-1])
+> ##D ###Splitting data into training and test set
+> ##D X.tr<-golubX[1:30]
+> ##D X.new<-golubX[31:39]
+> ##D y.tr<-golubY[1:30]
+> ##D ### 1. GeneSelection
+> ##D selttest <- GeneSelection(X=X.tr, y=y.tr, method = "t.test")
+> ##D ### 2. tuning
+> ##D tunek <- tune(X.tr, y.tr, genesel = selttest, nbgene = 20, classifier = knnCMA)
+> ##D ### 3. classification
+> ##D pred <- prediction(X.tr=X.tr,y.tr=y.tr,X.new=X.new, genesel = selttest,
+> ##D                        tuneres = tunek, nbgene = 20, classifier = knnCMA)
+> ##D ### show and analyze results:
+> ##D show(pred)
+> ##D 
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("qdaCMA")
+> ### * qdaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: qdaCMA
+> ### Title: Quadratic Discriminant Analysis
+> ### Aliases: qdaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression from first 3 genes
+> golubX <- as.matrix(golub[,2:4])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(112)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run QDA
+> qdaresult <- qdaCMA(X=golubX, y=golubY, learnind=learnind)
+> ### show results
+> show(qdaresult)
+binary Classification with quadratic discriminant analysis
+number of predictions: 13
+> ftable(qdaresult)
+number of missclassifications:  3 
+missclassification rate:  0.231 
+sensitivity: 0.25 
+specificity: 1 
+    predicted
+true 0 1
+   0 9 0
+   1 3 1
+
+> plot(qdaresult)
+> ### multiclass example:
+> ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression from first 4 genes
+> khanX <- as.matrix(khan[,2:5])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(ratio*length(khanY)))
+> ### run QDA
+> qdaresult <- qdaCMA(X=khanX, y=khanY, learnind=learnind)
+> ### show results
+> show(qdaresult)
+multiclass Classification with quadratic discriminant analysis
+number of predictions: 21
+> ftable(qdaresult)
+number of missclassifications:  7 
+missclassification rate:  0.333 
+    predicted
+true 0 1 2 3
+   0 0 2 0 0
+   1 0 8 0 1
+   2 0 2 1 2
+   3 0 0 0 5
+
+> plot(qdaresult)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("rfCMA")
+> ### * rfCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rfCMA
+> ### Title: Classification based on Random Forests
+> ### Aliases: rfCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+>  ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression
+> khanX <- as.matrix(khan[,-1])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(2/3*length(khanY)))
+> ### run random Forest
+> #rfresult <- rfCMA(X=khanX, y=khanY, learnind=learnind, varimp = FALSE)
+> ### show results
+> #show(rfresult)
+> #ftable(rfresult)
+> #plot(rfresult)
+> 
+> 
+> cleanEx()
+> nameEx("scdaCMA")
+> ### * scdaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scdaCMA
+> ### Title: Shrunken Centroids Discriminant Analysis
+> ### Aliases: scdaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Khan data
+> data(khan)
+> ### extract class labels
+> khanY <- khan[,1]
+> ### extract gene expression
+> khanX <- as.matrix(khan[,-1])
+> ### select learningset
+> set.seed(111)
+> learnind <- sample(length(khanY), size=floor(2/3*length(khanY)))
+> ### run Shrunken Centroids classfier, without tuning
+> scdaresult <- scdaCMA(X=khanX, y=khanY, learnind=learnind)
+> ### show results
+> show(scdaresult)
+multiclass Classification with shrunken centroids discriminant analysis
+number of predictions: 21
+> ftable(scdaresult)
+number of missclassifications:  0 
+missclassification rate:  0 
+    predicted
+true 0 1 2 3
+   0 2 0 0 0
+   1 0 9 0 0
+   2 0 0 5 0
+   3 0 0 0 5
+
+> plot(scdaresult)
+> 
+> 
+> cleanEx()
+> nameEx("shrinkldaCMA")
+> ### * shrinkldaCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: shrinkldaCMA
+> ### Title: Shrinkage linear discriminant analysis
+> ### Aliases: shrinkldaCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run  shrinkage-LDA
+> result <- shrinkldaCMA(X=golubX, y=golubY, learnind=learnind)
+Warning in sweep(x, 2L, center) :
+  STATS is longer than the extent of 'dim(x)[MARGIN]'
+Warning in sweep(x, 2L, center) :
+  STATS is longer than the extent of 'dim(x)[MARGIN]'
+> ### show results
+> show(result)
+binary Classification with shrinkage linear discriminant analysis
+number of predictions: 13
+> ftable(result)
+number of missclassifications:  3 
+missclassification rate:  0.231 
+sensitivity: 0.4 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 3 2
+
+> plot(result)
+> 
+> 
+> cleanEx()
+
+detaching ‘package:corpcor’
+
+> nameEx("svmCMA")
+> ### * svmCMA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: svmCMA
+> ### Title: Support Vector Machine
+> ### Aliases: svmCMA
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ### load Golub AML/ALL data
+> data(golub)
+> ### extract class labels
+> golubY <- golub[,1]
+> ### extract gene expression
+> golubX <- as.matrix(golub[,-1])
+> ### select learningset
+> ratio <- 2/3
+> set.seed(111)
+> learnind <- sample(length(golubY), size=floor(ratio*length(golubY)))
+> ### run _untuned_linear SVM
+> svmresult <- svmCMA(X=golubX, y=golubY, learnind=learnind,probability=TRUE)
+
+Attaching package: ‘e1071’
+
+The following object is masked _by_ ‘package:CMA’:
+
+    tune
+
+> ### show results
+> show(svmresult)
+binary Classification with support vector machine
+number of predictions: 13
+> ftable(svmresult)
+number of missclassifications:  0 
+missclassification rate:  0 
+sensitivity: 1 
+specificity: 1 
+    predicted
+true 0 1
+   0 8 0
+   1 0 5
+
+> plot(svmresult)
+> 
+> 
+> cleanEx()
+
+detaching ‘package:e1071’
+
+> nameEx("tune")
+> ### * tune
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tune
+> ### Title: Hyperparameter tuning for classifiers
+> ### Aliases: tune
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ### simple example for a one-dimensional grid, using compBoostCMA.
+> ##D ### dataset
+> ##D data(golub)
+> ##D golubY <- golub[,1]
+> ##D golubX <- as.matrix(golub[,-1])
+> ##D ### learningsets
+> ##D set.seed(111)
+> ##D lset <- GenerateLearningsets(y=golubY, method = "CV", fold=5, strat =TRUE)
+> ##D ### tuning after gene selection with the t.test
+> ##D tuneres <- tune(X = golubX, y = golubY, learningsets = lset,
+> ##D               genesellist = list(method = "t.test"),
+> ##D               classifier=compBoostCMA, nbgene = 100,
+> ##D               grids = list(mstop = c(50, 100, 250, 500, 1000)))
+> ##D ### inspect results
+> ##D show(tuneres)
+> ##D best(tuneres)
+> ##D plot(tuneres, iter = 3)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("weighted_mcr")
+> ### * weighted_mcr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: weighted.mcr
+> ### Title: Tuning / Selection bias correction
+> ### Aliases: weighted.mcr
+> ### Keywords: tuning bias, selection bias, corrected misclassification rate
+> 
+> ### ** Examples
+> 
+> #inputs
+> classifiers<-rep('knnCMA',7)
+> nbgenes<-rep(50,7)
+> parameters<-c('k=1','k=3','k=5','k=7','k=9','k=11','k=13')
+> portion<-0.8
+> niter<-100
+> data(golub)
+> X<-as.matrix(golub[,-1])         
+> y<-golub[,1]
+> sel.method<-'t.test'
+> #function call
+> wmcr<-weighted.mcr(classifiers=classifiers,parameters=parameters,nbgenes=nbgenes,sel.method=sel.method,X=X,y=y,portion=portion,niter=niter)
+GeneSelection: iteration 1 
+GeneSelection: iteration 2 
+GeneSelection: iteration 3 
+GeneSelection: iteration 4 
+GeneSelection: iteration 5 
+GeneSelection: iteration 6 
+GeneSelection: iteration 7 
+GeneSelection: iteration 8 
+GeneSelection: iteration 9 
+GeneSelection: iteration 10 
+GeneSelection: iteration 11 
+GeneSelection: iteration 12 
+GeneSelection: iteration 13 
+GeneSelection: iteration 14 
+GeneSelection: iteration 15 
+GeneSelection: iteration 16 
+GeneSelection: iteration 17 
+GeneSelection: iteration 18 
+GeneSelection: iteration 19 
+GeneSelection: iteration 20 
+GeneSelection: iteration 21 
+GeneSelection: iteration 22 
+GeneSelection: iteration 23 
+GeneSelection: iteration 24 
+GeneSelection: iteration 25 
+GeneSelection: iteration 26 
+GeneSelection: iteration 27 
+GeneSelection: iteration 28 
+GeneSelection: iteration 29 
+GeneSelection: iteration 30 
+GeneSelection: iteration 31 
+GeneSelection: iteration 32 
+GeneSelection: iteration 33 
+GeneSelection: iteration 34 
+GeneSelection: iteration 35 
+GeneSelection: iteration 36 
+GeneSelection: iteration 37 
+GeneSelection: iteration 38 
+GeneSelection: iteration 39 
+GeneSelection: iteration 40 
+GeneSelection: iteration 41 
+GeneSelection: iteration 42 
+GeneSelection: iteration 43 
+GeneSelection: iteration 44 
+GeneSelection: iteration 45 
+GeneSelection: iteration 46 
+GeneSelection: iteration 47 
+GeneSelection: iteration 48 
+GeneSelection: iteration 49 
+GeneSelection: iteration 50 
+GeneSelection: iteration 51 
+GeneSelection: iteration 52 
+GeneSelection: iteration 53 
+GeneSelection: iteration 54 
+GeneSelection: iteration 55 
+GeneSelection: iteration 56 
+GeneSelection: iteration 57 
+GeneSelection: iteration 58 
+GeneSelection: iteration 59 
+GeneSelection: iteration 60 
+GeneSelection: iteration 61 
+GeneSelection: iteration 62 
+GeneSelection: iteration 63 
+GeneSelection: iteration 64 
+GeneSelection: iteration 65 
+GeneSelection: iteration 66 
+GeneSelection: iteration 67 
+GeneSelection: iteration 68 
+GeneSelection: iteration 69 
+GeneSelection: iteration 70 
+GeneSelection: iteration 71 
+GeneSelection: iteration 72 
+GeneSelection: iteration 73 
+GeneSelection: iteration 74 
+GeneSelection: iteration 75 
+GeneSelection: iteration 76 
+GeneSelection: iteration 77 
+GeneSelection: iteration 78 
+GeneSelection: iteration 79 
+GeneSelection: iteration 80 
+GeneSelection: iteration 81 
+GeneSelection: iteration 82 
+GeneSelection: iteration 83 
+GeneSelection: iteration 84 
+GeneSelection: iteration 85 
+GeneSelection: iteration 86 
+GeneSelection: iteration 87 
+GeneSelection: iteration 88 
+GeneSelection: iteration 89 
+GeneSelection: iteration 90 
+GeneSelection: iteration 91 
+GeneSelection: iteration 92 
+GeneSelection: iteration 93 
+GeneSelection: iteration 94 
+GeneSelection: iteration 95 
+GeneSelection: iteration 96 
+GeneSelection: iteration 97 
+GeneSelection: iteration 98 
+GeneSelection: iteration 99 
+GeneSelection: iteration 100 
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+iteration 11 
+iteration 12 
+iteration 13 
+iteration 14 
+iteration 15 
+iteration 16 
+iteration 17 
+iteration 18 
+iteration 19 
+iteration 20 
+iteration 21 
+iteration 22 
+iteration 23 
+iteration 24 
+iteration 25 
+iteration 26 
+iteration 27 
+iteration 28 
+iteration 29 
+iteration 30 
+iteration 31 
+iteration 32 
+iteration 33 
+iteration 34 
+iteration 35 
+iteration 36 
+iteration 37 
+iteration 38 
+iteration 39 
+iteration 40 
+iteration 41 
+iteration 42 
+iteration 43 
+iteration 44 
+iteration 45 
+iteration 46 
+iteration 47 
+iteration 48 
+iteration 49 
+iteration 50 
+iteration 51 
+iteration 52 
+iteration 53 
+iteration 54 
+iteration 55 
+iteration 56 
+iteration 57 
+iteration 58 
+iteration 59 
+iteration 60 
+iteration 61 
+iteration 62 
+iteration 63 
+iteration 64 
+iteration 65 
+iteration 66 
+iteration 67 
+iteration 68 
+iteration 69 
+iteration 70 
+iteration 71 
+iteration 72 
+iteration 73 
+iteration 74 
+iteration 75 
+iteration 76 
+iteration 77 
+iteration 78 
+iteration 79 
+iteration 80 
+iteration 81 
+iteration 82 
+iteration 83 
+iteration 84 
+iteration 85 
+iteration 86 
+iteration 87 
+iteration 88 
+iteration 89 
+iteration 90 
+iteration 91 
+iteration 92 
+iteration 93 
+iteration 94 
+iteration 95 
+iteration 96 
+iteration 97 
+iteration 98 
+iteration 99 
+iteration 100 
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+iteration 11 
+iteration 12 
+iteration 13 
+iteration 14 
+iteration 15 
+iteration 16 
+iteration 17 
+iteration 18 
+iteration 19 
+iteration 20 
+iteration 21 
+iteration 22 
+iteration 23 
+iteration 24 
+iteration 25 
+iteration 26 
+iteration 27 
+iteration 28 
+iteration 29 
+iteration 30 
+iteration 31 
+iteration 32 
+iteration 33 
+iteration 34 
+iteration 35 
+iteration 36 
+iteration 37 
+iteration 38 
+iteration 39 
+iteration 40 
+iteration 41 
+iteration 42 
+iteration 43 
+iteration 44 
+iteration 45 
+iteration 46 
+iteration 47 
+iteration 48 
+iteration 49 
+iteration 50 
+iteration 51 
+iteration 52 
+iteration 53 
+iteration 54 
+iteration 55 
+iteration 56 
+iteration 57 
+iteration 58 
+iteration 59 
+iteration 60 
+iteration 61 
+iteration 62 
+iteration 63 
+iteration 64 
+iteration 65 
+iteration 66 
+iteration 67 
+iteration 68 
+iteration 69 
+iteration 70 
+iteration 71 
+iteration 72 
+iteration 73 
+iteration 74 
+iteration 75 
+iteration 76 
+iteration 77 
+iteration 78 
+iteration 79 
+iteration 80 
+iteration 81 
+iteration 82 
+iteration 83 
+iteration 84 
+iteration 85 
+iteration 86 
+iteration 87 
+iteration 88 
+iteration 89 
+iteration 90 
+iteration 91 
+iteration 92 
+iteration 93 
+iteration 94 
+iteration 95 
+iteration 96 
+iteration 97 
+iteration 98 
+iteration 99 
+iteration 100 
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+iteration 11 
+iteration 12 
+iteration 13 
+iteration 14 
+iteration 15 
+iteration 16 
+iteration 17 
+iteration 18 
+iteration 19 
+iteration 20 
+iteration 21 
+iteration 22 
+iteration 23 
+iteration 24 
+iteration 25 
+iteration 26 
+iteration 27 
+iteration 28 
+iteration 29 
+iteration 30 
+iteration 31 
+iteration 32 
+iteration 33 
+iteration 34 
+iteration 35 
+iteration 36 
+iteration 37 
+iteration 38 
+iteration 39 
+iteration 40 
+iteration 41 
+iteration 42 
+iteration 43 
+iteration 44 
+iteration 45 
+iteration 46 
+iteration 47 
+iteration 48 
+iteration 49 
+iteration 50 
+iteration 51 
+iteration 52 
+iteration 53 
+iteration 54 
+iteration 55 
+iteration 56 
+iteration 57 
+iteration 58 
+iteration 59 
+iteration 60 
+iteration 61 
+iteration 62 
+iteration 63 
+iteration 64 
+iteration 65 
+iteration 66 
+iteration 67 
+iteration 68 
+iteration 69 
+iteration 70 
+iteration 71 
+iteration 72 
+iteration 73 
+iteration 74 
+iteration 75 
+iteration 76 
+iteration 77 
+iteration 78 
+iteration 79 
+iteration 80 
+iteration 81 
+iteration 82 
+iteration 83 
+iteration 84 
+iteration 85 
+iteration 86 
+iteration 87 
+iteration 88 
+iteration 89 
+iteration 90 
+iteration 91 
+iteration 92 
+iteration 93 
+iteration 94 
+iteration 95 
+iteration 96 
+iteration 97 
+iteration 98 
+iteration 99 
+iteration 100 
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+iteration 11 
+iteration 12 
+iteration 13 
+iteration 14 
+iteration 15 
+iteration 16 
+iteration 17 
+iteration 18 
+iteration 19 
+iteration 20 
+iteration 21 
+iteration 22 
+iteration 23 
+iteration 24 
+iteration 25 
+iteration 26 
+iteration 27 
+iteration 28 
+iteration 29 
+iteration 30 
+iteration 31 
+iteration 32 
+iteration 33 
+iteration 34 
+iteration 35 
+iteration 36 
+iteration 37 
+iteration 38 
+iteration 39 
+iteration 40 
+iteration 41 
+iteration 42 
+iteration 43 
+iteration 44 
+iteration 45 
+iteration 46 
+iteration 47 
+iteration 48 
+iteration 49 
+iteration 50 
+iteration 51 
+iteration 52 
+iteration 53 
+iteration 54 
+iteration 55 
+iteration 56 
+iteration 57 
+iteration 58 
+iteration 59 
+iteration 60 
+iteration 61 
+iteration 62 
+iteration 63 
+iteration 64 
+iteration 65 
+iteration 66 
+iteration 67 
+iteration 68 
+iteration 69 
+iteration 70 
+iteration 71 
+iteration 72 
+iteration 73 
+iteration 74 
+iteration 75 
+iteration 76 
+iteration 77 
+iteration 78 
+iteration 79 
+iteration 80 
+iteration 81 
+iteration 82 
+iteration 83 
+iteration 84 
+iteration 85 
+iteration 86 
+iteration 87 
+iteration 88 
+iteration 89 
+iteration 90 
+iteration 91 
+iteration 92 
+iteration 93 
+iteration 94 
+iteration 95 
+iteration 96 
+iteration 97 
+iteration 98 
+iteration 99 
+iteration 100 
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+iteration 11 
+iteration 12 
+iteration 13 
+iteration 14 
+iteration 15 
+iteration 16 
+iteration 17 
+iteration 18 
+iteration 19 
+iteration 20 
+iteration 21 
+iteration 22 
+iteration 23 
+iteration 24 
+iteration 25 
+iteration 26 
+iteration 27 
+iteration 28 
+iteration 29 
+iteration 30 
+iteration 31 
+iteration 32 
+iteration 33 
+iteration 34 
+iteration 35 
+iteration 36 
+iteration 37 
+iteration 38 
+iteration 39 
+iteration 40 
+iteration 41 
+iteration 42 
+iteration 43 
+iteration 44 
+iteration 45 
+iteration 46 
+iteration 47 
+iteration 48 
+iteration 49 
+iteration 50 
+iteration 51 
+iteration 52 
+iteration 53 
+iteration 54 
+iteration 55 
+iteration 56 
+iteration 57 
+iteration 58 
+iteration 59 
+iteration 60 
+iteration 61 
+iteration 62 
+iteration 63 
+iteration 64 
+iteration 65 
+iteration 66 
+iteration 67 
+iteration 68 
+iteration 69 
+iteration 70 
+iteration 71 
+iteration 72 
+iteration 73 
+iteration 74 
+iteration 75 
+iteration 76 
+iteration 77 
+iteration 78 
+iteration 79 
+iteration 80 
+iteration 81 
+iteration 82 
+iteration 83 
+iteration 84 
+iteration 85 
+iteration 86 
+iteration 87 
+iteration 88 
+iteration 89 
+iteration 90 
+iteration 91 
+iteration 92 
+iteration 93 
+iteration 94 
+iteration 95 
+iteration 96 
+iteration 97 
+iteration 98 
+iteration 99 
+iteration 100 
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+iteration 11 
+iteration 12 
+iteration 13 
+iteration 14 
+iteration 15 
+iteration 16 
+iteration 17 
+iteration 18 
+iteration 19 
+iteration 20 
+iteration 21 
+iteration 22 
+iteration 23 
+iteration 24 
+iteration 25 
+iteration 26 
+iteration 27 
+iteration 28 
+iteration 29 
+iteration 30 
+iteration 31 
+iteration 32 
+iteration 33 
+iteration 34 
+iteration 35 
+iteration 36 
+iteration 37 
+iteration 38 
+iteration 39 
+iteration 40 
+iteration 41 
+iteration 42 
+iteration 43 
+iteration 44 
+iteration 45 
+iteration 46 
+iteration 47 
+iteration 48 
+iteration 49 
+iteration 50 
+iteration 51 
+iteration 52 
+iteration 53 
+iteration 54 
+iteration 55 
+iteration 56 
+iteration 57 
+iteration 58 
+iteration 59 
+iteration 60 
+iteration 61 
+iteration 62 
+iteration 63 
+iteration 64 
+iteration 65 
+iteration 66 
+iteration 67 
+iteration 68 
+iteration 69 
+iteration 70 
+iteration 71 
+iteration 72 
+iteration 73 
+iteration 74 
+iteration 75 
+iteration 76 
+iteration 77 
+iteration 78 
+iteration 79 
+iteration 80 
+iteration 81 
+iteration 82 
+iteration 83 
+iteration 84 
+iteration 85 
+iteration 86 
+iteration 87 
+iteration 88 
+iteration 89 
+iteration 90 
+iteration 91 
+iteration 92 
+iteration 93 
+iteration 94 
+iteration 95 
+iteration 96 
+iteration 97 
+iteration 98 
+iteration 99 
+iteration 100 
+iteration 1 
+iteration 2 
+iteration 3 
+iteration 4 
+iteration 5 
+iteration 6 
+iteration 7 
+iteration 8 
+iteration 9 
+iteration 10 
+iteration 11 
+iteration 12 
+iteration 13 
+iteration 14 
+iteration 15 
+iteration 16 
+iteration 17 
+iteration 18 
+iteration 19 
+iteration 20 
+iteration 21 
+iteration 22 
+iteration 23 
+iteration 24 
+iteration 25 
+iteration 26 
+iteration 27 
+iteration 28 
+iteration 29 
+iteration 30 
+iteration 31 
+iteration 32 
+iteration 33 
+iteration 34 
+iteration 35 
+iteration 36 
+iteration 37 
+iteration 38 
+iteration 39 
+iteration 40 
+iteration 41 
+iteration 42 
+iteration 43 
+iteration 44 
+iteration 45 
+iteration 46 
+iteration 47 
+iteration 48 
+iteration 49 
+iteration 50 
+iteration 51 
+iteration 52 
+iteration 53 
+iteration 54 
+iteration 55 
+iteration 56 
+iteration 57 
+iteration 58 
+iteration 59 
+iteration 60 
+iteration 61 
+iteration 62 
+iteration 63 
+iteration 64 
+iteration 65 
+iteration 66 
+iteration 67 
+iteration 68 
+iteration 69 
+iteration 70 
+iteration 71 
+iteration 72 
+iteration 73 
+iteration 74 
+iteration 75 
+iteration 76 
+iteration 77 
+iteration 78 
+iteration 79 
+iteration 80 
+iteration 81 
+iteration 82 
+iteration 83 
+iteration 84 
+iteration 85 
+iteration 86 
+iteration 87 
+iteration 88 
+iteration 89 
+iteration 90 
+iteration 91 
+iteration 92 
+iteration 93 
+iteration 94 
+iteration 95 
+iteration 96 
+iteration 97 
+iteration 98 
+iteration 99 
+iteration 100 
+Loading required package: corpcor
+Loading required package: mvtnorm
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:mvtnorm’, ‘package:corpcor’, ‘package:class’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  11.723 1.467 14.742 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

@@ -14,7 +14,6 @@ flush(stderr()); flush(stdout())
 ### Name: LDCA
 ### Title: Linear Discriminant Analysis based on Top Scoring Pair
 ### Aliases: LDCA
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -36,7 +35,6 @@ flush(stderr()); flush(stdout())
 ### Name: cv.LDCA
 ### Title: Cross validation for LDCA
 ### Aliases: cv.LDCA
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -57,7 +55,6 @@ flush(stderr()); flush(stdout())
 ### Name: predict.LDCA
 ### Title: predict function for LDCA
 ### Aliases: predict.LDCA
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -78,7 +75,6 @@ flush(stderr()); flush(stdout())
 ### Name: predict.cv.LDCA
 ### Title: prediction function for cv.LDCA
 ### Aliases: predict.cv.LDCA
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -99,7 +95,6 @@ flush(stderr()); flush(stdout())
 ### Name: predict.tsp.gbm
 ### Title: prediction function for tsp.gbm
 ### Aliases: predict.tsp.gbm
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -120,7 +115,6 @@ flush(stderr()); flush(stdout())
 ### Name: predict.tsp.randomForest
 ### Title: prediction function for tsp.randomForest
 ### Aliases: predict.tsp.randomForest
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -142,7 +136,6 @@ flush(stderr()); flush(stdout())
 ### Name: predict.tsp.tree
 ### Title: prediction function for tsp.tree
 ### Aliases: predict.tsp.tree
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -165,7 +158,6 @@ flush(stderr()); flush(stdout())
 ### Name: print.LDCA
 ### Title: print the LDCA object
 ### Aliases: print.LDCA
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -186,7 +178,6 @@ flush(stderr()); flush(stdout())
 ### Name: print.cv.LDCA
 ### Title: print function for cv.LDCA
 ### Aliases: print.cv.LDCA
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -208,7 +199,6 @@ flush(stderr()); flush(stdout())
 ### Title: Fits generalized boosted logistic regression models based on Top
 ###   Scoring Pairs.
 ### Aliases: tsp.gbm
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 
@@ -229,7 +219,6 @@ flush(stderr()); flush(stdout())
 ### Name: tsp.randomForest
 ### Title: Classification with Random Forest based on Top Scoring Pairs
 ### Aliases: tsp.randomForest
-### Keywords: ~kwd1 ~kwd2
 
 ### ** Examples
 

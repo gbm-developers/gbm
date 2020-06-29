@@ -1,13 +1,18 @@
 * installing *source* package ‘BiodiversityR’ ...
 ** package ‘BiodiversityR’ successfully unpacked and MD5 sums checked
+** using staged installation
 ** R
 ** data
 ** inst
 ** byte-compile and prepare package for lazy loading
-Warning in fun(libname, pkgname) : couldn't connect to display ""
+Warning message:
+In fun(libname, pkgname) : couldn't connect to display ""
 ** help
 *** installing help indices
 ** building package indices
-** testing if installed package can be loaded
+** testing if installed package can be loaded from temporary location
 Warning in fun(libname, pkgname) : couldn't connect to display ""
+** testing if installed package can be loaded from final location
+Warning in fun(libname, pkgname) : couldn't connect to display ""
+** testing if installed package keeps a record of temporary installation path
 * DONE (BiodiversityR)

@@ -1,0 +1,2051 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "statVisual"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('statVisual')
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: ggplot2
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("BiAxisErrBar")
+> ### * BiAxisErrBar
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BiAxisErrBar
+> ### Title: Compare Patterns of Two Outcomes in One Scatter Plot
+> ### Aliases: BiAxisErrBar
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> 
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 1.0.0
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+[32m✔[39m [34mpurrr  [39m 0.3.4     
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mggplot2[39m::[32mPosition()[39m masks [34mBiocGenerics[39m::Position(), [34mbase[39m::Position()
+[31m✖[39m [34mdplyr[39m::[32mcombine()[39m    masks [34mBiobase[39m::combine(), [34mBiocGenerics[39m::combine()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m     masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m        masks [34mstats[39m::lag()
+> library(ggplot2)
+> 
+> print(head(mtcars))
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+> 
+> print(table(mtcars$gear, useNA="ifany"))
+
+ 3  4  5 
+15 12  5 
+> 
+> statVisual(type = "BiAxisErrBar",
++   dat= mtcars,
++   group = "gear",
++   y.left = "mpg",
++   y.right = "wt")
+Warning: `group_by_()` is deprecated as of dplyr 0.7.0.
+Please use `group_by()` instead.
+See vignette('programming') for more help
+[90mThis warning is displayed once every 8 hours.[39m
+[90mCall `lifecycle::last_warnings()` to see where this warning was generated.[39m
+Warning: `funs()` is deprecated as of dplyr 0.8.0.
+Please use a list of either functions or lambdas: 
+
+  # Simple named list: 
+  list(mean = mean, median = median)
+
+  # Auto named with `tibble::lst()`: 
+  tibble::lst(mean, median)
+
+  # Using lambdas
+  list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+[90mThis warning is displayed once every 8 hours.[39m
+[90mCall `lifecycle::last_warnings()` to see where this warning was generated.[39m
+Scale for 'linetype' is already present. Adding another scale for 'linetype',
+which will replace the existing scale.
+> 
+> 
+> 
+> BiAxisErrBar(
++   dat = mtcars,
++   group = "gear",
++   y.left = "mpg",
++   y.right = "wt")
+Scale for 'linetype' is already present. Adding another scale for 'linetype',
+which will replace the existing scale.
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:tidyverse’
+
+> nameEx("Box")
+> ### * Box
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Box
+> ### Title: Compare Groups Based on Boxplots Across Time
+> ### Aliases: Box
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> 
+> data(longDat)
+> 
+> print(dim(longDat))
+[1] 540   4
+> print(longDat[1:3,])
+  sid  time        y  grp
+1   1 time0 4.539033 grp1
+2   1 time1 5.738715 grp1
+3   1 time2 4.594495 grp1
+> 
+> print(table(longDat$time, useNA = "ifany"))
+
+time0 time1 time2 time3 time4 time5 
+   90    90    90    90    90    90 
+> print(table(longDat$grp, useNA = "ifany"))
+
+grp1 grp2 grp3 
+ 180  180  180 
+> print(table(longDat$sid, useNA = "ifany"))
+
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+79 80 81 82 83 84 85 86 87 88 89 90 
+ 6  6  6  6  6  6  6  6  6  6  6  6 
+> 
+> print(table(longDat$time, longDat$grp))
+       
+        grp1 grp2 grp3
+  time0   30   30   30
+  time1   30   30   30
+  time2   30   30   30
+  time3   30   30   30
+  time4   30   30   30
+  time5   30   30   30
+> 
+> statVisual(type = 'Box', 
++            data = longDat, 
++            x = 'time', 
++            y = 'y', 
++            group = 'grp',
++ 	   title = "Boxplots across time") 
+Warning: `fun.y` is deprecated. Use `fun` instead.
+> 
+> Box( 
++     data = longDat, 
++     x = 'time', 
++     y = 'y', 
++     group = 'grp',
++     title = "Boxplots across time") 
+Warning: `fun.y` is deprecated. Use `fun` instead.
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:dplyr’
+
+> nameEx("BoxROC")
+> ### * BoxROC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BoxROC
+> ### Title: Compare Boxplots with ROC Curve
+> ### Aliases: BoxROC
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(gridExtra)
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first probe which is over-expressed in cases
+> pDat$probe1 = dat[1,]
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> statVisual(type = 'BoxROC', 
++            data = pDat, 
++            group = 'grp', 
++            y = 'probe1', 
++            point.size = 1)
+Setting levels: control = 0, case = 1
+Setting direction: controls < cases
+TableGrob (1 x 1) "arrange": 1 grobs
+  z     cells    name            grob
+1 1 (1-1,1-1) arrange gtable[arrange]
+> 
+> BoxROC(
++   data = pDat,
++   group = 'grp', 
++   y = 'probe1', 
++   point.size = 1)
+Setting levels: control = 0, case = 1
+Setting direction: controls < cases
+TableGrob (1 x 1) "arrange": 1 grobs
+  z     cells    name            grob
+1 1 (1-1,1-1) arrange gtable[arrange]
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:gridExtra’, ‘package:dplyr’
+
+> nameEx("Den")
+> ### * Den
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Den
+> ### Title: Compare Groups Based on Density Plots
+> ### Aliases: Den
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first probe which is over-expressed in cases
+> pDat$probe1 = dat[1,]
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> statVisual(type = 'Den', 
++            data = pDat, 
++            y = 'probe1', 
++            group = 'grp') 
+> 
+> Den( 
++     data = pDat, 
++     y = 'probe1', 
++     group = 'grp') 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Dendro")
+> ### * Dendro
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Dendro
+> ### Title: Compare Groups Based on Dendrogram
+> ### Aliases: Dendro
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first 6 probes (3 OE probes, 2 UE probes, and 1 NE probe)
+> pDat$probe1 = dat[1,]
+> pDat$probe2 = dat[2,]
+> pDat$probe3 = dat[3,]
+> pDat$probe4 = dat[4,]
+> pDat$probe5 = dat[5,]
+> pDat$probe6 = dat[6,]
+> 
+> print(pDat[1:2, ])
+        sid grp   probe1   probe2   probe3    probe4    probe5    probe6
+subj1 subj1   1 1.462929 1.574342 2.015327 -2.137848 -1.992898 1.0472686
+subj2 subj2   1 1.596203 2.232537 2.141727 -2.639981 -1.926786 0.3904537
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> pDat$grp = factor(pDat$grp)
+> 
+> statVisual(type = 'Dendro', 
++            x = pDat[, c(3:8)], 
++            group = pDat$grp)
+> 
+> Dendro(
++        x = pDat[, c(3:8)], 
++        group = pDat$grp)
+> 
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ErrBar")
+> ### * ErrBar
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ErrBar
+> ### Title: Compare Groups Based on dotplots Across Time
+> ### Aliases: ErrBar
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> 
+> 
+> data(longDat)
+> 
+> print(dim(longDat))
+[1] 540   4
+> print(longDat[1:3,])
+  sid  time        y  grp
+1   1 time0 4.539033 grp1
+2   1 time1 5.738715 grp1
+3   1 time2 4.594495 grp1
+> 
+> print(table(longDat$time, useNA = "ifany"))
+
+time0 time1 time2 time3 time4 time5 
+   90    90    90    90    90    90 
+> print(table(longDat$grp, useNA = "ifany"))
+
+grp1 grp2 grp3 
+ 180  180  180 
+> print(table(longDat$sid, useNA = "ifany"))
+
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+79 80 81 82 83 84 85 86 87 88 89 90 
+ 6  6  6  6  6  6  6  6  6  6  6  6 
+> 
+> print(table(longDat$time, longDat$grp))
+       
+        grp1 grp2 grp3
+  time0   30   30   30
+  time1   30   30   30
+  time2   30   30   30
+  time3   30   30   30
+  time4   30   30   30
+  time5   30   30   30
+> 
+> statVisual(type = 'ErrBar', 
++   data = longDat, 
++   x = 'time', 
++   y = 'y', 
++   group = 'grp',
++   title = "Dot plots across time") 
+Warning: `summarise_()` is deprecated as of dplyr 0.7.0.
+Please use `summarise()` instead.
+[90mThis warning is displayed once every 8 hours.[39m
+[90mCall `lifecycle::last_warnings()` to see where this warning was generated.[39m
+Joining, by = c("grp", "time")
+Warning: `fun.y` is deprecated. Use `fun` instead.
+> 
+> 
+> ErrBar(
++   data = longDat, 
++   x = 'time', 
++   y = 'y', 
++   group = 'grp',
++   title = "Dot plots across time") 
+Joining, by = c("grp", "time")
+Warning: `fun.y` is deprecated. Use `fun` instead.
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Heat")
+> ### * Heat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Heat
+> ### Title: Heatmap with Row Names Colored by Group
+> ### Aliases: Heat
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first 6 probes (3 OE probes, 2 UE probes, and 1 NE probe)
+> pDat$probe1 = dat[1,]
+> pDat$probe2 = dat[2,]
+> pDat$probe3 = dat[3,]
+> pDat$probe4 = dat[4,]
+> pDat$probe5 = dat[5,]
+> pDat$probe6 = dat[6,]
+> 
+> print(pDat[1:2, ])
+        sid grp   probe1   probe2   probe3    probe4    probe5    probe6
+subj1 subj1   1 1.462929 1.574342 2.015327 -2.137848 -1.992898 1.0472686
+subj2 subj2   1 1.596203 2.232537 2.141727 -2.639981 -1.926786 0.3904537
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> statVisual(type = 'Heat', 
++            data = pDat[, c(2:8)], 
++            group = 'grp')
+> 
+> Heat(
++      data = pDat[, c(2:8)], 
++      group = 'grp')
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Hist")
+> ### * Hist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Hist
+> ### Title: Compare Groups Based on Histograms
+> ### Aliases: Hist
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first probe which is over-expressed in cases
+> pDat$probe1 = dat[1,]
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> statVisual(type = 'Hist', 
++        data = pDat, 
++        y = 'probe1', 
++        group = 'grp') 
+> 
+> Hist(
++      data = pDat, 
++      y = 'probe1', 
++      group = 'grp') 
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ImpPlot")
+> ### * ImpPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ImpPlot
+> ### Title: Plot of Variable Importance
+> ### Aliases: ImpPlot
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(randomForest)
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+
+Attaching package: ‘randomForest’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+The following object is masked from ‘package:ggplot2’:
+
+    margin
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+> library(tibble)
+> 
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first 6 probes (3 OE probes, 2 UE probes, and 1 NE probe)
+> pDat$probe1 = dat[1,]
+> pDat$probe2 = dat[2,]
+> pDat$probe3 = dat[3,]
+> pDat$probe4 = dat[4,]
+> pDat$probe5 = dat[5,]
+> pDat$probe6 = dat[6,]
+> 
+> print(pDat[1:2, ])
+        sid grp   probe1   probe2   probe3    probe4    probe5    probe6
+subj1 subj1   1 1.462929 1.574342 2.015327 -2.137848 -1.992898 1.0472686
+subj2 subj2   1 1.596203 2.232537 2.141727 -2.639981 -1.926786 0.3904537
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> pDat$grp = factor(pDat$grp)
+> 
+> 
+> rf_m = randomForest(
++   x = pDat[, c(3:8)], 
++   y = pDat$grp, 
++   importance = TRUE, proximity = TRUE
++ )
+> 
+> 
+> statVisual(type = 'ImpPlot', model = rf_m)
+> 
+> ImpPlot(model = rf_m)
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:tibble’, ‘package:randomForest’, ‘package:dplyr’
+
+> nameEx("LinePlot")
+> ### * LinePlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LinePlot
+> ### Title: Compare Groups Based on Trajectory Plots
+> ### Aliases: LinePlot
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> data(longDat)
+> 
+> print(dim(longDat))
+[1] 540   4
+> print(longDat[1:3,])
+  sid  time        y  grp
+1   1 time0 4.539033 grp1
+2   1 time1 5.738715 grp1
+3   1 time2 4.594495 grp1
+> 
+> print(table(longDat$time, useNA = "ifany"))
+
+time0 time1 time2 time3 time4 time5 
+   90    90    90    90    90    90 
+> print(table(longDat$grp, useNA = "ifany"))
+
+grp1 grp2 grp3 
+ 180  180  180 
+> print(table(longDat$sid, useNA = "ifany"))
+
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+79 80 81 82 83 84 85 86 87 88 89 90 
+ 6  6  6  6  6  6  6  6  6  6  6  6 
+> 
+> print(table(longDat$time, longDat$grp))
+       
+        grp1 grp2 grp3
+  time0   30   30   30
+  time1   30   30   30
+  time2   30   30   30
+  time3   30   30   30
+  time4   30   30   30
+  time5   30   30   30
+> 
+> statVisual(type = "LinePlot",
++   data = longDat,
++   x = 'time',
++   y = 'y',
++   sid = 'sid',
++   group = 'grp')
+> 
+> LinePlot(
++   data = longDat,
++   x = 'time',
++   y = 'y',
++   sid = 'sid',
++   group = 'grp')
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("PCA_score")
+> ### * PCA_score
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: PCA_score
+> ### Title: Scatter Plot of 2 Specified Principal Components
+> ### Aliases: PCA_score
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> library(factoextra)
+Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first 6 probes (3 OE probes, 2 UE probes, and 1 NE probe)
+> pDat$probe1 = dat[1,]
+> pDat$probe2 = dat[2,]
+> pDat$probe3 = dat[3,]
+> pDat$probe4 = dat[4,]
+> pDat$probe5 = dat[5,]
+> pDat$probe6 = dat[6,]
+> 
+> print(pDat[1:2, ])
+        sid grp   probe1   probe2   probe3    probe4    probe5    probe6
+subj1 subj1   1 1.462929 1.574342 2.015327 -2.137848 -1.992898 1.0472686
+subj2 subj2   1 1.596203 2.232537 2.141727 -2.639981 -1.926786 0.3904537
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> pDat$grp = factor(pDat$grp)
+> 
+> ###
+> 
+> pca.obj = iprcomp(pDat[, c(3:8)], scale. = TRUE)
+> 
+> # scree plot
+> factoextra::fviz_eig(pca.obj, addlabels = TRUE)
+> 
+> # scatter plot of PC1 vs PC2
+> statVisual(type = 'PCA_score',
++            prcomp_obj = pca.obj, 
++            dims = c(1, 2),
++            data = pDat, 
++            color = 'grp',
++            loadings = FALSE)
+Warning: `select_()` is deprecated as of dplyr 0.7.0.
+Please use `select()` instead.
+[90mThis warning is displayed once every 8 hours.[39m
+[90mCall `lifecycle::last_warnings()` to see where this warning was generated.[39m
+> 
+> PCA_score(prcomp_obj = pca.obj, 
++           dims = c(1, 3),
++           data = pDat, 
++           color = 'grp',
++           loadings = FALSE)
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:factoextra’
+
+> nameEx("PVCA")
+> ### * PVCA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: PVCA
+> ### Title: Principal Variance Component Analysis (PVCA)
+> ### Aliases: PVCA
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> library(pvca)
+> 
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # create a fake Batch variable
+> esSim$Batch=c(rep("A", 4), rep("B", 6), rep("C", 10))
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  3
+> print(pDat[1:2,])
+        sid grp Batch
+subj1 subj1   1     A
+subj2 subj2   1     A
+> 
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> 
+> statVisual(type = 'PVCA',
++            clin_data = pData(esSim), 
++            clin_subjid = "sid", 
++            gene_data = exprs(esSim), 
++            batch.factors = c("grp", "Batch"))
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+> 
+> PVCA( 
++      clin_data = pData(esSim), 
++      clin_subjid = "sid", 
++      gene_data = exprs(esSim), 
++      batch.factors = c("grp", "Batch"))
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see ?isSingular
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:pvca’
+
+> nameEx("Volcano")
+> ### * Volcano
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Volcano
+> ### Title: Volcano Plot
+> ### Aliases: Volcano
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> library(ggrepel)
+> library(limma)
+
+Attaching package: ‘limma’
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    plotMA
+
+> 
+> # load the simulated dataset
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression levels
+> y = exprs(esSim)
+> print(dim(y))
+[1] 100  20
+> print(y[1:2,])
+          subj1    subj2    subj3    subj4    subj5    subj6    subj7    subj8
+probe1 1.462929 1.596203 2.252267 1.974616 1.842606 1.677204 2.242665 1.705923
+probe2 1.574342 2.232537 1.846260 1.980999 2.483777 2.048599 1.786081 1.934728
+          subj9   subj10     subj11     subj12      subj13    subj14     subj15
+probe1 1.758028 1.919597 0.07477602  0.3054811  0.12356526 0.3221119 -0.1346480
+probe2 1.740329 1.942189 0.08308643 -0.1012774 -0.06669481 0.5413783  0.0245575
+            subj16     subj17    subj18     subj19     subj20
+probe1 -0.03845011  0.3504460 0.4173905 -0.1438801  0.3335083
+probe2 -0.03849619 -0.2536194 0.1420066 -0.1072697 -0.1750033
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat)
+          sid grp
+subj1   subj1   1
+subj2   subj2   1
+subj3   subj3   1
+subj4   subj4   1
+subj5   subj5   1
+subj6   subj6   1
+subj7   subj7   1
+subj8   subj8   1
+subj9   subj9   1
+subj10 subj10   1
+subj11 subj11   0
+subj12 subj12   0
+subj13 subj13   0
+subj14 subj14   0
+subj15 subj15   0
+subj16 subj16   0
+subj17 subj17   0
+subj18 subj18   0
+subj19 subj19   0
+subj20 subj20   0
+> 
+> # design matrix
+> design = model.matrix(~grp, data = pDat)
+> print(design)
+       (Intercept) grp
+subj1            1   1
+subj2            1   1
+subj3            1   1
+subj4            1   1
+subj5            1   1
+subj6            1   1
+subj7            1   1
+subj8            1   1
+subj9            1   1
+subj10           1   1
+subj11           1   0
+subj12           1   0
+subj13           1   0
+subj14           1   0
+subj15           1   0
+subj16           1   0
+subj17           1   0
+subj18           1   0
+subj19           1   0
+subj20           1   0
+attr(,"assign")
+[1] 0 1
+> 
+> options(digits = 3)
+> 
+> # Ordinary fit
+> fit <- lmFit(y, design)
+> fit2 <- eBayes(fit)
+> 
+> # get result data frame
+> resFrame = topTable(fit2,coef = 2, number = nrow(esSim))
+> print(dim(resFrame))
+[1] 100   6
+> print(resFrame[1:2,])
+       logFC AveExpr     t  P.Value adj.P.Val    B
+probe5 -1.98  -1.082 -19.7 3.04e-15  1.66e-13 25.0
+probe3  2.05   0.996  19.6 3.31e-15  1.66e-13 24.9
+> resFrame$sigFlag  =  resFrame$adj.P.Val < 0.05
+> 
+> resFrame$probe  =  rownames(resFrame)
+> # make sure set NA to genes non-differentially expressed
+> resFrame$probe[which(resFrame$sigFlag == FALSE)] = NA
+> 
+> print(resFrame[1:2,])
+       logFC AveExpr     t  P.Value adj.P.Val    B sigFlag  probe
+probe5 -1.98  -1.082 -19.7 3.04e-15  1.66e-13 25.0    TRUE probe5
+probe3  2.05   0.996  19.6 3.31e-15  1.66e-13 24.9    TRUE probe3
+> print(table(resFrame$sigFlag, useNA = "ifany"))
+
+FALSE  TRUE 
+   95     5 
+> 
+> statVisual(type = 'Volcano',
++            resFrame = resFrame, 
++            stats = 'logFC', 
++            p.value = 'P.Value', 
++            group = 'sigFlag', 
++            rowname.var = 'probe', 
++            point.size = 1)
+Warning: Removed 95 rows containing missing values (geom_text_repel).
+> 
+> Volcano(
++   resFrame = resFrame, 
++   stats = 'logFC', 
++   p.value = 'P.Value', 
++   group = 'sigFlag', 
++   rowname.var = 'probe', 
++   point.size = 1)
+Warning: Removed 95 rows containing missing values (geom_text_repel).
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:limma’, ‘package:ggrepel’
+
+> nameEx("XYscatter")
+> ### * XYscatter
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: XYscatter
+> ### Title: Compare Groups Based on Scatter Plots
+> ### Aliases: XYscatter
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> data(diffCorDat)
+> 
+> print(dim(diffCorDat))
+[1] 100   3
+> print(diffCorDat[1:2,])
+  probe1 probe2   grp
+1  0.157  0.244 cases
+2  1.374 -1.525 cases
+> 
+> statVisual(type = 'XYscatter',
++   data = diffCorDat, 
++   x = 'probe1', 
++   y = 'probe2', 
++   group = 'grp', 
++   title = 'Scatter Plot: probe1 vs probe2')
+> 
+> XYscatter( 
++   data = diffCorDat, 
++   x = 'probe1', 
++   y = 'probe2', 
++   group = 'grp', 
++   title = 'Scatter Plot: probe1 vs probe2')
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("barPlot")
+> ### * barPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: barPlot
+> ### Title: Compare Groups Based on Barplots Across Time
+> ### Aliases: barPlot
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> 
+> 
+> data(longDat)
+> 
+> print(dim(longDat))
+[1] 540   4
+> print(longDat[1:3,])
+  sid  time    y  grp
+1   1 time0 4.54 grp1
+2   1 time1 5.74 grp1
+3   1 time2 4.59 grp1
+> 
+> print(table(longDat$time, useNA = "ifany"))
+
+time0 time1 time2 time3 time4 time5 
+   90    90    90    90    90    90 
+> print(table(longDat$grp, useNA = "ifany"))
+
+grp1 grp2 grp3 
+ 180  180  180 
+> print(table(longDat$sid, useNA = "ifany"))
+
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+79 80 81 82 83 84 85 86 87 88 89 90 
+ 6  6  6  6  6  6  6  6  6  6  6  6 
+> 
+> print(table(longDat$time, longDat$grp))
+       
+        grp1 grp2 grp3
+  time0   30   30   30
+  time1   30   30   30
+  time2   30   30   30
+  time3   30   30   30
+  time4   30   30   30
+  time5   30   30   30
+> 
+> statVisual(type = 'barPlot', 
++   data = longDat, 
++   x = 'time', 
++   y = 'y', 
++   group = 'grp',
++   title = "Bar plots across time") 
+Joining, by = c("grp", "time")
+> 
+> 
+> barPlot(
++   data = longDat, 
++   x = 'time', 
++   y = 'y', 
++   group = 'grp',
++   title = "Bar plots across time") 
+Joining, by = c("grp", "time")
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cv_glmnet_plot")
+> ### * cv_glmnet_plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cv_glmnet_plot
+> ### Title: Plot the Cross-Validation Curve Produced by cv.glmnet
+> ### Aliases: cv_glmnet_plot
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(tibble)
+> library(glmnet)
+Loading required package: Matrix
+Loaded glmnet 4.0-2
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+       subj1 subj2 subj3 subj4 subj5 subj6 subj7 subj8 subj9 subj10 subj11
+probe1  1.46  1.60  2.25  1.97  1.84  1.68  2.24  1.71  1.76   1.92 0.0748
+probe2  1.57  2.23  1.85  1.98  2.48  2.05  1.79  1.93  1.74   1.94 0.0831
+       subj12  subj13 subj14  subj15  subj16 subj17 subj18 subj19 subj20
+probe1  0.305  0.1236  0.322 -0.1346 -0.0385  0.350  0.417 -0.144  0.334
+probe2 -0.101 -0.0667  0.541  0.0246 -0.0385 -0.254  0.142 -0.107 -0.175
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first 6 probes (3 OE probes, 2 UE probes, and 1 NE probe)
+> pDat$probe1 = dat[1,]
+> pDat$probe2 = dat[2,]
+> pDat$probe3 = dat[3,]
+> pDat$probe4 = dat[4,]
+> pDat$probe5 = dat[5,]
+> pDat$probe6 = dat[6,]
+> 
+> print(pDat[1:2, ])
+        sid grp probe1 probe2 probe3 probe4 probe5 probe6
+subj1 subj1   1   1.46   1.57   2.02  -2.14  -1.99   1.05
+subj2 subj2   1   1.60   2.23   2.14  -2.64  -1.93   0.39
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> 
+> statVisual(type = "cv_glmnet_plot",
++            x = as.matrix(pDat[, c(3:8)]), 
++            y = pDat$grp, 
++            family = "binomial")
+Warning: Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per fold
+> 
+> cv_glmnet_plot(x = as.matrix(pDat[, c(3:8)]), 
++                y = pDat$grp, 
++                family = "binomial")
+Warning: Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per fold
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:glmnet’, ‘package:Matrix’, ‘package:tibble’,
+  ‘package:dplyr’
+
+> nameEx("diffCorDat")
+> ### * diffCorDat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: diffCorDat
+> ### Title: A Dataset for Differential Correlation Analysis
+> ### Aliases: diffCorDat
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(diffCorDat)
+> 
+> print(dim(diffCorDat))
+[1] 100   3
+> print(diffCorDat[1:2,])
+  probe1 probe2   grp
+1  0.157  0.244 cases
+2  1.374 -1.525 cases
+> 
+> 
+> 
+> cleanEx()
+> nameEx("esSim")
+> ### * esSim
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: esSim
+> ### Title: A Simulated Gene Expression Dataset
+> ### Aliases: esSim
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(esSim)
+> 
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> ###
+> dat=exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+       subj1 subj2 subj3 subj4 subj5 subj6 subj7 subj8 subj9 subj10 subj11
+probe1  1.46  1.60  2.25  1.97  1.84  1.68  2.24  1.71  1.76   1.92 0.0748
+probe2  1.57  2.23  1.85  1.98  2.48  2.05  1.79  1.93  1.74   1.94 0.0831
+       subj12  subj13 subj14  subj15  subj16 subj17 subj18 subj19 subj20
+probe1  0.305  0.1236  0.322 -0.1346 -0.0385  0.350  0.417 -0.144  0.334
+probe2 -0.101 -0.0667  0.541  0.0246 -0.0385 -0.254  0.142 -0.107 -0.175
+> 
+> ###
+> pDat=pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat)
+          sid grp
+subj1   subj1   1
+subj2   subj2   1
+subj3   subj3   1
+subj4   subj4   1
+subj5   subj5   1
+subj6   subj6   1
+subj7   subj7   1
+subj8   subj8   1
+subj9   subj9   1
+subj10 subj10   1
+subj11 subj11   0
+subj12 subj12   0
+subj13 subj13   0
+subj14 subj14   0
+subj15 subj15   0
+subj16 subj16   0
+subj17 subj17   0
+subj18 subj18   0
+subj19 subj19   0
+subj20 subj20   0
+> 
+> # subject group status
+> print(table(esSim$grp))
+
+ 0  1 
+10 10 
+> 
+> ###
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2, ])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # probe's status of differential expression
+> print(table(fDat$memProbes))
+< table of extent 0 >
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("genoSim")
+> ### * genoSim
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: genoSim
+> ### Title: An ExpressionSet Object Storing Simulated Genotype Data
+> ### Aliases: genoSim
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(genoSim)
+> 
+> print(genoSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 10 features, 100 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj100 (100 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: SNP1 SNP2 ... SNP10 (10 total)
+  fvarLabels: snp memSNPs
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> 
+> 
+> cleanEx()
+> nameEx("iprcomp")
+> ### * iprcomp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: iprcomp
+> ### Title: Improved Function for Obtaining Principal Components
+> ### Aliases: iprcomp
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> # generate simulated data
+> set.seed(1234567)
+> dat.x = matrix(rnorm(500), nrow = 100, ncol = 5)
+> dat.y = matrix(rnorm(500, mean = 2), nrow = 100, ncol = 5)
+> dat = rbind(dat.x, dat.y)
+> grp = c(rep(0, 100), rep(1, 100))
+> print(dim(dat))
+[1] 200   5
+> 
+> res = iprcomp(dat, center = TRUE, scale.  =  FALSE)
+> 
+> # for each row, set one artificial missing value
+> dat.na=dat
+> nr=nrow(dat.na)
+> nc=ncol(dat.na)
+> for(i in 1:nr)
++ {
++   posi=sample(x=1:nc, size=1)
++   dat.na[i,posi]=NA
++ }
+> 
+> res.na = iprcomp(dat.na, center = TRUE, scale.  =  FALSE)
+> 
+> ##
+> # pca plot
+> ##
+> par(mfrow = c(3,1))
+> # original data without missing values
+> plot(x = res$x[,1], y = res$x[,2], xlab = "PC1", ylab  =  "PC2")
+> # perturbed data with one NA per probe 
+> # the pattern of original data is captured
+> plot(x = res.na$x[,1], y = res.na$x[,2], xlab = "PC1", ylab  =  "PC2", main = "with missing values")
+> par(mfrow = c(1,1))
+> 
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("longDat")
+> ### * longDat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: longDat
+> ### Title: A Simulated Dataset for Longitudinal Data Analysis
+> ### Aliases: longDat
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(longDat)
+> 
+> print(dim(longDat))
+[1] 540   4
+> print(longDat[1:3,])
+  sid  time    y  grp
+1   1 time0 4.54 grp1
+2   1 time1 5.74 grp1
+3   1 time2 4.59 grp1
+> 
+> print(table(longDat$time, useNA = "ifany"))
+
+time0 time1 time2 time3 time4 time5 
+   90    90    90    90    90    90 
+> print(table(longDat$grp, useNA = "ifany"))
+
+grp1 grp2 grp3 
+ 180  180  180 
+> print(table(longDat$sid, useNA = "ifany"))
+
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 
+ 6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 
+79 80 81 82 83 84 85 86 87 88 89 90 
+ 6  6  6  6  6  6  6  6  6  6  6  6 
+> 
+> print(table(longDat$time, longDat$grp))
+       
+        grp1 grp2 grp3
+  time0   30   30   30
+  time1   30   30   30
+  time2   30   30   30
+  time3   30   30   30
+  time4   30   30   30
+  time5   30   30   30
+> 
+> 
+> 
+> cleanEx()
+> nameEx("stackedBarPlot")
+> ### * stackedBarPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stackedBarPlot
+> ### Title: Draw Stacked Bar Plots
+> ### Aliases: stackedBarPlot
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> data(genoSim)
+> 
+> pDat = pData(genoSim)
+> geno = exprs(genoSim)
+> 
+> pDat$snp1 = geno[1,]
+> 
+> print(table(pDat$snp1, pDat$grp, useNA="ifany"))
+   
+     0  1
+  0 37 19
+  1 11 22
+  2  2  9
+> 
+> stackedBarPlot(dat = pDat, 
++ 	       catVar = "snp1", 
++ 	       group = "grp", 
++                xlab = "snp1", 
++ 	       ylab = "Count", 
++ 	       group.lab = "grp",
++                title = "Stacked barplots of counts",
++                catVarLevel = NULL)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("statVisual")
+> ### * statVisual
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: statVisual
+> ### Title: The Wrapper Function Incorporating All Wrapper Functions in
+> ###   statVisual
+> ### Aliases: statVisual
+> ### Keywords: method
+> 
+> ### ** Examples
+> 
+> data(esSim)
+> print(esSim)
+ExpressionSet (storageMode: lockedEnvironment)
+assayData: 100 features, 20 samples 
+  element names: exprs 
+protocolData: none
+phenoData
+  sampleNames: subj1 subj2 ... subj20 (20 total)
+  varLabels: sid grp
+  varMetadata: labelDescription
+featureData
+  featureNames: probe1 probe2 ... probe100 (100 total)
+  fvarLabels: probeid gene chr
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> # expression data
+> dat = exprs(esSim)
+> print(dim(dat))
+[1] 100  20
+> print(dat[1:2,])
+       subj1 subj2 subj3 subj4 subj5 subj6 subj7 subj8 subj9 subj10 subj11
+probe1  1.46  1.60  2.25  1.97  1.84  1.68  2.24  1.71  1.76   1.92 0.0748
+probe2  1.57  2.23  1.85  1.98  2.48  2.05  1.79  1.93  1.74   1.94 0.0831
+       subj12  subj13 subj14  subj15  subj16 subj17 subj18 subj19 subj20
+probe1  0.305  0.1236  0.322 -0.1346 -0.0385  0.350  0.417 -0.144  0.334
+probe2 -0.101 -0.0667  0.541  0.0246 -0.0385 -0.254  0.142 -0.107 -0.175
+> 
+> # phenotype data
+> pDat = pData(esSim)
+> print(dim(pDat))
+[1] 20  2
+> print(pDat[1:2,])
+        sid grp
+subj1 subj1   1
+subj2 subj2   1
+> 
+> # feature data
+> fDat = fData(esSim)
+> print(dim(fDat))
+[1] 100   3
+> print(fDat[1:2,])
+       probeid      gene chr
+probe1  probe1 fakeGene1   1
+probe2  probe2 fakeGene2   1
+> 
+> # choose the first probe which is over-expressed in cases
+> pDat$probe1 = dat[1,]
+> 
+> # check histograms of probe 1 expression in cases and controls
+> print(table(pDat$grp, useNA = "ifany"))
+
+ 0  1 
+10 10 
+> 
+> statVisual(type = 'Hist', 
++        data = pDat, 
++        y = 'probe1', 
++        group = 'grp') 
+> 
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  10.319 0.681 11.258 0.002 0.005 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

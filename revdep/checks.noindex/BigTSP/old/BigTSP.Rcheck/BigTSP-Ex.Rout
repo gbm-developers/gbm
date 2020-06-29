@@ -1,7 +1,7 @@
 
-R version 3.5.1 (2018-07-02) -- "Feather Spray"
-Copyright (C) 2018 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -23,15 +23,13 @@ Type 'q()' to quit R.
 > library('BigTSP')
 Loading required package: glmnet
 Loading required package: Matrix
-Loading required package: foreach
-Loaded glmnet 2.0-16
-
+Loaded glmnet 4.0-2
 Loading required package: tree
 Loading required package: randomForest
 randomForest 4.6-14
 Type rfNews() to see new features/changes/bug fixes.
 Loading required package: gbm
-Loaded gbm 2.1.4
+Loaded gbm 2.1.5
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
@@ -44,7 +42,6 @@ Loaded gbm 2.1.4
 > ### Name: LDCA
 > ### Title: Linear Discriminant Analysis based on Top Scoring Pair
 > ### Aliases: LDCA
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -3704,7 +3701,6 @@ V190  .           .           .           .
 > ### Name: cv.LDCA
 > ### Title: Cross validation for LDCA
 > ### Aliases: cv.LDCA
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -3736,7 +3732,6 @@ V190  .           .           .           .
 > ### Name: predict.LDCA
 > ### Title: predict function for LDCA
 > ### Aliases: predict.LDCA
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -3768,7 +3763,6 @@ V190  .           .           .           .
 > ### Name: predict.cv.LDCA
 > ### Title: prediction function for cv.LDCA
 > ### Aliases: predict.cv.LDCA
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -3800,7 +3794,6 @@ V190  .           .           .           .
 > ### Name: predict.tsp.gbm
 > ### Title: prediction function for tsp.gbm
 > ### Aliases: predict.tsp.gbm
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -3842,7 +3835,6 @@ Iter   TrainDeviance   ValidDeviance   StepSize   Improve
 > ### Name: predict.tsp.randomForest
 > ### Title: prediction function for tsp.randomForest
 > ### Aliases: predict.tsp.randomForest
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -3867,7 +3859,6 @@ Levels: 0 1
 > ### Name: predict.tsp.tree
 > ### Title: prediction function for tsp.tree
 > ### Aliases: predict.tsp.tree
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -3901,7 +3892,6 @@ Levels: 0 1
 > ### Name: print.LDCA
 > ### Title: print the LDCA object
 > ### Aliases: print.LDCA
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -7384,7 +7374,6 @@ V190  .           .           .           .
 > ### Name: print.cv.LDCA
 > ### Title: print function for cv.LDCA
 > ### Aliases: print.cv.LDCA
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -7406,8 +7395,8 @@ s40 s41 s42 s43 s44 s45 s46 s47 s48 s49 s50 s51 s52 s53 s54 s55 s56 s57 s58 s59
  32  32  32  32  32  32  33  37  37  38  38  39  38  39  42  41  41  41  42  41 
 s60 s61 s62 s63 s64 s65 s66 s67 s68 s69 s70 s71 s72 s73 s74 s75 s76 s77 s78 s79 
  41  42  42  42  44  44  44  43  42  42  43  44  45  45  45  44  45  45  45  46 
-s80 s81 s82 s83 s84 s85 s86 s87 s88 s89 s90 s91 s92 s93 
- 46  46  46  46  46  46  46  47  47  48  51  51  52  52 
+s80 s81 s82 s83 s84 s85 s86 s87 s88 s89 s90 s91 s92 s93 s94 s95 s96 s97 s98 s99 
+ 46  46  46  46  46  46  46  47  47  48  51  51  52  52  53  54  55  55  55  55 
 > 
 > 
 > 
@@ -7421,7 +7410,6 @@ s80 s81 s82 s83 s84 s85 s86 s87 s88 s89 s90 s91 s92 s93
 > ### Title: Fits generalized boosted logistic regression models based on Top
 > ###   Scoring Pairs.
 > ### Aliases: tsp.gbm
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -7463,7 +7451,6 @@ Iter   TrainDeviance   ValidDeviance   StepSize   Improve
 > ### Name: tsp.randomForest
 > ### Title: Classification with Random Forest based on Top Scoring Pairs
 > ### Aliases: tsp.randomForest
-> ### Keywords: ~kwd1 ~kwd2
 > 
 > ### ** Examples
 > 
@@ -7520,7 +7507,7 @@ Levels: 0 1
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.262 0.362 2.632 0 0 
+Time elapsed:  2.746 0.581 3.369 0 0 
 > grDevices::dev.off()
 null device 
           1 

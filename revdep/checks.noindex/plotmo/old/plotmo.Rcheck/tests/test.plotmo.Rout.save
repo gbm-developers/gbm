@@ -1,0 +1,22 @@
+
+
+> # test.plotmo.R
+> # This does a basic sanity test of plotmo.
+> # For more comprehensive tests, see plotmo/inst/slowtests.
+> library(plotmo)
+Loading required package: plotrix
+Loading required package: TeachingDemos
+> library(rpart)
+> data(kyphosis)
+> rpart.model <- rpart(Kyphosis~., data=kyphosis)
+> plotmo(rpart.model, type="vec", trace=1)
+stats::predict(rpart.object, data.frame[3,3], type="vec")
+stats::fitted(object=rpart.object)
+fitted() was unsuccessful, will use predict() instead
+got model response from model.frame(Kyphosis~Age+Number+Start, 
+                                    data=call$data, na.action="na.pass")
+
+ plotmo grid:    Age Number Start
+                 87      4    13
+
+> 

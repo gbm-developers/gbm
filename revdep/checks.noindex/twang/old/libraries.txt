@@ -1,0 +1,20 @@
+Library: /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/gbm/old
+gbm (2.1.5)
+
+Library: /Users/b780620/Desktop/devel/gbm/revdep/library.noindex/twang
+DBI          (1.1.0)
+gridExtra    (2.3)
+gtable       (0.3.0)
+jpeg         (0.1-8.1)
+lattice      (0.20-41)
+latticeExtra (0.6-29)
+Matrix       (1.2-18)
+minqa        (1.2.4)
+mitools      (2.4)
+numDeriv     (2016.8-1.1)
+png          (0.1-7)
+RColorBrewer (1.1-2)
+Rcpp         (1.0.4.6)
+survey       (4.0)
+survival     (3.2-3)
+xtable       (1.8-4)

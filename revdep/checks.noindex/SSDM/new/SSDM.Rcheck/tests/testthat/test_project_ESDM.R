@@ -1,0 +1,10 @@
+test_that('project Ensemble.SDM', {
+  data(Env)
+  data(Occurrences)
+  Occurrences <- subset(Occurrences, Occurrences$SPECIES == 'elliptica')
+  ESDM <- ensemble_modelling(c('CTA', 'MARS'), Occurrences, Env, rep = 2, Xcol = 'LONGITUDE', Ycol = 'LATITUDE', ensemble.thresh = 0, verbose = FALSE)
+  Env_new <- stack(Env[[1]]-1,Env[[2]],Env[[3]])
+  ESDM_proj <- project(ESDM,Env_new)
+  expect_is(ESDM_proj, 'Ensemble.SDM')
+  expect_false(all(is.na(values(ESDM_proj@projection))))
+})

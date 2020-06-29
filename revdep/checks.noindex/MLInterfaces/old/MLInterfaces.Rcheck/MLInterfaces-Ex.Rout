@@ -1,0 +1,2043 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "MLInterfaces"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('MLInterfaces')
+Loading required package: Rcpp
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: annotate
+Loading required package: AnnotationDbi
+Loading required package: stats4
+Loading required package: IRanges
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: XML
+Loading required package: cluster
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("MLearn-new")
+> ### * MLearn-new
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MLearn
+> ### Title: revised MLearn interface for machine learning
+> ### Aliases: MLearn_new MLearn baggingI dlda glmI.logistic knnI knn.cvI
+> ###   ksvmI ldaI lvqI naiveBayesI nnetI qdaI RABI randomForestI rpartI svmI
+> ###   svm2 ksvm2 plsda2 plsdaI dlda2 dldaI sldaI blackboostI knn2 knn.cv2
+> ###   ldaI.predParms lvq rab adaI
+> ###   MLearn,formula,ExpressionSet,character,numeric-method
+> ###   MLearn,formula,ExpressionSet,learnerSchema,numeric-method
+> ###   MLearn,formula,data.frame,learnerSchema,numeric-method
+> ###   MLearn,formula,data.frame,learnerSchema,xvalSpec-method
+> ###   MLearn,formula,ExpressionSet,learnerSchema,xvalSpec-method
+> ###   MLearn,formula,data.frame,clusteringSchema,ANY-method plotXvalRDA
+> ###   rdacvI rdaI BgbmI gbm2 rdaML rdacvML hclustI kmeansI pamI
+> ###   makeLearnerSchema standardMLIConverter
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> library("MASS")
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:AnnotationDbi’:
+
+    select
+
+> data(crabs)
+> set.seed(1234)
+> kp = sample(1:200, size=120)
+> rf1 = MLearn(sp~CW+RW, data=crabs, randomForestI, kp, ntree=600 )
+> rf1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = randomForestI, 
+    trainInd = kp, ntree = 600)
+Predicted outcome distribution for test set:
+
+ B  O 
+40 40 
+Summary of scores on test set (use testScores() method for details):
+     B      O 
+0.4605 0.5395 
+> nn1 = MLearn(sp~CW+RW, data=crabs, nnetI, kp, size=3, decay=.01,
++     trace=FALSE )
+> nn1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = nnetI, 
+    trainInd = kp, size = 3, decay = 0.01, trace = FALSE)
+Predicted outcome distribution for test set:
+
+ B  O 
+38 42 
+Summary of scores on test set (use testScores() method for details):
+[1] 0.5394541
+> RObject(nn1)
+a 2-3-1 network with 13 weights
+inputs: CW RW 
+output(s): sp 
+options were - entropy fitting  decay=0.01
+> knn1 = MLearn(sp~CW+RW, data=crabs, knnI(k=3,l=2), kp)
+> knn1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = knnI(k = 3, 
+    l = 2), trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+28 50 
+Summary of scores on test set (use testScores() method for details):
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.5000  0.6667  0.6667  0.8177  1.0000  1.0000 
+> names(RObject(knn1))
+[1] "traindat" "ans"      "traincl" 
+> dlda1 = MLearn(sp~CW+RW, data=crabs, dldaI, kp )
+> dlda1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = dldaI, 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+39 41 
+> names(RObject(dlda1))
+[1] "traindat" "ans"      "traincl" 
+> lda1 = MLearn(sp~CW+RW, data=crabs, ldaI, kp )
+> lda1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = ldaI, 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+41 39 
+> names(RObject(lda1))
+ [1] "prior"   "counts"  "means"   "scaling" "lev"     "svd"     "N"      
+ [8] "call"    "terms"   "xlevels"
+> slda1 = MLearn(sp~CW+RW, data=crabs, sldaI, kp )
+> slda1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = sldaI, 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+32 48 
+Summary of scores on test set (use testScores() method for details):
+        B         O 
+0.4635331 0.5364669 
+> names(RObject(slda1))
+[1] "scores"  "mylda"   "terms"   "call"    "xlevels"
+> svm1 = MLearn(sp~CW+RW, data=crabs, svmI, kp )
+> svm1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = svmI, 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+41 39 
+Summary of scores on test set (use testScores() method for details):
+        B         O 
+0.4623062 0.5376938 
+> names(RObject(svm1))
+ [1] "call"            "type"            "kernel"          "cost"           
+ [5] "degree"          "gamma"           "coef0"           "nu"             
+ [9] "epsilon"         "sparse"          "scaled"          "x.scale"        
+[13] "y.scale"         "nclasses"        "levels"          "tot.nSV"        
+[17] "nSV"             "labels"          "SV"              "index"          
+[21] "rho"             "compprob"        "probA"           "probB"          
+[25] "sigma"           "coefs"           "na.action"       "fitted"         
+[29] "decision.values" "terms"          
+> ldapp1 = MLearn(sp~CW+RW, data=crabs, ldaI.predParms(method="debiased"), kp )
+> ldapp1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = ldaI.predParms(method = "debiased"), 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+41 39 
+> names(RObject(ldapp1))
+ [1] "prior"   "counts"  "means"   "scaling" "lev"     "svd"     "N"      
+ [8] "call"    "terms"   "xlevels"
+> qda1 = MLearn(sp~CW+RW, data=crabs, qdaI, kp )
+> qda1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = qdaI, 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+45 35 
+> names(RObject(qda1))
+ [1] "prior"   "counts"  "means"   "scaling" "ldet"    "lev"     "N"      
+ [8] "call"    "terms"   "xlevels"
+> logi = MLearn(sp~CW+RW, data=crabs, glmI.logistic(threshold=0.5), kp, family=binomial ) # need family
+> logi
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = glmI.logistic(threshold = 0.5), 
+    trainInd = kp, family = binomial)
+Predicted outcome distribution for test set:
+
+ B  O 
+40 40 
+Summary of scores on test set (use testScores() method for details):
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.1417  0.3956  0.4990  0.5514  0.7374  0.9353 
+> names(RObject(logi))
+ [1] "coefficients"      "residuals"         "fitted.values"    
+ [4] "effects"           "R"                 "rank"             
+ [7] "qr"                "family"            "linear.predictors"
+[10] "deviance"          "aic"               "null.deviance"    
+[13] "iter"              "weights"           "prior.weights"    
+[16] "df.residual"       "df.null"           "y"                
+[19] "converged"         "boundary"          "model"            
+[22] "call"              "formula"           "terms"            
+[25] "data"              "offset"            "control"          
+[28] "method"            "contrasts"         "xlevels"          
+> rp2 = MLearn(sp~CW+RW, data=crabs, rpartI, kp)
+> rp2
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = rpartI, 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+36 44 
+Summary of scores on test set (use testScores() method for details):
+        B         O 
+0.4226958 0.5773042 
+> ## recode data for RAB
+> #nsp = ifelse(crabs$sp=="O", -1, 1)
+> #nsp = factor(nsp)
+> #ncrabs = cbind(nsp,crabs)
+> #rab1 = MLearn(nsp~CW+RW, data=ncrabs, RABI, kp, maxiter=10)
+> #rab1
+> #
+> # new approach to adaboost
+> #
+> ada1 = MLearn(sp ~ CW+RW, data = crabs, .method = adaI, 
++     trainInd = kp, type = "discrete", iter = 200)
+> ada1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = adaI, 
+    trainInd = kp, type = "discrete", iter = 200)
+Predicted outcome distribution for test set:
+
+ B  O 
+44 36 
+> confuMat(ada1)
+     predicted
+given  B  O
+    B 29 16
+    O 15 20
+> #
+> lvq.1 = MLearn(sp~CW+RW, data=crabs, lvqI, kp )
+> lvq.1
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = lvqI, 
+    trainInd = kp)
+Predicted outcome distribution for test set:
+
+ B  O 
+43 37 
+> nb.1 = MLearn(sp~CW+RW, data=crabs, naiveBayesI, kp )
+> confuMat(nb.1)
+     predicted
+given  B  O
+    B 24 21
+    O 15 20
+> bb.1 = MLearn(sp~CW+RW, data=crabs, baggingI, kp )
+> confuMat(bb.1)
+     predicted
+given  B  O
+    B 22 23
+    O 13 22
+> #
+> # new mboost interface -- you MUST supply family for nonGaussian response
+> #
+> require(party)  # trafo ... killing cmd check
+Loading required package: party
+Loading required package: grid
+Loading required package: mvtnorm
+Loading required package: modeltools
+
+Attaching package: ‘modeltools’
+
+The following object is masked from ‘package:MLInterfaces’:
+
+    Predict
+
+Loading required package: strucchange
+Loading required package: zoo
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Loading required package: sandwich
+> blb.1 = MLearn(sp~CW+RW+FL, data=crabs, blackboostI, kp, family=mboost::Binomial() )
+> confuMat(blb.1)
+     predicted
+given  B  O
+    B 44  1
+    O  0 35
+> #
+> # ExpressionSet illustration
+> # 
+> data(sample.ExpressionSet)
+> #  needed to increase training set size to avoid a new randomForest condition
+> # on empty class
+> set.seed(1234)
+> X = MLearn(type~., sample.ExpressionSet[100:250,], randomForestI, 1:19, importance=TRUE )
+> library(randomForest)
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+
+Attaching package: ‘randomForest’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+> library(hgu95av2.db)
+Loading required package: org.Hs.eg.db
+
+
+> opar = par(no.readonly=TRUE)
+> par(las=2)
+> plot(getVarImp(X), n=10, plat="hgu95av2", toktype="SYMBOL")
+> par(opar)
+> #
+> # demonstrate cross validation
+> #
+> nn1cv = MLearn(sp~CW+RW, data=crabs[c(1:20,101:120),], 
++    nnetI, xvalSpec("LOO"), size=3, decay=.01, trace=FALSE )
+> confuMat(nn1cv)
+     predicted
+given  B  O
+    B 10 10
+    O  7 13
+> nn2cv = MLearn(sp~CW+RW, data=crabs[c(1:20,101:120),], nnetI, 
++    xvalSpec("LOG",5, balKfold.xvspec(5)), size=3, decay=.01,
++    trace=FALSE )
+> confuMat(nn2cv)
+     predicted
+given  B  O
+    B 11  9
+    O  7 13
+> nn3cv = MLearn(sp~CW+RW+CL+BD+FL, data=crabs[c(1:20,101:120),], nnetI, 
++    xvalSpec("LOG",5, balKfold.xvspec(5), fsFun=fs.absT(2)), size=3, decay=.01,
++    trace=FALSE )
+> confuMat(nn3cv)
+     predicted
+given  B  O
+    B 15  5
+    O  5 15
+> nn4cv = MLearn(sp~.-index-sex, data=crabs[c(1:20,101:120),], nnetI, 
++    xvalSpec("LOG",5, balKfold.xvspec(5), fsFun=fs.absT(2)), size=3, decay=.01,
++    trace=FALSE )
+> confuMat(nn4cv)
+     predicted
+given  B  O
+    B 15  5
+    O  5 15
+> #
+> # try with expression data
+> #
+> library(golubEsets)
+> data(Golub_Train)
+> litg = Golub_Train[ 100:150, ]
+> g1 = MLearn(ALL.AML~. , litg, nnetI, 
++    xvalSpec("LOG",5, balKfold.xvspec(5), 
++    fsFun=fs.probT(.75)), size=3, decay=.01, trace=FALSE )
+> confuMat(g1)
+     predicted
+given ALL AML
+  ALL  25   2
+  AML   4   7
+> #
+> # illustrate rda.cv interface from package rda (requiring local bridge)
+> #
+> library(ALL)
+> data(ALL)
+> #
+> # restrict to BCR/ABL or NEG
+> #
+> bio <- which( ALL$mol.biol %in% c("BCR/ABL", "NEG"))
+> #
+> # restrict to B-cell
+> #
+> isb <- grep("^B", as.character(ALL$BT))
+> kp <- intersect(bio,isb)
+> all2 <- ALL[,kp]
+> mads = apply(exprs(all2),1,mad)
+> kp = which(mads>1)  # get around 250 genes
+> vall2 = all2[kp, ]
+> vall2$mol.biol = factor(vall2$mol.biol) # drop unused levels
+> 
+> if (requireNamespace("rda", quietly=TRUE)) {
++  library("rda")
++  r1 = MLearn(mol.biol~., vall2, MLInterfaces:::rdacvI, 1:40)
++  confuMat(r1)
++  RObject(r1)
++  MLInterfaces:::plotXvalRDA(r1)  # special interface to plots of parameter space
++ }
+> 
+> # illustrate clustering support
+> 
+> cl1 = MLearn(~CW+RW+CL+FL+BD, data=crabs, hclustI(distFun=dist, cutParm=list(k=4)))
+> plot(cl1)
+> 
+> cl1a = MLearn(~CW+RW+CL+FL+BD, data=crabs, hclustI(distFun=dist, cutParm=list(k=4)), 
++    method="complete")
+> plot(cl1a)
+> 
+> cl2 = MLearn(~CW+RW+CL+FL+BD, data=crabs, kmeansI, centers=5, algorithm="Hartigan-Wong")
+> plot(cl2, crabs[,-c(1:3)])
+> 
+> c3 = MLearn(~CL+CW+RW, crabs, pamI(dist), k=5)
+> c3
+clusteringOutput: partition table
+
+ 1  2  3  4  5 
+30 48 43 52 27 
+The call that created this object was:
+MLearn(formula = ~CL + CW + RW, data = crabs, .method = pamI(dist), 
+    k = 5)
+> plot(c3, data=crabs[,c("CL", "CW", "RW")])
+> 
+> 
+> #  new interfaces to PLS thanks to Laurent Gatto
+> 
+> set.seed(1234)
+> kp = sample(1:200, size=120)
+> 
+> #plsda.1 = MLearn(sp~CW+RW, data=crabs, plsdaI, kp, probMethod="Bayes")
+> #plsda.1
+> #confuMat(plsda.1)
+> #confuMat(plsda.1,t=.65) ## requires at least 0.65 post error prob to assign species
+> #
+> #plsda.2 = MLearn(type~., data=sample.ExpressionSet[100:250,], plsdaI, 1:16)
+> #plsda.2
+> #confuMat(plsda.2)
+> #confuMat(plsda.2,t=.65) ## requires at least 0.65 post error prob to assign outcome
+> 
+> ## examples for predict
+> #clout <- MLearn(type~., sample.ExpressionSet[100:250,], svmI , 1:16)
+> #predict(clout, sample.ExpressionSet[100:250,17:26])
+> 
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+
+detaching ‘package:ALL’, ‘package:golubEsets’, ‘package:hgu95av2.db’,
+  ‘package:org.Hs.eg.db’, ‘package:randomForest’, ‘package:party’,
+  ‘package:strucchange’, ‘package:sandwich’, ‘package:zoo’,
+  ‘package:modeltools’, ‘package:mvtnorm’, ‘package:grid’,
+  ‘package:MASS’
+
+> nameEx("RAB")
+> ### * RAB
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RAB
+> ### Title: real adaboost (Friedman et al)
+> ### Aliases: RAB RAB4es DAB Predict tonp mkfmla Predict,raboostCont-method
+> ###   Predict,daboostCont-method
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> library(MASS)
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:AnnotationDbi’:
+
+    select
+
+> library(rpart)
+> data(Pima.tr)
+> data(Pima.te)
+> Pima.all = rbind(Pima.tr, Pima.te)
+> tonp = ifelse(Pima.all$type == "Yes", 1, -1)
+> tonp = factor(tonp)
+> Pima.all = data.frame(Pima.all[,1:7], mtype=tonp)
+> fit1 = RAB(mtype~ped+glu+npreg+bmi+age, data=Pima.all[1:200,], maxiter=10, maxdepth=5)
+[1] "real adaboost iterations:"
+12345678910> pfit1 = Predict(fit1, newdata=Pima.tr)
+> table(Pima.tr$type, pfit1)
+     pfit1
+       -1   1
+  No  132   0
+  Yes   0  68
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:rpart’, ‘package:MASS’
+
+> nameEx("balKfold.xvspec")
+> ### * balKfold.xvspec
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: balKfold.xvspec
+> ### Title: generate a partition function for cross-validation, where the
+> ###   partitions are approximately balanced with respect to the
+> ###   distribution of a response variable
+> ### Aliases: balKfold.xvspec
+> ### Keywords: models manip
+> 
+> ### ** Examples
+> 
+> ## The function is currently defined as
+> function (K) 
++ function(data, clab, iternum) {
++     clabs <- data[[clab]]
++     narr <- nrow(data)
++     cnames <- unique(clabs)
++     ilist <- list()
++     for (i in 1:length(cnames)) ilist[[cnames[i]]] <- which(clabs == 
++         cnames[i])
++     clens <- lapply(ilist, length)
++     nrep <- lapply(clens, function(x) ceiling(x/K))
++     grpinds <- list()
++     for (i in 1:length(nrep)) grpinds[[i]] <- rep(1:K, nrep[[i]])[1:clens[[i]]]
++     (1:narr)[-which(unlist(grpinds) == iternum)]
++   }
+function (K) 
+function(data, clab, iternum) {
+    clabs <- data[[clab]]
+    narr <- nrow(data)
+    cnames <- unique(clabs)
+    ilist <- list()
+    for (i in 1:length(cnames)) ilist[[cnames[i]]] <- which(clabs == 
+        cnames[i])
+    clens <- lapply(ilist, length)
+    nrep <- lapply(clens, function(x) ceiling(x/K))
+    grpinds <- list()
+    for (i in 1:length(nrep)) grpinds[[i]] <- rep(1:K, nrep[[i]])[1:clens[[i]]]
+    (1:narr)[-which(unlist(grpinds) == iternum)]
+}
+> # try it out
+> library("MASS")
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:AnnotationDbi’:
+
+    select
+
+> data(crabs)
+> p1c = balKfold.xvspec(5)
+> inds = p1c( crabs, "sp", 3 )
+> table(crabs$sp[inds] )
+
+ B  O 
+80 80 
+> inds2 = p1c( crabs, "sp", 4 )
+> table(crabs$sp[inds2] )
+
+ B  O 
+80 80 
+> allc = 1:200
+> # are test sets disjoint?
+> intersect(setdiff(allc,inds), setdiff(allc,inds2))
+integer(0)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("classifierOutput-class")
+> ### * classifierOutput-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: classifierOutput-class
+> ### Title: Class "classifierOutput"
+> ### Aliases: classifierOutput-class RObject,classifierOutput-method RObject
+> ###   trainInd,classifierOutput-method trainInd
+> ###   show,classifierOutput-method testScores,classifierOutput-method
+> ###   trainScores,classifierOutput-method
+> ###   predictions,classifierOutput-method predictions
+> ###   predScores,classifierOutput-method predScores
+> ###   predScore,classifierOutput-method predScore
+> ###   testPredictions,classifierOutput-method testPredictions
+> ###   trainPredictions trainPredictions,classifierOutput-method
+> ###   fsHistory,classifierOutput-method testScores trainScores
+> ###   testPredictions
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("classifierOutput")
+Class "classifierOutput" [package "MLInterfaces"]
+
+Slots:
+                                                                          
+Name:          trainInd     testOutcomes  testPredictions       testScores
+Class:          numeric           factor           factor              ANY
+                                                                          
+Name:     trainOutcomes trainPredictions      trainScores        fsHistory
+Class:           factor           factor              ANY             list
+                                                                          
+Name:           RObject             call       embeddedCV    learnerSchema
+Class:              ANY             call          logical    learnerSchema
+> library(golubEsets)
+> data(Golub_Train) # now cross-validate a neural net
+> set.seed(1234)
+> xv5 = xvalSpec("LOG", 5, balKfold.xvspec(5))
+> m2 = MLearn(ALL.AML~., Golub_Train[1000:1050,], nnetI, xv5, 
++    size=5, decay=.01, maxit=1900 )
+# weights:  266
+# weights:  266
+initial  value 21.788464 
+initial  value 20.992943 
+iter  10 value 14.159490
+iter  10 value 15.403392
+iter  20 value 13.024244
+iter  20 value 12.456865
+iter  30 value 10.879418
+iter  30 value 9.800105
+iter  40 value 7.708924
+iter  40 value 9.339317
+iter  50 value 6.482834
+iter  50 value 9.336702
+iter  60 value 8.367081
+iter  60 value 5.735272
+iter  70 value 8.360118
+iter  70 value 4.692887
+iter  80 value 6.980772
+iter  80 value 3.544914
+iter  90 value 4.310265
+iter  90 value 2.347080
+iter 100 value 3.273848
+iter 100 value 1.900360
+iter 110 value 1.709203
+iter 110 value 2.266911
+iter 120 value 1.451633
+iter 120 value 1.862466
+iter 130 value 1.373434
+iter 130 value 1.543257
+iter 140 value 1.427538
+iter 140 value 1.353478
+iter 150 value 1.426139
+iter 150 value 1.317531
+iter 160 value 1.285381
+iter 160 value 1.422527
+iter 170 value 1.269722
+iter 170 value 1.419262
+iter 180 value 1.241452
+iter 180 value 1.384765
+iter 190 value 1.237269
+iter 190 value 1.274570
+iter 200 value 1.235215
+iter 200 value 1.196082
+iter 210 value 1.228275
+iter 210 value 1.181290
+iter 220 value 1.223888
+iter 220 value 1.179011
+iter 230 value 1.202158
+iter 230 value 1.161057
+iter 240 value 1.077327
+iter 240 value 1.124002
+iter 250 value 0.988052
+iter 250 value 1.104950
+iter 260 value 0.936022
+iter 260 value 1.082568
+iter 270 value 0.896183
+iter 270 value 1.080483
+iter 280 value 0.876771
+iter 280 value 1.032374
+iter 290 value 0.841456
+iter 290 value 1.026875
+iter 300 value 0.832655
+iter 300 value 0.916415
+iter 310 value 0.811057
+iter 310 value 0.828262
+iter 320 value 0.750613
+iter 320 value 0.823401
+iter 330 value 0.736808
+iter 330 value 0.806596
+iter 340 value 0.708282
+iter 340 value 0.780645
+iter 350 value 0.683847
+iter 350 value 0.697015
+iter 360 value 0.683113
+iter 360 value 0.672848
+iter 370 value 0.680715
+iter 370 value 0.656279
+iter 380 value 0.669054
+iter 380 value 0.623648
+iter 390 value 0.668169
+iter 390 value 0.617962
+iter 400 value 0.667965
+iter 400 value 0.614143
+iter 410 value 0.657115
+iter 410 value 0.608569
+iter 420 value 0.656020
+iter 420 value 0.606002
+iter 430 value 0.653889
+iter 430 value 0.605090
+iter 440 value 0.652609
+iter 440 value 0.597384
+iter 450 value 0.648744
+iter 450 value 0.579614
+iter 460 value 0.637999
+iter 460 value 0.573965
+iter 470 value 0.635893
+iter 470 value 0.572544
+iter 480 value 0.635191
+iter 480 value 0.568945
+iter 490 value 0.635026
+iter 490 value 0.568321
+iter 500 value 0.634981
+iter 500 value 0.567977
+iter 510 value 0.634964
+iter 510 value 0.563449
+iter 520 value 0.634961
+iter 520 value 0.563126
+iter 530 value 0.634959
+iter 530 value 0.562722
+iter 540 value 0.634957
+iter 540 value 0.549936
+final  value 0.634957 
+converged
+iter 550 value 0.547150
+iter 560 value 0.542697
+iter 570 value 0.535443
+iter 580 value 0.506819
+iter 590 value 0.500509
+iter 600 value 0.498257
+iter 610 value 0.491631
+iter 620 value 0.470290
+iter 630 value 0.452627
+iter 640 value 0.433494
+iter 650 value 0.430045
+iter 660 value 0.422565
+iter 670 value 0.411375
+iter 680 value 0.408862
+iter 690 value 0.405587
+iter 700 value 0.403081
+iter 710 value 0.402387
+iter 720 value 0.398655
+iter 730 value 0.396053
+iter 740 value 0.392936
+iter 750 value 0.390446
+iter 760 value 0.387924
+iter 770 value 0.386713
+iter 780 value 0.386544
+iter 790 value 0.386489
+iter 800 value 0.386462
+iter 810 value 0.386454
+iter 820 value 0.386451
+iter 830 value 0.382114
+iter 840 value 0.372121
+iter 850 value 0.369293
+iter 860 value 0.366058
+iter 870 value 0.360694
+iter 880 value 0.357878
+iter 890 value 0.357506
+iter 900 value 0.357346
+iter 910 value 0.357274
+iter 920 value 0.357248
+iter 930 value 0.357240
+iter 940 value 0.357237
+iter 950 value 0.357235
+iter 960 value 0.357234
+iter 970 value 0.357233
+iter 980 value 0.357232
+iter 990 value 0.357232
+iter1000 value 0.357231
+iter1010 value 0.357231
+iter1020 value 0.357231
+iter1030 value 0.357231
+iter1040 value 0.357231
+iter1050 value 0.357231
+iter1060 value 0.357231
+final  value 0.357231 
+converged
+# weights:  266
+initial  value 26.725736 
+iter  10 value 18.575889
+iter  20 value 18.347906
+iter  30 value 13.916842
+iter  40 value 12.139204
+iter  50 value 11.576146
+iter  60 value 10.283507
+iter  70 value 8.302719
+iter  80 value 7.216160
+iter  90 value 7.053303
+iter 100 value 6.934646
+iter 110 value 6.243412
+iter 120 value 1.563451
+iter 130 value 1.094777
+iter 140 value 1.041188
+iter 150 value 1.021134
+iter 160 value 0.986652
+iter 170 value 0.924404
+iter 180 value 0.911363
+iter 190 value 0.905177
+iter 200 value 0.867473
+iter 210 value 0.857982
+iter 220 value 0.809059
+iter 230 value 0.770888
+iter 240 value 0.749732
+iter 250 value 0.710048
+iter 260 value 0.703900
+iter 270 value 0.681669
+iter 280 value 0.665162
+iter 290 value 0.647555
+iter 300 value 0.637780
+iter 310 value 0.635981
+iter 320 value 0.621045
+iter 330 value 0.618848
+iter 340 value 0.587262
+iter 350 value 0.568972
+iter 360 value 0.556903
+iter 370 value 0.547207
+iter 380 value 0.536229
+iter 390 value 0.493734
+iter 400 value 0.482103
+iter 410 value 0.476156
+iter 420 value 0.461248
+iter 430 value 0.453703
+iter 440 value 0.452355
+iter 450 value 0.452298
+# weights:  266
+iter 460 value 0.452243
+initial  value 21.572354 
+iter  10 value 18.026119
+iter 470 value 0.440199
+iter  20 value 17.038231
+iter 480 value 0.439773
+iter  30 value 16.580133
+iter 490 value 0.439737
+iter  40 value 16.558674
+iter 500 value 0.439672
+iter  50 value 15.963304
+iter 510 value 0.438519
+iter  60 value 12.094209
+iter 520 value 0.427174
+iter  70 value 7.304873
+iter 530 value 0.418075
+iter  80 value 7.251931
+iter 540 value 0.412823
+iter  90 value 5.794047
+iter 550 value 0.405952
+iter 100 value 5.781070
+iter 560 value 0.403994
+iter 110 value 4.070687
+iter 570 value 0.402895
+iter 120 value 3.951609
+iter 580 value 0.402167
+iter 130 value 3.911159
+iter 590 value 0.401368
+iter 140 value 3.900327
+iter 600 value 0.400889
+iter 150 value 3.833043
+iter 610 value 0.400622
+iter 160 value 2.265092
+iter 620 value 0.400263
+iter 170 value 2.160989
+iter 630 value 0.398319
+iter 180 value 1.760064
+iter 640 value 0.393596
+iter 190 value 1.695830
+iter 650 value 0.393096
+iter 200 value 1.617351
+iter 660 value 0.392800
+iter 210 value 1.598670
+iter 670 value 0.390330
+iter 220 value 1.556206
+iter 680 value 0.389430
+iter 230 value 1.492383
+iter 690 value 0.379805
+iter 240 value 1.430207
+iter 700 value 0.379593
+iter 250 value 1.422095
+iter 710 value 0.377431
+iter 260 value 1.409375
+iter 720 value 0.374202
+iter 270 value 1.396154
+iter 730 value 0.367284
+iter 280 value 1.393437
+iter 740 value 0.365010
+iter 290 value 1.344605
+iter 750 value 0.364677
+iter 300 value 1.336693
+iter 760 value 0.364566
+iter 310 value 1.330790
+iter 770 value 0.364506
+iter 320 value 1.314122
+iter 780 value 0.364481
+iter 790 value 0.364456
+iter 330 value 1.307860
+iter 800 value 0.364439
+iter 340 value 1.301124
+iter 810 value 0.364434
+iter 350 value 1.298228
+iter 820 value 0.364429
+iter 360 value 1.249764
+iter 830 value 0.364426
+iter 370 value 1.229838
+iter 840 value 0.364425
+iter 380 value 1.220422
+iter 850 value 0.364424
+iter 390 value 1.148579
+iter 860 value 0.364423
+iter 870 value 0.364422
+iter 400 value 1.116416
+iter 880 value 0.364422
+iter 410 value 1.066915
+iter 890 value 0.364422
+iter 420 value 1.018709
+iter 900 value 0.364421
+iter 430 value 0.969719
+iter 910 value 0.364421
+iter 440 value 0.925257
+iter 920 value 0.364421
+iter 930 value 0.364420
+iter 450 value 0.916828
+iter 940 value 0.364420
+iter 460 value 0.903126
+iter 950 value 0.364420
+iter 470 value 0.872783
+iter 960 value 0.364420
+iter 480 value 0.843480
+iter 970 value 0.364419
+iter 980 value 0.364418
+iter 490 value 0.805904
+iter 990 value 0.364417
+iter 500 value 0.759005
+iter1000 value 0.364417
+iter 510 value 0.688810
+iter1010 value 0.364417
+iter 520 value 0.676623
+iter1020 value 0.364416
+iter 530 value 0.675260
+final  value 0.364416 
+converged
+iter 540 value 0.673912
+iter 550 value 0.673362
+iter 560 value 0.672862
+iter 570 value 0.672565
+iter 580 value 0.671532
+iter 590 value 0.671390
+iter 600 value 0.671309
+iter 610 value 0.671294
+iter 620 value 0.670442
+iter 630 value 0.666614
+iter 640 value 0.653119
+iter 650 value 0.650083
+iter 660 value 0.647527
+iter 670 value 0.640045
+iter 680 value 0.633457
+iter 690 value 0.624054
+iter 700 value 0.611661
+iter 710 value 0.600200
+iter 720 value 0.593251
+iter 730 value 0.580722
+iter 740 value 0.562788
+iter 750 value 0.545983
+iter 760 value 0.522120
+iter 770 value 0.520273
+iter 780 value 0.516112
+iter 790 value 0.507861
+iter 800 value 0.504217
+iter 810 value 0.501131
+iter 820 value 0.500766
+iter 830 value 0.494379
+iter 840 value 0.485486
+iter 850 value 0.479600
+iter 860 value 0.478710
+iter 870 value 0.478613
+iter 880 value 0.478584
+iter 890 value 0.478554
+iter 900 value 0.477627
+iter 910 value 0.477153
+iter 920 value 0.467627
+iter 930 value 0.466823
+iter 940 value 0.465511
+iter 950 value 0.464572
+iter 960 value 0.463261
+iter 970 value 0.463032
+iter 980 value 0.462975
+iter 990 value 0.458813
+iter1000 value 0.454623
+iter1010 value 0.454119
+iter1020 value 0.453635
+iter1030 value 0.453163
+iter1040 value 0.452733
+iter1050 value 0.452692
+iter1060 value 0.452678
+iter1070 value 0.452674
+iter1080 value 0.452673
+iter1090 value 0.452673
+final  value 0.452673 
+converged
+# weights:  266
+initial  value 23.856919 
+iter  10 value 18.600343
+iter  20 value 16.552959
+iter  30 value 12.856762
+iter  40 value 9.372701
+iter  50 value 8.565909
+iter  60 value 8.354780
+iter  70 value 6.418807
+iter  80 value 6.346239
+iter  90 value 5.534316
+iter 100 value 4.237146
+iter 110 value 4.188654
+iter 120 value 3.789056
+iter 130 value 3.440773
+iter 140 value 3.133999
+iter 150 value 2.809254
+iter 160 value 2.706171
+iter 170 value 2.379389
+iter 180 value 1.972550
+iter 190 value 1.517937
+iter 200 value 1.415723
+iter 210 value 1.404433
+iter 220 value 1.378500
+iter 230 value 1.287387
+iter 240 value 1.236088
+iter 250 value 1.172780
+iter 260 value 1.117844
+iter 270 value 1.073197
+iter 280 value 1.043231
+iter 290 value 1.018671
+iter 300 value 1.015241
+iter 310 value 1.009442
+iter 320 value 1.009147
+iter 330 value 1.009056
+iter 340 value 1.009035
+iter 350 value 1.009032
+iter 360 value 1.009027
+iter 370 value 1.008141
+iter 380 value 1.007451
+iter 390 value 0.999583
+iter 400 value 0.998562
+iter 410 value 0.997989
+iter 420 value 0.988499
+iter 430 value 0.988159
+iter 440 value 0.987725
+iter 450 value 0.972509
+iter 460 value 0.954222
+iter 470 value 0.931752
+iter 480 value 0.879195
+iter 490 value 0.858086
+iter 500 value 0.850366
+iter 510 value 0.831556
+iter 520 value 0.828853
+iter 530 value 0.788641
+iter 540 value 0.774114
+iter 550 value 0.767819
+iter 560 value 0.745450
+iter 570 value 0.673708
+iter 580 value 0.641746
+iter 590 value 0.628665
+iter 600 value 0.593977
+iter 610 value 0.567974
+iter 620 value 0.558543
+iter 630 value 0.548516
+iter 640 value 0.536913
+iter 650 value 0.532949
+iter 660 value 0.531649
+iter 670 value 0.516482
+iter 680 value 0.511504
+iter 690 value 0.507290
+iter 700 value 0.498087
+iter 710 value 0.477138
+iter 720 value 0.458730
+iter 730 value 0.433240
+iter 740 value 0.422526
+iter 750 value 0.421436
+iter 760 value 0.421245
+iter 770 value 0.421086
+iter 780 value 0.421032
+iter 790 value 0.420992
+iter 800 value 0.420958
+iter 810 value 0.420934
+iter 820 value 0.420922
+iter 830 value 0.420911
+iter 840 value 0.420896
+iter 850 value 0.420888
+iter 860 value 0.420884
+iter 870 value 0.420880
+iter 880 value 0.420877
+iter 890 value 0.420875
+iter 900 value 0.420874
+iter 910 value 0.420872
+iter 920 value 0.420871
+iter 930 value 0.420871
+iter 940 value 0.420870
+iter 950 value 0.420869
+iter 960 value 0.420869
+iter 970 value 0.420868
+iter 980 value 0.420868
+final  value 0.420868 
+converged
+> testScores(RObject(m2)[[1]]$mlans)
+          [,1]
+1  0.911472361
+6  0.002859923
+11 0.002528703
+16 0.002528703
+21 0.985508171
+26 0.002528703
+34 0.995028510
+28 0.002536501
+33 0.995029068
+> alls = lapply(RObject(m2), function(x) testScores(x$mlans))
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:golubEsets’
+
+> nameEx("clusteringOutput-class")
+> ### * clusteringOutput-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: clusteringOutput-class
+> ### Title: container for clustering outputs in uniform structure
+> ### Aliases: clusteringOutput-class RObject,clusteringOutput-method
+> ###   plot,clusteringOutput,ANY-method show,clusteringOutput-method
+> ###   show,clusteringSchema-method getConverter,clusteringSchema-method
+> ###   getDist,clusteringSchema-method getConverter getDist
+> ###   clusteringSchema-class prcompObj-class silhouette-class prcomp-class
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("clusteringOutput")
+Class "clusteringOutput" [package "MLInterfaces"]
+
+Slots:
+                                                                          
+Name:         partition       silhouette           prcomp          distFun
+Class:          numeric       silhouette        prcompObj         function
+                                                                          
+Name:         converter             call    learnerSchema          RObject
+Class:         function             call clusteringSchema              ANY
+> 
+> 
+> 
+> cleanEx()
+> nameEx("confuMat-methods")
+> ### * confuMat-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: confuMat-methods
+> ### Title: Compute the confusion matrix for a classifier.
+> ### Aliases: confuMat confuMat-methods confuMat,classifierOutput-method
+> ###   confuMat,classifierOutput,character-method
+> ###   confuMat,classifierOutput,missing-method
+> ###   confuMat,classifierOutput,numeric-method
+> ### Keywords: methods classif
+> 
+> ### ** Examples
+> 
+> library(golubEsets)
+> data(Golub_Merge)
+> smallG <- Golub_Merge[101:150,]
+> k1 <- MLearn(ALL.AML~., smallG, knnI(k=1), 1:30)
+> confuMat(k1)
+     predicted
+given ALL AML
+  ALL  17  10
+  AML   6   9
+> confuMat(k1, "train")
+     predicted
+given ALL AML
+  ALL  20   0
+  AML   0  10
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:golubEsets’
+
+> nameEx("confuTab")
+> ### * confuTab
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: confuTab
+> ### Title: Compute confusion tables for a confusion matrix.
+> ### Aliases: confuTab
+> 
+> ### ** Examples
+> 
+> ## the confusion matrix
+> cm <- table(iris$Species, sample(iris$Species))
+> ## the 3 confusion tables
+> (ct <- confuTab(cm))
+$setosa
+         known
+predicted TRUE FALSE
+    TRUE    22    28
+    FALSE   28    72
+
+$versicolor
+         known
+predicted TRUE FALSE
+    TRUE    19    31
+    FALSE   31    69
+
+$virginica
+         known
+predicted TRUE FALSE
+    TRUE    15    35
+    FALSE   35    65
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fs.absT")
+> ### * fs.absT
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fs.absT
+> ### Title: support for feature selection in cross-validation
+> ### Aliases: fs.absT fs.probT fs.topVariance
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> library("MASS")
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:AnnotationDbi’:
+
+    select
+
+> data(crabs)
+> # we will demonstrate this procedure with the crabs data.
+> # first, create the closure to pick 3 features
+> demFS = fs.absT(3)
+> # run it on the entire dataset with features excluding sex
+> demFS(sp~.-sex, crabs)
+sp ~ FL + BD + RW
+<environment: 0x7fc5e56784d0>
+> # emulate cross-validation by excluding last 50 records
+> demFS(sp~.-sex, crabs[1:150,])
+sp ~ BD + FL + CL
+<environment: 0x7fc5e35b32f0>
+> # emulate cross-validation by excluding first 50 records -- different features retained
+> demFS(sp~.-sex, crabs[51:200,])
+sp ~ FL + BD + CL
+<environment: 0x7fc5e5314ee0>
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("fsHistory")
+> ### * fsHistory
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fsHistory
+> ### Title: extract history of feature selection for a cross-validated
+> ###   machine learner
+> ### Aliases: fsHistory
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> data(iris)
+> iris2 = iris[ iris$Species %in% levels(iris$Species)[1:2], ]
+> iris2$Species = factor(iris2$Species) # drop unused levels
+> x1 = MLearn(Species~., iris2, ldaI, xvalSpec("LOG", 3, 
++    balKfold.xvspec(3), fs.absT(3)))
+Ignoring testScores of class NULL, expecting vector or matrix.
+> fsHistory(x1)
+[[1]]
+[1] "Petal.Length" "Petal.Width"  "Sepal.Length"
+
+[[2]]
+[1] "Petal.Length" "Petal.Width"  "Sepal.Length"
+
+[[3]]
+[1] "Petal.Length" "Petal.Width"  "Sepal.Width" 
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("hclustWidget")
+> ### * hclustWidget
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hclustWidget
+> ### Title: shiny-oriented GUI for cluster or classifier exploration
+> ### Aliases: hclustWidget mlearnWidget
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> # should run with example(hclustWidget, ask=FALSE)
+> if (interactive()) {
++  library(shiny)
++  library(MASS)
++  data(crabs)
++  cr = data.matrix(crabs[,-c(1:3)])
++  au = crabs[,1:3]
++  show(hclustWidget(cr, auxdf=au))
++ ## must use stop widget button to proceed
++   library(ALL)
++   library(hgu95av2.db)
++   data(ALL)
++   show(mlearnWidget(ALL[1:500,], mol.biol~.))
++  }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("learnerSchema-class")
+> ### * learnerSchema-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: learnerSchema-class
+> ### Title: Class "learnerSchema" - convey information on a machine learning
+> ###   function to the MLearn wrapper
+> ### Aliases: learnerSchema-class nonstandardLearnerSchema-class
+> ###   show,learnerSchema-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("learnerSchema")
+Class "learnerSchema" [package "MLInterfaces"]
+
+Slots:
+                                                      
+Name:  packageName   mlFunName   converter   predicter
+Class:   character   character    function    function
+> 
+> 
+> 
+> cleanEx()
+> nameEx("performance-analytics")
+> ### * performance-analytics
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: performance-analytics
+> ### Title: Assessing classifier performance
+> ### Aliases: precision-methods precision,classifierOutput,character-method
+> ###   precision,classifierOutput,missing-method
+> ###   precision,classifierOutput,numeric-method
+> ###   precision,table,missing-method precision recall-methods
+> ###   recall,classifierOutput,character-method
+> ###   recall,classifierOutput,missing-method
+> ###   recall,classifierOutput,numeric-method recall,table,missing-method
+> ###   recall sensitivity-methods
+> ###   sensitivity,classifierOutput,character-method
+> ###   sensitivity,classifierOutput,missing-method
+> ###   sensitivity,classifierOutput,numeric-method
+> ###   sensitivity,table,missing-method sensitivity macroF1-methods
+> ###   macroF1,classifierOutput,character-method
+> ###   macroF1,classifierOutput,missing-method
+> ###   macroF1,classifierOutput,numeric-method macroF1,table,missing-method
+> ###   macroF1,numeric,numeric-method macroF1 acc,table-method acc
+> ###   specificity,table-method specificity tp,table-method tp
+> ###   tn,table-method tn fp,table-method fp fn,table-method fn
+> ###   F1,table-method F1
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> ## the confusion matrix
+> cm <- table(iris$Species, sample(iris$Species))
+> tp(cm)
+    setosa versicolor  virginica 
+        22         19         15 
+> tn(cm)
+    setosa versicolor  virginica 
+        72         69         65 
+> fp(cm)
+    setosa versicolor  virginica 
+        28         31         35 
+> fn(cm)
+    setosa versicolor  virginica 
+        28         31         35 
+> acc(cm)
+[1] 0.3733333
+> precision(cm)
+    setosa versicolor  virginica 
+      0.44       0.38       0.30 
+> recall(cm)
+    setosa versicolor  virginica 
+      0.44       0.38       0.30 
+> F1(cm)
+    setosa versicolor  virginica 
+      0.44       0.38       0.30 
+> macroF1(cm)
+[1] 0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("planarPlot-methods")
+> ### * planarPlot-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: planarPlot-methods
+> ### Title: Methods for Function planarPlot in Package 'MLInterfaces'
+> ### Aliases: planarPlot planarPlot-methods
+> ###   planarPlot,classifierOutput,ExpressionSet,character-method
+> ###   planarPlot,classifierOutput,data.frame,character-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> library(ALL)
+> library(hgu95av2.db)
+Loading required package: org.Hs.eg.db
+> data(ALL)
+> #
+> # restrict to BCR/ABL or NEG
+> #
+> bio <- which( ALL$mol.biol %in% c("BCR/ABL", "NEG"))
+> #
+> # restrict to B-cell
+> #
+> isb <- grep("^B", as.character(ALL$BT))
+> kp <- intersect(bio,isb)
+> all2 <- ALL[,kp]
+> #
+> # sample 2 genes at random
+> #
+> set.seed(1234)
+> ng <- nrow(exprs(all2)) # pick 5 in case any NAs come back
+> pick <- sample(1:ng, size=5, replace=FALSE)
+> gg <- all2[pick,]
+> sym <- unlist(mget(featureNames(gg), hgu95av2SYMBOL))
+> bad = which(is.na(sym))
+> if (length(bad)>0) {
++   gg = gg[-bad,]
++   sym = sym[-bad]
++   }
+> gg = gg[1:2,]
+> sym = sym[1:2]
+> featureNames(gg) <- sym
+> gg$class = factor(ifelse(all2$mol.biol=="NEG", "NEG", "POS"))
+> 
+> cl1 <- which( gg$class == "NEG" )
+> cl2 <- which( gg$class != "NEG" )
+> #
+> # create balanced training sample
+> #
+> trainInds <- c( sample(cl1, size=floor(length(cl1)/2) ),
++       sample(cl2, size=floor(length(cl2)/2)) )
+> #
+> # run rpart
+> #
+> tgg <- MLearn(class~., gg, rpartI, trainInds, minsplit=4 )
+> opar <- par(no.readonly=TRUE)
+> par(mfrow=c(2,2))
+> planarPlot( tgg, gg, "class" )
+Loading required namespace: RColorBrewer
+> title("rpart")
+> points(exprs(gg)[1,trainInds], exprs(gg)[2,trainInds], col=ifelse(gg$class[trainInds]=="NEG", "yellow", "black"), pch=16)
+> #
+> # run nnet
+> #
+> ngg <- MLearn( class~., gg, nnetI, trainInds, size=8 )
+# weights:  33
+initial  value 26.990974 
+iter  10 value 26.790129
+iter  20 value 26.739289
+iter  30 value 26.463308
+iter  40 value 25.884326
+iter  50 value 25.106988
+iter  60 value 24.918273
+iter  70 value 24.895713
+iter  70 value 24.895713
+final  value 24.895710 
+converged
+> planarPlot( ngg, gg, "class" )
+> points(exprs(gg)[1,trainInds], exprs(gg)[2,trainInds], col=ifelse(gg$class[trainInds]=="NEG", "yellow", "black"), pch=16)
+> title("nnet")
+> #
+> # run knn
+> #
+> kgg <- MLearn( class~.,  gg, knnI(k=3,l=1), trainInds)
+> planarPlot( kgg, gg, "class" )
+> points(exprs(gg)[1,trainInds], exprs(gg)[2,trainInds], col=ifelse(gg$class[trainInds]=="NEG", "yellow", "black"), pch=16)
+> title("3-nn")
+> #
+> # run svm
+> #
+> sgg <- MLearn( class~., gg, svmI, trainInds )
+> planarPlot( sgg, gg, "class" )
+> points(exprs(gg)[1,trainInds], exprs(gg)[2,trainInds], col=ifelse(gg$class[trainInds]=="NEG", "yellow", "black"), pch=16)
+> title("svm")
+> par(opar)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+
+detaching ‘package:hgu95av2.db’, ‘package:org.Hs.eg.db’, ‘package:ALL’
+
+> nameEx("plspinHcube")
+> ### * plspinHcube
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plspinHcube
+> ### Title: shiny app for interactive 3D visualization of mlbench hypercube
+> ### Aliases: plspinHcube
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> if (interactive()) plspinHcube()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("predict.classifierOutput")
+> ### * predict.classifierOutput
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: predict.classifierOutput
+> ### Title: Predict method for 'classifierOutput' objects
+> ### Aliases: predict.classifierOutput
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set.seed(1234)
+> ##D data(sample.ExpressionSet)
+> ##D trainInd <- 1:16
+> ##D 
+> ##D clout.svm <- MLearn(type~., sample.ExpressionSet[100:250,], svmI, trainInd)
+> ##D predict(clout.svm, sample.ExpressionSet[100:250,-trainInd])
+> ##D 
+> ##D clout.ksvm <- MLearn(type~., sample.ExpressionSet[100:250,], ksvmI, trainInd)
+> ##D predict(clout.ksvm, sample.ExpressionSet[100:250,-trainInd])
+> ##D 
+> ##D clout.nnet <- MLearn(type~., sample.ExpressionSet[100:250,], nnetI, trainInd, size=3, decay=.01 )
+> ##D predict(clout.nnet, sample.ExpressionSet[100:250,-trainInd])
+> ##D 
+> ##D clout.knn <- MLearn(type~., sample.ExpressionSet[100:250,], knnI(k=3), trainInd)
+> ##D predict(clout.knn, sample.ExpressionSet[100:250,-trainInd],k=1)
+> ##D predict(clout.knn, sample.ExpressionSet[100:250,-trainInd],k=3)
+> ##D 
+> ##D #clout.plsda <- MLearn(type~., sample.ExpressionSet[100:250,], plsdaI, trainInd)
+> ##D #predict(clout.plsda, sample.ExpressionSet[100:250,-trainInd])
+> ##D 
+> ##D clout.nb <- MLearn(type~., sample.ExpressionSet[100:250,], naiveBayesI, trainInd)
+> ##D predict(clout.nb, sample.ExpressionSet[100:250,-trainInd])
+> ##D 
+> ##D # this can fail if training set does not yield sufficient diversity in response vector;
+> ##D # setting seed seems to help with this example, but other applications may have problems
+> ##D #
+> ##D clout.rf <- MLearn(type~., sample.ExpressionSet[100:250,], randomForestI, trainInd)
+> ##D predict(clout.rf, sample.ExpressionSet[100:250,-trainInd])
+> ## End(Not run) # end of dontrun
+> 
+> 
+> 
+> cleanEx()
+> nameEx("projectLearnerToGrid")
+> ### * projectLearnerToGrid
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: projectLearnerToGrid
+> ### Title: create learned tesselation of feature space after PC
+> ###   transformation
+> ### Aliases: projectLearnerToGrid
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> library(mlbench)
+> # demostrate with 3 dimensional hypercube problem
+> kk = mlbench.hypercube()
+> colnames(kk$x) = c("f1", "f2", "f3")
+> hcu = data.frame(cl=kk$classes, kk$x)
+> set.seed(1234)
+> sam = sample(1:nrow(kk$x), size=nrow(kk$x)/2)
+> ldap = projectLearnerToGrid(cl~., data=hcu, ldaI, 
++    sam, predWrapper=function(x)x$class)
+> plot(ldap)
+> confuMat(ldap@fittedLearner)
+     predicted
+given  1  2  3  4  5  6  7  8
+    1 51  0  0  0  0  0  0  0
+    2  0 50  0  0  0  0  0  0
+    3  0  0 51  0  0  0  0  0
+    4  0  0  0 53  0  0  0  0
+    5  0  0  0  0 47  0  0  0
+    6  0  0  0  0  0 52  0  0
+    7  0  0  0  0  0  0 51  0
+    8  0  0  0  0  0  0  0 45
+> nnetp = projectLearnerToGrid(cl~., data=hcu, nnetI, sam, size=2,
++    decay=.01, predExtras=list(type="class"))
+# weights:  32
+initial  value 875.669514 
+iter  10 value 432.690570
+iter  20 value 306.611981
+iter  30 value 212.588189
+iter  40 value 145.524292
+iter  50 value 105.577146
+iter  60 value 95.314313
+iter  70 value 93.454490
+iter  80 value 87.571102
+iter  90 value 83.605070
+iter 100 value 83.138302
+final  value 83.138302 
+stopped after 100 iterations
+> plot(nnetp)
+> confuMat(nnetp@fittedLearner)
+     predicted
+given  1  2  3  4  5  6  7  8
+    1 50  0  1  0  0  0  0  0
+    2  0 50  0  0  0  0  0  0
+    3  2  1 46  0  0  2  0  0
+    4  0  0  0 53  0  0  0  0
+    5  0  0  0  0 47  0  0  0
+    6  0  0  2  0  0 48  0  2
+    7  0  0  0  0  0  0 51  0
+    8  0  0  0  0  0  0  0 45
+> #if (requireNamespace("rgl") && interactive()) {
+> #    learnerIn3D(nnetp)
+> #    ## customising the rgl plot
+> #    learnerIn3D(nnetp, size = 10, alpha = 0.1)
+> #}
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlbench’
+
+> nameEx("projectedLearner-class")
+> ### * projectedLearner-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: projectedLearner-class
+> ### Title: Class '"projectedLearner"'
+> ### Aliases: projectedLearner-class learnerIn3D,projectedLearner-method
+> ###   plot,projectedLearner,ANY-method plotOne,projectedLearner-method
+> ###   show,projectedLearner-method plotOne learnerIn3D
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("projectedLearner")
+Class "projectedLearner" [package "MLInterfaces"]
+
+Slots:
+                                                                        
+Name:                     fittedLearner                   trainingSetPCA
+Class:                 classifierOutput                           prcomp
+                                                                        
+Name:                    trainingLabels                       testLabels
+Class:                              ANY                              ANY
+                                                                        
+Name:   gridFeatsProjectedToTrainingPCs                  gridPredictions
+Class:                           matrix                              ANY
+                                                                        
+Name:  trainFeatsProjectedToTrainingPCs  testFeatsProjectedToTrainingPCs
+Class:                           matrix                           matrix
+                                                                        
+Name:                  trainPredictions                  testPredictions
+Class:                              ANY                              ANY
+                                       
+Name:                           theCall
+Class:                             call
+> 
+> 
+> 
+> cleanEx()
+> nameEx("raboostCont-class")
+> ### * raboostCont-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: raboostCont-class
+> ### Title: Class "raboostCont" ~~~
+> ### Aliases: raboostCont-class daboostCont-class show,raboostCont-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("raboostCont")
+Class "raboostCont" [package "MLInterfaces"]
+
+Slots:
+                              
+Name:    .Data formula    call
+Class:    list formula    call
+
+Extends: 
+Class "list", from data part
+Class "vector", by class "list", distance 2
+Class "AssayData", by class "list", distance 2
+Class "list_OR_List", by class "list", distance 2
+Class "vector_OR_Vector", by class "list", distance 3
+Class "vector_OR_factor", by class "list", distance 3
+
+Known Subclasses: "daboostCont"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("varImpStruct-class")
+> ### * varImpStruct-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: varImpStruct-class
+> ### Title: Class "varImpStruct" - collect data on variable importance from
+> ###   various machine learning methods
+> ### Aliases: varImpStruct-class plot plot,varImpStruct-method
+> ###   plot,varImpStruct,ANY-method show,varImpStruct-method
+> ###   report,varImpStruct-method report getVarImp
+> ###   getVarImp,classifOutput,logical-method
+> ###   getVarImp,classifierOutput,logical-method
+> ###   getVarImp,classifierOutput,missing-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> library(golubEsets)
+> data(Golub_Merge)
+> library(hu6800.db)
+Loading required package: org.Hs.eg.db
+
+> smallG <- Golub_Merge[1001:1060,]
+> set.seed(1234)
+> opar=par(no.readonly=TRUE)
+> par(las=2, mar=c(10,11,5,5))
+> rf2 <- MLearn(ALL.AML~., smallG, randomForestI, 1:40, importance=TRUE,
++  sampsize=table(smallG$ALL.AML[1:40]), mtry=sqrt(ncol(exprs(smallG))))
+> plot( getVarImp( rf2, FALSE ), n=10, plat="hu6800", toktype="SYMBOL")
+> par(opar)
+> report( getVarImp( rf2, FALSE ), n=10, plat="hu6800", toktype="SYMBOL")
+                   MnDecrAcc            names
+HG4740.HT5187_at 0.024413313 HG4740.HT5187_at
+HG64.HT64_at     0.007810415     HG64.HT64_at
+J02874_at        0.007665816            FABP4
+J00301_at        0.006983934              PTH
+HG960.HT960_at   0.006577261   HG960.HT960_at
+J00073_at        0.005323128            ACTC1
+HG987.HT987_at   0.005129924   HG987.HT987_at
+J02645_at        0.004961747           EIF2S1
+HG511.HT511_at   0.004156396   HG511.HT511_at
+HG4606.HT5011_at 0.003570340 HG4606.HT5011_at
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+
+detaching ‘package:hu6800.db’, ‘package:org.Hs.eg.db’,
+  ‘package:golubEsets’
+
+> nameEx("xvalLoop")
+> ### * xvalLoop
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: xvalLoop
+> ### Title: Cross-validation in clustered computing environments
+> ### Aliases: xvalLoop xvalLoop,ANY-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(golubEsets)
+> ##D data(Golub_Merge)
+> ##D smallG <- Golub_Merge[200:250,]
+> ##D 
+> ##D # Evaluation on one node
+> ##D 
+> ##D lk1 <- xval(smallG, "ALL.AML", knnB, xvalMethod="LOO", group=as.integer(0))
+> ##D table(lk1,smallG$ALL.AML)
+> ##D 
+> ##D # Evaluation on several nodes -- a cluster programmer might write the following...
+> ##D 
+> ##D library(snow)
+> ##D setOldClass("spawnedMPIcluster")
+> ##D 
+> ##D setMethod("xvalLoop", signature( cluster = "spawnedMPIcluster"),
+> ##D ## use the function returned below to evalutae
+> ##D ## the central cross-validation loop in xval
+> ##D function( cluster, ... ) {
+> ##D     clusterExportEnv <- function (cl, env = .GlobalEnv)
+> ##D     {
+> ##D         unpackEnv <- function(env) {
+> ##D             for ( name in ls(env) ) assign(name, get(name, env), .GlobalEnv )
+> ##D             NULL
+> ##D         }
+> ##D         clusterCall(cl, unpackEnv, env)
+> ##D     }
+> ##D     function(X, FUN, ...) { # this gets returned to xval
+> ##D         ## send all visible variables from the parent (i.e., xval) frame
+> ##D         clusterExportEnv( cluster, parent.frame(1) )
+> ##D         parLapply( cluster, X, FUN, ... )
+> ##D     }
+> ##D })
+> ##D 
+> ##D # ... and use the cluster like this...
+> ##D 
+> ##D cl <- makeCluster(2, "MPI")
+> ##D clusterEvalQ(cl, library(MLInterfaces))
+> ##D 
+> ##D lk1 <- xval(smallG, "ALL.AML", knnB, xvalMethod="LOO", group=as.integer(0), cluster = cl)
+> ##D table(lk1,smallG$ALL.AML)
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("xvalSpec")
+> ### * xvalSpec
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: xvalSpec
+> ### Title: container for information specifying a cross-validated machine
+> ###   learning exercise
+> ### Aliases: xvalSpec xvalSpec-class
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> library("MASS")
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:AnnotationDbi’:
+
+    select
+
+> data(crabs)
+> set.seed(1234)
+> #
+> # demonstrate cross validation
+> #
+> nn1cv = MLearn(sp~CW+RW, data=crabs, nnetI, xvalSpec("LOG",
++    5, balKfold.xvspec(5)), size=3, decay=.01 )
+# weights:  13
+# weights:  13
+initial  value 113.239085 
+initial  value 124.572676 
+iter  10 value 110.737329
+iter  10 value 110.746545
+iter  20 value 107.003151
+iter  20 value 109.209904
+iter  30 value 99.596708
+iter  30 value 97.991495
+iter  40 value 95.998197
+iter  40 value 94.463993
+iter  50 value 92.417670
+iter  50 value 94.213462
+iter  60 value 94.159685
+iter  60 value 92.063025
+iter  70 value 94.158700
+iter  70 value 92.018875
+final  value 94.158679 
+converged
+iter  80 value 92.015564
+final  value 92.015550 
+converged
+# weights:  13
+initial  value 112.199455 
+# weights:  13
+initial  value 111.394139 
+iter  10 value 110.338161
+iter  10 value 108.563222
+iter  20 value 103.495259
+iter  20 value 102.036192
+iter  30 value 103.178191
+iter  30 value 95.608225
+iter  40 value 101.790981
+iter  40 value 94.939537
+iter  50 value 97.871261
+iter  50 value 94.934158
+iter  60 value 96.885908
+iter  60 value 94.922418
+iter  70 value 96.699137
+iter  70 value 94.367568
+iter  80 value 93.359379
+iter  80 value 91.743543
+iter  90 value 91.654361
+iter  90 value 90.807819
+iter 100 value 91.611954
+final  value 91.611954 
+stopped after 100 iterations
+iter 100 value 90.775984
+final  value 90.775984 
+stopped after 100 iterations
+# weights:  13
+initial  value 119.598836 
+iter  10 value 109.449609
+iter  20 value 100.017286
+iter  30 value 99.901220
+iter  40 value 96.995613
+iter  50 value 94.037850
+iter  60 value 93.878860
+iter  70 value 93.826009
+iter  80 value 92.107801
+iter  90 value 89.126438
+iter 100 value 88.201302
+final  value 88.201302 
+stopped after 100 iterations
+> nn1cv
+MLInterfaces classification output container
+The call was:
+MLearn(formula = sp ~ CW + RW, data = crabs, .method = nnetI, 
+    trainInd = xvalSpec("LOG", 5, balKfold.xvspec(5)), size = 3, 
+    decay = 0.01)
+Predicted outcome distribution for test set:
+
+  B   O 
+101  99 
+Summary of scores on test set (use testScores() method for details):
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.001159 0.352477 0.496429 0.509602 0.703128 0.949675 
+history of feature selection in cross-validation available; use fsHistory()
+> confuMat(nn1cv)
+     predicted
+given  B  O
+    B 72 28
+    O 29 71
+> names(RObject(nn1cv)[[1]])
+[1] "test.idx"  "mlans"     "featInUse"
+> RObject(RObject(nn1cv)[[1]]$mlans)
+a 2-3-1 network with 13 weights
+inputs: CW RW 
+output(s): sp 
+options were - entropy fitting  decay=0.01
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  16.9 1.772 21.07 2.632 0.722 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

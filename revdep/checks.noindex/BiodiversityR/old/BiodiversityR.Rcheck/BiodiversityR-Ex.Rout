@@ -1,7 +1,7 @@
 
-R version 3.5.1 (2018-07-02) -- "Feather Spray"
-Copyright (C) 2018 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -26,8 +26,10 @@ Warning in fun(libname, pkgname) : couldn't connect to display ""
 Loading required package: vegan
 Loading required package: permute
 Loading required package: lattice
-This is vegan 2.5-3
-BiodiversityR 2.10-1: Use command BiodiversityRGUI() to launch the Graphical User Interface; 
+This is vegan 2.5-6
+Loading required package: vegan3d
+Loading required package: rgl
+BiodiversityR 2.11-3: Use command BiodiversityRGUI() to launch the Graphical User Interface; 
 to see changes use BiodiversityRGUI(changeLog=TRUE, backward.compatibility.messages=TRUE)
 
 > 
@@ -196,7 +198,7 @@ attr(,"intercept")
 attr(,"response")
 [1] 1
 attr(,".Environment")
-<environment: 0x7fc0b725bb48>
+<environment: 0x7f8751d2e600>
 attr(,"predvars")
 list(y[, group], points[, 1:m])
 attr(,"dataClasses")
@@ -656,14 +658,14 @@ Species Accumulation Curve
 Accumulation method: balanced species accumulation
 Call: balanced.specaccum(comm = dune, strata = dune.env$Management,      reps = 3) 
 
-                                                                           
-Sites     1.000000  2.00000  3.000000  4.00000  5.00000  6.000000  7.000000
-Richness 10.140000 14.66000 16.770000 19.83000 21.61000 23.010000 24.320000
-sd        2.238416  1.98591  1.751507  2.28325  2.29578  2.042453  1.895662
+                                                                              
+Sites     1.000000  2.000000  3.000000  4.000000  5.000000  6.000000  7.000000
+Richness 10.450000 14.680000 17.270000 20.220000 21.920000 23.090000 24.550000
+sd        2.354343  2.054215  1.791422  2.125269  2.008467  2.132457  1.976503
                                                          
-Sites     8.000000  9.000000 10.00000 11.000000 12.000000
-Richness 25.290000 25.910000 26.88000 27.430000 27.900000
-sd        1.776928  1.735517  1.44446  1.208179  1.039619
+Sites     8.00000  9.000000 10.000000 11.000000 12.000000
+Richness 25.40000 25.900000 26.890000 27.490000 27.870000
+sd        1.74657  1.778093  1.347613  1.087068  1.097794
 > 
 > # scale results by number of trees per quadrat
 > dune.env$site.totals <- apply(dune,1,sum)
@@ -673,14 +675,14 @@ Species Accumulation Curve
 Accumulation method: balanced species accumulation
 Call: balanced.specaccum(comm = dune, strata = dune.env$Management,      reps = 3, scale = dune.env$site.totals) 
 
-                                                                             
-Sites    35.1917 70.3833 105.5750 140.7667 175.9583 211.150 246.3417 281.5333
-Richness 10.2200 14.6800  17.1100  19.8700  21.7500  22.990  24.4400  25.3600
-sd        2.4187  2.3736   2.1268   1.9779   1.9611   1.795   1.6837   1.5987
-                                           
-Sites    316.7250 351.9167 387.1083 422.300
-Richness  25.8100  26.6900  27.3700  27.800
-sd         1.6249   1.3081   1.1429   1.015
+                                                                              
+Sites    35.1917 70.3833 105.5750 140.7667 175.9583 211.1500 246.3417 281.5333
+Richness 10.3800 14.5800  16.9500  19.9400  21.7400  22.8200  24.3200  25.3600
+sd        2.0782  2.0009   1.7774   2.0539   2.1725   2.0567   1.8957   1.7611
+                                            
+Sites    316.7250 351.9167 387.1083 422.3000
+Richness  26.0300  26.9800  27.5800  28.0100
+sd         1.8004   1.4838   1.2727   1.1236
 > 
 > 
 > 
@@ -934,7 +936,7 @@ Warning in vegdist(matrix, method = "kulc") : missing values in results
 > library(vegan)
 > library(mgcv)
 Loading required package: nlme
-This is mgcv 1.8-26. For overview type 'help("mgcv-package")'.
+This is mgcv 1.8-31. For overview type 'help("mgcv-package")'.
 > data(dune)
 > distmatrix <- vegdist(dune,method="kulc")
 > ordination.model1 <- cmdscale(distmatrix,k=2)
@@ -977,7 +979,7 @@ Mantel statistic r: 0.9232
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.112 0.185 0.210 0.232 
+0.120 0.154 0.182 0.210 
 Permutation: free
 Number of permutations: 100
 
@@ -1251,7 +1253,7 @@ Management       1       2       4       5
 > ### Aliases: ensemble.calibrate.models ensemble.calibrate.weights
 > ###   ensemble.calibrate.models.gbm ensemble.calibrate.models.nnet
 > ###   ensemble.drop1 ensemble.formulae ensemble.weights ensemble.strategy
-> ###   ensemble.threshold ensemble.VIF ensemble.pairs
+> ###   ensemble.threshold ensemble.VIF ensemble.VIF.dataframe ensemble.pairs
 > 
 > ### ** Examples
 > 
@@ -1296,16 +1298,18 @@ Management       1       2       4       5
 > ##D     bio17 + I(bio17^2) + I(bio17^3) )
 > ##D 
 > ##D # fit four ensemble models (RF, GLM, BIOCLIM, DOMAIN)
+> ##D # factors removed for BIOCLIM, DOMAIN, MAHAL
 > ##D ensemble.nofactors <- ensemble.calibrate.models(x=predictors, p=pres_train, a=backg_train, 
 > ##D     pt=pres_test, at=backg_test,
 > ##D     species.name="Bradypus",
 > ##D     ENSEMBLE.tune=TRUE,
 > ##D     ENSEMBLE.min = 0.65,
-> ##D     MAXENT=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=0, GAM=0, 
-> ##D     GAMSTEP=0, MGCV=0, MGCVFIX=0, EARTH=0, RPART=0, NNET=0, FDA=0, 
-> ##D     SVM=0, SVME=0, GLMNET=0,
+> ##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0, 
+> ##D     GLM=1, GLMSTEP=0, GAM=0, GAMSTEP=0, MGCV=0, MGCVFIX=0, 
+> ##D     EARTH=0, RPART=0, NNET=0, FDA=0, SVM=0, SVME=0, GLMNET=0,
 > ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
 > ##D     Yweights="BIOMOD",
+> ##D     factors="biome",
 > ##D     evaluations.keep=TRUE, models.keep=TRUE,
 > ##D     RF.formula=rfformula,
 > ##D     GLM.formula=glmformula)
@@ -1334,7 +1338,8 @@ Management       1       2       4       5
 > ##D     ENSEMBLE.tune=TRUE,
 > ##D     ENSEMBLE.min=0.65,
 > ##D     SINK=TRUE,
-> ##D     MAXENT=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=0, GAM=0, 
+> ##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0, 
+> ##D     GLM=1, GLMSTEP=0, GAM=0, 
 > ##D     GAMSTEP=0, MGCV=0, MGCVFIX=0, EARTH=0, RPART=0, NNET=0, FDA=0, 
 > ##D     SVM=0, SVME=0, GLMNET=0,
 > ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
@@ -1352,9 +1357,9 @@ Management       1       2       4       5
 > ##D     SINK=TRUE,
 > ##D     ENSEMBLE.tune=TRUE,
 > ##D     ENSEMBLE.min=0.65,
-> ##D     MAXENT=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=0, GAM=0, 
-> ##D     GAMSTEP=0, MGCV=0, MGCVFIX=0, EARTH=0, RPART=0, NNET=0, FDA=0, 
-> ##D     SVM=0, SVME=0, GLMNET=0,
+> ##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0,
+> ##D     GLM=1, GLMSTEP=0, GAM=0, GAMSTEP=0, MGCV=0, MGCVFIX=0, 
+> ##D     EARTH=0, RPART=0, NNET=0, FDA=0, SVM=0, SVME=0, GLMNET=0,
 > ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
 > ##D     PROBIT=TRUE,
 > ##D     Yweights="BIOMOD", factors="biome",
@@ -1376,9 +1381,9 @@ Management       1       2       4       5
 > ##D     SINK=TRUE,
 > ##D     ENSEMBLE.tune=TRUE,
 > ##D     ENSEMBLE.min=0.65,
-> ##D     MAXENT=0, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-> ##D     GAMSTEP=1, MGCV=1, MGCVFIX=0, EARTH=1, RPART=1, NNET=1, FDA=1, 
-> ##D     SVM=1, SVME=1, GLMNET=1,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=0, 
+> ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
 > ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     Yweights="BIOMOD", factors="biome",
 > ##D     evaluations.keep=TRUE)
@@ -1391,9 +1396,10 @@ Management       1       2       4       5
 > ##D     species.name="Bradypus",
 > ##D     SINK=TRUE,
 > ##D     ENSEMBLE.tune=TRUE,
-> ##D     MAXENT=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-> ##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-> ##D     SVM=1, SVME=1, BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+> ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+> ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     ENSEMBLE.best=c(4:10), ENSEMBLE.exponent=c(1, 2, 3),
 > ##D     Yweights="BIOMOD", factors="biome",
 > ##D     evaluations.keep=TRUE)
@@ -1404,9 +1410,10 @@ Management       1       2       4       5
 > ##D     p=pres, a=background, k=4, 
 > ##D     species.name="Bradypus",
 > ##D     SINK=TRUE, PROBIT=TRUE,
-> ##D     MAXENT=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-> ##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-> ##D     SVM=1, SVME=1, BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+> ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+> ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     ENSEMBLE.tune=TRUE,
 > ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 > ##D     ENSEMBLE.min=0.7,
@@ -1423,10 +1430,10 @@ Management       1       2       4       5
 > ##D     SINK=TRUE,
 > ##D     difference=TRUE,
 > ##D     VIF=TRUE, PROBIT=TRUE,
-> ##D     MAXENT=0, MAXLIKE=0, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-> ##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-> ##D     SVM=1, SVME=1, GLMNET=1,
-> ##D     BIOCLIM.O=0, BIOCLIM=0, DOMAIN=1, MAHAL=0, MAHAL01=1,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+> ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+> ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     ENSEMBLE.tune=TRUE,
 > ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 > ##D     ENSEMBLE.min=0.7,
@@ -1606,10 +1613,10 @@ Management       1       2       4       5
 > ##D     layer.drops=c("biome"),
 > ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3), 
 > ##D     ENSEMBLE.min=0.7,
-> ##D     MAXENT=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-> ##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-> ##D     SVM=1, SVME=1, GLMNET=1,
-> ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+> ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+> ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     PROBIT=TRUE,
 > ##D     Yweights="BIOMOD",
 > ##D     formulae.defaults=TRUE)
@@ -1987,6 +1994,111 @@ Management       1       2       4       5
 > 
 > 
 > cleanEx()
+> nameEx("ensemble.evaluate")
+> ### * ensemble.evaluate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ensemble.evaluate
+> ### Title: Model evaluation including True Skill Statistic (TSS), AUCdiff
+> ###   and Symmetric Extremal Dependence Index (SEDI).
+> ### Aliases: ensemble.evaluate ensemble.SEDI
+> 
+> ### ** Examples
+> 
+> 
+> ## check examples from Ferro and Stephenson (2011)
+> ## see their Tables 2 - 5
+> 
+> TPR.Table2 <- 55/100
+> FPR.Table2 <- 45/900
+> ensemble.SEDI(TPR=TPR.Table2, FPR=FPR.Table2)
+[1] 0.707821
+> 
+> TPR.Table4 <- 195/300
+> FPR.Table4 <- 105/700
+> ensemble.SEDI(TPR=TPR.Table4, FPR=FPR.Table4)
+[1] 0.664824
+> 
+> ## Not run: 
+> ##D ## Not run: 
+> ##D # get predictor variables
+> ##D library(dismo)
+> ##D predictor.files <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''),
+> ##D     pattern='grd', full.names=TRUE)
+> ##D predictors <- stack(predictor.files)
+> ##D # subset based on Variance Inflation Factors
+> ##D predictors <- subset(predictors, subset=c("bio5", "bio6", 
+> ##D     "bio16", "bio17", "biome"))
+> ##D predictors
+> ##D predictors@title <- "predictors"
+> ##D 
+> ##D # presence points
+> ##D presence_file <- paste(system.file(package="dismo"), '/ex/bradypus.csv', sep='')
+> ##D pres <- read.table(presence_file, header=TRUE, sep=',')[,-1]
+> ##D 
+> ##D # the kfold function randomly assigns data to groups; 
+> ##D # groups are used as calibration (1/4) and training (3/4) data
+> ##D groupp <- kfold(pres, 4)
+> ##D pres_train <- pres[groupp !=  1, ]
+> ##D pres_test <- pres[groupp ==  1, ]
+> ##D 
+> ##D # choose background points
+> ##D background <- randomPoints(predictors, n=1000, extf=1.00)
+> ##D colnames(background)=c('lon', 'lat')
+> ##D groupa <- kfold(background, 4)
+> ##D backg_train <- background[groupa != 1, ]
+> ##D backg_test <- background[groupa == 1, ]
+> ##D 
+> ##D # formulae for random forest and generalized linear model
+> ##D # compare with: ensemble.formulae(predictors, factors=c("biome"))
+> ##D 
+> ##D rfformula <- as.formula(pb ~ bio5+bio6+bio16+bio17)
+> ##D 
+> ##D glmformula <- as.formula(pb ~ bio5 + I(bio5^2) + I(bio5^3) + 
+> ##D     bio6 + I(bio6^2) + I(bio6^3) + bio16 + I(bio16^2) + I(bio16^3) + 
+> ##D     bio17 + I(bio17^2) + I(bio17^3) )
+> ##D 
+> ##D # fit four ensemble models (RF, GLM, BIOCLIM, DOMAIN)
+> ##D # factors removed for BIOCLIM, DOMAIN, MAHAL
+> ##D ensemble.nofactors <- ensemble.calibrate.models(x=predictors, p=pres_train, a=backg_train, 
+> ##D     pt=pres_test, at=backg_test,
+> ##D     species.name="Bradypus",
+> ##D     ENSEMBLE.tune=TRUE,
+> ##D     ENSEMBLE.min = 0.65,
+> ##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0, 
+> ##D     GLM=1, GLMSTEP=0, GAM=0, GAMSTEP=0, MGCV=0, MGCVFIX=0, 
+> ##D     EARTH=0, RPART=0, NNET=0, FDA=0, SVM=0, SVME=0, GLMNET=0,
+> ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
+> ##D     Yweights="BIOMOD",
+> ##D     factors="biome",
+> ##D     evaluations.keep=TRUE, models.keep=FALSE,
+> ##D     RF.formula=rfformula,
+> ##D     GLM.formula=glmformula)
+> ##D 
+> ##D # with option evaluations.keep, all model evaluations are saved in the ensemble object
+> ##D attributes(ensemble.nofactors$evaluations)
+> ##D 
+> ##D # Get evaluation statistics for the ENSEMBLE model
+> ##D eval.ENSEMBLE <- ensemble.nofactors$evaluations$ENSEMBLE.T
+> ##D eval.calibrate.ENSEMBLE <- ensemble.nofactors$evaluations$ENSEMBLE.C
+> ##D ensemble.evaluate(eval=eval.ENSEMBLE, eval.train=eval.calibrate.ENSEMBLE)
+> ##D 
+> ##D # TSS is maximum where specificity + sensitivity is maximum
+> ##D threshold.specsens <- threshold(eval.ENSEMBLE, stat="spec_sens")
+> ##D ensemble.evaluate(eval=eval.ENSEMBLE, fixed.threshold=threshold.specsens,
+> ##D     eval.train=eval.calibrate.ENSEMBLE)
+> ##D 
+> ##D # usual practice to calculate threshold from calibration data
+> ##D ensemble.evaluate(eval=eval.ENSEMBLE, eval.train=eval.calibrate.ENSEMBLE)
+> ##D 
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
 > nameEx("ensemble.novel")
 > ### * ensemble.novel
 > 
@@ -2160,10 +2272,10 @@ Management       1       2       4       5
 > ##D ensemble.calibrate.step1 <- ensemble.calibrate.weights(
 > ##D     x=predictors, p=pres, a=background, k=4, 
 > ##D     SINK=TRUE, species.name="Bradypus",
-> ##D     MAXENT=1, MAXLIKE=0, GBM=1, GBMSTEP=0, RF=0, GLM=1, GLMSTEP=0, 
-> ##D     GAM=1, GAMSTEP=0, MGCV=1, MGCVFIX=0,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
 > ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
-> ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+> ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     ENSEMBLE.tune=TRUE, PROBIT=TRUE,
 > ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 > ##D     ENSEMBLE.min=c(0.65, 0.7),
@@ -2212,10 +2324,10 @@ Management       1       2       4       5
 > ##D     factors=factors.batch, dummy.vars=dummy.vars.batch, 
 > ##D     k=4, 
 > ##D     SINK=TRUE, species.name="Bradypus",
-> ##D     MAXENT=1, MAXLIKE=0, GBM=1, GBMSTEP=0, RF=0, GLM=1, GLMSTEP=0, 
-> ##D     GAM=1, GAMSTEP=0, MGCV=1, MGCVFIX=0,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
 > ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
-> ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+> ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     ENSEMBLE.tune=TRUE, PROBIT=TRUE,
 > ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 > ##D     ENSEMBLE.min=c(0.65, 0.7),
@@ -2313,10 +2425,10 @@ Management       1       2       4       5
 > ##D     SINK=TRUE, 
 > ##D     ENSEMBLE.best=10, ENSEMBLE.exponent=c(1, 2, 3), 
 > ##D     ENSEMBLE.min=0.6,
-> ##D     MAXENT=0, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-> ##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-> ##D     SVM=1, SVME=1, GLMNET=1,
-> ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+> ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, 
+> ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     PROBIT=TRUE,
 > ##D     Yweights="BIOMOD",
 > ##D     formulae.defaults=TRUE)
@@ -2377,9 +2489,11 @@ Management       1       2       4       5
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: ensemble.spatialThin
-> ### Title: Spatial thinning of presence point locations using the highly
-> ###   accurate geodesic estimates from the geosphere package
-> ### Aliases: ensemble.spatialThin
+> ### Title: Thinning of presence point coordinates in geographical or
+> ###   environmental space
+> ### Aliases: ensemble.spatialThin ensemble.spatialThin.quant
+> ###   ensemble.environmentalThin ensemble.environmentalThin.clara
+> ###   ensemble.outlierThin
 > 
 > ### ** Examples
 > 
@@ -2406,20 +2520,87 @@ Management       1       2       4       5
 > ##D par(mfrow=c(2,2))
 > ##D 
 > ##D pres.thin1 <- ensemble.spatialThin(pres, thin.km=100, runs=10, verbose=T)
-> ##D plot(predictors[[1]], main="10 runs", ext=extent(SpatialPoints(pres.thin1)))
+> ##D plot(predictors[[1]], main="5 runs", ext=extent(SpatialPoints(pres.thin1)))
+> ##D points(pres, pch=20, col="black")
 > ##D points(pres.thin1, pch=20, col="red")
 > ##D 
 > ##D pres.thin2 <- ensemble.spatialThin(pres, thin.km=100, runs=10, verbose=T)
-> ##D plot(predictors[[1]], main="10 runs", ext=extent(SpatialPoints(pres.thin2)))
+> ##D plot(predictors[[1]], main="5 runs (after fresh start)", ext=extent(SpatialPoints(pres.thin2)))
+> ##D points(pres, pch=20, col="black")
 > ##D points(pres.thin2, pch=20, col="red")
 > ##D 
 > ##D pres.thin3 <- ensemble.spatialThin(pres, thin.km=100, runs=100, verbose=T)
 > ##D plot(predictors[[1]], main="100 runs", ext=extent(SpatialPoints(pres.thin3)))
+> ##D points(pres, pch=20, col="black")
 > ##D points(pres.thin3, pch=20, col="red")
 > ##D 
 > ##D pres.thin4 <- ensemble.spatialThin(pres, thin.km=100, runs=100, verbose=T)
-> ##D plot(predictors[[1]], main="100 runs", ext=extent(SpatialPoints(pres.thin4)))
+> ##D plot(predictors[[1]], main="100 runs (after fresh start)", ext=extent(SpatialPoints(pres.thin4)))
+> ##D points(pres, pch=20, col="black")
 > ##D points(pres.thin4, pch=20, col="red")
+> ##D 
+> ##D graphics::par(par.old)
+> ##D 
+> ##D ## thinning in environmental space
+> ##D 
+> ##D env.thin <- ensemble.environmentalThin(pres, predictors.stack=predictors, thin.n=60,
+> ##D     return.notRetained=T)
+> ##D pres.env1 <- env.thin$retained
+> ##D pres.env2 <- env.thin$not.retained
+> ##D 
+> ##D # plot in geographical space
+> ##D par.old <- graphics::par(no.readonly=T)
+> ##D par(mfrow=c(1, 2))
+> ##D 
+> ##D plot(predictors[[1]], main="black = not retained", ext=extent(SpatialPoints(pres.thin3)))
+> ##D points(pres.env2, pch=20, col="black")
+> ##D points(pres.env1, pch=20, col="red")
+> ##D 
+> ##D # plot in environmental space
+> ##D background.data <- data.frame(raster::extract(predictors, pres))
+> ##D rda.result <- vegan::rda(X=background.data, scale=T)
+> ##D # select number of axes
+> ##D ax <- 2
+> ##D while ( (sum(vegan::eigenvals(rda.result)[c(1:ax)])/
+> ##D     sum(vegan::eigenvals(rda.result))) < 0.95 ) {ax <- ax+1}
+> ##D rda.scores <- data.frame(vegan::scores(rda.result, display="sites", scaling=1, choices=c(1:ax)))
+> ##D rownames(rda.scores) <- rownames(pres)
+> ##D points.in <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.env1)), c(1:2)]
+> ##D points.out <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.env2)), c(1:2)]
+> ##D plot(points.out, main="black = not retained", pch=20, col="black", 
+> ##D     xlim=range(rda.scores[, 1]), ylim=range(rda.scores[, 2]))
+> ##D points(points.in, pch=20, col="red")
+> ##D 
+> ##D graphics::par(par.old)
+> ##D 
+> ##D ## removing outliers
+> ##D out.thin <- ensemble.outlierThin(pres, predictors.stack=predictors, k=10,
+> ##D     return.outliers=T)
+> ##D pres.out1 <- out.thin$inliers
+> ##D pres.out2 <- out.thin$outliers
+> ##D 
+> ##D # plot in geographical space
+> ##D par.old <- graphics::par(no.readonly=T)
+> ##D par(mfrow=c(1, 2))
+> ##D 
+> ##D plot(predictors[[1]], main="black = outliers", ext=extent(SpatialPoints(pres.thin3)))
+> ##D points(pres.out2, pch=20, col="black")
+> ##D points(pres.out1, pch=20, col="red")
+> ##D 
+> ##D # plot in environmental space
+> ##D background.data <- data.frame(raster::extract(predictors, pres))
+> ##D rda.result <- vegan::rda(X=background.data, scale=T)
+> ##D # select number of axes
+> ##D ax <- 2
+> ##D while ( (sum(vegan::eigenvals(rda.result)[c(1:ax)])/
+> ##D     sum(vegan::eigenvals(rda.result))) < 0.95 ) {ax <- ax+1}
+> ##D rda.scores <- data.frame(vegan::scores(rda.result, display="sites", scaling=1, choices=c(1:ax)))
+> ##D rownames(rda.scores) <- rownames(pres)
+> ##D points.in <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.out1)), c(1:2)]
+> ##D points.out <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.out2)), c(1:2)]
+> ##D plot(points.out, main="black = outliers", pch=20, col="black", 
+> ##D     xlim=range(rda.scores[, 1]), ylim=range(rda.scores[, 2]))
+> ##D points(points.in, pch=20, col="red")
 > ##D 
 > ##D graphics::par(par.old)
 > ##D 
@@ -2563,9 +2744,9 @@ Management       1       2       4       5
 > ##D     p=pres_train, a=backg_train, 
 > ##D     pt=pres_test, at=backg_test,
 > ##D     ENSEMBLE.min=0.5, ENSEMBLE.weight.min = 0.001,
-> ##D     MAXENT=1, MAXLIKE=0, GBM=1, GBMSTEP=1, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-> ##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-> ##D     SVM=1, SVME=1, GLMNET=1,
+> ##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+> ##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+> ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, 
 > ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 > ##D     Yweights="BIOMOD", 
 > ##D     PLOTS=FALSE, models.keep=TRUE)
@@ -3220,6 +3401,42 @@ Prunsero         0.0470833         0.920611
 Platocci         0.0402048         0.913733
 
 > 
+> # Calculate diversity profiles from importance values
+> imp <- importancevalue.comp(ifri, site='plotID', species='species', 
++     count='count', basal='basal', factor='forest')
+> vals <- imp[["values"]]
+> for (i in 1:length(vals)) {
++     imp.i <- data.frame(imp[[vals[i]]])
++     name.i <- paste(vals[[i]], ".Renyi", sep="")
++     imp[[name.i]] <- renyi(imp.i$importance.value)
++ }
+> 
+> # LOT more diverse
+> imp$LOT.Renyi - imp$MCF.Renyi
+       0     0.25      0.5        1        2        4        8       16 
+0.216223 0.259129 0.302735 0.376402 0.439521 0.391807 0.279478 0.214602 
+      32       64      Inf 
+0.185327 0.171562 0.161036 
+attr(,"class")
+[1] "renyi"   "numeric"
+> imp$LOT.Renyi - imp$YSF.Renyi
+       0     0.25      0.5        1        2        4        8       16 
+0.117783 0.172814 0.232469 0.341464 0.451496 0.428211 0.329145 0.286771 
+      32       64      Inf 
+0.275773 0.271376 0.267136 
+attr(,"class")
+[1] "renyi"   "numeric"
+> 
+> # YSF and MCF different richness and evenness
+> imp$YSF.Renyi - imp$MCF.Renyi
+         0       0.25        0.5          1          2          4          8 
+ 0.0984401  0.0863151  0.0702663  0.0349379 -0.0119748 -0.0364041 -0.0496670 
+        16         32         64        Inf 
+-0.0721692 -0.0904461 -0.0998142 -0.1060997 
+attr(,"class")
+[1] "renyi"   "numeric"
+> 
+> 
 > 
 > 
 > 
@@ -3361,7 +3578,7 @@ Platocci         0.0402048         0.913733
 > library(vegan)
 > library(mgcv)
 Loading required package: nlme
-This is mgcv 1.8-26. For overview type 'help("mgcv-package")'.
+This is mgcv 1.8-31. For overview type 'help("mgcv-package")'.
 > data(dune)
 > Ordination.model1 <- rda(dune)
 > plot1 <- ordiplot(Ordination.model1, choices=c(1,2), scaling=1)
@@ -3961,6 +4178,7 @@ Chenalbu   30         1        0.1   -0.2    0.5     100.0     0.0    100.0
 > ### Title: Synchronize Community and Environmental Datasets
 > ### Aliases: removeNAcomm removeNAenv same.sites check.datasets
 > ###   check.ordiscores replaceNAcomm removezerospecies subsetcomm
+> ###   import.with.readxl
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -4043,7 +4261,7 @@ OK
 > library(vegan)
 > library(mgcv)
 Loading required package: nlme
-This is mgcv 1.8-26. For overview type 'help("mgcv-package")'.
+This is mgcv 1.8-31. For overview type 'help("mgcv-package")'.
 > library(akima)
 > data(faramea)
 > Count.model1 <- lm(Faramea.occidentalis ~ Precipitation,
@@ -4154,26 +4372,26 @@ Spatial Point Pattern Analysis Code in S-Plus
 > spatialsample(area, method="random grid", n=20, xwidth=1, ywidth=1, 
 +     plotit=TRUE, xleft=12, ylower=7, xdist=4, ydist=4)
       [,1] [,2]
- [1,]   28   11
- [2,]   20   15
- [3,]   32   19
- [4,]   16   19
- [5,]   20   19
- [6,]   16   23
- [7,]   24   19
- [8,]   16   11
- [9,]   36   23
-[10,]   24   23
-[11,]   12   15
-[12,]   24   31
-[13,]   16   15
-[14,]   32   15
-[15,]   28   15
-[16,]   32   11
-[17,]   36   19
-[18,]   24   11
-[19,]   20   31
-[20,]   24   27
+ [1,]   36   23
+ [2,]   12   27
+ [3,]   24   23
+ [4,]   28   31
+ [5,]   16   31
+ [6,]   12   11
+ [7,]   20   23
+ [8,]   24   15
+ [9,]   32   23
+[10,]   36   27
+[11,]   12    7
+[12,]   20   27
+[13,]   28   19
+[14,]   16    7
+[15,]   28   27
+[16,]   24   19
+[17,]   16   23
+[18,]   24   31
+[19,]   28   11
+[20,]   12   31
 > 
 > 
 > 
@@ -4262,7 +4480,7 @@ detaching ‘package:splancs’, ‘package:sp’
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.043 1.305 5.401 0.005 0.003 
+Time elapsed:  5.745 1.423 7.301 0.013 0.031 
 > grDevices::dev.off()
 null device 
           1 

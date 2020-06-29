@@ -1,7 +1,8 @@
 * using log directory ‘/Users/b780620/Desktop/devel/gbm/revdep/checks.noindex/aurelius/old/aurelius.Rcheck’
-* using R version 3.5.1 (2018-07-02)
-* using platform: x86_64-apple-darwin15.6.0 (64-bit)
+* using R version 4.0.0 (2020-04-24)
+* using platform: x86_64-apple-darwin17.0 (64-bit)
 * using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘aurelius/DESCRIPTION’ ... OK
 * checking extension type ... Package
 * this is package ‘aurelius’ version ‘0.8.4’
@@ -30,6 +31,7 @@ Package which this enhances but not available for checking: ‘rPython’
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
 * checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
@@ -52,7 +54,8 @@ Package which this enhances but not available for checking: ‘rPython’
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
-* checking re-building of vignette outputs ... OK
-* checking PDF version of manual ... OK
+  ‘basic-usage.Rmd’ using ‘UTF-8’... OK
+  ‘migration-to-new-syntax.Rmd’ using ‘UTF-8’... OK
+* checking re-building of vignette outputs ... SKIPPED
 * DONE
 Status: 1 NOTE

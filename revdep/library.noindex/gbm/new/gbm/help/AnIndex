@@ -22,7 +22,6 @@ gbmDoFold	gbmCrossVal
 getCVgroup	gbm-internals
 getStratify	gbm-internals
 getVarNames	gbm-internals
-grid.arrange	grid.arrange
 guessDist	gbm-internals
 interact.gbm	interact.gbm
 ir.measure.auc	gbm.roc.area

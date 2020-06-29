@@ -1,0 +1,2020 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "insight"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('insight')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("all_models_equal")
+> ### * all_models_equal
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: all_models_equal
+> ### Title: Checks if all objects are models of same class
+> ### Aliases: all_models_equal all_models_same_class
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(mtcars)
+> data(sleepstudy)
+> 
+> m1 <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> m2 <- lm(mpg ~ wt + cyl, data = mtcars)
+> m3 <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+> m4 <- glm(formula = vs ~ wt, family = binomial(), data = mtcars)
+> 
+> all_models_same_class(m1, m2)
+[1] TRUE
+> all_models_same_class(m1, m2, m3)
+[1] FALSE
+> all_models_same_class(m1, m4, m2, m3, verbose = TRUE)
+Following objects are not identical with m1 (of class "lm"): m4 ("glm"), m3 ("lmerMod")
+[1] FALSE
+> all_models_same_class(m1, m4, mtcars, m2, m3, verbose = TRUE)
+Following objects are no (supported) models: mtcars
+Following objects are not identical with m1 (of class "lm"): m4 ("glm"), mtcars ("data.frame"), m3 ("lmerMod")
+[1] FALSE
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("clean_names")
+> ### * clean_names
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: clean_names
+> ### Title: Get clean names of model terms
+> ### Aliases: clean_names
+> 
+> ### ** Examples
+> 
+> # example from ?stats::glm
+> counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
+> outcome <- as.numeric(gl(3, 1, 9))
+> treatment <- gl(3, 3)
+> m <- glm(counts ~ log(outcome) + as.factor(treatment), family = poisson())
+> clean_names(m)
+[1] "counts"    "outcome"   "treatment"
+> 
+> # difference "clean_names()" and "find_variables()"
+> library(lme4)
+Loading required package: Matrix
+> m <- glmer(
++   cbind(incidence, size - incidence) ~ period + (1 | herd),
++   data = cbpp,
++   family = binomial
++ )
+> 
+> clean_names(m)
+[1] "incidence" "size"      "period"    "herd"     
+> find_variables(m)
+$response
+[1] "incidence" "size"     
+
+$conditional
+[1] "period"
+
+$random
+[1] "herd"
+
+> find_variables(m, flatten = TRUE)
+[1] "incidence" "size"      "period"    "herd"     
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("clean_parameters")
+> ### * clean_parameters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: clean_parameters
+> ### Title: Get clean names of model parameters
+> ### Aliases: clean_parameters
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(brms)
+> ##D model <- download_model("brms_zi_2")
+> ##D clean_parameters(model)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("color_if")
+> ### * color_if
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: color_if
+> ### Title: Color-formatting for data columns based on condition
+> ### Aliases: color_if colour_if
+> 
+> ### ** Examples
+> 
+> # all values in Sepal.Length larger than 5 in green, all remaining in red
+> x <- color_if(iris[1:10, ], columns = "Sepal.Length", predicate = `>`, value = 5)
+> x
+                   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1  \033[32m        5.10\033[39m         3.5          1.4         0.2  setosa
+2  \033[31m        4.90\033[39m         3.0          1.4         0.2  setosa
+3  \033[31m        4.70\033[39m         3.2          1.3         0.2  setosa
+4  \033[31m        4.60\033[39m         3.1          1.5         0.2  setosa
+5  \033[31m        5.00\033[39m         3.6          1.4         0.2  setosa
+6  \033[32m        5.40\033[39m         3.9          1.7         0.4  setosa
+7  \033[31m        4.60\033[39m         3.4          1.4         0.3  setosa
+8  \033[31m        5.00\033[39m         3.4          1.5         0.2  setosa
+9  \033[31m        4.40\033[39m         2.9          1.4         0.2  setosa
+10 \033[31m        4.90\033[39m         3.1          1.5         0.1  setosa
+> cat(x$Sepal.Length)
+[32m        5.10[39m [31m        4.90[39m [31m        4.70[39m [31m        4.60[39m [31m        5.00[39m [32m        5.40[39m [31m        4.60[39m [31m        5.00[39m [31m        4.40[39m [31m        4.90[39m> 
+> # all levels "setosa" in Species in green, all remaining in red
+> x <- color_if(iris, columns = "Species", predicate = `==`, value = "setosa")
+> cat(x$Species)
+[32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [32m    setosa[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31mversicolor[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m [31m virginica[39m> 
+> # own function, argument "value" not needed here
+> p <- function(x, y) {
++   x >= 4.9 & x <= 5.1
++ }
+> # all values in Sepal.Length between 4.9 and 5.1 in green, all remaining in red
+> x <- color_if(iris[1:10, ], columns = "Sepal.Length", predicate = p)
+> cat(x$Sepal.Length)
+[32m        5.10[39m [32m        4.90[39m [31m        4.70[39m [31m        4.60[39m [32m        5.00[39m [31m        5.40[39m [31m        4.60[39m [32m        5.00[39m [31m        4.40[39m [32m        4.90[39m> 
+> 
+> 
+> cleanEx()
+> nameEx("find_algorithm")
+> ### * find_algorithm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_algorithm
+> ### Title: Find sampling algorithm and optimizers
+> ### Aliases: find_algorithm
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(sleepstudy)
+> m <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+> find_algorithm(m)
+$algorithm
+[1] "REML"
+
+$optimizer
+[1] "nloptwrap"
+
+> ## Not run: 
+> ##D library(rstanarm)
+> ##D m <- stan_lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+> ##D find_algorithm(m)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("find_formula")
+> ### * find_formula
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_formula
+> ### Title: Find model formula
+> ### Aliases: find_formula
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> find_formula(m)
+$conditional
+mpg ~ wt + cyl + vs
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("find_interactions")
+> ### * find_interactions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_interactions
+> ### Title: Find interaction terms from models
+> ### Aliases: find_interactions
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> 
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> find_interactions(m)
+NULL
+> 
+> m <- lm(mpg ~ wt * cyl + vs * hp * gear + carb, data = mtcars)
+> find_interactions(m)
+$conditional
+[1] "wt:cyl"     "vs:hp"      "vs:gear"    "hp:gear"    "vs:hp:gear"
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("find_parameters")
+> ### * find_parameters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_parameters
+> ### Title: Find names of model parameters
+> ### Aliases: find_parameters find_parameters.betamfx
+> ###   find_parameters.logitmfx find_parameters.gam find_parameters.merMod
+> ###   find_parameters.zeroinfl find_parameters.BFBayesFactor
+> ###   find_parameters.brmsfit find_parameters.bayesx
+> ###   find_parameters.stanreg find_parameters.sim.merMod
+> ###   find_parameters.averaging
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> find_parameters(m)
+$conditional
+[1] "(Intercept)" "wt"          "cyl"         "vs"         
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("find_predictors")
+> ### * find_predictors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_predictors
+> ### Title: Find names of model predictors
+> ### Aliases: find_predictors
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> find_predictors(m)
+$conditional
+[1] "wt"  "cyl" "vs" 
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("find_random")
+> ### * find_random
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_random
+> ### Title: Find names of random effects
+> ### Aliases: find_random
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(sleepstudy)
+> sleepstudy$mygrp <- sample(1:5, size = 180, replace = TRUE)
+> sleepstudy$mysubgrp <- NA
+> for (i in 1:5) {
++   filter_group <- sleepstudy$mygrp == i
++   sleepstudy$mysubgrp[filter_group] <-
++     sample(1:30, size = sum(filter_group), replace = TRUE)
++ }
+> 
+> m <- lmer(
++   Reaction ~ Days + (1 | mygrp / mysubgrp) + (1 | Subject),
++   data = sleepstudy
++ )
+> 
+> find_random(m)
+$random
+[1] "mysubgrp:mygrp" "mygrp"          "Subject"       
+
+> find_random(m, split_nested = TRUE)
+$random
+[1] "mysubgrp" "mygrp"    "Subject" 
+
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("find_random_slopes")
+> ### * find_random_slopes
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_random_slopes
+> ### Title: Find names of random slopes
+> ### Aliases: find_random_slopes
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(sleepstudy)
+> 
+> m <- lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
+> find_random_slopes(m)
+$random
+[1] "Days"
+
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("find_response")
+> ### * find_response
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_response
+> ### Title: Find name of the response variable
+> ### Aliases: find_response
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(cbpp)
+> cbpp$trials <- cbpp$size - cbpp$incidence
+> m <- glm(cbind(incidence, trials) ~ period, data = cbpp, family = binomial)
+> 
+> find_response(m, combine = TRUE)
+[1] "cbind(incidence, trials)"
+> find_response(m, combine = FALSE)
+[1] "incidence" "trials"   
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("find_statistic")
+> ### * find_statistic
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_statistic
+> ### Title: Find statistic for model
+> ### Aliases: find_statistic
+> 
+> ### ** Examples
+> 
+> # regression model object
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> find_statistic(m)
+[1] "t-statistic"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("find_terms")
+> ### * find_terms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_terms
+> ### Title: Find all model terms
+> ### Aliases: find_terms
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(sleepstudy)
+> m <- lmer(
++   log(Reaction) ~ Days + I(Days^2) + (1 + Days + exp(Days) | Subject),
++   data = sleepstudy
++ )
+Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 14.7145 (tol = 0.002, component 1)
+Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model is nearly unidentifiable: very large eigenvalue
+ - Rescale variables?;Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?
+> 
+> find_terms(m)
+$response
+[1] "log(Reaction)"
+
+$conditional
+[1] "Days"      "I(Days^2)"
+
+$random
+[1] "Days"      "exp(Days)" "Subject"  
+
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("find_variables")
+> ### * find_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_variables
+> ### Title: Find names of all variables
+> ### Aliases: find_variables
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(cbpp)
+> data(sleepstudy)
+> # some data preparation...
+> cbpp$trials <- cbpp$size - cbpp$incidence
+> sleepstudy$mygrp <- sample(1:5, size = 180, replace = TRUE)
+> sleepstudy$mysubgrp <- NA
+> for (i in 1:5) {
++   filter_group <- sleepstudy$mygrp == i
++   sleepstudy$mysubgrp[filter_group] <-
++     sample(1:30, size = sum(filter_group), replace = TRUE)
++ }
+> 
+> m1 <- glmer(
++   cbind(incidence, size - incidence) ~ period + (1 | herd),
++   data = cbpp,
++   family = binomial
++ )
+> find_variables(m1)
+$response
+[1] "incidence" "size"     
+
+$conditional
+[1] "period"
+
+$random
+[1] "herd"
+
+> 
+> m2 <- lmer(
++   Reaction ~ Days + (1 | mygrp / mysubgrp) + (1 | Subject),
++   data = sleepstudy
++ )
+> find_variables(m2)
+$response
+[1] "Reaction"
+
+$conditional
+[1] "Days"
+
+$random
+[1] "mysubgrp" "mygrp"    "Subject" 
+
+> find_variables(m2, flatten = TRUE)
+[1] "Reaction" "Days"     "mysubgrp" "mygrp"    "Subject" 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("find_weights")
+> ### * find_weights
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_weights
+> ### Title: Find names of model weights
+> ### Aliases: find_weights
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> mtcars$weight <- rnorm(nrow(mtcars), 1, .3)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars, weights = weight)
+> find_weights(m)
+[1] "weight"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_ci")
+> ### * format_ci
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_ci
+> ### Title: Confidence/Credible Interval (CI) Formatting
+> ### Aliases: format_ci
+> 
+> ### ** Examples
+> 
+> format_ci(1.20, 3.57, ci = 0.90)
+[1] "90% CI [1.20, 3.57]"
+> format_ci(1.20, 3.57, ci = NULL)
+[1] "[1.20, 3.57]"
+> format_ci(1.20, 3.57, ci = NULL, brackets = FALSE)
+[1] "1.20, 3.57"
+> format_ci(c(1.205645, 23.4), c(3.57, -1.35), ci = 0.90)
+[1] "90% CI [1.21, 3.57]"   "90% CI [23.40, -1.35]"
+> format_ci(c(1.20, NA, NA), c(3.57, -1.35, NA), ci = 0.90)
+[1] "90% CI [1.20, 3.57]" "90% CI [, -1.35]"    ""                   
+> 
+> # automatic alignment of width, useful for printing multiple CIs in columns
+> x <- format_ci(c(1.205, 23.4, 100.43), c(3.57, -13.35, 9.4))
+> cat(x, sep = "\n")
+95% CI [1.21, 3.57]
+95% CI [23.40, -13.35]
+95% CI [100.43, 9.40]
+> 
+> x <- format_ci(c(1.205, 23.4, 100.43), c(3.57, -13.35, 9.4), width = "auto")
+> cat(x, sep = "\n")
+95% CI [  1.21,   3.57]
+95% CI [ 23.40, -13.35]
+95% CI [100.43,   9.40]
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_table")
+> ### * format_table
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_table
+> ### Title: Dataframe and Tables Pretty Formatting
+> ### Aliases: format_table
+> 
+> ### ** Examples
+> 
+> cat(format_table(iris))
+Sepal.Length | Sepal.Width | Petal.Length | Petal.Width |    Species
+--------------------------------------------------------------------
+        5.10 |        3.50 |         1.40 |        0.20 |     setosa
+        4.90 |        3.00 |         1.40 |        0.20 |     setosa
+        4.70 |        3.20 |         1.30 |        0.20 |     setosa
+        4.60 |        3.10 |         1.50 |        0.20 |     setosa
+        5.00 |        3.60 |         1.40 |        0.20 |     setosa
+        5.40 |        3.90 |         1.70 |        0.40 |     setosa
+        4.60 |        3.40 |         1.40 |        0.30 |     setosa
+        5.00 |        3.40 |         1.50 |        0.20 |     setosa
+        4.40 |        2.90 |         1.40 |        0.20 |     setosa
+        4.90 |        3.10 |         1.50 |        0.10 |     setosa
+        5.40 |        3.70 |         1.50 |        0.20 |     setosa
+        4.80 |        3.40 |         1.60 |        0.20 |     setosa
+        4.80 |        3.00 |         1.40 |        0.10 |     setosa
+        4.30 |        3.00 |         1.10 |        0.10 |     setosa
+        5.80 |        4.00 |         1.20 |        0.20 |     setosa
+        5.70 |        4.40 |         1.50 |        0.40 |     setosa
+        5.40 |        3.90 |         1.30 |        0.40 |     setosa
+        5.10 |        3.50 |         1.40 |        0.30 |     setosa
+        5.70 |        3.80 |         1.70 |        0.30 |     setosa
+        5.10 |        3.80 |         1.50 |        0.30 |     setosa
+        5.40 |        3.40 |         1.70 |        0.20 |     setosa
+        5.10 |        3.70 |         1.50 |        0.40 |     setosa
+        4.60 |        3.60 |         1.00 |        0.20 |     setosa
+        5.10 |        3.30 |         1.70 |        0.50 |     setosa
+        4.80 |        3.40 |         1.90 |        0.20 |     setosa
+        5.00 |        3.00 |         1.60 |        0.20 |     setosa
+        5.00 |        3.40 |         1.60 |        0.40 |     setosa
+        5.20 |        3.50 |         1.50 |        0.20 |     setosa
+        5.20 |        3.40 |         1.40 |        0.20 |     setosa
+        4.70 |        3.20 |         1.60 |        0.20 |     setosa
+        4.80 |        3.10 |         1.60 |        0.20 |     setosa
+        5.40 |        3.40 |         1.50 |        0.40 |     setosa
+        5.20 |        4.10 |         1.50 |        0.10 |     setosa
+        5.50 |        4.20 |         1.40 |        0.20 |     setosa
+        4.90 |        3.10 |         1.50 |        0.20 |     setosa
+        5.00 |        3.20 |         1.20 |        0.20 |     setosa
+        5.50 |        3.50 |         1.30 |        0.20 |     setosa
+        4.90 |        3.60 |         1.40 |        0.10 |     setosa
+        4.40 |        3.00 |         1.30 |        0.20 |     setosa
+        5.10 |        3.40 |         1.50 |        0.20 |     setosa
+        5.00 |        3.50 |         1.30 |        0.30 |     setosa
+        4.50 |        2.30 |         1.30 |        0.30 |     setosa
+        4.40 |        3.20 |         1.30 |        0.20 |     setosa
+        5.00 |        3.50 |         1.60 |        0.60 |     setosa
+        5.10 |        3.80 |         1.90 |        0.40 |     setosa
+        4.80 |        3.00 |         1.40 |        0.30 |     setosa
+        5.10 |        3.80 |         1.60 |        0.20 |     setosa
+        4.60 |        3.20 |         1.40 |        0.20 |     setosa
+        5.30 |        3.70 |         1.50 |        0.20 |     setosa
+        5.00 |        3.30 |         1.40 |        0.20 |     setosa
+        7.00 |        3.20 |         4.70 |        1.40 | versicolor
+        6.40 |        3.20 |         4.50 |        1.50 | versicolor
+        6.90 |        3.10 |         4.90 |        1.50 | versicolor
+        5.50 |        2.30 |         4.00 |        1.30 | versicolor
+        6.50 |        2.80 |         4.60 |        1.50 | versicolor
+        5.70 |        2.80 |         4.50 |        1.30 | versicolor
+        6.30 |        3.30 |         4.70 |        1.60 | versicolor
+        4.90 |        2.40 |         3.30 |        1.00 | versicolor
+        6.60 |        2.90 |         4.60 |        1.30 | versicolor
+        5.20 |        2.70 |         3.90 |        1.40 | versicolor
+        5.00 |        2.00 |         3.50 |        1.00 | versicolor
+        5.90 |        3.00 |         4.20 |        1.50 | versicolor
+        6.00 |        2.20 |         4.00 |        1.00 | versicolor
+        6.10 |        2.90 |         4.70 |        1.40 | versicolor
+        5.60 |        2.90 |         3.60 |        1.30 | versicolor
+        6.70 |        3.10 |         4.40 |        1.40 | versicolor
+        5.60 |        3.00 |         4.50 |        1.50 | versicolor
+        5.80 |        2.70 |         4.10 |        1.00 | versicolor
+        6.20 |        2.20 |         4.50 |        1.50 | versicolor
+        5.60 |        2.50 |         3.90 |        1.10 | versicolor
+        5.90 |        3.20 |         4.80 |        1.80 | versicolor
+        6.10 |        2.80 |         4.00 |        1.30 | versicolor
+        6.30 |        2.50 |         4.90 |        1.50 | versicolor
+        6.10 |        2.80 |         4.70 |        1.20 | versicolor
+        6.40 |        2.90 |         4.30 |        1.30 | versicolor
+        6.60 |        3.00 |         4.40 |        1.40 | versicolor
+        6.80 |        2.80 |         4.80 |        1.40 | versicolor
+        6.70 |        3.00 |         5.00 |        1.70 | versicolor
+        6.00 |        2.90 |         4.50 |        1.50 | versicolor
+        5.70 |        2.60 |         3.50 |        1.00 | versicolor
+        5.50 |        2.40 |         3.80 |        1.10 | versicolor
+        5.50 |        2.40 |         3.70 |        1.00 | versicolor
+        5.80 |        2.70 |         3.90 |        1.20 | versicolor
+        6.00 |        2.70 |         5.10 |        1.60 | versicolor
+        5.40 |        3.00 |         4.50 |        1.50 | versicolor
+        6.00 |        3.40 |         4.50 |        1.60 | versicolor
+        6.70 |        3.10 |         4.70 |        1.50 | versicolor
+        6.30 |        2.30 |         4.40 |        1.30 | versicolor
+        5.60 |        3.00 |         4.10 |        1.30 | versicolor
+        5.50 |        2.50 |         4.00 |        1.30 | versicolor
+        5.50 |        2.60 |         4.40 |        1.20 | versicolor
+        6.10 |        3.00 |         4.60 |        1.40 | versicolor
+        5.80 |        2.60 |         4.00 |        1.20 | versicolor
+        5.00 |        2.30 |         3.30 |        1.00 | versicolor
+        5.60 |        2.70 |         4.20 |        1.30 | versicolor
+        5.70 |        3.00 |         4.20 |        1.20 | versicolor
+        5.70 |        2.90 |         4.20 |        1.30 | versicolor
+        6.20 |        2.90 |         4.30 |        1.30 | versicolor
+        5.10 |        2.50 |         3.00 |        1.10 | versicolor
+        5.70 |        2.80 |         4.10 |        1.30 | versicolor
+        6.30 |        3.30 |         6.00 |        2.50 |  virginica
+        5.80 |        2.70 |         5.10 |        1.90 |  virginica
+        7.10 |        3.00 |         5.90 |        2.10 |  virginica
+        6.30 |        2.90 |         5.60 |        1.80 |  virginica
+        6.50 |        3.00 |         5.80 |        2.20 |  virginica
+        7.60 |        3.00 |         6.60 |        2.10 |  virginica
+        4.90 |        2.50 |         4.50 |        1.70 |  virginica
+        7.30 |        2.90 |         6.30 |        1.80 |  virginica
+        6.70 |        2.50 |         5.80 |        1.80 |  virginica
+        7.20 |        3.60 |         6.10 |        2.50 |  virginica
+        6.50 |        3.20 |         5.10 |        2.00 |  virginica
+        6.40 |        2.70 |         5.30 |        1.90 |  virginica
+        6.80 |        3.00 |         5.50 |        2.10 |  virginica
+        5.70 |        2.50 |         5.00 |        2.00 |  virginica
+        5.80 |        2.80 |         5.10 |        2.40 |  virginica
+        6.40 |        3.20 |         5.30 |        2.30 |  virginica
+        6.50 |        3.00 |         5.50 |        1.80 |  virginica
+        7.70 |        3.80 |         6.70 |        2.20 |  virginica
+        7.70 |        2.60 |         6.90 |        2.30 |  virginica
+        6.00 |        2.20 |         5.00 |        1.50 |  virginica
+        6.90 |        3.20 |         5.70 |        2.30 |  virginica
+        5.60 |        2.80 |         4.90 |        2.00 |  virginica
+        7.70 |        2.80 |         6.70 |        2.00 |  virginica
+        6.30 |        2.70 |         4.90 |        1.80 |  virginica
+        6.70 |        3.30 |         5.70 |        2.10 |  virginica
+        7.20 |        3.20 |         6.00 |        1.80 |  virginica
+        6.20 |        2.80 |         4.80 |        1.80 |  virginica
+        6.10 |        3.00 |         4.90 |        1.80 |  virginica
+        6.40 |        2.80 |         5.60 |        2.10 |  virginica
+        7.20 |        3.00 |         5.80 |        1.60 |  virginica
+        7.40 |        2.80 |         6.10 |        1.90 |  virginica
+        7.90 |        3.80 |         6.40 |        2.00 |  virginica
+        6.40 |        2.80 |         5.60 |        2.20 |  virginica
+        6.30 |        2.80 |         5.10 |        1.50 |  virginica
+        6.10 |        2.60 |         5.60 |        1.40 |  virginica
+        7.70 |        3.00 |         6.10 |        2.30 |  virginica
+        6.30 |        3.40 |         5.60 |        2.40 |  virginica
+        6.40 |        3.10 |         5.50 |        1.80 |  virginica
+        6.00 |        3.00 |         4.80 |        1.80 |  virginica
+        6.90 |        3.10 |         5.40 |        2.10 |  virginica
+        6.70 |        3.10 |         5.60 |        2.40 |  virginica
+        6.90 |        3.10 |         5.10 |        2.30 |  virginica
+        5.80 |        2.70 |         5.10 |        1.90 |  virginica
+        6.80 |        3.20 |         5.90 |        2.30 |  virginica
+        6.70 |        3.30 |         5.70 |        2.50 |  virginica
+        6.70 |        3.00 |         5.20 |        2.30 |  virginica
+        6.30 |        2.50 |         5.00 |        1.90 |  virginica
+        6.50 |        3.00 |         5.20 |        2.00 |  virginica
+        6.20 |        3.40 |         5.40 |        2.30 |  virginica
+        5.90 |        3.00 |         5.10 |        1.80 |  virginica
+> cat(format_table(iris, sep = " ", header = "*", digits = 1))
+Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+************************************************************
+         5.1         3.5          1.4         0.2     setosa
+         4.9         3.0          1.4         0.2     setosa
+         4.7         3.2          1.3         0.2     setosa
+         4.6         3.1          1.5         0.2     setosa
+         5.0         3.6          1.4         0.2     setosa
+         5.4         3.9          1.7         0.4     setosa
+         4.6         3.4          1.4         0.3     setosa
+         5.0         3.4          1.5         0.2     setosa
+         4.4         2.9          1.4         0.2     setosa
+         4.9         3.1          1.5         0.1     setosa
+         5.4         3.7          1.5         0.2     setosa
+         4.8         3.4          1.6         0.2     setosa
+         4.8         3.0          1.4         0.1     setosa
+         4.3         3.0          1.1         0.1     setosa
+         5.8         4.0          1.2         0.2     setosa
+         5.7         4.4          1.5         0.4     setosa
+         5.4         3.9          1.3         0.4     setosa
+         5.1         3.5          1.4         0.3     setosa
+         5.7         3.8          1.7         0.3     setosa
+         5.1         3.8          1.5         0.3     setosa
+         5.4         3.4          1.7         0.2     setosa
+         5.1         3.7          1.5         0.4     setosa
+         4.6         3.6          1.0         0.2     setosa
+         5.1         3.3          1.7         0.5     setosa
+         4.8         3.4          1.9         0.2     setosa
+         5.0         3.0          1.6         0.2     setosa
+         5.0         3.4          1.6         0.4     setosa
+         5.2         3.5          1.5         0.2     setosa
+         5.2         3.4          1.4         0.2     setosa
+         4.7         3.2          1.6         0.2     setosa
+         4.8         3.1          1.6         0.2     setosa
+         5.4         3.4          1.5         0.4     setosa
+         5.2         4.1          1.5         0.1     setosa
+         5.5         4.2          1.4         0.2     setosa
+         4.9         3.1          1.5         0.2     setosa
+         5.0         3.2          1.2         0.2     setosa
+         5.5         3.5          1.3         0.2     setosa
+         4.9         3.6          1.4         0.1     setosa
+         4.4         3.0          1.3         0.2     setosa
+         5.1         3.4          1.5         0.2     setosa
+         5.0         3.5          1.3         0.3     setosa
+         4.5         2.3          1.3         0.3     setosa
+         4.4         3.2          1.3         0.2     setosa
+         5.0         3.5          1.6         0.6     setosa
+         5.1         3.8          1.9         0.4     setosa
+         4.8         3.0          1.4         0.3     setosa
+         5.1         3.8          1.6         0.2     setosa
+         4.6         3.2          1.4         0.2     setosa
+         5.3         3.7          1.5         0.2     setosa
+         5.0         3.3          1.4         0.2     setosa
+         7.0         3.2          4.7         1.4 versicolor
+         6.4         3.2          4.5         1.5 versicolor
+         6.9         3.1          4.9         1.5 versicolor
+         5.5         2.3          4.0         1.3 versicolor
+         6.5         2.8          4.6         1.5 versicolor
+         5.7         2.8          4.5         1.3 versicolor
+         6.3         3.3          4.7         1.6 versicolor
+         4.9         2.4          3.3         1.0 versicolor
+         6.6         2.9          4.6         1.3 versicolor
+         5.2         2.7          3.9         1.4 versicolor
+         5.0         2.0          3.5         1.0 versicolor
+         5.9         3.0          4.2         1.5 versicolor
+         6.0         2.2          4.0         1.0 versicolor
+         6.1         2.9          4.7         1.4 versicolor
+         5.6         2.9          3.6         1.3 versicolor
+         6.7         3.1          4.4         1.4 versicolor
+         5.6         3.0          4.5         1.5 versicolor
+         5.8         2.7          4.1         1.0 versicolor
+         6.2         2.2          4.5         1.5 versicolor
+         5.6         2.5          3.9         1.1 versicolor
+         5.9         3.2          4.8         1.8 versicolor
+         6.1         2.8          4.0         1.3 versicolor
+         6.3         2.5          4.9         1.5 versicolor
+         6.1         2.8          4.7         1.2 versicolor
+         6.4         2.9          4.3         1.3 versicolor
+         6.6         3.0          4.4         1.4 versicolor
+         6.8         2.8          4.8         1.4 versicolor
+         6.7         3.0          5.0         1.7 versicolor
+         6.0         2.9          4.5         1.5 versicolor
+         5.7         2.6          3.5         1.0 versicolor
+         5.5         2.4          3.8         1.1 versicolor
+         5.5         2.4          3.7         1.0 versicolor
+         5.8         2.7          3.9         1.2 versicolor
+         6.0         2.7          5.1         1.6 versicolor
+         5.4         3.0          4.5         1.5 versicolor
+         6.0         3.4          4.5         1.6 versicolor
+         6.7         3.1          4.7         1.5 versicolor
+         6.3         2.3          4.4         1.3 versicolor
+         5.6         3.0          4.1         1.3 versicolor
+         5.5         2.5          4.0         1.3 versicolor
+         5.5         2.6          4.4         1.2 versicolor
+         6.1         3.0          4.6         1.4 versicolor
+         5.8         2.6          4.0         1.2 versicolor
+         5.0         2.3          3.3         1.0 versicolor
+         5.6         2.7          4.2         1.3 versicolor
+         5.7         3.0          4.2         1.2 versicolor
+         5.7         2.9          4.2         1.3 versicolor
+         6.2         2.9          4.3         1.3 versicolor
+         5.1         2.5          3.0         1.1 versicolor
+         5.7         2.8          4.1         1.3 versicolor
+         6.3         3.3          6.0         2.5  virginica
+         5.8         2.7          5.1         1.9  virginica
+         7.1         3.0          5.9         2.1  virginica
+         6.3         2.9          5.6         1.8  virginica
+         6.5         3.0          5.8         2.2  virginica
+         7.6         3.0          6.6         2.1  virginica
+         4.9         2.5          4.5         1.7  virginica
+         7.3         2.9          6.3         1.8  virginica
+         6.7         2.5          5.8         1.8  virginica
+         7.2         3.6          6.1         2.5  virginica
+         6.5         3.2          5.1         2.0  virginica
+         6.4         2.7          5.3         1.9  virginica
+         6.8         3.0          5.5         2.1  virginica
+         5.7         2.5          5.0         2.0  virginica
+         5.8         2.8          5.1         2.4  virginica
+         6.4         3.2          5.3         2.3  virginica
+         6.5         3.0          5.5         1.8  virginica
+         7.7         3.8          6.7         2.2  virginica
+         7.7         2.6          6.9         2.3  virginica
+         6.0         2.2          5.0         1.5  virginica
+         6.9         3.2          5.7         2.3  virginica
+         5.6         2.8          4.9         2.0  virginica
+         7.7         2.8          6.7         2.0  virginica
+         6.3         2.7          4.9         1.8  virginica
+         6.7         3.3          5.7         2.1  virginica
+         7.2         3.2          6.0         1.8  virginica
+         6.2         2.8          4.8         1.8  virginica
+         6.1         3.0          4.9         1.8  virginica
+         6.4         2.8          5.6         2.1  virginica
+         7.2         3.0          5.8         1.6  virginica
+         7.4         2.8          6.1         1.9  virginica
+         7.9         3.8          6.4         2.0  virginica
+         6.4         2.8          5.6         2.2  virginica
+         6.3         2.8          5.1         1.5  virginica
+         6.1         2.6          5.6         1.4  virginica
+         7.7         3.0          6.1         2.3  virginica
+         6.3         3.4          5.6         2.4  virginica
+         6.4         3.1          5.5         1.8  virginica
+         6.0         3.0          4.8         1.8  virginica
+         6.9         3.1          5.4         2.1  virginica
+         6.7         3.1          5.6         2.4  virginica
+         6.9         3.1          5.1         2.3  virginica
+         5.8         2.7          5.1         1.9  virginica
+         6.8         3.2          5.9         2.3  virginica
+         6.7         3.3          5.7         2.5  virginica
+         6.7         3.0          5.2         2.3  virginica
+         6.3         2.5          5.0         1.9  virginica
+         6.5         3.0          5.2         2.0  virginica
+         6.2         3.4          5.4         2.3  virginica
+         5.9         3.0          5.1         1.8  virginica
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_value")
+> ### * format_value
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_value
+> ### Title: Numeric Values Formatting
+> ### Aliases: format_value
+> 
+> ### ** Examples
+> 
+> format_value(1.20)
+[1] "1.20"
+> format_value(1.2)
+[1] "1.20"
+> format_value(1.2012313)
+[1] "1.20"
+> format_value(c(0.0045, 234, -23))
+[1] "4.50e-03" "234.00"   "-23.00"  
+> format_value(c(0.0045, .12, .34))
+[1] "4.50e-03" "0.12"     "0.34"    
+> format_value(c(0.0045, .12, .34), as_percent = TRUE)
+[1] "0.45%"  "12.00%" "34.00%"
+> 
+> format_value(as.factor(c("A", "B", "A")))
+[1] A B A
+Levels: A B
+> format_value(iris$Species)
+  [1] setosa     setosa     setosa     setosa     setosa     setosa    
+  [7] setosa     setosa     setosa     setosa     setosa     setosa    
+ [13] setosa     setosa     setosa     setosa     setosa     setosa    
+ [19] setosa     setosa     setosa     setosa     setosa     setosa    
+ [25] setosa     setosa     setosa     setosa     setosa     setosa    
+ [31] setosa     setosa     setosa     setosa     setosa     setosa    
+ [37] setosa     setosa     setosa     setosa     setosa     setosa    
+ [43] setosa     setosa     setosa     setosa     setosa     setosa    
+ [49] setosa     setosa     versicolor versicolor versicolor versicolor
+ [55] versicolor versicolor versicolor versicolor versicolor versicolor
+ [61] versicolor versicolor versicolor versicolor versicolor versicolor
+ [67] versicolor versicolor versicolor versicolor versicolor versicolor
+ [73] versicolor versicolor versicolor versicolor versicolor versicolor
+ [79] versicolor versicolor versicolor versicolor versicolor versicolor
+ [85] versicolor versicolor versicolor versicolor versicolor versicolor
+ [91] versicolor versicolor versicolor versicolor versicolor versicolor
+ [97] versicolor versicolor versicolor versicolor virginica  virginica 
+[103] virginica  virginica  virginica  virginica  virginica  virginica 
+[109] virginica  virginica  virginica  virginica  virginica  virginica 
+[115] virginica  virginica  virginica  virginica  virginica  virginica 
+[121] virginica  virginica  virginica  virginica  virginica  virginica 
+[127] virginica  virginica  virginica  virginica  virginica  virginica 
+[133] virginica  virginica  virginica  virginica  virginica  virginica 
+[139] virginica  virginica  virginica  virginica  virginica  virginica 
+[145] virginica  virginica  virginica  virginica  virginica  virginica 
+Levels: setosa versicolor virginica
+> 
+> format_value(3)
+[1] "3.00"
+> format_value(3, protect_integers = TRUE)
+[1] "3"
+> 
+> format_value(iris)
+    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1           5.10        3.50         1.40        0.20     setosa
+2           4.90        3.00         1.40        0.20     setosa
+3           4.70        3.20         1.30        0.20     setosa
+4           4.60        3.10         1.50        0.20     setosa
+5           5.00        3.60         1.40        0.20     setosa
+6           5.40        3.90         1.70        0.40     setosa
+7           4.60        3.40         1.40        0.30     setosa
+8           5.00        3.40         1.50        0.20     setosa
+9           4.40        2.90         1.40        0.20     setosa
+10          4.90        3.10         1.50        0.10     setosa
+11          5.40        3.70         1.50        0.20     setosa
+12          4.80        3.40         1.60        0.20     setosa
+13          4.80        3.00         1.40        0.10     setosa
+14          4.30        3.00         1.10        0.10     setosa
+15          5.80        4.00         1.20        0.20     setosa
+16          5.70        4.40         1.50        0.40     setosa
+17          5.40        3.90         1.30        0.40     setosa
+18          5.10        3.50         1.40        0.30     setosa
+19          5.70        3.80         1.70        0.30     setosa
+20          5.10        3.80         1.50        0.30     setosa
+21          5.40        3.40         1.70        0.20     setosa
+22          5.10        3.70         1.50        0.40     setosa
+23          4.60        3.60         1.00        0.20     setosa
+24          5.10        3.30         1.70        0.50     setosa
+25          4.80        3.40         1.90        0.20     setosa
+26          5.00        3.00         1.60        0.20     setosa
+27          5.00        3.40         1.60        0.40     setosa
+28          5.20        3.50         1.50        0.20     setosa
+29          5.20        3.40         1.40        0.20     setosa
+30          4.70        3.20         1.60        0.20     setosa
+31          4.80        3.10         1.60        0.20     setosa
+32          5.40        3.40         1.50        0.40     setosa
+33          5.20        4.10         1.50        0.10     setosa
+34          5.50        4.20         1.40        0.20     setosa
+35          4.90        3.10         1.50        0.20     setosa
+36          5.00        3.20         1.20        0.20     setosa
+37          5.50        3.50         1.30        0.20     setosa
+38          4.90        3.60         1.40        0.10     setosa
+39          4.40        3.00         1.30        0.20     setosa
+40          5.10        3.40         1.50        0.20     setosa
+41          5.00        3.50         1.30        0.30     setosa
+42          4.50        2.30         1.30        0.30     setosa
+43          4.40        3.20         1.30        0.20     setosa
+44          5.00        3.50         1.60        0.60     setosa
+45          5.10        3.80         1.90        0.40     setosa
+46          4.80        3.00         1.40        0.30     setosa
+47          5.10        3.80         1.60        0.20     setosa
+48          4.60        3.20         1.40        0.20     setosa
+49          5.30        3.70         1.50        0.20     setosa
+50          5.00        3.30         1.40        0.20     setosa
+51          7.00        3.20         4.70        1.40 versicolor
+52          6.40        3.20         4.50        1.50 versicolor
+53          6.90        3.10         4.90        1.50 versicolor
+54          5.50        2.30         4.00        1.30 versicolor
+55          6.50        2.80         4.60        1.50 versicolor
+56          5.70        2.80         4.50        1.30 versicolor
+57          6.30        3.30         4.70        1.60 versicolor
+58          4.90        2.40         3.30        1.00 versicolor
+59          6.60        2.90         4.60        1.30 versicolor
+60          5.20        2.70         3.90        1.40 versicolor
+61          5.00        2.00         3.50        1.00 versicolor
+62          5.90        3.00         4.20        1.50 versicolor
+63          6.00        2.20         4.00        1.00 versicolor
+64          6.10        2.90         4.70        1.40 versicolor
+65          5.60        2.90         3.60        1.30 versicolor
+66          6.70        3.10         4.40        1.40 versicolor
+67          5.60        3.00         4.50        1.50 versicolor
+68          5.80        2.70         4.10        1.00 versicolor
+69          6.20        2.20         4.50        1.50 versicolor
+70          5.60        2.50         3.90        1.10 versicolor
+71          5.90        3.20         4.80        1.80 versicolor
+72          6.10        2.80         4.00        1.30 versicolor
+73          6.30        2.50         4.90        1.50 versicolor
+74          6.10        2.80         4.70        1.20 versicolor
+75          6.40        2.90         4.30        1.30 versicolor
+76          6.60        3.00         4.40        1.40 versicolor
+77          6.80        2.80         4.80        1.40 versicolor
+78          6.70        3.00         5.00        1.70 versicolor
+79          6.00        2.90         4.50        1.50 versicolor
+80          5.70        2.60         3.50        1.00 versicolor
+81          5.50        2.40         3.80        1.10 versicolor
+82          5.50        2.40         3.70        1.00 versicolor
+83          5.80        2.70         3.90        1.20 versicolor
+84          6.00        2.70         5.10        1.60 versicolor
+85          5.40        3.00         4.50        1.50 versicolor
+86          6.00        3.40         4.50        1.60 versicolor
+87          6.70        3.10         4.70        1.50 versicolor
+88          6.30        2.30         4.40        1.30 versicolor
+89          5.60        3.00         4.10        1.30 versicolor
+90          5.50        2.50         4.00        1.30 versicolor
+91          5.50        2.60         4.40        1.20 versicolor
+92          6.10        3.00         4.60        1.40 versicolor
+93          5.80        2.60         4.00        1.20 versicolor
+94          5.00        2.30         3.30        1.00 versicolor
+95          5.60        2.70         4.20        1.30 versicolor
+96          5.70        3.00         4.20        1.20 versicolor
+97          5.70        2.90         4.20        1.30 versicolor
+98          6.20        2.90         4.30        1.30 versicolor
+99          5.10        2.50         3.00        1.10 versicolor
+100         5.70        2.80         4.10        1.30 versicolor
+101         6.30        3.30         6.00        2.50  virginica
+102         5.80        2.70         5.10        1.90  virginica
+103         7.10        3.00         5.90        2.10  virginica
+104         6.30        2.90         5.60        1.80  virginica
+105         6.50        3.00         5.80        2.20  virginica
+106         7.60        3.00         6.60        2.10  virginica
+107         4.90        2.50         4.50        1.70  virginica
+108         7.30        2.90         6.30        1.80  virginica
+109         6.70        2.50         5.80        1.80  virginica
+110         7.20        3.60         6.10        2.50  virginica
+111         6.50        3.20         5.10        2.00  virginica
+112         6.40        2.70         5.30        1.90  virginica
+113         6.80        3.00         5.50        2.10  virginica
+114         5.70        2.50         5.00        2.00  virginica
+115         5.80        2.80         5.10        2.40  virginica
+116         6.40        3.20         5.30        2.30  virginica
+117         6.50        3.00         5.50        1.80  virginica
+118         7.70        3.80         6.70        2.20  virginica
+119         7.70        2.60         6.90        2.30  virginica
+120         6.00        2.20         5.00        1.50  virginica
+121         6.90        3.20         5.70        2.30  virginica
+122         5.60        2.80         4.90        2.00  virginica
+123         7.70        2.80         6.70        2.00  virginica
+124         6.30        2.70         4.90        1.80  virginica
+125         6.70        3.30         5.70        2.10  virginica
+126         7.20        3.20         6.00        1.80  virginica
+127         6.20        2.80         4.80        1.80  virginica
+128         6.10        3.00         4.90        1.80  virginica
+129         6.40        2.80         5.60        2.10  virginica
+130         7.20        3.00         5.80        1.60  virginica
+131         7.40        2.80         6.10        1.90  virginica
+132         7.90        3.80         6.40        2.00  virginica
+133         6.40        2.80         5.60        2.20  virginica
+134         6.30        2.80         5.10        1.50  virginica
+135         6.10        2.60         5.60        1.40  virginica
+136         7.70        3.00         6.10        2.30  virginica
+137         6.30        3.40         5.60        2.40  virginica
+138         6.40        3.10         5.50        1.80  virginica
+139         6.00        3.00         4.80        1.80  virginica
+140         6.90        3.10         5.40        2.10  virginica
+141         6.70        3.10         5.60        2.40  virginica
+142         6.90        3.10         5.10        2.30  virginica
+143         5.80        2.70         5.10        1.90  virginica
+144         6.80        3.20         5.90        2.30  virginica
+145         6.70        3.30         5.70        2.50  virginica
+146         6.70        3.00         5.20        2.30  virginica
+147         6.30        2.50         5.00        1.90  virginica
+148         6.50        3.00         5.20        2.00  virginica
+149         6.20        3.40         5.40        2.30  virginica
+150         5.90        3.00         5.10        1.80  virginica
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_data")
+> ### * get_data
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_data
+> ### Title: Get the data that was used to fit the model
+> ### Aliases: get_data get_data.gee get_data.rqss get_data.hurdle
+> ###   get_data.zcpglm get_data.glmmTMB get_data.merMod get_data.glmmadmb
+> ###   get_data.rlmerMod get_data.clmm get_data.mixed get_data.lme
+> ###   get_data.MixMod get_data.brmsfit get_data.stanreg get_data.MCMCglmm
+> 
+> ### ** Examples
+> 
+> data(cbpp, package = "lme4")
+> cbpp$trials <- cbpp$size - cbpp$incidence
+> m <- glm(cbind(incidence, trials) ~ period, data = cbpp, family = binomial)
+> head(get_data(m))
+  cbind(incidence, trials).incidence cbind(incidence, trials).trials period
+1                                  2                              12      1
+2                                  3                               9      2
+3                                  4                               5      3
+4                                  0                               5      4
+5                                  3                              19      1
+6                                  1                              17      2
+  incidence trials
+1         2     12
+2         3      9
+3         4      5
+4         0      5
+5         3     19
+6         1     17
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_parameters")
+> ### * get_parameters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_parameters
+> ### Title: Get model parameters
+> ### Aliases: get_parameters get_parameters.betamfx get_parameters.logitmfx
+> ###   get_parameters.averaging get_parameters.betareg
+> ###   get_parameters.DirichletRegModel get_parameters.clm2
+> ###   get_parameters.coxme get_parameters.merMod get_parameters.mixed
+> ###   get_parameters.glmmTMB get_parameters.BBmm get_parameters.glimML
+> ###   get_parameters.gam get_parameters.zeroinfl get_parameters.zcpglm
+> ###   get_parameters.MCMCglmm get_parameters.BFBayesFactor
+> ###   get_parameters.stanmvreg get_parameters.brmsfit
+> ###   get_parameters.stanreg get_parameters.sim.merMod
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> get_parameters(m)
+    Parameter   Estimate
+1 (Intercept) 38.7460642
+2          wt -3.2463673
+3         cyl -1.3641033
+4          vs  0.5241721
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_predictors")
+> ### * get_predictors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_predictors
+> ### Title: Get the data from model predictors
+> ### Aliases: get_predictors
+> 
+> ### ** Examples
+> 
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> head(get_predictors(m))
+                     wt cyl vs
+Mazda RX4         2.620   6  0
+Mazda RX4 Wag     2.875   6  0
+Datsun 710        2.320   4  1
+Hornet 4 Drive    3.215   6  1
+Hornet Sportabout 3.440   8  0
+Valiant           3.460   6  1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_priors")
+> ### * get_priors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_priors
+> ### Title: Get summary of priors used for a model
+> ### Aliases: get_priors
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(rstanarm)
+> ##D model <- stan_glm(Sepal.Width ~ Species * Petal.Length, data = iris)
+> ##D get_priors(model)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_random")
+> ### * get_random
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_random
+> ### Title: Get the data from random effects
+> ### Aliases: get_random
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(sleepstudy)
+> # prepare some data...
+> sleepstudy$mygrp <- sample(1:5, size = 180, replace = TRUE)
+> sleepstudy$mysubgrp <- NA
+> for (i in 1:5) {
++   filter_group <- sleepstudy$mygrp == i
++   sleepstudy$mysubgrp[filter_group] <-
++     sample(1:30, size = sum(filter_group), replace = TRUE)
++ }
+> 
+> m <- lmer(
++   Reaction ~ Days + (1 | mygrp / mysubgrp) + (1 | Subject),
++   data = sleepstudy
++ )
+> 
+> head(get_random(m))
+  mysubgrp mygrp Subject
+1       26     1     308
+2       23     4     308
+3        8     1     308
+4       28     2     308
+5        2     5     308
+6       18     3     308
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("get_response")
+> ### * get_response
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_response
+> ### Title: Get the values from the response variable
+> ### Aliases: get_response
+> 
+> ### ** Examples
+> 
+> library(lme4)
+Loading required package: Matrix
+> data(cbpp)
+> data(mtcars)
+> cbpp$trials <- cbpp$size - cbpp$incidence
+> 
+> m <- glm(cbind(incidence, trials) ~ period, data = cbpp, family = binomial)
+> head(get_response(m))
+  incidence trials
+1         2     12
+2         3      9
+3         4      5
+4         0      5
+5         3     19
+6         1     17
+> get_response(m, select = "incidence")
+ [1]  2  3  4  0  3  1  1  8  2  0  2  2  0  2  0  5  0  0  1  3  0  0  1  8  1
+[26]  3  0 12  2  0  0  0  1  1  0  2  0  5  3  1  2  1  0  0  1  2  0  0 11  0
+[51]  0  0  1  1  1  0
+> 
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> get_response(m)
+ [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
+[16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
+[31] 15.0 21.4
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("get_statistic")
+> ### * get_statistic
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_statistic
+> ### Title: Get statistic associated with estimates
+> ### Aliases: get_statistic get_statistic.default get_statistic.glmmTMB
+> ###   get_statistic.clm2 get_statistic.betamfx get_statistic.logitmfx
+> ###   get_statistic.emmGrid get_statistic.gee get_statistic.betareg
+> ###   get_statistic.DirichletRegModel
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> get_statistic(m)
+    Parameter  Statistic
+1 (Intercept) 11.3994647
+2          wt -4.1204121
+3         cyl -2.2234114
+4          vs  0.3221477
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_varcov")
+> ### * get_varcov
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_varcov
+> ### Title: Get variance-covariance matrix from models
+> ### Aliases: get_varcov get_varcov.betareg get_varcov.DirichletRegModel
+> ###   get_varcov.clm2 get_varcov.truncreg get_varcov.gamlss
+> ###   get_varcov.hurdle get_varcov.zcpglm get_varcov.MixMod
+> ###   get_varcov.glmmTMB get_varcov.brmsfit get_varcov.betamfx
+> ###   get_varcov.mixor
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> get_varcov(m)
+            (Intercept)         wt        cyl         vs
+(Intercept)   11.552774  0.1680680 -1.5843752 -4.7487893
+wt             0.168068  0.6207461 -0.3301421 -0.2797924
+cyl           -1.584375 -0.3301421  0.3764045  0.7257641
+vs            -4.748789 -0.2797924  0.7257641  2.6475113
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_variance")
+> ### * get_variance
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_variance
+> ### Title: Get variance components from random effects models
+> ### Aliases: get_variance get_variance_residual get_variance_fixed
+> ###   get_variance_random get_variance_distribution get_variance_dispersion
+> ###   get_variance_intercept get_variance_slope
+> ###   get_correlation_slope_intercept
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(lme4)
+> ##D data(sleepstudy)
+> ##D m <- lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
+> ##D 
+> ##D get_variance(m)
+> ##D get_variance_fixed(m)
+> ##D get_variance_residual(m)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_weights")
+> ### * get_weights
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_weights
+> ### Title: Get the values from model weights
+> ### Aliases: get_weights
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> mtcars$weight <- rnorm(nrow(mtcars), 1, .3)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars, weights = weight)
+> get_weights(m)
+ [1] 0.8120639 1.0550930 0.7493114 1.4785842 1.0988523 0.7538595 1.1462287
+ [8] 1.2214974 1.1727344 0.9083835 1.4535344 1.1169530 0.8136278 0.3355900
+[15] 1.3374793 0.9865199 0.9951429 1.2831509 1.2463664 1.1781704 1.2756932
+[22] 1.2346409 1.0223695 0.4031945 1.1859477 0.9831614 0.9532613 0.5587743
+[29] 0.8565550 1.1253825 1.4076039 0.9691637
+> 
+> 
+> 
+> cleanEx()
+> nameEx("has_intercept")
+> ### * has_intercept
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: has_intercept
+> ### Title: Checks if model has an intercept
+> ### Aliases: has_intercept
+> 
+> ### ** Examples
+> 
+> model <- lm(mpg ~ 0 + gear, data = mtcars)
+> has_intercept(model)
+[1] FALSE
+> 
+> model <- lm(mpg ~ gear, data = mtcars)
+> has_intercept(model)
+[1] TRUE
+> 
+> library(lme4)
+Loading required package: Matrix
+> model <- lmer(Reaction ~ 0 + Days + (Days | Subject), data = sleepstudy)
+> has_intercept(model)
+[1] FALSE
+> 
+> model <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+> has_intercept(model)
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("is_model")
+> ### * is_model
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: is_model
+> ### Title: Checks if an object is a regression model object
+> ### Aliases: is_model
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> 
+> is_model(m)
+[1] TRUE
+> is_model(mtcars)
+[1] FALSE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("is_model_supported")
+> ### * is_model_supported
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: is_model_supported
+> ### Title: Checks if an object is a regression model object supported in
+> ###   'insight' package.
+> ### Aliases: is_model_supported supported_models
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> 
+> is_model_supported(m)
+[1] TRUE
+> is_model_supported(mtcars)
+[1] FALSE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("is_multivariate")
+> ### * is_multivariate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: is_multivariate
+> ### Title: Checks if an object stems from a multivariate response model
+> ### Aliases: is_multivariate
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(rstanarm)
+> ##D data("pbcLong")
+> ##D model <- stan_mvmer(
+> ##D   formula = list(
+> ##D     logBili ~ year + (1 | id),
+> ##D     albumin ~ sex + year + (year | id)
+> ##D   ),
+> ##D   data = pbcLong,
+> ##D   chains = 1, cores = 1, seed = 12345, iter = 1000
+> ##D )
+> ##D 
+> ##D f <- find_formula(model)
+> ##D is_multivariate(model)
+> ##D is_multivariate(f)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("is_nullmodel")
+> ### * is_nullmodel
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: is_nullmodel
+> ### Title: Checks if model is a null-model (intercept-only)
+> ### Aliases: is_nullmodel
+> 
+> ### ** Examples
+> 
+> model <- lm(mpg ~ 1, data = mtcars)
+> is_nullmodel(model)
+[1] TRUE
+> 
+> model <- lm(mpg ~ gear, data = mtcars)
+> is_nullmodel(model)
+[1] FALSE
+> 
+> library(lme4)
+Loading required package: Matrix
+> model <- lmer(Reaction ~ 1 + (Days | Subject), data = sleepstudy)
+> is_nullmodel(model)
+[1] TRUE
+> 
+> model <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+> is_nullmodel(model)
+[1] FALSE
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("link_function")
+> ### * link_function
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: link_function
+> ### Title: Get link-function from model object
+> ### Aliases: link_function link_function.betamfx link_function.gamlss
+> ###   link_function.betareg link_function.DirichletRegModel
+> 
+> ### ** Examples
+> 
+> # example from ?stats::glm
+> counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
+> outcome <- gl(3, 1, 9)
+> treatment <- gl(3, 3)
+> m <- glm(counts ~ outcome + treatment, family = poisson())
+> 
+> link_function(m)(.3)
+[1] -1.203973
+> # same as
+> log(.3)
+[1] -1.203973
+> 
+> 
+> 
+> cleanEx()
+> nameEx("link_inverse")
+> ### * link_inverse
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: link_inverse
+> ### Title: Get link-inverse function from model object
+> ### Aliases: link_inverse link_inverse.betareg
+> ###   link_inverse.DirichletRegModel link_inverse.betamfx
+> ###   link_inverse.gamlss
+> 
+> ### ** Examples
+> 
+> # example from ?stats::glm
+> counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
+> outcome <- gl(3, 1, 9)
+> treatment <- gl(3, 3)
+> m <- glm(counts ~ outcome + treatment, family = poisson())
+> 
+> link_inverse(m)(.3)
+[1] 1.349859
+> # same as
+> exp(.3)
+[1] 1.349859
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_info")
+> ### * model_info
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_info
+> ### Title: Access information from model objects
+> ### Aliases: model_info model_info.default
+> 
+> ### ** Examples
+> 
+> ldose <- rep(0:5, 2)
+> numdead <- c(1, 4, 9, 13, 18, 20, 0, 2, 6, 10, 12, 16)
+> sex <- factor(rep(c("M", "F"), c(6, 6)))
+> SF <- cbind(numdead, numalive = 20 - numdead)
+> dat <- data.frame(ldose, sex, SF, stringsAsFactors = FALSE)
+> m <- glm(SF ~ sex * ldose, family = binomial)
+> 
+> model_info(m)
+$is_binomial
+[1] TRUE
+
+$is_count
+[1] FALSE
+
+$is_poisson
+[1] FALSE
+
+$is_negbin
+[1] FALSE
+
+$is_beta
+[1] FALSE
+
+$is_betabinomial
+[1] FALSE
+
+$is_dirichlet
+[1] FALSE
+
+$is_exponential
+[1] FALSE
+
+$is_logit
+[1] TRUE
+
+$is_probit
+[1] FALSE
+
+$is_censored
+[1] FALSE
+
+$is_truncated
+[1] FALSE
+
+$is_survival
+[1] FALSE
+
+$is_linear
+[1] FALSE
+
+$is_tweedie
+[1] FALSE
+
+$is_zeroinf
+[1] FALSE
+
+$is_zero_inflated
+[1] FALSE
+
+$is_dispersion
+[1] FALSE
+
+$is_hurdle
+[1] FALSE
+
+$is_ordinal
+[1] FALSE
+
+$is_cumulative
+[1] FALSE
+
+$is_multinomial
+[1] FALSE
+
+$is_categorical
+[1] FALSE
+
+$is_mixed
+[1] FALSE
+
+$is_multivariate
+[1] FALSE
+
+$is_trial
+[1] FALSE
+
+$is_bayesian
+[1] FALSE
+
+$is_anova
+[1] FALSE
+
+$is_timeseries
+[1] FALSE
+
+$is_ttest
+[1] FALSE
+
+$is_correlation
+[1] FALSE
+
+$is_meta
+[1] FALSE
+
+$link_function
+[1] "logit"
+
+$family
+[1] "binomial"
+
+$n_obs
+[1] 12
+
+$model_terms
+$model_terms$response
+[1] "SF"
+
+$model_terms$conditional
+[1] "sex"   "ldose"
+
+
+> ## Not run: 
+> ##D library(glmmTMB)
+> ##D data("Salamanders")
+> ##D m <- glmmTMB(
+> ##D   count ~ spp + cover + mined + (1 | site),
+> ##D   ziformula = ~ spp + mined,
+> ##D   dispformula = ~DOY,
+> ##D   data = Salamanders,
+> ##D   family = nbinom2
+> ##D )
+> ## End(Not run)
+> 
+> model_info(m)
+$is_binomial
+[1] TRUE
+
+$is_count
+[1] FALSE
+
+$is_poisson
+[1] FALSE
+
+$is_negbin
+[1] FALSE
+
+$is_beta
+[1] FALSE
+
+$is_betabinomial
+[1] FALSE
+
+$is_dirichlet
+[1] FALSE
+
+$is_exponential
+[1] FALSE
+
+$is_logit
+[1] TRUE
+
+$is_probit
+[1] FALSE
+
+$is_censored
+[1] FALSE
+
+$is_truncated
+[1] FALSE
+
+$is_survival
+[1] FALSE
+
+$is_linear
+[1] FALSE
+
+$is_tweedie
+[1] FALSE
+
+$is_zeroinf
+[1] FALSE
+
+$is_zero_inflated
+[1] FALSE
+
+$is_dispersion
+[1] FALSE
+
+$is_hurdle
+[1] FALSE
+
+$is_ordinal
+[1] FALSE
+
+$is_cumulative
+[1] FALSE
+
+$is_multinomial
+[1] FALSE
+
+$is_categorical
+[1] FALSE
+
+$is_mixed
+[1] FALSE
+
+$is_multivariate
+[1] FALSE
+
+$is_trial
+[1] FALSE
+
+$is_bayesian
+[1] FALSE
+
+$is_anova
+[1] FALSE
+
+$is_timeseries
+[1] FALSE
+
+$is_ttest
+[1] FALSE
+
+$is_correlation
+[1] FALSE
+
+$is_meta
+[1] FALSE
+
+$link_function
+[1] "logit"
+
+$family
+[1] "binomial"
+
+$n_obs
+[1] 12
+
+$model_terms
+$model_terms$response
+[1] "SF"
+
+$model_terms$conditional
+[1] "sex"   "ldose"
+
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("n_obs")
+> ### * n_obs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: n_obs
+> ### Title: Get number of observations from a model
+> ### Aliases: n_obs n_obs.svyolr n_obs.stanmvreg
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> m <- lm(mpg ~ wt + cyl + vs, data = mtcars)
+> n_obs(m)
+[1] 32
+> 
+> 
+> 
+> cleanEx()
+> nameEx("null_model")
+> ### * null_model
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: null_model
+> ### Title: Compute intercept-only model for regression models
+> ### Aliases: null_model
+> 
+> ### ** Examples
+> 
+> if (require("lme4")) {
++   data(sleepstudy)
++   m <- lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
++   summary(m)
++   summary(null_model(m))
++ }
+Loading required package: lme4
+Loading required package: Matrix
+Linear mixed model fit by REML ['lmerMod']
+Formula: Reaction ~ (1 + Days | Subject)
+   Data: sleepstudy
+
+REML criterion at convergence: 1769.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.0449 -0.4486  0.0089  0.4819  5.2186 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr 
+ Subject  (Intercept) 651.6    25.53         
+          Days        142.2    11.93    -0.18
+ Residual             654.9    25.59         
+Number of obs: 180, groups:  Subject, 18
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   257.76       6.76   38.13
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("print_color")
+> ### * print_color
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print_color
+> ### Title: Coloured console output
+> ### Aliases: print_color print_colour
+> 
+> ### ** Examples
+> 
+> print_color("I'm blue dabedi dabedei", "blue")
+[34mI'm blue dabedi dabedei[39m> 
+> 
+> 
+> cleanEx()
+> nameEx("print_parameters")
+> ### * print_parameters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print_parameters
+> ### Title: Prepare summary statistics of model parameters for printing
+> ### Aliases: print_parameters
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(bayestestR)
+> ##D model <- download_model("brms_zi_2")
+> ##D x <- hdi(model, effects = "all", component = "all")
+> ##D 
+> ##D # hdi() returns a data frame; here we use only the informaton on
+> ##D # parameter names and HDI values
+> ##D tmp <- as.data.frame(x)[, 1:4]
+> ##D tmp
+> ##D 
+> ##D # Based on the "split_by" argument, we get a list of data frames that
+> ##D # is split into several parts that reflect the model components.
+> ##D print_parameters(model, tmp)
+> ##D 
+> ##D # This is the standard print()-method for "bayestestR::hdi"-objects.
+> ##D # For printing methods, it is easy to print complex summary statistics
+> ##D # in a clean way to the console by splitting the information into
+> ##D # different model components.
+> ##D x
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  2.54 0.297 2.975 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

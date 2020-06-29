@@ -1,0 +1,26 @@
+* installing *source* package ‘pdp’ ...
+** package ‘pdp’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+g++-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c PartialGBM.cpp -o PartialGBM.o
+PartialGBM.cpp: In function 'SEXPREC* PartialGBM(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)':
+PartialGBM.cpp:29:17: warning: variable 'hr' set but not used [-Wunused-but-set-variable]
+   29 |   unsigned long hr = 0;
+      |                 ^~
+gcc-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c pdp-init.c -o pdp-init.o
+g++-9 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o pdp.so PartialGBM.o pdp-init.o -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+installing to /Users/b780620/Desktop/devel/gbm/revdep/checks.noindex/pdp/old/pdp.Rcheck/00LOCK-pdp/00new/pdp/libs
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (pdp)

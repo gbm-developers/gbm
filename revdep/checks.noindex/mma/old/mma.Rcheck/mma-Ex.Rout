@@ -1,0 +1,738 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "mma"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('mma')
+Loading required package: gbm
+Loaded gbm 2.1.5
+Loading required package: splines
+Loading required package: survival
+Loading required package: car
+Loading required package: carData
+Loading required package: gplots
+
+Attaching package: ‘gplots’
+
+The following object is masked from ‘package:stats’:
+
+    lowess
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("boot.med")
+> ### * boot.med
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: boot.med
+> ### Title: Statistical Inference on Mediation Analysis with Continuous or
+> ###   Binary Predictor
+> ### Aliases: boot.med
+> ### Keywords: Mediation Analysis Continuous Predictor
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> ##binary x
+> #binary y
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  data.bin<-data.org(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),binref=c(1,1),
++                     catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4)
+>  temp1<-boot.med(data=data.bin,n=2,n2=4)
+[1] 1
+[1] 2
+[1] 3
+[1] 4
+>  temp2<-boot.med(data=data.bin,n=2,n2=4,nu=0.05,nonlinear=TRUE)
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+[1] 1
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+[1] 2
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+[1] 3
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+[1] 4
+> 
+> 
+> ##Surv class outcome (survival analysis)
+> ## End(No test)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("boot.mod")
+> ### * boot.mod
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: boot.mod
+> ### Title: Statistical Inference on Mediation Analysis with Continuous or
+> ###   Binary Predictor at different level of the moderator
+> ### Aliases: boot.mod
+> ### Keywords: Moderation Effect with Mediation Analysis
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cgd1")
+> ### * cgd1
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cgd1
+> ### Title: cgd1 Data Set
+> ### Aliases: cgd1
+> ### Keywords: Datasets
+> 
+> ### ** Examples
+> 
+> data(cgd1)
+> names(cgd1)
+ [1] "id"       "center"   "random"   "treat"    "sex"      "age"     
+ [7] "height"   "weight"   "inherit"  "steroids" "propylac" "hos.cat" 
+[13] "futime"   "etime1"   "etime2"   "etime3"   "etime4"   "etime5"  
+[19] "etime6"   "etime7"  
+> 
+> 
+> 
+> cleanEx()
+> nameEx("data.org")
+> ### * data.org
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: data.org
+> ### Title: Data Organization and Identify Potential Mediators
+> ### Aliases: data.org
+> ### Keywords: Mediator Tests
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> #binary predictor
+>  #binary y
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  data.b.b.2.1<-data.org(x,y,mediator=5:12,jointm=list(n=1,j1=c(5,7,9)),
++                         pred=pred,predref="M", alpha=0.4,alpha2=0.4)
+>  summary(data.b.b.2.1)
+Identified as mediators: 
+[1] "tvhours"   "cellhours" "exercises" "sweat"     "sports"    "gotosch"  
+Selected as covariates: 
+[1] "age"       "race"      "numpeople" "car"      
+Tests: 
+            P-Value 1.y P-Value 2.pred
+age               0.836             NA
+race              0.850             NA
+numpeople         0.561             NA
+car               0.052             NA
+gotosch -         0.710          0.071
+snack             0.724             NA
+tvhours -         0.830          0.484
+cmpthours         0.826             NA
+cellhours -       0.067          0.688
+sports *          0.000          0.003
+exercises *       0.176          0.203
+sweat *           0.181          0.046
+pred              0.178             NA
+----
+ *:mediator,-:joint mediator
+ P-Value 1:Type-3 tests in the full model (data.org) or estimated coefficients (data.org.big) 
+ when testtype=1, univariate relationship test with the outcome when testtype=2
+ P-Value 2:Tests of relationship with the Predictor
+>  #Or you can specify the potential mediators and change the reference 
+>  #group for binary or categorical mediators. In the following code,
+>  #potential continuous mediators are columns 8,9,10,12, and 13 of x,
+>  #binary mediators are columns 7 and 11, and categorical mediator is
+>  #column 6 of x with 1 to be the reference group for all categorical
+>  #and binary mediators. 
+>   data.b.b.2<-data.org(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),
++    binref=c(1,1),catmed=5,catref=1,jointm=list(n=1,j1=c(5,7,9)),
++    predref="M",alpha=0.4,alpha2=0.4) 
+>   summary(data.b.b.2)
+Identified as mediators: 
+[1] "tvhours"   "cellhours" "exercises" "sweat"     "sports"    "gotosch"  
+Selected as covariates: 
+[1] "age"       "race"      "numpeople" "car"      
+Tests: 
+            P-Value 1.y P-Value 2.pred
+age               0.836             NA
+race              0.850             NA
+numpeople         0.561             NA
+car               0.052             NA
+gotosch -         0.710          0.071
+snack             0.724             NA
+tvhours -         0.830          0.484
+cmpthours         0.826             NA
+cellhours -       0.067          0.688
+sports *          0.000          0.003
+exercises *       0.176          0.203
+sweat *           0.181          0.046
+pred              0.178             NA
+----
+ *:mediator,-:joint mediator
+ P-Value 1:Type-3 tests in the full model (data.org) or estimated coefficients (data.org.big) 
+ when testtype=1, univariate relationship test with the outcome when testtype=2
+ P-Value 2:Tests of relationship with the Predictor
+>  #use the mediator argument instead of contmet, binmed and catmed
+>  
+>  #multivariate predictor
+> 
+> 
+> 
+> cleanEx()
+> nameEx("form.interaction")
+> ### * form.interaction
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: form.interaction
+> ### Title: Create interaction terms of predictor(s) and potential
+> ###   moderator(s).
+> ### Aliases: form.interaction
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> pred=data.frame(weight_behavior[,3])
+> names(pred)="pred"
+> x=weight_behavior[,c(2,4:14)]
+> inter=form.interaction(x,pred,inter.cov=c("sports","sweat"),predref=NULL) 
+> x=cbind(x,inter)
+> head(x)
+   age  race numpeople car gotosch snack tvhours cmpthours cellhours sports
+1 12.2 OTHER         5   3       2     1       4         0         0      2
+2 12.8 OTHER         4   3       2     1       4         2         0      1
+3 12.6 OTHER         4   2       4     2      NA        NA        NA   <NA>
+4 12.1 OTHER         2   3       2     1       0         2         0      2
+5 12.3 OTHER         4   1       2     1       2         1         3      1
+6 11.8 OTHER         4   1       1     1       4         3         2      1
+  exercises sweat sportsX2.predM sweat.predM
+1         2     1              0           0
+2         8     2              0           2
+3         4     2             NA           0
+4         9     1              1           1
+5        12     1              0           1
+6         1     1              0           1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("med")
+> ### * med
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: med
+> ### Title: Mediation Analysis with Binary or Continuous Predictor
+> ### Aliases: med
+> ### Keywords: Mediation Analysis
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> ##binary x
+> #binary y
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  data.bin<-data.org(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),
++   binref=c(1,1),catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4)
+> temp1<-med(data=data.bin,n=2)
+> #or use self-defined final function
+> temp1<-med(data=data.bin,n=2,custom.function = 
++            'glm(responseY~.,data=dataset123,family="quasibinomial",
++            weights=weights123)')
+> temp2<-med(data=data.bin,n=2,nonlinear=TRUE)
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mma-package")
+> ### * mma-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mma-package
+> ### Title: Mediation Analysis Package
+> ### Aliases: mma-package
+> ### Keywords: Package
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> #binary predictor
+>  #binary y
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  temp.b.b.glm<-mma(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),binref=c(1,1),
++                     catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4,n=2,n2=2)
+[1] 1
+[1] 2
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mma")
+> ### * mma
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mma
+> ### Title: Multiple Mediation Analysis
+> ### Aliases: mma
+> ### Keywords: Mediation Analysis Mediator Tests
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> #binary predictor
+>  #binary y
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  temp.b.b.glm<-mma(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),binref=c(1,1),
++                     catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4,n=2,n2=2)
+[1] 1
+[1] 2
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("moderate")
+> ### * moderate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: moderate
+> ### Title: Calculate and plot the direct effect of the selected exposure
+> ###   variable at each level of the moderator.
+> ### Aliases: moderate
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.med")
+> ### * plot.med
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.med
+> ### Title: Plot the mediation effect on the fitted med object
+> ### Aliases: plot.med
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  data.bin<-data.org(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),
++   binref=c(1,1),catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4)
+> temp1<-med(data=data.bin,n=2)
+> temp2<-med(data=data.bin,n=2,nonlinear=TRUE)
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+> plot(temp1,data.bin,vari="exercises",xlim=c(0,50))
+> plot(temp2,data.bin,vari="sports")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.mma")
+> ### * plot.mma
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.mma
+> ### Title: Relative effects plot of the fitted mma object
+> ### Aliases: plot.mma
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  temp.b.b.glm<-mma(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),binref=c(1,1),
++                     catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4,n=2,n2=2)
+[1] 1
+[1] 2
+> plot(temp.b.b.glm,vari="exercises",xlim=c(0,50))
+> plot(temp.b.b.glm,vari="sports")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot2.mma")
+> ### * plot2.mma
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot2.mma
+> ### Title: Relative effects plot of the fitted mma object with moderator
+> ### Aliases: plot2.mma
+> 
+> ### ** Examples
+> 
+> #see boot.mod menu.
+> 
+> 
+> 
+> cleanEx()
+> nameEx("print.med")
+> ### * print.med
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.med
+> ### Title: Print an med object
+> ### Aliases: print.med
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> ##binary x
+> #binary y
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  data.bin<-data.org(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),
++                     binref=c(1,1),catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4)
+>  temp1<-med(data=data.bin,n=2)
+>  temp2<-med(data=data.bin,n=2,nonlinear=TRUE)
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+>  temp1
+
+
+For the predictor pred :
+ The estimated total effect:[1] 0.6551
+
+ The estimated indirect effect:
+      y1.all y1.exercises     y1.sweat    y1.sports 
+      0.2112      -0.0062       0.0218       0.1912 
+>  print(temp2,digit=5)
+
+
+For the predictor pred :
+ The estimated total effect:[1] 0.16996
+
+ The estimated indirect effect:
+      y1.all y1.exercises     y1.sweat    y1.sports 
+     0.09693     -0.00082      0.00357      0.07699 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("print.mma")
+> ### * print.mma
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.mma
+> ### Title: Print a mma object
+> ### Aliases: print.mma
+> 
+> ### ** Examples
+> 
+>  data("weight_behavior")
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  temp.b.b.glm<-mma(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),binref=c(1,1),
++                     catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4,n=2,n2=2)
+[1] 1
+[1] 2
+>  print(temp.b.b.glm,digit=8)
+For Categorical Exposure(s): [1] "pred"
+
+ MMA Analysis: Estimated Mediation Effects Using GLM
+$ie
+         y1.all  y1.exercises     y1.sweat  y1.sports
+pred 0.12035101 -0.0028630772 0.0061024952 0.12372126
+
+$te
+   y1.pred 
+0.52576486 
+
+$de
+   y1.pred 
+0.40541385 
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.med_iden")
+> ### * summary.med_iden
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.med_iden
+> ### Title: Summary method for class "med_iden".
+> ### Aliases: summary.med_iden print.summary.med_iden
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>  data.b.b.2<-data.org(x,y,mediator=5:12,jointm=list(n=1,j1=c(5,7,9)),
++                         pred=pred,predref="M", alpha=0.4,alpha2=0.4)
+>  summary(data.b.b.2)
+Identified as mediators: 
+[1] "tvhours"   "cellhours" "exercises" "sweat"     "sports"    "gotosch"  
+Selected as covariates: 
+[1] "age"       "race"      "numpeople" "car"      
+Tests: 
+            P-Value 1.y P-Value 2.pred
+age               0.836             NA
+race              0.850             NA
+numpeople         0.561             NA
+car               0.052             NA
+gotosch -         0.710          0.071
+snack             0.724             NA
+tvhours -         0.830          0.484
+cmpthours         0.826             NA
+cellhours -       0.067          0.688
+sports *          0.000          0.003
+exercises *       0.176          0.203
+sweat *           0.181          0.046
+pred              0.178             NA
+----
+ *:mediator,-:joint mediator
+ P-Value 1:Type-3 tests in the full model (data.org) or estimated coefficients (data.org.big) 
+ when testtype=1, univariate relationship test with the outcome when testtype=2
+ P-Value 2:Tests of relationship with the Predictor
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.mma")
+> ### * summary.mma
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.mma
+> ### Title: Summary of an mma project
+> ### Aliases: summary.mma print.summary.mma
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+>  x=weight_behavior[,c(2,4:14)]
+>  pred=weight_behavior[,3]
+>  y=weight_behavior[,15]
+>   temp.b.b.glm<-mma(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),binref=c(1,1),
++                     catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4,n=2,n2=2)
+[1] 1
+[1] 2
+>  summary(temp.b.b.glm, RE=TRUE, ball.use=FALSE)
+MMA Analysis: Estimated Mediation Effects Using GLM
+The relative effects:
+For Predictor/Moderator at pred 
+$direct.effect
+   est   mean     sd   upbd   lwbd upbd_q lwbd_q upbd_b lwbd_b 
+ 0.771  3.101  3.464  9.890 -3.687  5.428  0.774  0.652  0.652 
+
+$indirect.effect
+       y1.all y1.exercises y1.sweat y1.sports
+est     0.229       -0.005    0.012     0.235
+mean   -2.101       -0.047    0.042    -1.483
+sd      3.464        0.073    0.018     2.557
+upbd    4.687        0.097    0.076     3.528
+lwbd   -8.890       -0.190    0.007    -6.494
+upbd_q  0.226        0.002    0.053     0.234
+lwbd_q -4.428       -0.096    0.030    -3.201
+upbd_b  0.348        0.348    0.348     0.348
+lwbd_b  0.005        0.005    0.005     0.005
+
+>  summary(temp.b.b.glm, ball.use=FALSE)
+MMA Analysis: Estimated Mediation Effects Using GLM
+For Predictor/Moderator at pred 
+$total.effect
+   est   mean     sd   upbd   lwbd upbd_q lwbd_q upbd_b lwbd_b 
+ 0.526  0.363  0.607  1.552 -0.827  0.770 -0.045  0.792  0.792 
+
+$direct.effect
+   est   mean     sd   upbd   lwbd upbd_q lwbd_q upbd_b lwbd_b 
+ 0.405  0.073  0.627  1.301 -1.155  0.494 -0.348  0.516  0.516 
+
+$indirect.effect
+       y1.all y1.exercises y1.sweat y1.sports
+est     0.120       -0.003    0.006     0.124
+mean    0.289        0.005    0.010     0.238
+sd      0.020        0.002    0.019     0.027
+upbd    0.328        0.009    0.047     0.291
+lwbd    0.251        0.002   -0.027     0.186
+upbd_q  0.303        0.006    0.022     0.256
+lwbd_q  0.276        0.004   -0.003     0.220
+upbd_b  0.276        0.276    0.276     0.276
+lwbd_b  0.004        0.004    0.004     0.004
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("test.moderation")
+> ### * test.moderation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: test.moderation
+> ### Title: Test for moderation effects.
+> ### Aliases: test.moderation
+> 
+> ### ** Examples
+> 
+> data("weight_behavior")
+> x=weight_behavior[,c(2,4:14)]
+> pred=weight_behavior[,3]
+> y=weight_behavior[,15]
+> data.bin<-data.org(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),
++                    binref=c(1,1),catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4)
+> temp2<-med(data=data.bin,n=2,nonlinear=TRUE)
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+> test.moderation(temp2,c("sports","sweat"),j=1,kx=NULL)
+Analysis of Deviance Table (Type III tests)
+
+Response: y
+             LR Chisq Df Pr(>Chisq)
+sports1.pred  2.07596  1     0.1496
+sweat.pred    0.80181  1     0.3706
+
+The H-statistics on MART:
+between sports and pred: 0.01577129 
+between sweat and pred: 0.05693747 
+Analysis of Deviance Table (Type III tests)
+
+Response: y
+             LR Chisq Df Pr(>Chisq)
+sports1.pred  2.07596  1     0.1496
+sweat.pred    0.80181  1     0.3706
+
+The H-statistics on MART:
+between sports and pred: 0.01577129 
+between sweat and pred: 0.05693747 
+> 
+> x=cbind(x,form.interaction(x,pred,inter.cov=c("sports","sweat"),predref=NULL))
+> 
+> data.bin<-data.org(x,y,pred=pred,contmed=c(7:9,11:12),binmed=c(6,10),
++                    binref=c(1,1),catmed=5,catref=1,predref="M",alpha=0.4,alpha2=0.4)
+> temp1<-med(data=data.bin,n=2)
+> test.moderation(temp1,c("sports","sweat"),j=1,kx=NULL)
+Analysis of Deviance Table (Type III tests)
+
+Response: y1
+                LR Chisq Df Pr(>Chisq)   
+sports            7.2441  1   0.007114 **
+sportsX2.pred1M   2.0760  1   0.149636   
+sweat             1.2923  1   0.255624   
+sweat.pred1M      0.8018  1   0.370553   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Analysis of Deviance Table (Type III tests)
+
+Response: y1
+                LR Chisq Df Pr(>Chisq)   
+sports            7.2441  1   0.007114 **
+sportsX2.pred1M   2.0760  1   0.149636   
+sweat             1.2923  1   0.255624   
+sweat.pred1M      0.8018  1   0.370553   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("weight_behavior")
+> ### * weight_behavior
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: weight_behavior
+> ### Title: Weight_Behavior Data Set
+> ### Aliases: weight_behavior
+> ### Keywords: Datasets
+> 
+> ### ** Examples
+> 
+> data(weight_behavior)
+> names(weight_behavior)
+ [1] "bmi"       "age"       "sex"       "race"      "numpeople" "car"      
+ [7] "gotosch"   "snack"     "tvhours"   "cmpthours" "cellhours" "sports"   
+[13] "exercises" "sweat"     "overweigh"
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  8.342 0.654 9.183 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

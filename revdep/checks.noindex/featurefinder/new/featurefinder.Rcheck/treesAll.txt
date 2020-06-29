@@ -1,0 +1,2 @@
+Tree  1 :  ALL
+RESIDUAL: SMIfactor,ALL,3.66e-05,100,930,930,0,0,0,NA and root

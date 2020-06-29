@@ -1,0 +1,447 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "paths"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('paths')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("paths")
+> ### * paths
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: paths
+> ### Title: Causal Paths Analysis
+> ### Aliases: paths print.paths
+> 
+> ### ** Examples
+> 
+> data(tatar)
+> 
+> m1 <- c("trust_g1", "victim_g1", "fear_g1")
+> m2 <- c("trust_g2", "victim_g2", "fear_g2")
+> m3 <- c("trust_g3", "victim_g3", "fear_g3")
+> mediators <- list(m1, m2, m3)
+> 
+> formula_m0 <- annex ~ kulak + prosoviet_pre + religiosity_pre + land_pre +
++   orchard_pre + animals_pre + carriage_pre + otherprop_pre + violence
+> formula_m1 <- update(formula_m0,    ~ . + trust_g1 + victim_g1 + fear_g1)
+> formula_m2 <- update(formula_m1,    ~ . + trust_g2 + victim_g2 + fear_g2)
+> formula_m3 <- update(formula_m2,    ~ . + trust_g3 + victim_g3 + fear_g3)
+> formula_ps <- violence ~ kulak + prosoviet_pre + religiosity_pre +
++   land_pre + orchard_pre + animals_pre + carriage_pre + otherprop_pre
+> 
+> ####################################################
+> # Causal Paths Analysis using GLM
+> ####################################################
+> 
+> # outcome models
+> glm_m0 <- glm(formula_m0, family = binomial("logit"), data = tatar)
+> glm_m1 <- glm(formula_m1, family = binomial("logit"), data = tatar)
+> glm_m2 <- glm(formula_m2, family = binomial("logit"), data = tatar)
+> glm_m3 <- glm(formula_m3, family = binomial("logit"), data = tatar)
+> glm_ymodels <- list(glm_m0, glm_m1, glm_m2, glm_m3)
+> 
+> # propensity score model
+> glm_ps <- glm(formula_ps, family = binomial("logit"), data = tatar)
+> 
+> # causal paths analysis using glm
+> # note: For illustration purposes only a small number of bootstrap replicates are used
+> paths_glm <- paths(a = "violence", y = "annex", m = mediators,
++   glm_ymodels, ps_model = glm_ps, data = tatar, nboot = 3)
+....> 
+> 
+> ####################################################
+> # Causal Paths Analysis using GBM
+> ####################################################
+> 
+> require(gbm)
+Loading required package: gbm
+Loaded gbm 2.1.6
+> 
+> # outcome models
+> gbm_m0 <- gbm(formula_m0, data = tatar, distribution = "bernoulli", interaction.depth = 3)
+> gbm_m1 <- gbm(formula_m1, data = tatar, distribution = "bernoulli", interaction.depth = 3)
+> gbm_m2 <- gbm(formula_m2, data = tatar, distribution = "bernoulli", interaction.depth = 3)
+> gbm_m3 <- gbm(formula_m3, data = tatar, distribution = "bernoulli", interaction.depth = 3)
+> gbm_ymodels <- list(gbm_m0, gbm_m1, gbm_m2, gbm_m3)
+> 
+> # propensity score model via gbm
+> gbm_ps <- gbm(formula_ps, data = tatar, distribution = "bernoulli", interaction.depth = 3)
+> 
+> # causal paths analysis using gbm
+> # note: For illustration purposes only a small number of bootstrap replicates are used
+> paths_gbm <- paths(a = "violence", y = "annex", m = mediators,
++   gbm_ymodels, ps_model = gbm_ps, data = tatar, nboot = 3)
+....> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:gbm’
+
+> nameEx("plot.paths")
+> ### * plot.paths
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.paths
+> ### Title: Plot Method for 'paths' Objects
+> ### Aliases: plot.paths
+> 
+> ### ** Examples
+> 
+> data(tatar)
+> 
+> m1 <- c("trust_g1", "victim_g1", "fear_g1")
+> m2 <- c("trust_g2", "victim_g2", "fear_g2")
+> m3 <- c("trust_g3", "victim_g3", "fear_g3")
+> mediators <- list(m1, m2, m3)
+> 
+> formula_m0 <- annex ~ kulak + prosoviet_pre + religiosity_pre + land_pre +
++   orchard_pre + animals_pre + carriage_pre + otherprop_pre + violence
+> formula_m1 <- update(formula_m0,    ~ . + trust_g1 + victim_g1 + fear_g1)
+> formula_m2 <- update(formula_m1,    ~ . + trust_g2 + victim_g2 + fear_g2)
+> formula_m3 <- update(formula_m2,    ~ . + trust_g3 + victim_g3 + fear_g3)
+> formula_ps <- violence ~ kulak + prosoviet_pre + religiosity_pre +
++   land_pre + orchard_pre + animals_pre + carriage_pre + otherprop_pre
+> 
+> ####################################################
+> # Causal Paths Analysis using GLM
+> ####################################################
+> 
+> # outcome models
+> glm_m0 <- glm(formula_m0, family = binomial("logit"), data = tatar)
+> glm_m1 <- glm(formula_m1, family = binomial("logit"), data = tatar)
+> glm_m2 <- glm(formula_m2, family = binomial("logit"), data = tatar)
+> glm_m3 <- glm(formula_m3, family = binomial("logit"), data = tatar)
+> glm_ymodels <- list(glm_m0, glm_m1, glm_m2, glm_m3)
+> 
+> # propensity score model
+> glm_ps <- glm(formula_ps, family = binomial("logit"), data = tatar)
+> 
+> # causal paths analysis using glm
+> # note: For illustration purposes only a small number of bootstrap replicates are used
+> paths_glm <- paths(a = "violence", y = "annex", m = mediators,
++   glm_ymodels, ps_model = glm_ps, data = tatar, nboot = 3)
+....> 
+> 
+> # plot total, direct, and path-specific effects
+> plot(paths_glm, mediator_names = c("G1 identity", "G2 identity", "G3 identity"),
++      estimator = "both")
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.sens")
+> ### * plot.sens
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.sens
+> ### Title: Plot Method for 'sens' Objects
+> ### Aliases: plot.sens
+> 
+> ### ** Examples
+> 
+> data(tatar)
+> 
+> m1 <- c("trust_g1", "victim_g1", "fear_g1")
+> m2 <- c("trust_g2", "victim_g2", "fear_g2")
+> m3 <- c("trust_g3", "victim_g3", "fear_g3")
+> mediators <- list(m1, m2, m3)
+> 
+> formula_m0 <- annex ~ kulak + prosoviet_pre + religiosity_pre + land_pre +
++   orchard_pre + animals_pre + carriage_pre + otherprop_pre + violence
+> formula_m1 <- update(formula_m0,    ~ . + trust_g1 + victim_g1 + fear_g1)
+> formula_m2 <- update(formula_m1,    ~ . + trust_g2 + victim_g2 + fear_g2)
+> formula_m3 <- update(formula_m2,    ~ . + trust_g3 + victim_g3 + fear_g3)
+> formula_ps <- violence ~ kulak + prosoviet_pre + religiosity_pre +
++   land_pre + orchard_pre + animals_pre + carriage_pre + otherprop_pre
+> 
+> ####################################################
+> # Causal Paths Analysis using GLM
+> ####################################################
+> 
+> # outcome models
+> glm_m0 <- glm(formula_m0, family = binomial("logit"), data = tatar)
+> glm_m1 <- glm(formula_m1, family = binomial("logit"), data = tatar)
+> glm_m2 <- glm(formula_m2, family = binomial("logit"), data = tatar)
+> glm_m3 <- glm(formula_m3, family = binomial("logit"), data = tatar)
+> glm_ymodels <- list(glm_m0, glm_m1, glm_m2, glm_m3)
+> 
+> # propensity score model
+> glm_ps <- glm(formula_ps, family = binomial("logit"), data = tatar)
+> 
+> # causal paths analysis using glm
+> # note: For illustration purposes only a small number of bootstrap replicates are used
+> paths_glm <- paths(a = "violence", y = "annex", m = mediators,
++   glm_ymodels, ps_model = glm_ps, data = tatar, nboot = 3)
+....> 
+> # sensitivity analysis for the path-specific effect via M1
+> sens_glm <- sens(paths_glm, confounded = "M1", estimand = "via M1",
++   gamma_values = - seq(0, 0.5, 0.005), eta_values = seq(-0.5, 0.5, 0.005))
+> 
+> plot(sens_glm)
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+Warning in as.numeric(group[1]) %in% rot.groups :
+  NAs introduced by coercion
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("sens")
+> ### * sens
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: sens
+> ### Title: Sensitivity Analysis for Unobserved Confounding on Path-Specific
+> ###   Causal Effects
+> ### Aliases: sens
+> 
+> ### ** Examples
+> 
+> data(tatar)
+> 
+> m1 <- c("trust_g1", "victim_g1", "fear_g1")
+> m2 <- c("trust_g2", "victim_g2", "fear_g2")
+> m3 <- c("trust_g3", "victim_g3", "fear_g3")
+> mediators <- list(m1, m2, m3)
+> 
+> formula_m0 <- annex ~ kulak + prosoviet_pre + religiosity_pre + land_pre +
++   orchard_pre + animals_pre + carriage_pre + otherprop_pre + violence
+> formula_m1 <- update(formula_m0,    ~ . + trust_g1 + victim_g1 + fear_g1)
+> formula_m2 <- update(formula_m1,    ~ . + trust_g2 + victim_g2 + fear_g2)
+> formula_m3 <- update(formula_m2,    ~ . + trust_g3 + victim_g3 + fear_g3)
+> formula_ps <- violence ~ kulak + prosoviet_pre + religiosity_pre +
++   land_pre + orchard_pre + animals_pre + carriage_pre + otherprop_pre
+> 
+> ####################################################
+> # Causal Paths Analysis using GLM
+> ####################################################
+> 
+> # outcome models
+> glm_m0 <- glm(formula_m0, family = binomial("logit"), data = tatar)
+> glm_m1 <- glm(formula_m1, family = binomial("logit"), data = tatar)
+> glm_m2 <- glm(formula_m2, family = binomial("logit"), data = tatar)
+> glm_m3 <- glm(formula_m3, family = binomial("logit"), data = tatar)
+> glm_ymodels <- list(glm_m0, glm_m1, glm_m2, glm_m3)
+> 
+> # propensity score model
+> glm_ps <- glm(formula_ps, family = binomial("logit"), data = tatar)
+> 
+> # causal paths analysis using glm
+> # note: For illustration purposes only a small number of bootstrap replicates are used
+> paths_glm <- paths(a = "violence", y = "annex", m = mediators,
++   glm_ymodels, ps_model = glm_ps, data = tatar, nboot = 3)
+....> 
+> # sensitivity analysis for the path-specific effect via M1
+> sens_glm <- sens(paths_glm, confounded = "M1", estimand = "via M1",
++   gamma_values = - seq(0, 0.5, 0.005), eta_values = seq(-0.5, 0.5, 0.005))
+> 
+> plot(sens_glm)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.paths")
+> ### * summary.paths
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.paths
+> ### Title: Summarizing Output from Causal Paths Analysis
+> ### Aliases: summary.paths print.summary.paths
+> 
+> ### ** Examples
+> 
+> # **For illustration purposes a small number of bootstrap replicates are used**
+> 
+> data(tatar)
+> 
+> m1 <- c("trust_g1", "victim_g1", "fear_g1")
+> m2 <- c("trust_g2", "victim_g2", "fear_g2")
+> m3 <- c("trust_g3", "victim_g3", "fear_g3")
+> mediators <- list(m1, m2, m3)
+> 
+> formula_m0 <- annex ~ kulak + prosoviet_pre + religiosity_pre + land_pre +
++   orchard_pre + animals_pre + carriage_pre + otherprop_pre + violence
+> formula_m1 <- update(formula_m0,    ~ . + trust_g1 + victim_g1 + fear_g1)
+> formula_m2 <- update(formula_m1,    ~ . + trust_g2 + victim_g2 + fear_g2)
+> formula_m3 <- update(formula_m2,    ~ . + trust_g3 + victim_g3 + fear_g3)
+> formula_ps <- violence ~ kulak + prosoviet_pre + religiosity_pre +
++   land_pre + orchard_pre + animals_pre + carriage_pre + otherprop_pre
+> 
+> ####################################################
+> # Causal Paths Analysis using GLM
+> ####################################################
+> 
+> # outcome models
+> glm_m0 <- glm(formula_m0, family = binomial("logit"), data = tatar)
+> glm_m1 <- glm(formula_m1, family = binomial("logit"), data = tatar)
+> glm_m2 <- glm(formula_m2, family = binomial("logit"), data = tatar)
+> glm_m3 <- glm(formula_m3, family = binomial("logit"), data = tatar)
+> glm_ymodels <- list(glm_m0, glm_m1, glm_m2, glm_m3)
+> 
+> # propensity score model
+> glm_ps <- glm(formula_ps, family = binomial("logit"), data = tatar)
+> 
+> # causal paths analysis using glm
+> # note: For illustration purposes only a small number of bootstrap replicates are used
+> paths_glm <- paths(a = "violence", y = "annex", m = mediators,
++   glm_ymodels, ps_model = glm_ps, data = tatar, nboot = 3)
+....> # plot total, direct, and path-specific effects
+> summary(paths_glm)
+
+Causal Paths Analysis 
+
+Call: paths(a = "violence", y = "annex", m = mediators, models = glm_ymodels, 
+    ps_model = glm_ps, data = tatar, nboot = 3)
+
+Treatment: violence 
+Outcome: annex 
+
+Outcome model: annex ~ kulak + prosoviet_pre + religiosity_pre + land_pre + 
+    orchard_pre + animals_pre + carriage_pre + otherprop_pre + 
+    violence
+<environment: 0x7fee47570968>
+
+Mediator 1 :  trust_g1 + victim_g1 + fear_g1 
+Mediator 2 :  trust_g2 + victim_g2 + fear_g2 
+Mediator 3 :  trust_g3 + victim_g3 + fear_g3 
+
+Causal Paths Estimates: 
+
+Pure Imputation Estimator: 
+Type 1 Decomposition: 
+                              Estimate Std. Err. 95% CI Lower 95% CI Upper
+Direct Effect: A -> Y           -0.066     0.062       -0.091      2.6e-02
+Indirect Effect: A -> M3 -> Y   -0.041     0.033       -0.061      9.7e-05
+Indirect Effect: A -> M2 ~> Y   -0.033     0.038       -0.063      7.1e-03
+Indirect Effect: A -> M1 ~> Y   -0.078     0.016       -0.115     -8.6e-02
+Total Effect: A ~> Y            -0.218     0.065       -0.235     -1.2e-01
+                              P-value    
+Direct Effect: A -> Y           0.667    
+Indirect Effect: A -> M3 -> Y   0.667    
+Indirect Effect: A -> M2 ~> Y   0.667    
+Indirect Effect: A -> M1 ~> Y  <2e-16 ***
+Total Effect: A ~> Y           <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Type 2 Decomposition: 
+                              Estimate Std. Err. 95% CI Lower 95% CI Upper
+Direct Effect: A -> Y           -0.090     0.068       -0.097       0.0257
+Indirect Effect: A -> M3 -> Y   -0.031     0.018       -0.060      -0.0301
+Indirect Effect: A -> M2 ~> Y   -0.015     0.021       -0.041      -0.0029
+Indirect Effect: A -> M1 ~> Y   -0.082     0.011       -0.098      -0.0771
+Total Effect: A ~> Y            -0.218     0.065       -0.235      -0.1246
+                              P-value    
+Direct Effect: A -> Y           0.667    
+Indirect Effect: A -> M3 -> Y  <2e-16 ***
+Indirect Effect: A -> M2 ~> Y  <2e-16 ***
+Indirect Effect: A -> M1 ~> Y  <2e-16 ***
+Total Effect: A ~> Y           <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+Imputation-based Weighting Estimator: 
+Type 1 Decomposition: 
+                              Estimate Std. Err. 95% CI Lower 95% CI Upper
+Direct Effect: A -> Y           -0.051     0.071       -0.065       0.0656
+Indirect Effect: A -> M3 -> Y   -0.033     0.024       -0.069      -0.0264
+Indirect Effect: A -> M2 ~> Y   -0.032     0.024       -0.040       0.0044
+Indirect Effect: A -> M1 ~> Y   -0.101     0.007       -0.131      -0.1173
+Total Effect: A ~> Y            -0.218     0.065       -0.235      -0.1246
+                              P-value    
+Direct Effect: A -> Y           0.667    
+Indirect Effect: A -> M3 -> Y  <2e-16 ***
+Indirect Effect: A -> M2 ~> Y   0.667    
+Indirect Effect: A -> M1 ~> Y  <2e-16 ***
+Total Effect: A ~> Y           <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Type 2 Decomposition: 
+                              Estimate Std. Err. 95% CI Lower 95% CI Upper
+Direct Effect: A -> Y           -0.090     0.070       -0.103       0.0234
+Indirect Effect: A -> M3 -> Y   -0.032     0.017       -0.060      -0.0296
+Indirect Effect: A -> M2 ~> Y   -0.015     0.022       -0.041      -0.0008
+Indirect Effect: A -> M1 ~> Y   -0.082     0.012       -0.096      -0.0726
+Total Effect: A ~> Y            -0.218     0.065       -0.235      -0.1246
+                              P-value    
+Direct Effect: A -> Y           0.667    
+Indirect Effect: A -> M3 -> Y  <2e-16 ***
+Indirect Effect: A -> M2 ~> Y  <2e-16 ***
+Indirect Effect: A -> M1 ~> Y  <2e-16 ***
+Total Effect: A ~> Y           <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+Sample size: 427 
+
+Number of bootstrap simulations: 3 
+
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  5.489 0.542 6.131 0.003 0.007 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

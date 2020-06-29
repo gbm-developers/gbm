@@ -1,0 +1,41 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # test.plotmo.R
+> # This does a basic sanity test of plotmo.
+> # For more comprehensive tests, see plotmo/inst/slowtests.
+> library(plotmo)
+Loading required package: Formula
+Loading required package: plotrix
+Loading required package: TeachingDemos
+> library(rpart)
+> data(kyphosis)
+> rpart.model <- rpart(Kyphosis~., data=kyphosis)
+> plotmo(rpart.model, type="vec", trace=1)
+stats::predict(rpart.object, data.frame[3,3], type="vec")
+stats::fitted(object=rpart.object)
+fitted() was unsuccessful, will use predict() instead
+got model response from model.frame(Kyphosis~Age+Number+Start,
+                                    data=call$data, na.action="na.pass")
+
+ plotmo grid:    Age Number Start
+                  87      4    13
+
+> 
+> proc.time()
+   user  system elapsed 
+  0.494   0.158   0.690 

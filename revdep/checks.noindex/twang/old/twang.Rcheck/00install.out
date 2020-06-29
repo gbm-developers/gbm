@@ -1,0 +1,25 @@
+* installing *source* package ‘twang’ ...
+** package ‘twang’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+gcc-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c init.c -o init.o
+gcc-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c psmirnov2x.c -o psmirnov2x.o
+psmirnov2x.c: In function 'psmirnov2x':
+psmirnov2x.c:31:31: warning: conversion to 'size_t' {aka 'long unsigned int'} from 'int' may change the sign of the result [-Wsign-conversion]
+   31 |     u = (double *) R_alloc(*n + 1, sizeof(double));
+      |                            ~~~^~~
+gcc-9 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o twang.so init.o psmirnov2x.o -L/Library/Frameworks/R.framework/Resources/lib -lRlapack -L/Library/Frameworks/R.framework/Resources/lib -lRblas -L/usr/local/Cellar/gcc/9.2.0_3/lib/gcc/9 -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+installing to /Users/b780620/Desktop/devel/gbm/revdep/checks.noindex/twang/old/twang.Rcheck/00LOCK-twang/00new/twang/libs
+** R
+** data
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (twang)

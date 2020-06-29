@@ -1,0 +1,68 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(corrgrapher)
+> 
+> test_check("corrgrapher")
+Welcome to DALEX (version: 1.2.1).
+Find examples and detailed introduction at: https://pbiecek.github.io/ema/
+Additional features will be available after installation of: ggpubr.
+Use 'install_dependencies()' to get all suggested dependencies
+Preparation of a new explainer is initiated
+  -> model label       :  ranger  ( [33m default [39m )
+  -> data              :  2000  rows  7  cols 
+  -> target variable   :  2000  values 
+  -> target variable   :  Please note that 'y' is a factor.  ( [31m WARNING [39m )
+  -> target variable   :  Consider changing the 'y' to a logical or numerical vector.
+  -> target variable   :  Otherwise I will not be able to calculate residuals or loss function.
+  -> model_info        :  package ranger , ver. 0.12.1 , task classification ( [33m default [39m ) 
+  -> predict function  :  yhat.ranger  will be used ( [33m default [39m )
+  -> predicted values  :  predict function returns multiple columns:  4  ( [31m WARNING [39m ) some of functionalities may not work 
+  -> residual function :  difference between y and yhat ( [33m default [39m )
+  -> residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
+ [32m A new explainer has been created! [39m 
+Preparation of a new explainer is initiated
+  -> model label       :  ranger  ( [33m default [39m )
+  -> data              :  2207  rows  7  cols 
+  -> target variable   :  2207  values 
+  -> model_info        :  package ranger , ver. 0.12.1 , task regression ( [33m default [39m ) 
+  -> predict function  :  yhat.ranger  will be used ( [33m default [39m )
+  -> predicted values  :  numerical, min =  0.004642896 , mean =  0.3226892 , max =  0.9994964  
+  -> residual function :  difference between y and yhat ( [33m default [39m )
+  -> residuals         :  numerical, min =  -0.7793524 , mean =  -0.0005323766 , max =  0.8815091  
+ [32m A new explainer has been created! [39m 
+Preparation of a new explainer is initiated
+  -> model label       :  lm  ( [33m default [39m )
+  -> data              :  39  rows  4  cols 
+  -> target variable   :  39  values 
+  -> model_info        :  package stats , ver. 4.0.0 , task regression ( [33m default [39m ) 
+  -> predict function  :  yhat.lm  will be used ( [33m default [39m )
+  -> predicted values  :  numerical, min =  8.78917 , mean =  9.306304 , max =  9.788801  
+  -> residual function :  difference between y and yhat ( [33m default [39m )
+  -> residuals         :  numerical, min =  -0.02594259 , mean =  3.507166e-15 , max =  0.0267124  
+ [32m A new explainer has been created! [39m 
+[1] "helper ended!"
+══ testthat results  ═══════════════════════════════════════════════════════════
+[ OK: 102 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
+Warning message:
+In Ops.factor(y, predict_function(model, data)) :
+  '-' not meaningful for factors
+> 
+> proc.time()
+   user  system elapsed 
+124.976   8.368  82.564 

@@ -1,0 +1,21 @@
+* installing *source* package ‘mlr3proba’ ...
+** package ‘mlr3proba’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+gcc-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c cindex.c -o cindex.o
+gcc-9 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I/usr/local/include   -fPIC  -mtune=native -g -O2 -Wall -pedantic -Wconversion -c init.c -o init.o
+gcc-9 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o mlr3proba.so cindex.o init.o -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+installing to /Users/b780620/Desktop/devel/gbm/revdep/checks.noindex/mlr3proba/old/mlr3proba.Rcheck/00LOCK-mlr3proba/00new/mlr3proba/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (mlr3proba)

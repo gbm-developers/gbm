@@ -453,7 +453,7 @@ flush(stderr()); flush(stdout())
 ### Aliases: ensemble.calibrate.models ensemble.calibrate.weights
 ###   ensemble.calibrate.models.gbm ensemble.calibrate.models.nnet
 ###   ensemble.drop1 ensemble.formulae ensemble.weights ensemble.strategy
-###   ensemble.threshold ensemble.VIF ensemble.pairs
+###   ensemble.threshold ensemble.VIF ensemble.VIF.dataframe ensemble.pairs
 
 ### ** Examples
 
@@ -498,16 +498,18 @@ flush(stderr()); flush(stdout())
 ##D     bio17 + I(bio17^2) + I(bio17^3) )
 ##D 
 ##D # fit four ensemble models (RF, GLM, BIOCLIM, DOMAIN)
+##D # factors removed for BIOCLIM, DOMAIN, MAHAL
 ##D ensemble.nofactors <- ensemble.calibrate.models(x=predictors, p=pres_train, a=backg_train, 
 ##D     pt=pres_test, at=backg_test,
 ##D     species.name="Bradypus",
 ##D     ENSEMBLE.tune=TRUE,
 ##D     ENSEMBLE.min = 0.65,
-##D     MAXENT=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=0, GAM=0, 
-##D     GAMSTEP=0, MGCV=0, MGCVFIX=0, EARTH=0, RPART=0, NNET=0, FDA=0, 
-##D     SVM=0, SVME=0, GLMNET=0,
+##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0, 
+##D     GLM=1, GLMSTEP=0, GAM=0, GAMSTEP=0, MGCV=0, MGCVFIX=0, 
+##D     EARTH=0, RPART=0, NNET=0, FDA=0, SVM=0, SVME=0, GLMNET=0,
 ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
 ##D     Yweights="BIOMOD",
+##D     factors="biome",
 ##D     evaluations.keep=TRUE, models.keep=TRUE,
 ##D     RF.formula=rfformula,
 ##D     GLM.formula=glmformula)
@@ -536,7 +538,8 @@ flush(stderr()); flush(stdout())
 ##D     ENSEMBLE.tune=TRUE,
 ##D     ENSEMBLE.min=0.65,
 ##D     SINK=TRUE,
-##D     MAXENT=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=0, GAM=0, 
+##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0, 
+##D     GLM=1, GLMSTEP=0, GAM=0, 
 ##D     GAMSTEP=0, MGCV=0, MGCVFIX=0, EARTH=0, RPART=0, NNET=0, FDA=0, 
 ##D     SVM=0, SVME=0, GLMNET=0,
 ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
@@ -554,9 +557,9 @@ flush(stderr()); flush(stdout())
 ##D     SINK=TRUE,
 ##D     ENSEMBLE.tune=TRUE,
 ##D     ENSEMBLE.min=0.65,
-##D     MAXENT=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=0, GAM=0, 
-##D     GAMSTEP=0, MGCV=0, MGCVFIX=0, EARTH=0, RPART=0, NNET=0, FDA=0, 
-##D     SVM=0, SVME=0, GLMNET=0,
+##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0,
+##D     GLM=1, GLMSTEP=0, GAM=0, GAMSTEP=0, MGCV=0, MGCVFIX=0, 
+##D     EARTH=0, RPART=0, NNET=0, FDA=0, SVM=0, SVME=0, GLMNET=0,
 ##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
 ##D     PROBIT=TRUE,
 ##D     Yweights="BIOMOD", factors="biome",
@@ -578,9 +581,9 @@ flush(stderr()); flush(stdout())
 ##D     SINK=TRUE,
 ##D     ENSEMBLE.tune=TRUE,
 ##D     ENSEMBLE.min=0.65,
-##D     MAXENT=0, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-##D     GAMSTEP=1, MGCV=1, MGCVFIX=0, EARTH=1, RPART=1, NNET=1, FDA=1, 
-##D     SVM=1, SVME=1, GLMNET=1,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=0, 
+##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
 ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     Yweights="BIOMOD", factors="biome",
 ##D     evaluations.keep=TRUE)
@@ -593,9 +596,10 @@ flush(stderr()); flush(stdout())
 ##D     species.name="Bradypus",
 ##D     SINK=TRUE,
 ##D     ENSEMBLE.tune=TRUE,
-##D     MAXENT=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-##D     SVM=1, SVME=1, BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     ENSEMBLE.best=c(4:10), ENSEMBLE.exponent=c(1, 2, 3),
 ##D     Yweights="BIOMOD", factors="biome",
 ##D     evaluations.keep=TRUE)
@@ -606,9 +610,10 @@ flush(stderr()); flush(stdout())
 ##D     p=pres, a=background, k=4, 
 ##D     species.name="Bradypus",
 ##D     SINK=TRUE, PROBIT=TRUE,
-##D     MAXENT=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-##D     SVM=1, SVME=1, BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     ENSEMBLE.tune=TRUE,
 ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 ##D     ENSEMBLE.min=0.7,
@@ -625,10 +630,10 @@ flush(stderr()); flush(stdout())
 ##D     SINK=TRUE,
 ##D     difference=TRUE,
 ##D     VIF=TRUE, PROBIT=TRUE,
-##D     MAXENT=0, MAXLIKE=0, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-##D     SVM=1, SVME=1, GLMNET=1,
-##D     BIOCLIM.O=0, BIOCLIM=0, DOMAIN=1, MAHAL=0, MAHAL01=1,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     ENSEMBLE.tune=TRUE,
 ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 ##D     ENSEMBLE.min=0.7,
@@ -808,10 +813,10 @@ flush(stderr()); flush(stdout())
 ##D     layer.drops=c("biome"),
 ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3), 
 ##D     ENSEMBLE.min=0.7,
-##D     MAXENT=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-##D     SVM=1, SVME=1, GLMNET=1,
-##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
+##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     PROBIT=TRUE,
 ##D     Yweights="BIOMOD",
 ##D     formulae.defaults=TRUE)
@@ -1189,6 +1194,109 @@ flush(stderr()); flush(stdout())
 
 
 cleanEx()
+nameEx("ensemble.evaluate")
+### * ensemble.evaluate
+
+flush(stderr()); flush(stdout())
+
+### Name: ensemble.evaluate
+### Title: Model evaluation including True Skill Statistic (TSS), AUCdiff
+###   and Symmetric Extremal Dependence Index (SEDI).
+### Aliases: ensemble.evaluate ensemble.SEDI
+
+### ** Examples
+
+
+## check examples from Ferro and Stephenson (2011)
+## see their Tables 2 - 5
+
+TPR.Table2 <- 55/100
+FPR.Table2 <- 45/900
+ensemble.SEDI(TPR=TPR.Table2, FPR=FPR.Table2)
+
+TPR.Table4 <- 195/300
+FPR.Table4 <- 105/700
+ensemble.SEDI(TPR=TPR.Table4, FPR=FPR.Table4)
+
+## Not run: 
+##D ## Not run: 
+##D # get predictor variables
+##D library(dismo)
+##D predictor.files <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''),
+##D     pattern='grd', full.names=TRUE)
+##D predictors <- stack(predictor.files)
+##D # subset based on Variance Inflation Factors
+##D predictors <- subset(predictors, subset=c("bio5", "bio6", 
+##D     "bio16", "bio17", "biome"))
+##D predictors
+##D predictors@title <- "predictors"
+##D 
+##D # presence points
+##D presence_file <- paste(system.file(package="dismo"), '/ex/bradypus.csv', sep='')
+##D pres <- read.table(presence_file, header=TRUE, sep=',')[,-1]
+##D 
+##D # the kfold function randomly assigns data to groups; 
+##D # groups are used as calibration (1/4) and training (3/4) data
+##D groupp <- kfold(pres, 4)
+##D pres_train <- pres[groupp !=  1, ]
+##D pres_test <- pres[groupp ==  1, ]
+##D 
+##D # choose background points
+##D background <- randomPoints(predictors, n=1000, extf=1.00)
+##D colnames(background)=c('lon', 'lat')
+##D groupa <- kfold(background, 4)
+##D backg_train <- background[groupa != 1, ]
+##D backg_test <- background[groupa == 1, ]
+##D 
+##D # formulae for random forest and generalized linear model
+##D # compare with: ensemble.formulae(predictors, factors=c("biome"))
+##D 
+##D rfformula <- as.formula(pb ~ bio5+bio6+bio16+bio17)
+##D 
+##D glmformula <- as.formula(pb ~ bio5 + I(bio5^2) + I(bio5^3) + 
+##D     bio6 + I(bio6^2) + I(bio6^3) + bio16 + I(bio16^2) + I(bio16^3) + 
+##D     bio17 + I(bio17^2) + I(bio17^3) )
+##D 
+##D # fit four ensemble models (RF, GLM, BIOCLIM, DOMAIN)
+##D # factors removed for BIOCLIM, DOMAIN, MAHAL
+##D ensemble.nofactors <- ensemble.calibrate.models(x=predictors, p=pres_train, a=backg_train, 
+##D     pt=pres_test, at=backg_test,
+##D     species.name="Bradypus",
+##D     ENSEMBLE.tune=TRUE,
+##D     ENSEMBLE.min = 0.65,
+##D     MAXENT=0, MAXNET=0, MAXLIKE=0, GBM=0, GBMSTEP=0, RF=1, CF=0, 
+##D     GLM=1, GLMSTEP=0, GAM=0, GAMSTEP=0, MGCV=0, MGCVFIX=0, 
+##D     EARTH=0, RPART=0, NNET=0, FDA=0, SVM=0, SVME=0, GLMNET=0,
+##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=0,
+##D     Yweights="BIOMOD",
+##D     factors="biome",
+##D     evaluations.keep=TRUE, models.keep=FALSE,
+##D     RF.formula=rfformula,
+##D     GLM.formula=glmformula)
+##D 
+##D # with option evaluations.keep, all model evaluations are saved in the ensemble object
+##D attributes(ensemble.nofactors$evaluations)
+##D 
+##D # Get evaluation statistics for the ENSEMBLE model
+##D eval.ENSEMBLE <- ensemble.nofactors$evaluations$ENSEMBLE.T
+##D eval.calibrate.ENSEMBLE <- ensemble.nofactors$evaluations$ENSEMBLE.C
+##D ensemble.evaluate(eval=eval.ENSEMBLE, eval.train=eval.calibrate.ENSEMBLE)
+##D 
+##D # TSS is maximum where specificity + sensitivity is maximum
+##D threshold.specsens <- threshold(eval.ENSEMBLE, stat="spec_sens")
+##D ensemble.evaluate(eval=eval.ENSEMBLE, fixed.threshold=threshold.specsens,
+##D     eval.train=eval.calibrate.ENSEMBLE)
+##D 
+##D # usual practice to calculate threshold from calibration data
+##D ensemble.evaluate(eval=eval.ENSEMBLE, eval.train=eval.calibrate.ENSEMBLE)
+##D 
+## End(Not run)
+
+
+
+
+
+cleanEx()
 nameEx("ensemble.novel")
 ### * ensemble.novel
 
@@ -1362,10 +1470,10 @@ flush(stderr()); flush(stdout())
 ##D ensemble.calibrate.step1 <- ensemble.calibrate.weights(
 ##D     x=predictors, p=pres, a=background, k=4, 
 ##D     SINK=TRUE, species.name="Bradypus",
-##D     MAXENT=1, MAXLIKE=0, GBM=1, GBMSTEP=0, RF=0, GLM=1, GLMSTEP=0, 
-##D     GAM=1, GAMSTEP=0, MGCV=1, MGCVFIX=0,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
 ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
-##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     ENSEMBLE.tune=TRUE, PROBIT=TRUE,
 ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 ##D     ENSEMBLE.min=c(0.65, 0.7),
@@ -1414,10 +1522,10 @@ flush(stderr()); flush(stdout())
 ##D     factors=factors.batch, dummy.vars=dummy.vars.batch, 
 ##D     k=4, 
 ##D     SINK=TRUE, species.name="Bradypus",
-##D     MAXENT=1, MAXLIKE=0, GBM=1, GBMSTEP=0, RF=0, GLM=1, GLMSTEP=0, 
-##D     GAM=1, GAMSTEP=0, MGCV=1, MGCVFIX=0,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
 ##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, GLMNET=1,
-##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     ENSEMBLE.tune=TRUE, PROBIT=TRUE,
 ##D     ENSEMBLE.best=0, ENSEMBLE.exponent=c(1, 2, 3),
 ##D     ENSEMBLE.min=c(0.65, 0.7),
@@ -1515,10 +1623,10 @@ flush(stderr()); flush(stdout())
 ##D     SINK=TRUE, 
 ##D     ENSEMBLE.best=10, ENSEMBLE.exponent=c(1, 2, 3), 
 ##D     ENSEMBLE.min=0.6,
-##D     MAXENT=0, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-##D     SVM=1, SVME=1, GLMNET=1,
-##D     BIOCLIM.O=0, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, 
+##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     PROBIT=TRUE,
 ##D     Yweights="BIOMOD",
 ##D     formulae.defaults=TRUE)
@@ -1579,9 +1687,11 @@ nameEx("ensemble.spatialThin")
 flush(stderr()); flush(stdout())
 
 ### Name: ensemble.spatialThin
-### Title: Spatial thinning of presence point locations using the highly
-###   accurate geodesic estimates from the geosphere package
-### Aliases: ensemble.spatialThin
+### Title: Thinning of presence point coordinates in geographical or
+###   environmental space
+### Aliases: ensemble.spatialThin ensemble.spatialThin.quant
+###   ensemble.environmentalThin ensemble.environmentalThin.clara
+###   ensemble.outlierThin
 
 ### ** Examples
 
@@ -1608,20 +1718,87 @@ flush(stderr()); flush(stdout())
 ##D par(mfrow=c(2,2))
 ##D 
 ##D pres.thin1 <- ensemble.spatialThin(pres, thin.km=100, runs=10, verbose=T)
-##D plot(predictors[[1]], main="10 runs", ext=extent(SpatialPoints(pres.thin1)))
+##D plot(predictors[[1]], main="5 runs", ext=extent(SpatialPoints(pres.thin1)))
+##D points(pres, pch=20, col="black")
 ##D points(pres.thin1, pch=20, col="red")
 ##D 
 ##D pres.thin2 <- ensemble.spatialThin(pres, thin.km=100, runs=10, verbose=T)
-##D plot(predictors[[1]], main="10 runs", ext=extent(SpatialPoints(pres.thin2)))
+##D plot(predictors[[1]], main="5 runs (after fresh start)", ext=extent(SpatialPoints(pres.thin2)))
+##D points(pres, pch=20, col="black")
 ##D points(pres.thin2, pch=20, col="red")
 ##D 
 ##D pres.thin3 <- ensemble.spatialThin(pres, thin.km=100, runs=100, verbose=T)
 ##D plot(predictors[[1]], main="100 runs", ext=extent(SpatialPoints(pres.thin3)))
+##D points(pres, pch=20, col="black")
 ##D points(pres.thin3, pch=20, col="red")
 ##D 
 ##D pres.thin4 <- ensemble.spatialThin(pres, thin.km=100, runs=100, verbose=T)
-##D plot(predictors[[1]], main="100 runs", ext=extent(SpatialPoints(pres.thin4)))
+##D plot(predictors[[1]], main="100 runs (after fresh start)", ext=extent(SpatialPoints(pres.thin4)))
+##D points(pres, pch=20, col="black")
 ##D points(pres.thin4, pch=20, col="red")
+##D 
+##D graphics::par(par.old)
+##D 
+##D ## thinning in environmental space
+##D 
+##D env.thin <- ensemble.environmentalThin(pres, predictors.stack=predictors, thin.n=60,
+##D     return.notRetained=T)
+##D pres.env1 <- env.thin$retained
+##D pres.env2 <- env.thin$not.retained
+##D 
+##D # plot in geographical space
+##D par.old <- graphics::par(no.readonly=T)
+##D par(mfrow=c(1, 2))
+##D 
+##D plot(predictors[[1]], main="black = not retained", ext=extent(SpatialPoints(pres.thin3)))
+##D points(pres.env2, pch=20, col="black")
+##D points(pres.env1, pch=20, col="red")
+##D 
+##D # plot in environmental space
+##D background.data <- data.frame(raster::extract(predictors, pres))
+##D rda.result <- vegan::rda(X=background.data, scale=T)
+##D # select number of axes
+##D ax <- 2
+##D while ( (sum(vegan::eigenvals(rda.result)[c(1:ax)])/
+##D     sum(vegan::eigenvals(rda.result))) < 0.95 ) {ax <- ax+1}
+##D rda.scores <- data.frame(vegan::scores(rda.result, display="sites", scaling=1, choices=c(1:ax)))
+##D rownames(rda.scores) <- rownames(pres)
+##D points.in <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.env1)), c(1:2)]
+##D points.out <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.env2)), c(1:2)]
+##D plot(points.out, main="black = not retained", pch=20, col="black", 
+##D     xlim=range(rda.scores[, 1]), ylim=range(rda.scores[, 2]))
+##D points(points.in, pch=20, col="red")
+##D 
+##D graphics::par(par.old)
+##D 
+##D ## removing outliers
+##D out.thin <- ensemble.outlierThin(pres, predictors.stack=predictors, k=10,
+##D     return.outliers=T)
+##D pres.out1 <- out.thin$inliers
+##D pres.out2 <- out.thin$outliers
+##D 
+##D # plot in geographical space
+##D par.old <- graphics::par(no.readonly=T)
+##D par(mfrow=c(1, 2))
+##D 
+##D plot(predictors[[1]], main="black = outliers", ext=extent(SpatialPoints(pres.thin3)))
+##D points(pres.out2, pch=20, col="black")
+##D points(pres.out1, pch=20, col="red")
+##D 
+##D # plot in environmental space
+##D background.data <- data.frame(raster::extract(predictors, pres))
+##D rda.result <- vegan::rda(X=background.data, scale=T)
+##D # select number of axes
+##D ax <- 2
+##D while ( (sum(vegan::eigenvals(rda.result)[c(1:ax)])/
+##D     sum(vegan::eigenvals(rda.result))) < 0.95 ) {ax <- ax+1}
+##D rda.scores <- data.frame(vegan::scores(rda.result, display="sites", scaling=1, choices=c(1:ax)))
+##D rownames(rda.scores) <- rownames(pres)
+##D points.in <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.out1)), c(1:2)]
+##D points.out <- rda.scores[which(rownames(rda.scores) %in% rownames(pres.out2)), c(1:2)]
+##D plot(points.out, main="black = outliers", pch=20, col="black", 
+##D     xlim=range(rda.scores[, 1]), ylim=range(rda.scores[, 2]))
+##D points(points.in, pch=20, col="red")
 ##D 
 ##D graphics::par(par.old)
 ##D 
@@ -1765,9 +1942,9 @@ flush(stderr()); flush(stdout())
 ##D     p=pres_train, a=backg_train, 
 ##D     pt=pres_test, at=backg_test,
 ##D     ENSEMBLE.min=0.5, ENSEMBLE.weight.min = 0.001,
-##D     MAXENT=1, MAXLIKE=0, GBM=1, GBMSTEP=1, RF=1, GLM=1, GLMSTEP=1, GAM=1, 
-##D     GAMSTEP=1, MGCV=1, MGCVFIX=1, EARTH=1, RPART=1, NNET=1, FDA=1, 
-##D     SVM=1, SVME=1, GLMNET=1,
+##D     MAXENT=0, MAXNET=1, MAXLIKE=1, GBM=1, GBMSTEP=0, RF=1, CF=1,
+##D     GLM=1, GLMSTEP=1, GAM=1, GAMSTEP=1, MGCV=1, MGCVFIX=1, 
+##D     EARTH=1, RPART=1, NNET=1, FDA=1, SVM=1, SVME=1, 
 ##D     BIOCLIM.O=1, BIOCLIM=1, DOMAIN=1, MAHAL=0, MAHAL01=1,
 ##D     Yweights="BIOMOD", 
 ##D     PLOTS=FALSE, models.keep=TRUE)
@@ -1871,6 +2048,24 @@ importancevalue(ifri, site='plotID', species='species', count='count',
     basal='basal', factor='forest', level='YSF')
 importancevalue.comp(ifri, site='plotID', species='species', count='count', 
     basal='basal', factor='forest')
+
+# Calculate diversity profiles from importance values
+imp <- importancevalue.comp(ifri, site='plotID', species='species', 
+    count='count', basal='basal', factor='forest')
+vals <- imp[["values"]]
+for (i in 1:length(vals)) {
+    imp.i <- data.frame(imp[[vals[i]]])
+    name.i <- paste(vals[[i]], ".Renyi", sep="")
+    imp[[name.i]] <- renyi(imp.i$importance.value)
+}
+
+# LOT more diverse
+imp$LOT.Renyi - imp$MCF.Renyi
+imp$LOT.Renyi - imp$YSF.Renyi
+
+# YSF and MCF different richness and evenness
+imp$YSF.Renyi - imp$MCF.Renyi
+
 
 
 
@@ -2106,6 +2301,7 @@ flush(stderr()); flush(stdout())
 ### Title: Synchronize Community and Environmental Datasets
 ### Aliases: removeNAcomm removeNAenv same.sites check.datasets
 ###   check.ordiscores replaceNAcomm removezerospecies subsetcomm
+###   import.with.readxl
 ### Keywords: multivariate
 
 ### ** Examples

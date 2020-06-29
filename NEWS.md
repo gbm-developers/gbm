@@ -8,7 +8,7 @@
 
 * Calling `gbm()` with `distribution = "bernoulli"` will now throw an error whenever the response is non-numeric (e.g., 0/1 factors will throw an error instead of possibly crashing the session.) [(#6)](https://github.com/gbm-developers/gbm/issues/6). (Thanks to @mzoll.)
 
-* Calling `gbm()` with `distribution = "multinomial"` now comes with a warning message; multinomial support has always been problematic and since this package is only being maintained for backwards compatibility, it likely will not be fixes unless someone makes a PR.
+* Calling `gbm()` with `distribution = "multinomial"` now comes with a warning message; multinomial support has always been problematic and since this package is only being maintained for backwards compatibility, it likely will not be fixed unless someone makes a PR.
 
 * Switched from [RUnit](https://cran.r-project.org/package=RUnit) to [tinytest](https://cran.r-project.org/package=tinytest) framework. The `test.gbm()`, `test.relative.influence()`, and `validate.gbm()` functions will remain for backwards compatability. This is just the start, as more tests will be added in the future [(#51)](https://github.com/gbm-developers/gbm/issues/51).
 

@@ -1,0 +1,283 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "horserule"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('horserule')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("HorseRuleFit")
+> ### * HorseRuleFit
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HorseRuleFit
+> ### Title: Horseshoe RuleFit
+> ### Aliases: HorseRuleFit
+> 
+> ### ** Examples
+> 
+> library(MASS)
+> library(horserule)
+> data(Boston)
+> # Split in train and test data
+> N = nrow(Boston)
+> train = sample(1:N, 400)
+> Xtrain = Boston[train,-14]
+> ytrain = Boston[train, 14]
+> Xtest = Boston[-train, -14]
+> ytest = Boston[-train, 14]
+> 
+> # Run the HorseRuleFit with 100 trees
+> # Increase Number of trees and the number of posterior samples for better modelfit
+> hrres = HorseRuleFit(X = Xtrain, y=ytrain,
++                     thin=1, niter=100, burnin=10,
++                     L=5, S=6, ensemble = "both", mix=0.3, ntree=100,
++                     intercept=FALSE, linterms=1:13, ytransform = "log",
++                     alpha=1, beta=2, linp = 1, restricted = 0)
+> 
+> # Calculate the error
+> pred = predict(hrres, Xtest, burnin=100, postmean=TRUE)
+> sqrt(mean((pred-ytest)^2))
+[1] NaN
+> 
+> # Look at the most important rules/linear effects.
+> importance_hs(hrres)
+                                            Rule    2.5% Imp   50% Imp
+1                                    X[,13]>9.95 0.041878593 1.0000000
+2                                     Linear:X 9 0.076034976 0.6578474
+3                                    Linear:X 10 0.155855719 0.4251897
+4     X[,5]<=0.618 & X[,6]<=6.979 & X[,13]<=9.95 0.003888217 0.3835799
+5                                  X[,5]<=0.6695 0.006689407 0.3562882
+6                   X[,1]>11.48635 & X[,5]>0.675 0.105305786 0.2973831
+7                                     Linear:X 8 0.094299044 0.2439945
+8  X[,1]<=0.866645 & X[,13]>9.95 & X[,13]<=19.23 0.096479939 0.2350775
+9                                     Linear:X 7 0.074771284 0.2228479
+10                                   Linear:X 11 0.031735359 0.2226646
+   97.5% Imp          bhat
+1  1.0000000 -0.1473482626
+2  1.0000000  0.0058868578
+3  0.6893198 -0.0001866582
+4  0.9828923 -0.0665426762
+5  0.8728290  0.0671124385
+6  0.6419671 -0.1093820039
+7  0.5578155 -0.0096745857
+8  0.5501539  0.0450713975
+9  0.5268873 -0.0006463655
+10 0.4733963 -0.0079654487
+> 
+> # Look at the input variable importance.
+> Variable_importance(hrres, var_names=colnames(Xtrain))
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("Variable_importance")
+> ### * Variable_importance
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Variable_importance
+> ### Title: Variable Importance plot
+> ### Aliases: Variable_importance
+> 
+> ### ** Examples
+> 
+> #Fit HorseRuleFit
+> x = matrix(rnorm(5000), ncol=10)
+> y = apply(x,1,function(x)sum(x[1:5])+rnorm(1))
+> hrres = HorseRuleFit(X = x, y=y,
++                      thin=1, niter=100, burnin=10,
++                      L=5, S=6, ensemble = "both", mix=0.3, ntree=100,
++                      intercept=FALSE, linterms=1:10,
++                      alpha=1, beta=2, linp = 1, restricted = 0)
+> Variable_importance(hrres)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("convergence_plot")
+> ### * convergence_plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: convergence_plot
+> ### Title: convergence_plot
+> ### Aliases: convergence_plot
+> 
+> ### ** Examples
+> 
+> library(MASS)
+> data(Boston)
+> #Split in train and test data
+> N = nrow(Boston)
+> train = sample(1:N, 400)
+> Xtrain = Boston[train,-14]
+> ytrain = Boston[train, 14]
+> Xtest = Boston[-train, -14]
+> ytest = Boston[-train, 14]
+> 
+> hrres = HorseRuleFit(X = Xtrain, y=ytrain,
++                     thin=1, niter=100, burnin=10,
++                     L=5, S=6, ensemble = "both", mix=0.3, ntree=100,
++                     intercept=FALSE, linterms=1:13, ytransform = "log",
++                     alpha=1, beta=2, linp = 1, restricted = 0)
+> 
+> #Check the model convergence out of sample
+> convergence_plot(hrres, Xtest, ytest, burnin = 10)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("hs")
+> ### * hs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hs
+> ### Title: Horseshoe regression Gibbs-sampler
+> ### Aliases: hs
+> 
+> ### ** Examples
+> 
+> x = matrix(rnorm(1000), ncol=10)
+> y = apply(x,1,function(x)sum(x[1:5])+rnorm(1))
+> hsmod = hs(X=x, y=y, niter=100)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("importance_hs")
+> ### * importance_hs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: importance_hs
+> ### Title: Most important Rules/terms
+> ### Aliases: importance_hs
+> 
+> ### ** Examples
+> 
+> library(MASS)
+> library(horserule)
+> data(Boston)
+> # Split in train and test data
+> N = nrow(Boston)
+> train = sample(1:N, 400)
+> Xtrain = Boston[train,-14]
+> ytrain = Boston[train, 14]
+> Xtest = Boston[-train, -14]
+> ytest = Boston[-train, 14]
+> hrres = HorseRuleFit(X = Xtrain, y=ytrain,
++                     thin=1, niter=100, burnin=10,
++                     L=5, S=6, ensemble = "both", mix=0.3, ntree=100,
++                     intercept=FALSE, linterms=1:13, ytransform = "log",
++                     alpha=1, beta=2, linp = 1, restricted = 0)
+> 
+> #Create an importance table containing the 10 most important rules and linear terms
+> importance_hs(hrres, k=10)
+                                            Rule    2.5% Imp   50% Imp
+1                                    X[,13]>9.95 0.041878593 1.0000000
+2                                     Linear:X 9 0.076034976 0.6578474
+3                                    Linear:X 10 0.155855719 0.4251897
+4     X[,5]<=0.618 & X[,6]<=6.979 & X[,13]<=9.95 0.003888217 0.3835799
+5                                  X[,5]<=0.6695 0.006689407 0.3562882
+6                   X[,1]>11.48635 & X[,5]>0.675 0.105305786 0.2973831
+7                                     Linear:X 8 0.094299044 0.2439945
+8  X[,1]<=0.866645 & X[,13]>9.95 & X[,13]<=19.23 0.096479939 0.2350775
+9                                     Linear:X 7 0.074771284 0.2228479
+10                                   Linear:X 11 0.031735359 0.2226646
+   97.5% Imp          bhat
+1  1.0000000 -0.1473482626
+2  1.0000000  0.0058868578
+3  0.6893198 -0.0001866582
+4  0.9828923 -0.0665426762
+5  0.8728290  0.0671124385
+6  0.6419671 -0.1093820039
+7  0.5578155 -0.0096745857
+8  0.5501539  0.0450713975
+9  0.5268873 -0.0006463655
+10 0.4733963 -0.0079654487
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:MASS’
+
+> nameEx("predict.HorseRulemodel")
+> ### * predict.HorseRulemodel
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: predict.HorseRulemodel
+> ### Title: predict.hs
+> ### Aliases: predict.HorseRulemodel
+> 
+> ### ** Examples
+> 
+> x = matrix(rnorm(1000), ncol=10)
+> y = apply(x,1,function(x)sum(x[1:5])+rnorm(1))
+> hrresmod = HorseRuleFit(X=x, y=y, niter=100, burnin=10)
+> #predict training data to obtain the fitted values
+> predict(hrresmod, x, burnin=10)
+  [1]  1.28060254  4.13292944  0.41383237 -0.25776522 -1.16359013  2.95251192
+  [7]  1.49377534  0.98052408  0.29674973  1.67645276  0.73413281 -0.13634343
+ [13]  1.29506101 -5.93608842  1.11150584  1.59816888  0.06342639 -1.76061718
+ [19] -1.71652518  4.07831139  0.97287057  3.33439175  0.80364210 -5.19859114
+ [25]  1.08037432  4.48818611 -2.85523645 -4.21143637 -1.69375674  0.75941424
+ [31] -1.77978897 -4.71891496 -2.06093906  0.79678604 -0.95351305 -0.57318639
+ [37]  1.11369027 -1.24770592  0.69937654 -0.04610407  0.18990773  2.97936497
+ [43] -1.05610668 -0.72462774 -1.03418731 -6.12401464  2.12536531 -0.27851285
+ [49] -0.14765085  1.02395459  2.04063877  0.25302115 -0.79910316 -3.03370676
+ [55]  1.19308752  1.15866185 -1.95108686 -3.37242303 -2.38041224  1.05934507
+ [61]  0.24874794  4.09144641  2.72470446  1.32786482  0.06983603  2.33565649
+ [67] -2.28318649 -0.93102357  0.44248413  0.22800193  1.54969163 -2.94352656
+ [73] -0.31039399  0.60468405 -0.70644005 -0.91441747 -2.29665983  1.88987557
+ [79]  1.26894428  3.20985274 -0.05337965  0.89856030  0.92663065 -3.43643757
+ [85]  4.07644510  1.67599975  0.76346806 -1.07930321 -3.69728377  0.79409493
+ [91]  0.23597648  4.51052051  1.17215056  0.04585637  4.36516850 -2.48085125
+ [97]  3.23994125 -0.97543750 -1.00382236 -0.26222121
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  13.402 1.352 15.623 0.002 0.008 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

@@ -1,0 +1,1455 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(SuperLearner)
+Loading required package: nnls
+Super Learner
+Version: 2.0-26
+Package created on 2019-10-27
+
+> 
+> test_check("SuperLearner")
+[14:05:43] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:44] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+[14:05:45] WARNING: amalgamation/../src/objective/regression_obj.cu:170: reg:linear is now deprecated in favor of reg:squarederror.
+
+Call:  
+SuperLearner(Y = Y_reg, X = X, family = gaussian(), SL.library = c(SL.library,  
+    xgb_grid$names), cvControl = list(V = 2)) 
+
+
+                   Risk       Coef
+SL.mean_All    1.100027 0.73787916
+SL.xgboost_All 1.532526 0.01813212
+SL.xgb.1_All   1.290361 0.24398872
+SL.xgb.2_All   1.176793 0.00000000
+SL.xgb.3_All   1.321512 0.00000000
+SL.xgb.4_All   1.223680 0.00000000
+SL.xgb.5_All   1.593716 0.00000000
+SL.xgb.6_All   1.544470 0.00000000
+SL.xgb.7_All   1.600138 0.00000000
+SL.xgb.8_All   1.555782 0.00000000
+SL.xgb.9_All   1.642955 0.00000000
+SL.xgb.10_All  1.637269 0.00000000
+SL.xgb.11_All  1.643616 0.00000000
+SL.xgb.12_All  1.638586 0.00000000
+lasso-penalized linear regression with n=506, p=13
+At minimum cross-validation error (lambda=0.0073):
+-------------------------------------------------
+  Nonzero coefficients: 12
+  Cross-validation error (deviance): 24.60
+  R-squared: 0.71
+  Signal-to-noise ratio: 2.43
+  Scale estimate (sigma): 4.960
+lasso-penalized logistic regression with n=506, p=13
+At minimum cross-validation error (lambda=0.0017):
+-------------------------------------------------
+  Nonzero coefficients: 13
+  Cross-validation error (deviance): 0.64
+  R-squared: 0.50
+  Signal-to-noise ratio: 0.98
+  Prediction error: 0.125
+lasso-penalized linear regression with n=506, p=13
+At minimum cross-validation error (lambda=0.0068):
+-------------------------------------------------
+  Nonzero coefficients: 12
+  Cross-validation error (deviance): 23.94
+  R-squared: 0.72
+  Signal-to-noise ratio: 2.53
+  Scale estimate (sigma): 4.893
+lasso-penalized logistic regression with n=506, p=13
+At minimum cross-validation error (lambda=0.0018):
+-------------------------------------------------
+  Nonzero coefficients: 13
+  Cross-validation error (deviance): 0.64
+  R-squared: 0.50
+  Signal-to-noise ratio: 0.99
+  Prediction error: 0.123
+
+Call:  
+SuperLearner(Y = Y_gaus, X = X, family = gaussian(), SL.library = c("SL.mean",  
+    "SL.biglasso"), cvControl = list(V = 2)) 
+
+
+                    Risk       Coef
+SL.mean_All     84.42119 0.04698365
+SL.biglasso_All 25.47217 0.95301635
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = c("SL.mean",  
+    "SL.biglasso"), cvControl = list(V = 2)) 
+
+
+                      Risk Coef
+SL.mean_All     0.23918511    0
+SL.biglasso_All 0.09457758    1
+Y
+ 0  1 
+53 47 
+$grid
+NULL
+
+$names
+[1] "SL.randomForest_1"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+$params$ntree
+[1] 100
+
+
+[1] "SL.randomForest_1" "X"                 "Y"                
+[4] "create_rf"         "data"             
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2)) 
+
+
+                          Risk Coef
+SL.randomForest_1_All 0.047901    1
+$grid
+  mtry
+1    1
+2    4
+3   20
+
+$names
+[1] "SL.randomForest_1" "SL.randomForest_2" "SL.randomForest_3"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+list()
+
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2)) 
+
+
+                            Risk      Coef
+SL.randomForest_1_All 0.06229353 0.1023683
+SL.randomForest_2_All 0.05076692 0.8976317
+SL.randomForest_3_All 0.05654268 0.0000000
+$grid
+  alpha
+1  0.00
+2  0.25
+3  0.50
+4  0.75
+5  1.00
+
+$names
+[1] "SL.glmnet_0"    "SL.glmnet_0.25" "SL.glmnet_0.5"  "SL.glmnet_0.75"
+[5] "SL.glmnet_1"   
+
+$base_learner
+[1] "SL.glmnet"
+
+$params
+list()
+
+[1] "SL.glmnet_0"    "SL.glmnet_0.25" "SL.glmnet_0.5"  "SL.glmnet_0.75"
+[5] "SL.glmnet_1"   
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = ls(learners),  
+    cvControl = list(V = 2), env = learners) 
+
+
+                         Risk Coef
+SL.glmnet_0_All    0.06578497    0
+SL.glmnet_0.25_All 0.06393436    1
+SL.glmnet_0.5_All  0.06552848    0
+SL.glmnet_0.75_All 0.06939863    0
+SL.glmnet_1_All    0.08319900    0
+
+Call:  
+SuperLearner(Y = Y, X = X_clean, family = binomial(), SL.library = c("SL.mean",  
+    svm$names), cvControl = list(V = 3)) 
+
+
+                            Risk      Coef
+SL.mean_All           0.25993856 0.0000000
+SL.svm_polynomial_All 0.07494856 0.4917546
+SL.svm_radial_All     0.07714246 0.0000000
+SL.svm_sigmoid_All    0.07428697 0.5082454
+ExtraTrees:
+ - # of trees: 500
+ - node size:  5
+ - # of dim:   13
+ - # of tries: 4
+ - type:       numeric (regression)
+ - multi-task: no
+ExtraTrees:
+ - # of trees: 500
+ - node size:  1
+ - # of dim:   13
+ - # of tries: 3
+ - type:       factor (classification)
+ - multi-task: no
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = sl_lib,  
+    cvControl = list(V = 2)) 
+
+
+                       Risk      Coef
+SL.extraTrees_All 0.1063865 0.1705775
+SL.ranger_All     0.1004474 0.8294225
+SL.mean_All       0.2532000 0.0000000
+$grid
+NULL
+
+$names
+[1] "SL.extraTrees_1"
+
+$base_learner
+[1] "SL.extraTrees"
+
+$params
+list()
+
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = c("SL.mean",  
+    lib$names), cvControl = list(V = 2)) 
+
+
+                         Risk Coef
+SL.mean_All         0.2112000    0
+SL.extraTrees_1_All 0.1011586    1
+SL.extraTrees_1 <- function(...) SL.extraTrees(...) 
+$grid
+NULL
+
+$names
+[1] "SL.extraTrees_1"
+
+$base_learner
+[1] "SL.extraTrees"
+
+$params
+list()
+
+[1] "SL.extraTrees_1"
+[1] 1
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = c("SL.mean",  
+    lib$names), cvControl = list(V = 2), env = sl_env) 
+
+
+                         Risk Coef
+SL.mean_All         0.2112000    0
+SL.extraTrees_1_All 0.1171381    1
+$grid
+  mtry
+1    1
+2    2
+
+$names
+[1] "SL.extraTrees_1" "SL.extraTrees_2"
+
+$base_learner
+[1] "SL.extraTrees"
+
+$params
+list()
+
+[1] "SL.extraTrees_1" "SL.extraTrees_2"
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = c("SL.mean",  
+    lib$names), cvControl = list(V = 2), env = sl_env) 
+
+
+                         Risk Coef
+SL.mean_All         0.2292000    0
+SL.extraTrees_1_All 0.1384171    0
+SL.extraTrees_2_All 0.1224645    1
+$grid
+  mtry
+1    1
+2    2
+
+$names
+[1] "SL.extraTrees_1" "SL.extraTrees_2"
+
+$base_learner
+[1] "SL.extraTrees"
+
+$params
+list()
+
+[1] "SL.extraTrees_1" "SL.extraTrees_2"
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = c("SL.mean",  
+    lib$names), cvControl = list(V = 2), env = sl_env) 
+
+
+                         Risk Coef
+SL.mean_All         0.2292000    0
+SL.extraTrees_1_All 0.1251496    0
+SL.extraTrees_2_All 0.1137550    1
+
+Call:  glm(formula = Y ~ ., family = family, data = X, weights = obsWeights, 
+    model = model)
+
+Coefficients:
+(Intercept)         crim           zn        indus         chas          nox  
+  3.646e+01   -1.080e-01    4.642e-02    2.056e-02    2.687e+00   -1.777e+01  
+         rm          age          dis          rad          tax      ptratio  
+  3.810e+00    6.922e-04   -1.476e+00    3.060e-01   -1.233e-02   -9.527e-01  
+      black        lstat  
+  9.312e-03   -5.248e-01  
+
+Degrees of Freedom: 505 Total (i.e. Null);  492 Residual
+Null Deviance:	    42720 
+Residual Deviance: 11080 	AIC: 3028
+
+Call:
+glm(formula = Y ~ ., family = family, data = X, weights = obsWeights, 
+    model = model)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-15.595   -2.730   -0.518    1.777   26.199  
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.646e+01  5.103e+00   7.144 3.28e-12 ***
+crim        -1.080e-01  3.286e-02  -3.287 0.001087 ** 
+zn           4.642e-02  1.373e-02   3.382 0.000778 ***
+indus        2.056e-02  6.150e-02   0.334 0.738288    
+chas         2.687e+00  8.616e-01   3.118 0.001925 ** 
+nox         -1.777e+01  3.820e+00  -4.651 4.25e-06 ***
+rm           3.810e+00  4.179e-01   9.116  < 2e-16 ***
+age          6.922e-04  1.321e-02   0.052 0.958229    
+dis         -1.476e+00  1.995e-01  -7.398 6.01e-13 ***
+rad          3.060e-01  6.635e-02   4.613 5.07e-06 ***
+tax         -1.233e-02  3.760e-03  -3.280 0.001112 ** 
+ptratio     -9.527e-01  1.308e-01  -7.283 1.31e-12 ***
+black        9.312e-03  2.686e-03   3.467 0.000573 ***
+lstat       -5.248e-01  5.072e-02 -10.347  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for gaussian family taken to be 22.51785)
+
+    Null deviance: 42716  on 505  degrees of freedom
+Residual deviance: 11079  on 492  degrees of freedom
+AIC: 3027.6
+
+Number of Fisher Scoring iterations: 2
+
+
+Call:
+glm(formula = Y ~ ., family = family, data = X, weights = obsWeights, 
+    model = model)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.9747  -0.4250  -0.0911   0.2720   3.5929  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) 10.682635   3.921395   2.724 0.006446 ** 
+crim        -0.040649   0.049796  -0.816 0.414321    
+zn           0.012134   0.010678   1.136 0.255786    
+indus       -0.040715   0.045615  -0.893 0.372078    
+chas         0.248209   0.653283   0.380 0.703989    
+nox         -3.601085   2.924365  -1.231 0.218170    
+rm           1.155157   0.374843   3.082 0.002058 ** 
+age         -0.018660   0.009319  -2.002 0.045252 *  
+dis         -0.518934   0.146286  -3.547 0.000389 ***
+rad          0.255522   0.061391   4.162 3.15e-05 ***
+tax         -0.009500   0.003107  -3.057 0.002233 ** 
+ptratio     -0.409317   0.103191  -3.967 7.29e-05 ***
+black       -0.001451   0.002558  -0.567 0.570418    
+lstat       -0.318436   0.054735  -5.818 5.96e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 669.76  on 505  degrees of freedom
+Residual deviance: 296.39  on 492  degrees of freedom
+AIC: 324.39
+
+Number of Fisher Scoring iterations: 7
+
+ [1] "coefficients"      "residuals"         "fitted.values"    
+ [4] "effects"           "R"                 "rank"             
+ [7] "qr"                "family"            "linear.predictors"
+[10] "deviance"          "aic"               "null.deviance"    
+[13] "iter"              "weights"           "prior.weights"    
+[16] "df.residual"       "df.null"           "y"                
+[19] "converged"         "boundary"          "call"             
+[22] "formula"           "terms"             "data"             
+[25] "offset"            "control"           "method"           
+[28] "contrasts"         "xlevels"          
+
+Call:
+glm(formula = Y ~ ., family = family, data = X, weights = obsWeights, 
+    model = model)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-15.595   -2.730   -0.518    1.777   26.199  
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.646e+01  5.103e+00   7.144 3.28e-12 ***
+crim        -1.080e-01  3.286e-02  -3.287 0.001087 ** 
+zn           4.642e-02  1.373e-02   3.382 0.000778 ***
+indus        2.056e-02  6.150e-02   0.334 0.738288    
+chas         2.687e+00  8.616e-01   3.118 0.001925 ** 
+nox         -1.777e+01  3.820e+00  -4.651 4.25e-06 ***
+rm           3.810e+00  4.179e-01   9.116  < 2e-16 ***
+age          6.922e-04  1.321e-02   0.052 0.958229    
+dis         -1.476e+00  1.995e-01  -7.398 6.01e-13 ***
+rad          3.060e-01  6.635e-02   4.613 5.07e-06 ***
+tax         -1.233e-02  3.760e-03  -3.280 0.001112 ** 
+ptratio     -9.527e-01  1.308e-01  -7.283 1.31e-12 ***
+black        9.312e-03  2.686e-03   3.467 0.000573 ***
+lstat       -5.248e-01  5.072e-02 -10.347  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for gaussian family taken to be 22.51785)
+
+    Null deviance: 42716  on 505  degrees of freedom
+Residual deviance: 11079  on 492  degrees of freedom
+AIC: 3027.6
+
+Number of Fisher Scoring iterations: 2
+
+
+Call:
+glm(formula = Y ~ ., family = family, data = X, weights = obsWeights, 
+    model = model)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.9747  -0.4250  -0.0911   0.2720   3.5929  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) 10.682635   3.921395   2.724 0.006446 ** 
+crim        -0.040649   0.049796  -0.816 0.414321    
+zn           0.012134   0.010678   1.136 0.255786    
+indus       -0.040715   0.045615  -0.893 0.372078    
+chas         0.248209   0.653283   0.380 0.703989    
+nox         -3.601085   2.924365  -1.231 0.218170    
+rm           1.155157   0.374843   3.082 0.002058 ** 
+age         -0.018660   0.009319  -2.002 0.045252 *  
+dis         -0.518934   0.146286  -3.547 0.000389 ***
+rad          0.255522   0.061391   4.162 3.15e-05 ***
+tax         -0.009500   0.003107  -3.057 0.002233 ** 
+ptratio     -0.409317   0.103191  -3.967 7.29e-05 ***
+black       -0.001451   0.002558  -0.567 0.570418    
+lstat       -0.318436   0.054735  -5.818 5.96e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 669.76  on 505  degrees of freedom
+Residual deviance: 296.39  on 492  degrees of freedom
+AIC: 324.39
+
+Number of Fisher Scoring iterations: 7
+
+
+Call:  
+SuperLearner(Y = Y_gaus, X = X, family = gaussian(), SL.library = c("SL.mean",  
+    "SL.glm")) 
+
+
+                Risk      Coef
+SL.mean_All 84.74142 0.0134192
+SL.glm_All  23.62549 0.9865808
+       V1        
+ Min.   :-3.921  
+ 1st Qu.:17.514  
+ Median :22.124  
+ Mean   :22.533  
+ 3rd Qu.:27.345  
+ Max.   :44.376  
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = c("SL.mean",  
+    "SL.glm")) 
+
+
+                  Risk       Coef
+SL.mean_All 0.23580362 0.01315872
+SL.glm_All  0.09519266 0.98684128
+       V1          
+ Min.   :0.004942  
+ 1st Qu.:0.035424  
+ Median :0.196222  
+ Mean   :0.375494  
+ 3rd Qu.:0.781687  
+ Max.   :0.991313  
+Got an error, as expected.
+<simpleError in cbind2(1, newx) %*% nbeta: Cholmod error 'X and/or Y have wrong dimensions' at file ../MatrixOps/cholmod_sdmult.c, line 90>
+Got an error, as expected.
+<simpleError in cbind2(1, newx) %*% nbeta: Cholmod error 'X and/or Y have wrong dimensions' at file ../MatrixOps/cholmod_sdmult.c, line 90>
+Call:
+lda(X, grouping = Y, prior = prior, method = method, tol = tol, 
+    CV = CV, nu = nu)
+
+Prior probabilities of groups:
+        0         1 
+0.6245059 0.3754941 
+
+Group means:
+       crim        zn     indus       chas       nox       rm      age      dis
+0 5.2936824  4.708861 13.622089 0.05379747 0.5912399 5.985693 77.93228 3.349307
+1 0.8191541 22.431579  7.003316 0.09473684 0.4939153 6.781821 53.01211 4.536371
+        rad      tax  ptratio    black     lstat
+0 11.588608 459.9209 19.19968 340.6392 16.042468
+1  6.157895 322.2789 17.21789 383.3425  7.015947
+
+Coefficients of linear discriminants:
+                  LD1
+crim     0.0012515925
+zn       0.0095179029
+indus   -0.0166376334
+chas     0.1399207112
+nox     -2.9934367740
+rm       0.5612713068
+age     -0.0128420045
+dis     -0.3095403096
+rad      0.0695027989
+tax     -0.0027771271
+ptratio -0.2059853828
+black    0.0006058031
+lstat   -0.0816668897
+Call:
+lda(X, grouping = Y, prior = prior, method = method, tol = tol, 
+    CV = CV, nu = nu)
+
+Prior probabilities of groups:
+        0         1 
+0.6245059 0.3754941 
+
+Group means:
+       crim        zn     indus       chas       nox       rm      age      dis
+0 5.2936824  4.708861 13.622089 0.05379747 0.5912399 5.985693 77.93228 3.349307
+1 0.8191541 22.431579  7.003316 0.09473684 0.4939153 6.781821 53.01211 4.536371
+        rad      tax  ptratio    black     lstat
+0 11.588608 459.9209 19.19968 340.6392 16.042468
+1  6.157895 322.2789 17.21789 383.3425  7.015947
+
+Coefficients of linear discriminants:
+                  LD1
+crim     0.0012515925
+zn       0.0095179029
+indus   -0.0166376334
+chas     0.1399207112
+nox     -2.9934367740
+rm       0.5612713068
+age     -0.0128420045
+dis     -0.3095403096
+rad      0.0695027989
+tax     -0.0027771271
+ptratio -0.2059853828
+black    0.0006058031
+lstat   -0.0816668897
+
+Call:
+stats::lm(formula = Y ~ ., data = X, weights = obsWeights, model = model)
+
+Coefficients:
+(Intercept)         crim           zn        indus         chas          nox  
+  3.646e+01   -1.080e-01    4.642e-02    2.056e-02    2.687e+00   -1.777e+01  
+         rm          age          dis          rad          tax      ptratio  
+  3.810e+00    6.922e-04   -1.476e+00    3.060e-01   -1.233e-02   -9.527e-01  
+      black        lstat  
+  9.312e-03   -5.248e-01  
+
+
+Call:
+stats::lm(formula = Y ~ ., data = X, weights = obsWeights, model = model)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.595  -2.730  -0.518   1.777  26.199 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.646e+01  5.103e+00   7.144 3.28e-12 ***
+crim        -1.080e-01  3.286e-02  -3.287 0.001087 ** 
+zn           4.642e-02  1.373e-02   3.382 0.000778 ***
+indus        2.056e-02  6.150e-02   0.334 0.738288    
+chas         2.687e+00  8.616e-01   3.118 0.001925 ** 
+nox         -1.777e+01  3.820e+00  -4.651 4.25e-06 ***
+rm           3.810e+00  4.179e-01   9.116  < 2e-16 ***
+age          6.922e-04  1.321e-02   0.052 0.958229    
+dis         -1.476e+00  1.995e-01  -7.398 6.01e-13 ***
+rad          3.060e-01  6.635e-02   4.613 5.07e-06 ***
+tax         -1.233e-02  3.760e-03  -3.280 0.001112 ** 
+ptratio     -9.527e-01  1.308e-01  -7.283 1.31e-12 ***
+black        9.312e-03  2.686e-03   3.467 0.000573 ***
+lstat       -5.248e-01  5.072e-02 -10.347  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.745 on 492 degrees of freedom
+Multiple R-squared:  0.7406,	Adjusted R-squared:  0.7338 
+F-statistic: 108.1 on 13 and 492 DF,  p-value: < 2.2e-16
+
+
+Call:
+stats::lm(formula = Y ~ ., data = X, weights = obsWeights, model = model)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.80469 -0.23612 -0.03105  0.23080  1.05224 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1.6675402  0.3662392   4.553 6.67e-06 ***
+crim         0.0003028  0.0023585   0.128 0.897888    
+zn           0.0023028  0.0009851   2.338 0.019808 *  
+indus       -0.0040254  0.0044131  -0.912 0.362135    
+chas         0.0338534  0.0618295   0.548 0.584264    
+nox         -0.7242540  0.2741160  -2.642 0.008501 ** 
+rm           0.1357981  0.0299915   4.528 7.48e-06 ***
+age         -0.0031071  0.0009480  -3.278 0.001121 ** 
+dis         -0.0748924  0.0143135  -5.232 2.48e-07 ***
+rad          0.0168160  0.0047612   3.532 0.000451 ***
+tax         -0.0006719  0.0002699  -2.490 0.013110 *  
+ptratio     -0.0498376  0.0093885  -5.308 1.68e-07 ***
+black        0.0001466  0.0001928   0.760 0.447370    
+lstat       -0.0197591  0.0036395  -5.429 8.91e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3405 on 492 degrees of freedom
+Multiple R-squared:  0.5192,	Adjusted R-squared:  0.5065 
+F-statistic: 40.86 on 13 and 492 DF,  p-value: < 2.2e-16
+
+ [1] "coefficients"  "residuals"     "fitted.values" "effects"      
+ [5] "weights"       "rank"          "assign"        "qr"           
+ [9] "df.residual"   "xlevels"       "call"          "terms"        
+
+Call:
+stats::lm(formula = Y ~ ., data = X, weights = obsWeights, model = model)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.595  -2.730  -0.518   1.777  26.199 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.646e+01  5.103e+00   7.144 3.28e-12 ***
+crim        -1.080e-01  3.286e-02  -3.287 0.001087 ** 
+zn           4.642e-02  1.373e-02   3.382 0.000778 ***
+indus        2.056e-02  6.150e-02   0.334 0.738288    
+chas         2.687e+00  8.616e-01   3.118 0.001925 ** 
+nox         -1.777e+01  3.820e+00  -4.651 4.25e-06 ***
+rm           3.810e+00  4.179e-01   9.116  < 2e-16 ***
+age          6.922e-04  1.321e-02   0.052 0.958229    
+dis         -1.476e+00  1.995e-01  -7.398 6.01e-13 ***
+rad          3.060e-01  6.635e-02   4.613 5.07e-06 ***
+tax         -1.233e-02  3.760e-03  -3.280 0.001112 ** 
+ptratio     -9.527e-01  1.308e-01  -7.283 1.31e-12 ***
+black        9.312e-03  2.686e-03   3.467 0.000573 ***
+lstat       -5.248e-01  5.072e-02 -10.347  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.745 on 492 degrees of freedom
+Multiple R-squared:  0.7406,	Adjusted R-squared:  0.7338 
+F-statistic: 108.1 on 13 and 492 DF,  p-value: < 2.2e-16
+
+
+Call:
+stats::lm(formula = Y ~ ., data = X, weights = obsWeights, model = model)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.80469 -0.23612 -0.03105  0.23080  1.05224 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1.6675402  0.3662392   4.553 6.67e-06 ***
+crim         0.0003028  0.0023585   0.128 0.897888    
+zn           0.0023028  0.0009851   2.338 0.019808 *  
+indus       -0.0040254  0.0044131  -0.912 0.362135    
+chas         0.0338534  0.0618295   0.548 0.584264    
+nox         -0.7242540  0.2741160  -2.642 0.008501 ** 
+rm           0.1357981  0.0299915   4.528 7.48e-06 ***
+age         -0.0031071  0.0009480  -3.278 0.001121 ** 
+dis         -0.0748924  0.0143135  -5.232 2.48e-07 ***
+rad          0.0168160  0.0047612   3.532 0.000451 ***
+tax         -0.0006719  0.0002699  -2.490 0.013110 *  
+ptratio     -0.0498376  0.0093885  -5.308 1.68e-07 ***
+black        0.0001466  0.0001928   0.760 0.447370    
+lstat       -0.0197591  0.0036395  -5.429 8.91e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3405 on 492 degrees of freedom
+Multiple R-squared:  0.5192,	Adjusted R-squared:  0.5065 
+F-statistic: 40.86 on 13 and 492 DF,  p-value: < 2.2e-16
+
+
+Call:  
+SuperLearner(Y = Y_gaus, X = X, family = gaussian(), SL.library = c("SL.mean",  
+    "SL.lm")) 
+
+
+               Risk       Coef
+SL.mean_All 84.6696 0.02186479
+SL.lm_All   24.3340 0.97813521
+       V1        
+ Min.   :-3.695  
+ 1st Qu.:17.557  
+ Median :22.128  
+ Mean   :22.533  
+ 3rd Qu.:27.303  
+ Max.   :44.189  
+
+Call:  
+SuperLearner(Y = Y_bin, X = X, family = binomial(), SL.library = c("SL.mean",  
+    "SL.lm")) 
+
+
+                 Risk Coef
+SL.mean_All 0.2349366    0
+SL.lm_All   0.1125027    1
+       V1        
+ Min.   :0.0000  
+ 1st Qu.:0.1281  
+ Median :0.3530  
+ Mean   :0.3899  
+ 3rd Qu.:0.6091  
+ Max.   :1.0000  
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = SL.library,  
+    method = "method.NNLS", verbose = F, cvControl = list(V = 2)) 
+
+
+                   Risk       Coef
+SL.rpart_All  0.1986827 0.31226655
+SL.glmnet_All 0.1803963 0.66105261
+SL.mean_All   0.2534500 0.02668084
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Error in (function (Y, X, newX, ...)  : bad algorithm
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = c(SL.library,  
+    "SL.bad_algorithm"), method = "method.NNLS", verbose = T, cvControl = list(V = 2)) 
+
+
+
+                          Risk       Coef
+SL.rpart_All         0.1921176 0.08939677
+SL.glmnet_All        0.1635548 0.91060323
+SL.mean_All          0.2504500 0.00000000
+SL.bad_algorithm_All        NA 0.00000000
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = SL.library,  
+    method = "method.NNLS2", verbose = F, cvControl = list(V = 2)) 
+
+
+                   Risk       Coef
+SL.rpart_All  0.2279346 0.05397859
+SL.glmnet_All 0.1670620 0.94602141
+SL.mean_All   0.2504500 0.00000000
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = SL.library,  
+    method = "method.NNloglik", verbose = F, cvControl = list(V = 2)) 
+
+
+                   Risk      Coef
+SL.rpart_All  0.5804469 0.1760951
+SL.glmnet_All 0.5010294 0.8239049
+SL.mean_All   0.6964542 0.0000000
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Error in (function (Y, X, newX, ...)  : bad algorithm
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = c(SL.library,  
+    "SL.bad_algorithm"), method = "method.NNloglik", verbose = T, cvControl = list(V = 2)) 
+
+
+
+                          Risk      Coef
+SL.rpart_All               Inf 0.1338597
+SL.glmnet_All        0.5027498 0.8661403
+SL.mean_All          0.7000679 0.0000000
+SL.bad_algorithm_All        NA 0.0000000
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = SL.library,  
+    method = "method.CC_LS", verbose = F, cvControl = list(V = 2)) 
+
+
+                   Risk       Coef
+SL.rpart_All  0.2033781 0.16438434
+SL.glmnet_All 0.1740498 0.82391928
+SL.mean_All   0.2516500 0.01169638
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = SL.library,  
+    method = "method.CC_nloglik", verbose = F, cvControl = list(V = 2)) 
+
+
+                  Risk      Coef
+SL.rpart_All  295.8455 0.1014591
+SL.glmnet_All 205.3289 0.7867610
+SL.mean_All   277.1389 0.1117798
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Error in (function (Y, X, newX, ...)  : bad algorithm
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = c(SL.library,  
+    "SL.bad_algorithm"), method = "method.CC_nloglik", verbose = T, cvControl = list(V = 2)) 
+
+
+
+                         Risk      Coef
+SL.rpart_All         212.5569 0.2707202
+SL.glmnet_All        193.9384 0.7292798
+SL.mean_All          277.1389 0.0000000
+SL.bad_algorithm_All       NA 0.0000000
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = SL.library,  
+    method = "method.AUC", verbose = F, cvControl = list(V = 2)) 
+
+
+                   Risk      Coef
+SL.rpart_All  0.2533780 0.3333333
+SL.glmnet_All 0.1869683 0.3333333
+SL.mean_All   0.5550495 0.3333333
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Error in (function (Y, X, newX, ...)  : bad algorithm
+Removing failed learners: SL.bad_algorithm_All 
+Error in (function (Y, X, newX, ...)  : bad algorithm
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = c(SL.library,  
+    "SL.bad_algorithm"), method = "method.AUC", verbose = T, cvControl = list(V = 2)) 
+
+
+
+                          Risk      Coef
+SL.rpart_All         0.2467721 0.2982123
+SL.glmnet_All        0.1705535 0.3508938
+SL.mean_All          0.5150135 0.3508938
+SL.bad_algorithm_All        NA 0.0000000
+Call:
+qda(X, grouping = Y, prior = prior, method = method, tol = tol, 
+    CV = CV, nu = nu)
+
+Prior probabilities of groups:
+        0         1 
+0.6245059 0.3754941 
+
+Group means:
+       crim        zn     indus       chas       nox       rm      age      dis
+0 5.2936824  4.708861 13.622089 0.05379747 0.5912399 5.985693 77.93228 3.349307
+1 0.8191541 22.431579  7.003316 0.09473684 0.4939153 6.781821 53.01211 4.536371
+        rad      tax  ptratio    black     lstat
+0 11.588608 459.9209 19.19968 340.6392 16.042468
+1  6.157895 322.2789 17.21789 383.3425  7.015947
+Call:
+qda(X, grouping = Y, prior = prior, method = method, tol = tol, 
+    CV = CV, nu = nu)
+
+Prior probabilities of groups:
+        0         1 
+0.6245059 0.3754941 
+
+Group means:
+       crim        zn     indus       chas       nox       rm      age      dis
+0 5.2936824  4.708861 13.622089 0.05379747 0.5912399 5.985693 77.93228 3.349307
+1 0.8191541 22.431579  7.003316 0.09473684 0.4939153 6.781821 53.01211 4.536371
+        rad      tax  ptratio    black     lstat
+0 11.588608 459.9209 19.19968 340.6392 16.042468
+1  6.157895 322.2789 17.21789 383.3425  7.015947
+Y
+ 0  1 
+62 38 
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = sl_lib, cvControl = list(V = 2)) 
+
+
+
+                          Risk Coef
+SL.randomForest_All 0.04141665    1
+SL.mean_All         0.23560000    0
+$grid
+NULL
+
+$names
+[1] "SL.randomForest_1"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+list()
+
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2)) 
+
+
+                            Risk Coef
+SL.randomForest_1_All 0.06761492    1
+SL.randomForest_1 <- function(...) SL.randomForest(...) 
+$grid
+NULL
+
+$names
+[1] "SL.randomForest_1"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+list()
+
+[1] "SL.randomForest_1"
+[1] 1
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2), env = sl_env) 
+
+
+                          Risk Coef
+SL.randomForest_1_All 0.056687    1
+$grid
+  mtry
+1    1
+2    2
+
+$names
+[1] "SL.randomForest_1" "SL.randomForest_2"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+list()
+
+[1] "SL.randomForest_1" "SL.randomForest_2"
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2), env = sl_env) 
+
+
+                            Risk      Coef
+SL.randomForest_1_All 0.05775282 0.2130143
+SL.randomForest_2_All 0.05021309 0.7869857
+$grid
+  mtry
+1    1
+2    2
+
+$names
+[1] "SL.randomForest_1" "SL.randomForest_2"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+list()
+
+[1] "SL.randomForest_1" "SL.randomForest_2"
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2), env = sl_env) 
+
+
+                            Risk      Coef
+SL.randomForest_1_All 0.04492449 0.4071852
+SL.randomForest_2_All 0.03961866 0.5928148
+$grid
+  mtry nodesize maxnodes
+1    1     NULL     NULL
+2    2     NULL     NULL
+
+$names
+[1] "SL.randomForest_1_NULL_NULL" "SL.randomForest_2_NULL_NULL"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+list()
+
+[1] "SL.randomForest_1_NULL_NULL" "SL.randomForest_2_NULL_NULL"
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2), env = sl_env) 
+
+
+                                      Risk      Coef
+SL.randomForest_1_NULL_NULL_All 0.04645335 0.2596168
+SL.randomForest_2_NULL_NULL_All 0.04111806 0.7403832
+$grid
+  mtry maxnodes
+1    1        5
+2    2        5
+3    1       10
+4    2       10
+5    1     NULL
+6    2     NULL
+
+$names
+[1] "SL.randomForest_1_5"    "SL.randomForest_2_5"    "SL.randomForest_1_10"  
+[4] "SL.randomForest_2_10"   "SL.randomForest_1_NULL" "SL.randomForest_2_NULL"
+
+$base_learner
+[1] "SL.randomForest"
+
+$params
+list()
+
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2), env = sl_env) 
+
+
+                                 Risk      Coef
+SL.randomForest_1_5_All    0.05181234 0.0000000
+SL.randomForest_2_5_All    0.04334241 0.0000000
+SL.randomForest_1_10_All   0.04782853 0.3745053
+SL.randomForest_2_10_All   0.04335836 0.6254947
+SL.randomForest_1_NULL_All 0.04870680 0.0000000
+SL.randomForest_2_NULL_All 0.04383429 0.0000000
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2)) 
+
+
+                                 Risk Coef
+SL.randomForest_1_5_All    0.05171393    0
+SL.randomForest_2_5_All    0.04183487    0
+SL.randomForest_1_10_All   0.04885838    0
+SL.randomForest_2_10_All   0.03917066    1
+SL.randomForest_1_NULL_All 0.04730564    0
+SL.randomForest_2_NULL_All 0.04117284    0
+
+Call:  
+SuperLearner(Y = Y, X = X, family = binomial(), SL.library = create_rf$names,  
+    cvControl = list(V = 2)) 
+
+
+                                 Risk       Coef
+SL.randomForest_1_5_All    0.05147493 0.00000000
+SL.randomForest_2_5_All    0.04114267 0.00000000
+SL.randomForest_1_10_All   0.04763217 0.00000000
+SL.randomForest_2_10_All   0.03809721 0.07433538
+SL.randomForest_1_NULL_All 0.04806088 0.00000000
+SL.randomForest_2_NULL_All 0.03820266 0.92566462
+Ranger result
+
+Call:
+ ranger::ranger(`_Y` ~ ., data = cbind(`_Y` = Y, X), num.trees = num.trees,      mtry = mtry, min.node.size = min.node.size, replace = replace,      sample.fraction = sample.fraction, case.weights = obsWeights,      write.forest = write.forest, probability = probability, num.threads = num.threads,      verbose = verbose) 
+
+Type:                             Regression 
+Number of trees:                  500 
+Sample size:                      506 
+Number of independent variables:  13 
+Mtry:                             3 
+Target node size:                 5 
+Variable importance mode:         none 
+Splitrule:                        variance 
+OOB prediction error (MSE):       10.39743 
+R squared (OOB):                  0.8770796 
+Ranger result
+
+Call:
+ ranger::ranger(`_Y` ~ ., data = cbind(`_Y` = Y, X), num.trees = num.trees,      mtry = mtry, min.node.size = min.node.size, replace = replace,      sample.fraction = sample.fraction, case.weights = obsWeights,      write.forest = write.forest, probability = probability, num.threads = num.threads,      verbose = verbose) 
+
+Type:                             Probability estimation 
+Number of trees:                  500 
+Sample size:                      506 
+Number of independent variables:  13 
+Mtry:                             3 
+Target node size:                 1 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.08374536 
+Ranger result
+
+Call:
+ ranger::ranger(`_Y` ~ ., data = cbind(`_Y` = Y, X), num.trees = num.trees,      mtry = mtry, min.node.size = min.node.size, replace = replace,      sample.fraction = sample.fraction, case.weights = obsWeights,      write.forest = write.forest, probability = probability, num.threads = num.threads,      verbose = verbose) 
+
+Type:                             Regression 
+Number of trees:                  500 
+Sample size:                      506 
+Number of independent variables:  13 
+Mtry:                             3 
+Target node size:                 5 
+Variable importance mode:         none 
+Splitrule:                        variance 
+OOB prediction error (MSE):       10.74731 
+R squared (OOB):                  0.8729433 
+Ranger result
+
+Call:
+ ranger::ranger(`_Y` ~ ., data = cbind(`_Y` = Y, X), num.trees = num.trees,      mtry = mtry, min.node.size = min.node.size, replace = replace,      sample.fraction = sample.fraction, case.weights = obsWeights,      write.forest = write.forest, probability = probability, num.threads = num.threads,      verbose = verbose) 
+
+Type:                             Probability estimation 
+Number of trees:                  500 
+Sample size:                      506 
+Number of independent variables:  13 
+Mtry:                             3 
+Target node size:                 1 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.08326064 
+Generalized Linear Model of class 'speedglm':
+
+Call:  speedglm::speedglm(formula = Y ~ ., data = X, family = family,      weights = obsWeights, maxit = maxit, k = k) 
+
+Coefficients:
+(Intercept)         crim           zn        indus         chas          nox  
+  3.646e+01   -1.080e-01    4.642e-02    2.056e-02    2.687e+00   -1.777e+01  
+         rm          age          dis          rad          tax      ptratio  
+  3.810e+00    6.922e-04   -1.476e+00    3.060e-01   -1.233e-02   -9.527e-01  
+      black        lstat  
+  9.312e-03   -5.248e-01  
+
+Generalized Linear Model of class 'speedglm':
+
+Call:  speedglm::speedglm(formula = Y ~ ., data = X, family = family,      weights = obsWeights, maxit = maxit, k = k) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+              Estimate Std. Error  t value Pr(>|t|)    
+(Intercept)  3.646e+01   5.103459   7.1441 3.28e-12 ***
+crim        -1.080e-01   0.032865  -3.2865 1.09e-03 ** 
+zn           4.642e-02   0.013728   3.3816 7.78e-04 ***
+indus        2.056e-02   0.061496   0.3343 7.38e-01    
+chas         2.687e+00   0.861580   3.1184 1.93e-03 ** 
+nox         -1.777e+01   3.819744  -4.6513 4.25e-06 ***
+rm           3.810e+00   0.417925   9.1161 1.98e-18 ***
+age          6.922e-04   0.013210   0.0524 9.58e-01    
+dis         -1.476e+00   0.199455  -7.3980 6.01e-13 ***
+rad          3.060e-01   0.066346   4.6129 5.07e-06 ***
+tax         -1.233e-02   0.003760  -3.2800 1.11e-03 ** 
+ptratio     -9.527e-01   0.130827  -7.2825 1.31e-12 ***
+black        9.312e-03   0.002686   3.4668 5.73e-04 ***
+lstat       -5.248e-01   0.050715 -10.3471 7.78e-23 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+---
+null df: 505; null deviance: 42716.3;
+residuals df: 492; residuals deviance: 11078.78;
+# obs.: 506; # non-zero weighted obs.: 506;
+AIC: 3027.609; log Likelihood: -1498.804;
+RSS: 11078.8; dispersion: 22.51785; iterations: 1;
+rank: 14; max tolerance: 1e+00; convergence: FALSE.
+Generalized Linear Model of class 'speedglm':
+
+Call:  speedglm::speedglm(formula = Y ~ ., data = X, family = family,      weights = obsWeights, maxit = maxit, k = k) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) 10.682635   3.921395  2.7242 6.45e-03 ** 
+crim        -0.040649   0.049796 -0.8163 4.14e-01    
+zn           0.012134   0.010678  1.1364 2.56e-01    
+indus       -0.040715   0.045615 -0.8926 3.72e-01    
+chas         0.248209   0.653283  0.3799 7.04e-01    
+nox         -3.601085   2.924365 -1.2314 2.18e-01    
+rm           1.155156   0.374843  3.0817 2.06e-03 ** 
+age         -0.018661   0.009319 -2.0023 4.53e-02 *  
+dis         -0.518934   0.146286 -3.5474 3.89e-04 ***
+rad          0.255522   0.061391  4.1622 3.15e-05 ***
+tax         -0.009500   0.003107 -3.0574 2.23e-03 ** 
+ptratio     -0.409317   0.103191 -3.9666 7.29e-05 ***
+black       -0.001452   0.002558 -0.5674 5.70e-01    
+lstat       -0.318436   0.054735 -5.8178 5.96e-09 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+---
+null df: 505; null deviance: 669.76;
+residuals df: 492; residuals deviance: 296.39;
+# obs.: 506; # non-zero weighted obs.: 506;
+AIC: 324.3944; log Likelihood: -148.1972;
+RSS: 1107.5; dispersion: 1; iterations: 7;
+rank: 14; max tolerance: 7.55e-12; convergence: TRUE.
+Generalized Linear Model of class 'speedglm':
+
+Call:  speedglm::speedglm(formula = Y ~ ., data = X, family = family,      weights = obsWeights, maxit = maxit, k = k) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+              Estimate Std. Error  t value Pr(>|t|)    
+(Intercept)  3.646e+01   5.103459   7.1441 3.28e-12 ***
+crim        -1.080e-01   0.032865  -3.2865 1.09e-03 ** 
+zn           4.642e-02   0.013728   3.3816 7.78e-04 ***
+indus        2.056e-02   0.061496   0.3343 7.38e-01    
+chas         2.687e+00   0.861580   3.1184 1.93e-03 ** 
+nox         -1.777e+01   3.819744  -4.6513 4.25e-06 ***
+rm           3.810e+00   0.417925   9.1161 1.98e-18 ***
+age          6.922e-04   0.013210   0.0524 9.58e-01    
+dis         -1.476e+00   0.199455  -7.3980 6.01e-13 ***
+rad          3.060e-01   0.066346   4.6129 5.07e-06 ***
+tax         -1.233e-02   0.003760  -3.2800 1.11e-03 ** 
+ptratio     -9.527e-01   0.130827  -7.2825 1.31e-12 ***
+black        9.312e-03   0.002686   3.4668 5.73e-04 ***
+lstat       -5.248e-01   0.050715 -10.3471 7.78e-23 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+---
+null df: 505; null deviance: 42716.3;
+residuals df: 492; residuals deviance: 11078.78;
+# obs.: 506; # non-zero weighted obs.: 506;
+AIC: 3027.609; log Likelihood: -1498.804;
+RSS: 11078.8; dispersion: 22.51785; iterations: 1;
+rank: 14; max tolerance: 1e+00; convergence: FALSE.
+Generalized Linear Model of class 'speedglm':
+
+Call:  speedglm::speedglm(formula = Y ~ ., data = X, family = family,      weights = obsWeights, maxit = maxit, k = k) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) 10.682635   3.921395  2.7242 6.45e-03 ** 
+crim        -0.040649   0.049796 -0.8163 4.14e-01    
+zn           0.012134   0.010678  1.1364 2.56e-01    
+indus       -0.040715   0.045615 -0.8926 3.72e-01    
+chas         0.248209   0.653283  0.3799 7.04e-01    
+nox         -3.601085   2.924365 -1.2314 2.18e-01    
+rm           1.155156   0.374843  3.0817 2.06e-03 ** 
+age         -0.018661   0.009319 -2.0023 4.53e-02 *  
+dis         -0.518934   0.146286 -3.5474 3.89e-04 ***
+rad          0.255522   0.061391  4.1622 3.15e-05 ***
+tax         -0.009500   0.003107 -3.0574 2.23e-03 ** 
+ptratio     -0.409317   0.103191 -3.9666 7.29e-05 ***
+black       -0.001452   0.002558 -0.5674 5.70e-01    
+lstat       -0.318436   0.054735 -5.8178 5.96e-09 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+---
+null df: 505; null deviance: 669.76;
+residuals df: 492; residuals deviance: 296.39;
+# obs.: 506; # non-zero weighted obs.: 506;
+AIC: 324.3944; log Likelihood: -148.1972;
+RSS: 1107.5; dispersion: 1; iterations: 7;
+rank: 14; max tolerance: 7.55e-12; convergence: TRUE.
+Linear Regression Model of class 'speedlm':
+
+Call:  speedglm::speedlm(formula = Y ~ ., data = X, weights = obsWeights) 
+
+Coefficients:
+(Intercept)         crim           zn        indus         chas          nox  
+  3.646e+01   -1.080e-01    4.642e-02    2.056e-02    2.687e+00   -1.777e+01  
+         rm          age          dis          rad          tax      ptratio  
+  3.810e+00    6.922e-04   -1.476e+00    3.060e-01   -1.233e-02   -9.527e-01  
+      black        lstat  
+  9.312e-03   -5.248e-01  
+
+Linear Regression Model of class 'speedlm':
+
+Call:  speedglm::speedlm(formula = Y ~ ., data = X, weights = obsWeights) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+                  coef       se       t   p.value    
+(Intercept)  36.459488 5.103459   7.144 3.283e-12 ***
+crim         -0.108011 0.032865  -3.287 1.087e-03 ** 
+zn            0.046420 0.013727   3.382 7.781e-04 ***
+indus         0.020559 0.061496   0.334 7.383e-01    
+chas          2.686734 0.861580   3.118 1.925e-03 ** 
+nox         -17.766611 3.819744  -4.651 4.246e-06 ***
+rm            3.809865 0.417925   9.116 1.979e-18 ***
+age           0.000692 0.013210   0.052 9.582e-01    
+dis          -1.475567 0.199455  -7.398 6.013e-13 ***
+rad           0.306049 0.066346   4.613 5.071e-06 ***
+tax          -0.012335 0.003761  -3.280 1.112e-03 ** 
+ptratio      -0.952747 0.130827  -7.283 1.309e-12 ***
+black         0.009312 0.002686   3.467 5.729e-04 ***
+lstat        -0.524758 0.050715 -10.347 7.777e-23 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+---
+Residual standard error: 4.745298 on 492 degrees of freedom;
+observations: 506;  R^2: 0.741;  adjusted R^2: 0.734;
+F-statistic: 108.1 on 13 and 492 df;  p-value: 0.
+Linear Regression Model of class 'speedlm':
+
+Call:  speedglm::speedlm(formula = Y ~ ., data = X, weights = obsWeights) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+                 coef       se      t   p.value    
+(Intercept)  1.667540 0.366239  4.553 6.670e-06 ***
+crim         0.000303 0.002358  0.128 8.979e-01    
+zn           0.002303 0.000985  2.338 1.981e-02 *  
+indus       -0.004025 0.004413 -0.912 3.621e-01    
+chas         0.033853 0.061829  0.548 5.843e-01    
+nox         -0.724254 0.274116 -2.642 8.501e-03 ** 
+rm           0.135798 0.029992  4.528 7.483e-06 ***
+age         -0.003107 0.000948 -3.278 1.121e-03 ** 
+dis         -0.074892 0.014313 -5.232 2.482e-07 ***
+rad          0.016816 0.004761  3.532 4.515e-04 ***
+tax         -0.000672 0.000270 -2.490 1.311e-02 *  
+ptratio     -0.049838 0.009389 -5.308 1.677e-07 ***
+black        0.000147 0.000193  0.760 4.474e-01    
+lstat       -0.019759 0.003639 -5.429 8.912e-08 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+---
+Residual standard error: 0.340537 on 492 degrees of freedom;
+observations: 506;  R^2: 0.519;  adjusted R^2: 0.506;
+F-statistic: 40.86 on 13 and 492 df;  p-value: 0.
+Linear Regression Model of class 'speedlm':
+
+Call:  speedglm::speedlm(formula = Y ~ ., data = X, weights = obsWeights) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+                  coef       se       t   p.value    
+(Intercept)  36.459488 5.103459   7.144 3.283e-12 ***
+crim         -0.108011 0.032865  -3.287 1.087e-03 ** 
+zn            0.046420 0.013727   3.382 7.781e-04 ***
+indus         0.020559 0.061496   0.334 7.383e-01    
+chas          2.686734 0.861580   3.118 1.925e-03 ** 
+nox         -17.766611 3.819744  -4.651 4.246e-06 ***
+rm            3.809865 0.417925   9.116 1.979e-18 ***
+age           0.000692 0.013210   0.052 9.582e-01    
+dis          -1.475567 0.199455  -7.398 6.013e-13 ***
+rad           0.306049 0.066346   4.613 5.071e-06 ***
+tax          -0.012335 0.003761  -3.280 1.112e-03 ** 
+ptratio      -0.952747 0.130827  -7.283 1.309e-12 ***
+black         0.009312 0.002686   3.467 5.729e-04 ***
+lstat        -0.524758 0.050715 -10.347 7.777e-23 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+---
+Residual standard error: 4.745298 on 492 degrees of freedom;
+observations: 506;  R^2: 0.741;  adjusted R^2: 0.734;
+F-statistic: 108.1 on 13 and 492 df;  p-value: 0.
+Linear Regression Model of class 'speedlm':
+
+Call:  speedglm::speedlm(formula = Y ~ ., data = X, weights = obsWeights) 
+
+Coefficients:
+ ------------------------------------------------------------------ 
+                 coef       se      t   p.value    
+(Intercept)  1.667540 0.366239  4.553 6.670e-06 ***
+crim         0.000303 0.002358  0.128 8.979e-01    
+zn           0.002303 0.000985  2.338 1.981e-02 *  
+indus       -0.004025 0.004413 -0.912 3.621e-01    
+chas         0.033853 0.061829  0.548 5.843e-01    
+nox         -0.724254 0.274116 -2.642 8.501e-03 ** 
+rm           0.135798 0.029992  4.528 7.483e-06 ***
+age         -0.003107 0.000948 -3.278 1.121e-03 ** 
+dis         -0.074892 0.014313 -5.232 2.482e-07 ***
+rad          0.016816 0.004761  3.532 4.515e-04 ***
+tax         -0.000672 0.000270 -2.490 1.311e-02 *  
+ptratio     -0.049838 0.009389 -5.308 1.677e-07 ***
+black        0.000147 0.000193  0.760 4.474e-01    
+lstat       -0.019759 0.003639 -5.429 8.912e-08 ***
+
+------------------------------------------------------------------- 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+---
+Residual standard error: 0.340537 on 492 degrees of freedom;
+observations: 506;  R^2: 0.519;  adjusted R^2: 0.506;
+F-statistic: 40.86 on 13 and 492 df;  p-value: 0.
+══ testthat results  ═══════════════════════════════════════════════════════════
+[ OK: 68 | SKIPPED: 0 | WARNINGS: 22 | FAILED: 0 ]
+> 
+> proc.time()
+   user  system elapsed 
+ 53.772   1.933  51.703 

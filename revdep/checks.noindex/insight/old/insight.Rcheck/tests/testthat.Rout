@@ -1,0 +1,66 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(insight)
+> 
+> if (length(strsplit(packageDescription("insight")$Version, "\\.")[[1]]) > 3) {
++   Sys.setenv("RunAllinsightTests" = "yes")
++ } else {
++   Sys.setenv("RunAllinsightTests" = "no")
++ }
+> 
+> test_check("insight")
+GAM s.wam loop 1: deviance = 66.42095 
+GAM s.wam loop 2: deviance = 63.77252 
+GAM s.wam loop 3: deviance = 63.25199 
+GAM s.wam loop 4: deviance = 63.13399 
+GAM s.wam loop 5: deviance = 63.11016 
+GAM s.wam loop 6: deviance = 63.10748 
+GAM s.wam loop 7: deviance = 63.10727 
+GAM s.wam loop 8: deviance = 63.10725 
+GAM s.wam loop 9: deviance = 63.10725 
+?????????GAMLSS-RS iteration 1: Global Deviance = 4771.925 
+GAMLSS-CG iteration 1: Global Deviance = 4771.013 
+GAMLSS-CG iteration 2: Global Deviance = 4770.994 
+GAMLSS-CG iteration 3: Global Deviance = 4770.994 
+Gu & Wahba 4 term additive model
+???(Intercept)    tensionM    tensionH 
+   36.38889   -10.00000   -14.72222 
+[31mWarning: Data frame is empty, probably component 'all' does not exist in the random-part of the model?
+[39m[31mWarning: Data frame is empty, probably you have an intercept-only model?
+[39m[31mWarning: Data frame is empty, probably component 'dispersion' does not exist in the random-part of the model?
+[39mEstimating SMNL model 
+Fitting one lmer() model. [DONE]
+Calculating p-values. [DONE]
+Fitting one lmer() model. [DONE]
+Calculating p-values. [DONE]
+# weights:  6 (5 variable)
+initial  value 131.004817 
+iter  10 value 108.535568
+final  value 108.535541 
+converged
+VGLM    linear loop  1 :  deviance = 5.181115
+VGLM    linear loop  2 :  deviance = 5.129147
+VGLM    linear loop  3 :  deviance = 5.129141
+VGLM    linear loop  4 :  deviance = 5.129141
+══ testthat results  ═══════════════════════════════════════════════════════════
+[ OK: 1917 | SKIPPED: 5 | WARNINGS: 6 | FAILED: 0 ]
+> 
+> proc.time()
+   user  system elapsed 
+ 51.551   3.049  55.998 

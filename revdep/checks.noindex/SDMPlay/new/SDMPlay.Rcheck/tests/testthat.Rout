@@ -1,0 +1,142 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(SDMPlay)
+> 
+> test_check("SDMPlay")
+[1] "xydata= 500"
+[1] "presvals= 500"
+[1] "presvals.cellnb= 500"
+     depth seasurface_temperature_mean_1965_1974
+[1,]  -230                                     4
+[2,] -1440                                     6
+[3,] -1318                                     4
+[4,] -1419                                     4
+[5,]  -214                                     5
+[6,]  -224                                     5
+     seasurface_temperature_amplitude_1965_1974
+[1,]                                         -1
+[2,]                                         -3
+[3,]                                         -2
+[4,]                                         -1
+[5,]                                         -2
+[6,]                                         -2
+     seafloor_temperature_mean_1965_1974
+[1,]                                   1
+[2,]                                   2
+[3,]                                   2
+[4,]                                  NA
+[5,]                                   2
+[6,]                                  NA
+     seafloor_temperature_amplitude_1965_1974
+[1,]                                        0
+[2,]                                        0
+[3,]                                        0
+[4,]                                       NA
+[5,]                                        0
+[6,]                                       NA
+     seasurface_salinity_mean_1965_1974 seasurface_salinity_amplitude_1965_1974
+[1,]                                 34                                       0
+[2,]                                 34                                       0
+[3,]                                 34                                       0
+[4,]                                 34                                       0
+[5,]                                 34                                       0
+[6,]                                 34                                       0
+     seafloor_salinity_mean_1965_1974 seafloor_salinity_amplitude_1965_1974
+[1,]                               34                                     0
+[2,]                               35                                     0
+[3,]                               35                                     0
+[4,]                               NA                                    NA
+[5,]                               34                                     0
+[6,]                               NA                                    NA
+     chlorophyla_summer_mean_2002_2009 geomorphology sediments slope
+[1,]                                 0            14         4     0
+[2,]                                 0            14         4     0
+[3,]                                 0            14         2     0
+[4,]                                 0            14         7     0
+[5,]                                 0             2         4     0
+[6,]                                 1             2         4     0
+     seafloor_oxygen_mean_1955_2012 roughness
+[1,]                              6       116
+[2,]                              5       758
+[3,]                             NA       683
+[4,]                              4       256
+[5,]                              7       112
+[6,]                             NA       160
+     depth seasurface_temperature_mean_1965_1974
+[1,]  -230                                     4
+[2,] -1440                                     6
+[3,] -1318                                     4
+[4,] -1419                                     4
+[5,]  -214                                     5
+[6,]  -224                                     5
+     seasurface_temperature_amplitude_1965_1974
+[1,]                                         -1
+[2,]                                         -3
+[3,]                                         -2
+[4,]                                         -1
+[5,]                                         -2
+[6,]                                         -2
+     seafloor_temperature_mean_1965_1974
+[1,]                                   1
+[2,]                                   2
+[3,]                                   2
+[4,]                                  NA
+[5,]                                   2
+[6,]                                  NA
+     seafloor_temperature_amplitude_1965_1974
+[1,]                                        0
+[2,]                                        0
+[3,]                                        0
+[4,]                                       NA
+[5,]                                        0
+[6,]                                       NA
+     seasurface_salinity_mean_1965_1974 seasurface_salinity_amplitude_1965_1974
+[1,]                                 34                                       0
+[2,]                                 34                                       0
+[3,]                                 34                                       0
+[4,]                                 34                                       0
+[5,]                                 34                                       0
+[6,]                                 34                                       0
+     seafloor_salinity_mean_1965_1974 seafloor_salinity_amplitude_1965_1974
+[1,]                               34                                     0
+[2,]                               35                                     0
+[3,]                               35                                     0
+[4,]                               NA                                    NA
+[5,]                               34                                     0
+[6,]                               NA                                    NA
+     chlorophyla_summer_mean_2002_2009 geomorphology sediments slope
+[1,]                                 0            14         4     0
+[2,]                                 0            14         4     0
+[3,]                                 0            14         2     0
+[4,]                                 0            14         7     0
+[5,]                                 0             2         4     0
+[6,]                                 1             2         4     0
+     seafloor_oxygen_mean_1955_2012 roughness
+[1,]                              6       116
+[2,]                              5       758
+[3,]                             NA       683
+[4,]                              4       256
+[5,]                              7       112
+[6,]                             NA       160
+══ testthat results  ═══════════════════════════════════════════════════════════
+[ OK: 5 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
+> 
+> proc.time()
+   user  system elapsed 
+  2.166   0.284   2.572 

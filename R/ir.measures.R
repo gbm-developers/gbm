@@ -20,7 +20,7 @@
 #' @param pred Predicted value.
 #' @param metric What type of performance measure to compute.
 #' @param y,y.f,f,w,group,max.rank Used internally.
-#' @param x ?.
+#' @param x Numeric vector.
 #' @return The requested performance measure.
 #'
 #' @details
@@ -47,16 +47,7 @@
 #' @references C. Burges (2010). "From RankNet to LambdaRank to LambdaMART: An
 #' Overview", Microsoft Research Technical Report MSR-TR-2010-82.
 #' @keywords models
-#' 
-#' @examples
-#' 
-#' ##---- Should be DIRECTLY executable !! ----
-#' ##-- ==>  Define data, use random,
-#' ##--	or do  help(data=index)  for the standard data sets.
-
-
-# Area under ROC curve = ratio of correctly ranking pairs
-#' @rdname gbm.roc.area
+#'
 #' @export
 gbm.roc.area <- function(obs, pred) {
    n1 <- sum(obs)

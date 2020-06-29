@@ -32,7 +32,7 @@ perf.pairwise(y, f, group, metric = "ndcg", w = NULL, max.rank = 0)
 
 \item{pred}{Predicted value.}
 
-\item{x}{?.}
+\item{x}{Numeric vector.}
 
 \item{y, y.f, f, w, group, max.rank}{Used internally.}
 
@@ -59,12 +59,6 @@ gbm.conc(obs[order(-pred)])}.
 
 \code{gbm.conc} is more general as it allows non-binary targets, but is
 significantly slower.
-}
-\examples{
-
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 }
 \references{
 C. Burges (2010). "From RankNet to LambdaRank to LambdaMART: An

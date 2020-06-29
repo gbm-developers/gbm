@@ -1,0 +1,44 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(data.table)
+> context("Prediction error")
+> # {{{ "AUC censored data: order"
+> test_that("AUC censored data: order",{
++     library(riskRegression)
++     library(survival)
++     library(prodlim)
++     data(Melanoma)
++     setDT(Melanoma)
++     setkey(Melanoma,age)
++     fit <- coxph(Surv(time,status!=0)~invasion+epicel+logthick,data=Melanoma,x=TRUE)
++     a <- Score(list(fit),data=Melanoma,Surv(time,status!=0)~invasion+epicel+logthick,cens.model="marginal",metric="Auc")
++     A <- Score(list(fit),data=Melanoma,Surv(time,status!=0)~invasion+epicel+logthick,cens.model="cox",metric="Auc")
++     setkey(Melanoma,logthick)
++     b <- Score(list(fit),data=Melanoma,Surv(time,status!=0)~invasion+epicel+logthick,cens.model="marginal",metric="Auc")
++     B <- Score(list(fit),data=Melanoma,Surv(time,status!=0)~invasion+epicel+logthick,cens.model="cox",metric="Auc")
++     a$call <- b$call <- A$call <- B$call <- NULL
++     expect_equal(A,B)
++     expect_equal(a,b)
++ })
+> # }}}
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  2.476   0.446   3.066 
