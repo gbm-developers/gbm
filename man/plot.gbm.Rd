@@ -55,7 +55,7 @@ for the continuous panel variables. See \code{\link[graphics:coplot]{co.interval
 and \code{\link[lattice:shingles]{equal.count}} for further details.}
 
 \item{overlap}{The fraction of overlap of the conditioning variables. See
-\code{\link[graphics]{co.intervals}} and \code{\link[lattice:shingles]{equal.count}}
+\code{\link[graphics:coplot]{co.intervals}} and \code{\link[lattice:shingles]{equal.count}}
 for further details.}
 
 \item{col.regions}{Color vector to be used if \code{level.plot} is

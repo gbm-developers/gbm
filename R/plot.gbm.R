@@ -49,7 +49,7 @@
 #' and \code{\link[lattice:shingles]{equal.count}} for further details.
 #'
 #' @param overlap The fraction of overlap of the conditioning variables. See
-#' \code{\link[graphics]{co.intervals}} and \code{\link[lattice:shingles]{equal.count}}
+#' \code{\link[graphics:coplot]{co.intervals}} and \code{\link[lattice:shingles]{equal.count}}
 #' for further details.
 #'
 #' @param col.regions Color vector to be used if \code{level.plot} is
