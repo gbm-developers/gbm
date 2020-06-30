@@ -32,7 +32,7 @@ calibrate.plot(
 All others default to squared error assuming \code{gaussian}.}
 
 \item{replace}{Determines whether this plot will replace or overlay the
-current plot.  \code{replace=FALSE} is useful for comparing the calibration
+current plot. \code{replace=FALSE} is useful for comparing the calibration
 of several methods.}
 
 \item{line.par}{Graphics parameters for the line.}
@@ -56,7 +56,7 @@ select limits.}
 calibration curve.}
 
 \item{...}{Additional optional arguments to be passed onto 
-\code{\link[graphics]{plot}}}
+\code{\link[graphics:plot.default]{plot}}}
 }
 \value{
 No return values.

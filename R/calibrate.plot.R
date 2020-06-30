@@ -13,7 +13,7 @@
 #' 
 #' @author Greg Ridgeway \email{gregridgeway@@gmail.com}.
 #' 
-#' @seealso \code{\link[graphics]{plot}}, \code{\link[stats]{quantile}},
+#' @seealso \code{\link[graphics:plot.default]{plot}}, \code{\link[stats]{quantile}},
 #' \code{\link[base]{jitter}}, \code{\link[graphics]{rug}}.
 #' 
 #' @keywords aplot
@@ -52,7 +52,7 @@ quantile.rug <- function(x, prob = 0:10/10, ...) {
 #' All others default to squared error assuming \code{gaussian}.
 #' 
 #' @param replace Determines whether this plot will replace or overlay the
-#' current plot.  \code{replace=FALSE} is useful for comparing the calibration
+#' current plot. \code{replace=FALSE} is useful for comparing the calibration
 #' of several methods.
 #' 
 #' @param line.par Graphics parameters for the line.
@@ -76,7 +76,7 @@ quantile.rug <- function(x, prob = 0:10/10, ...) {
 #' calibration curve.
 #' 
 #' @param ... Additional optional arguments to be passed onto 
-#' \code{\link[graphics]{plot}}
+#' \code{\link[graphics:plot.default]{plot}}
 #' 
 #' @return No return values.
 #' 

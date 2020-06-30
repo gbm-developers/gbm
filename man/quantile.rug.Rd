@@ -27,7 +27,7 @@ plot(x, y)
 quantile.rug(x)
 }
 \seealso{
-\code{\link[graphics]{plot}}, \code{\link[stats]{quantile}},
+\code{\link[graphics:plot.default]{plot}}, \code{\link[stats]{quantile}},
 \code{\link[base]{jitter}}, \code{\link[graphics]{rug}}.
 }
 \author{

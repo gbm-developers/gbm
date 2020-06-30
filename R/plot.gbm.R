@@ -9,8 +9,8 @@
 #' the weighted tree traversal method described in Friedman (2001) to do the
 #' integration. Based on the variable types included in the projection,
 #' \code{plot.gbm} selects an appropriate display choosing amongst line plots,
-#' contour plots, and \code{\link[lattice]{lattice}} plots. If the default
-#' graphics are not sufficient the user may set \code{return.grid=TRUE}, store
+#' contour plots, and \code{\link[lattice:Lattice]{lattice}} plots. If the default
+#' graphics are not sufficient the user may set \code{return.grid = TRUE}, store
 #' the result of the function, and develop another graphic display more
 #' appropriate to the particular example.
 #' 
@@ -19,7 +19,7 @@
 #' 
 #' @param i.var Vector of indices or the names of the variables to plot. If
 #' using indices, the variables are indexed in the same order that they appear
-#' in the initial \code{gbm} formula.  If \code{length(i.var)} is between 1 and
+#' in the initial \code{gbm} formula. If \code{length(i.var)} is between 1 and
 #' 3 then \code{plot.gbm} produces the plots. Otherwise, \code{plot.gbm}
 #' returns only the grid of evaluation points and their average predictions
 #' 
@@ -45,20 +45,20 @@
 #' level plot. Only used when \code{level.plot = TRUE}. Default is \code{FALSE}.
 #'
 #' @param number Integer specifying the number of conditional intervals to use
-#' for the continuous panel variables. See \code{\link[graphics]{co.intervals}}
-#' and \code{\link[lattice]{equal.count}} for further details.
+#' for the continuous panel variables. See \code{\link[graphics:coplot]{co.intervals}}
+#' and \code{\link[lattice:shingles]{equal.count}} for further details.
 #'
 #' @param overlap The fraction of overlap of the conditioning variables. See
-#' \code{\link[graphics]{co.intervals}} and \code{\link[lattice]{equal.count}}
+#' \code{\link[graphics]{co.intervals}} and \code{\link[lattice:shingles]{equal.count}}
 #' for further details.
 #'
 #' @param col.regions Color vector to be used if \code{level.plot} is
 #' \code{TRUE}. Defaults to the wonderful Matplotlib 'viridis' color map
-#' provided by the \code{viridis} package. See \code{\link[viridis]{viridis}}
+#' provided by the \code{viridis} package. See \code{\link[viridis:reexports]{viridis}}
 #' for details.
 #' 
 #' @param ... Additional optional arguments to be passed onto 
-#' \code{\link[graphics]{plot}}.
+#' \code{\link[graphics:plot.default]{plot}}.
 #' 
 #' @return If \code{return.grid = TRUE}, a grid of evaluation points and their 
 #' average predictions. Otherwise, a plot is returned.

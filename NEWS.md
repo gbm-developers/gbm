@@ -1,3 +1,8 @@
+# gbm 2.1.7
+
+* Fix `Non-file package-anchored link(s) in documentation...` warning.
+
+
 # gbm 2.1.6
 
 * Corrected the number of arguments for `gbm_shrink_gradient()` in `gbm-init.c` [(#50)](https://github.com/gbm-developers/gbm/issues/50). (Thanks to CRAN for highlighting the issue.)
@@ -46,7 +51,7 @@
 
 * Fixed bug with axis labels in the `plot()` method for `"gbm"` objects [(#17)](https://github.com/gbm-developers/gbm/issues/17).
 
-* The `plot()` method for `"gbm"` objects is now more consistent and always returns a `"trellis"` object [(#19)](https://github.com/gbm-developers/gbm/issues/19). Consequently, setting graphical parameters via `par` will no longer have an effect on the output from `plot.gbm`.
+* The `plot()` method for `"gbm"` objects is now more consistent and always returns a `"trellis"` object [(#19)](https://github.com/gbm-developers/gbm/issues/19). Consequently, setting graphical parameters via `par` will no longer have an effect on the output from `plot.gbm()`.
 
 * The `plot()` method for `"gbm"` objects gained five new arguments: `level.plot`, `contour`, `number`, `overlap`, and `col.regions`; see `?plot.gbm` for details.
 
