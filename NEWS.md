@@ -1,5 +1,10 @@
 # gbm 2.1.7
 
+* Removed experimental functions `shrink.gbm()` and `shrink.gbm.pred()`; the latter seemed broken anyway. Happy to accept a PR if anyone wants to fix them.
+
+
+# gbm 2.1.7
+
 * Fix `Non-file package-anchored link(s) in documentation...` warning.
 
 

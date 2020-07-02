@@ -57,7 +57,7 @@ shrink.gbm <- function(object,n.trees,
 
    cCols <- length(object$var.names)
    cRows <- length(x)/cCols
-
+   
 
    if(missing(n.trees) || (n.trees > object$n.trees))
    {
@@ -70,6 +70,7 @@ shrink.gbm <- function(object,n.trees,
                    X=as.double(x),
                    cRows=as.integer(cRows),
                    cCols=as.integer(cCols),
+                   cNumClasses=as.integer(object$num.classes),
                    n.trees=as.integer(n.trees),
                    initF=object$initF,
                    trees=object$trees,

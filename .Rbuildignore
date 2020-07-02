@@ -5,3 +5,4 @@
 ^README\.html$
 ^revdep$
 ^codecov\.yml$
+^deprecated$
