@@ -1,4 +1,4 @@
-# gbm 2.1.7
+# gbm 2.1.8
 
 * Removed experimental functions `shrink.gbm()` and `shrink.gbm.pred()`; the latter seemed broken anyway. Happy to accept a PR if anyone wants to fix them.
 

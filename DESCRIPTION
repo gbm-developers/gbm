@@ -1,5 +1,5 @@
 Package: gbm
-Version: 2.1.7
+Version: 2.1.8
 Title: Generalized Boosted Regression Models
 Authors@R: c(
   person("Brandon", "Greenwell",
