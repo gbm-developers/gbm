@@ -13,7 +13,7 @@
 #' @export
 reconstructGBMdata <- function(x)
 {
-   if(class(x) != "gbm")
+   if(!inherits(x, "gbm"))
    {
       stop( "This function is for use only with objects having class 'gbm'" )
    } else
