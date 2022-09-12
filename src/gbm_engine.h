@@ -24,8 +24,6 @@
 #include "dataset.h"
 #include "node_factory.h"
 
-using namespace std;
-
 class CGBM
 {
 
