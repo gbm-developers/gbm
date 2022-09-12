@@ -228,6 +228,7 @@ double CMultinomial::BagImprovement
       }
     }
 
+    delete[] adStepProb;
     return dReturnValue/dW;
 }
 
