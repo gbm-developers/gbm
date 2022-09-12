@@ -87,10 +87,10 @@ public:
                           unsigned long nTrain);
 
 private:
-    vector<double> vecdNum;
-    vector<double> vecdDen;
-    vector<double> vecdMax;
-    vector<double> vecdMin;
+    std::vector<double> vecdNum;
+    std::vector<double> vecdDen;
+    std::vector<double> vecdMax;
+    std::vector<double> vecdMin;
 };
 
 #endif // POISSON_H
