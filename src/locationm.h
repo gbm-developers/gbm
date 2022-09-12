@@ -38,7 +38,7 @@ private:
 
     struct comp{
 
-	    bool operator()(pair<int, double> prP, pair<int, double> prQ)
+	    bool operator()(std::pair<int, double> prP, std::pair<int, double> prQ)
 		{
 		    return (prP.second < prQ.second);
 		}
