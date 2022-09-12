@@ -20,8 +20,6 @@
 #include "node_factory.h"
 #include "dataset.h"
 
-using namespace std;
-
 class CNodeSearch
 {
 public:
