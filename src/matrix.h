@@ -55,13 +55,13 @@ public:
         double rv;
         for (int i=0; i < actualsize; i++)
         {
-            cout << "i=" << i << ": ";
+            std::cout << "i=" << i << ": ";
             for (int j=0; j<actualsize; j++)
             {
                 getvalue(i,j,rv,xyz);
-                cout << rv << " ";
+                std::cout << rv << " ";
             } 
-            cout << endl;
+            std::cout << std::endl;
         }
     };
 
@@ -100,11 +100,11 @@ public:
                 }
             }
         }
-        cout << "Worst diagonal value deviation from unity: " 
-             << maxunitydeviation << " at row/column " << worstdiagonal << endl;
-        cout << "Worst off-diagonal value deviation from zero: " 
-             << maxzerodeviation << " at row = " << worstoffdiagonalrow 
-             << ", column = " << worstoffdiagonalcolumn << endl;
+        std::cout << "Worst diagonal value deviation from unity: " 
+                  << maxunitydeviation << " at row/column " << worstdiagonal << std::endl;
+        std::cout << "Worst off-diagonal value deviation from zero: " 
+                  << maxzerodeviation << " at row = " << worstoffdiagonalrow 
+                  << ", column = " << worstoffdiagonalcolumn << std::endl;
     }
 
     void settoproduct(matrix& left, matrix& right)  
