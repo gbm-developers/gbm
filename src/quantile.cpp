@@ -71,7 +71,7 @@ GBMRESULT CQuantile::InitF
 
     if(dAlpha==1.0)
     {
-        dInitF = *max_element(vecd.begin(), vecd.end());
+        dInitF = *std::max_element(vecd.begin(), vecd.end());
     } else
     {
         nth_element(vecd.begin(), vecd.begin() + int(cLength*dAlpha), vecd.end());
@@ -178,7 +178,7 @@ GBMRESULT CQuantile::FitBestConstant
             if(dAlpha==1.0)
             {
                 vecpTermNodes[iNode]->dPrediction = 
-                    *max_element(vecd.begin(), vecd.begin()+iVecd);
+                    *std::max_element(vecd.begin(), vecd.begin()+iVecd);
             } else
             {
                 nth_element(vecd.begin(), 
