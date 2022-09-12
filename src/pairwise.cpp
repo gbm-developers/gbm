@@ -62,7 +62,7 @@ bool CRanker::Rank()
 
     CDoubleUintPairPtrComparison comp;
 
-    sort(vecpdipScoreRank.begin(), vecpdipScoreRank.begin() + cNumItems, comp);
+    std::sort(vecpdipScoreRank.begin(), vecpdipScoreRank.begin() + cNumItems, comp);
 
     bool bChanged = false;
 
@@ -343,7 +343,7 @@ inline void TopRankPos(const double* const adY, const CRanker& ranker, unsigned 
             // All subsequent items are zero, because of presorting
             return;
         }
-        cRankTop = min(cRankTop, ranker.GetRank(cPos));
+        cRankTop = std::min(cRankTop, ranker.GetRank(cPos));
     }
 }
 
@@ -353,7 +353,7 @@ double CMRR::Measure(const double* const adY, const CRanker& ranker)
 
     TopRankPos(adY, ranker, cRankTop, cPos);
 
-    const unsigned int cNumItems =  min(ranker.GetNumItems(), GetCutoffRank());
+    const unsigned int cNumItems =  std::min(ranker.GetNumItems(), GetCutoffRank());
 
     if (cRankTop >= cNumItems + 1)
     {
@@ -407,7 +407,7 @@ void CMAP::Init
 
 
 // Auxiliary function to find the sorted ranks of positive items (veccRankPos), and their number (cPos)
-inline void SortRankPos(const double* const adY, const CRanker& ranker, vector<int>& veccRankPos, unsigned int& cPos)
+inline void SortRankPos(const double* const adY, const CRanker& ranker, std::vector<int>& veccRankPos, unsigned int& cPos)
 {
     // Store all ranks of positive items in veccRankPos
     for (cPos = 0; cPos < ranker.GetNumItems(); cPos++)
@@ -420,7 +420,7 @@ inline void SortRankPos(const double* const adY, const CRanker& ranker, vector<i
         veccRankPos[cPos] = ranker.GetRank(cPos);
     }
 
-    sort(veccRankPos.begin(), veccRankPos.begin() + cPos);
+    std::sort(veccRankPos.begin(), veccRankPos.begin() + cPos);
 }
 
 
@@ -442,8 +442,8 @@ double CMAP::SwapCost(int iItemPos, int iItemNeg, const double* const adY, const
     const int iRankItemNeg  = ranker.GetRank(iItemNeg);
 
     // Search for the position of the two items to swap
-    const vector<int>::iterator itItemPos = upper_bound(veccRankPos.begin(), veccRankPos.begin() + cPos, iRankItemPos);
-    const vector<int>::iterator itItemNeg = upper_bound(veccRankPos.begin(), veccRankPos.begin() + cPos, iRankItemNeg);
+    const std::vector<int>::iterator itItemPos = upper_bound(veccRankPos.begin(), veccRankPos.begin() + cPos, iRankItemPos);
+    const std::vector<int>::iterator itItemNeg = upper_bound(veccRankPos.begin(), veccRankPos.begin() + cPos, iRankItemNeg);
 
     // The number of positive items up to and including iItemPos
     const unsigned int cNumPosNotBelowItemPos = (unsigned int)(itItemPos - veccRankPos.begin());
@@ -556,7 +556,7 @@ CPairwise::~CPairwise()
 
 
 // Auxiliary function for addition of optional offset parameter
-inline const double* OffsetVector(const double* const adX, const double* const adOffset, unsigned int iStart, unsigned int iEnd, vector<double>& vecBuffer)
+inline const double* OffsetVector(const double* const adX, const double* const adOffset, unsigned int iStart, unsigned int iEnd, std::vector<double>& vecBuffer)
 {
     if (adOffset == NULL)
     {
