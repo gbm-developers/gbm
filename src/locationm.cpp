@@ -13,8 +13,6 @@
 #include "locationm.h"
 #include <algorithm>
 
-using namespace std;
-
 /////////////////////////////////////////////////
 // Constructor
 //
@@ -65,8 +63,8 @@ double CLocationM::Median(int iN, double *adV, double *adW)
 
 	// Local variables
 	int ii, iMedIdx;
-	vector<double> vecW;
-	vector< pair<int, double> > vecV;
+	std::vector<double> vecW;
+	std::vector< std::pair<int, double> > vecV;
 	double dCumSum, dWSum, dMed;
 
 	// Check the vector size
@@ -83,7 +81,7 @@ double CLocationM::Median(int iN, double *adV, double *adW)
 	vecV.resize(iN);
 	for (ii = 0; ii < iN; ii++)
 	{
-		vecV[ii] = make_pair(ii, adV[ii]);
+		vecV[ii] = std::make_pair(ii, adV[ii]);
 	}
 
 	// Sort the vector
