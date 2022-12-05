@@ -54,6 +54,6 @@ This is a maintained version of
 versions of [gbm](https://cran.r-project.org/package=gbm) 2.1.x. It
 exists mainly for the purpose of reproducible research and data analyses
 performed with the 2.1.x versions of
-[gbm](https://cran.r-project.org/package=gbm). ~~For newer development,
+[gbm](https://cran.r-project.org/package=gbm). For newer development,
 and a more consistent API, try out the
-[gbm3](https://github.com/gbm-developers/gbm3) package!~~
+[gbm3](https://github.com/gbm-developers/gbm3) package!
