@@ -1,104 +1,0 @@
-
-R version 4.0.0 (2020-04-24) -- "Arbor Day"
-Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin17.0 (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-> library(testthat)
-> library(DALEXtra)
-Loading required package: DALEX
-Welcome to DALEX (version: 1.2.1).
-Find examples and detailed introduction at: https://pbiecek.github.io/ema/
-Additional features will be available after installation of: ggpubr.
-Use 'install_dependencies()' to get all suggested dependencies
-> 
-> test_check("DALEXtra")
-Preparation of a new explainer is initiated
-  -> model label       :  LM 
-  -> data              :  9000  rows  6  cols 
-  -> target variable   :  9000  values 
-  -> model_info        :  package mlr , ver. 2.17.1 , task regression ( [33m default [39m ) 
-  -> predict function  :  yhat.WrappedModel  will be used ( [33m default [39m )
-  -> predicted values  :  numerical, min =  1792.597 , mean =  3506.836 , max =  6241.447  
-  -> residual function :  difference between y and yhat ( [33m default [39m )
-  -> residuals         :  numerical, min =  -257.2555 , mean =  4.687686 , max =  472.356  
- [32m A new explainer has been created! [39m 
-Preparation of a new explainer is initiated
-  -> model label       :  RF 
-  -> data              :  9000  rows  6  cols 
-  -> target variable   :  9000  values 
-  -> model_info        :  package mlr , ver. 2.17.1 , task regression ( [33m default [39m ) 
-  -> predict function  :  yhat.WrappedModel  will be used ( [33m default [39m )
-  -> predicted values  :  numerical, min =  1971.308 , mean =  3507.76 , max =  5770.462  
-  -> residual function :  difference between y and yhat ( [33m default [39m )
-  -> residuals         :  numerical, min =  -708.3335 , mean =  3.763243 , max =  1285.827  
- [32m A new explainer has been created! [39m 
-Preparation of a new explainer is initiated
-  -> model label       :  GBM 
-  -> data              :  9000  rows  6  cols 
-  -> target variable   :  9000  values 
-  -> model_info        :  package mlr , ver. 2.17.1 , task regression ( [33m default [39m ) 
-  -> predict function  :  yhat.WrappedModel  will be used ( [33m default [39m )
-  -> predicted values  :  numerical, min =  2115.758 , mean =  3502.258 , max =  6055.129  
-  -> residual function :  difference between y and yhat ( [33m default [39m )
-  -> residuals         :  numerical, min =  -512.7577 , mean =  9.265594 , max =  778.5281  
- [32m A new explainer has been created! [39m 
-  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%additional arguments ignored in warning()
-Preparation of a new explainer is initiated
-  -> model label       :  R6  ( [33m default [39m )
-  -> data              :  2207  rows  8  cols 
-  -> target variable   :  2207  values 
-  -> model_info        :  package mlr3 , ver. 0.3.0 , task classification ( [33m default [39m ) 
-  -> predict function  :  yhat.LearnerClassif  will be used ( [33m default [39m )
-  -> predicted values  :  numerical, min =  0.05555556 , mean =  0.3221568 , max =  0.9267399  
-  -> residual function :  difference between y and yhat ( [33m default [39m )
-  -> residuals         :  numerical, min =  -0.9267399 , mean =  1.858834e-17 , max =  0.9444444  
- [32m A new explainer has been created! [39m 
-Preparation of a new explainer is initiated
-  -> model label       :  R6  ( [33m default [39m )
-  -> data              :  1000  rows  6  cols 
-  -> target variable   :  1000  values 
-  -> model_info        :  package mlr3 , ver. 0.3.0 , task regression ( [33m default [39m ) 
-  -> predict function  :  yhat.LearnerRegr  will be used ( [33m default [39m )
-  -> predicted values  :  numerical, min =  2289.664 , mean =  3487.019 , max =  5737.175  
-  -> residual function :  difference between y and yhat ( [33m default [39m )
-  -> residuals         :  numerical, min =  -1044.133 , mean =  4.321552e-14 , max =  1080.867  
- [32m A new explainer has been created! [39m 
-Preparation of a new explainer is initiated
-  -> model label       :  WrappedModel  ( [33m default [39m )
-  -> data              :  524  rows  17  cols 
-  -> target variable   :  524  values 
-  -> model_info        :  package mlr , ver. 2.17.1 , task classification ( [33m default [39m ) 
-  -> predict function  :  yhat.WrappedModel  will be used ( [33m default [39m )
-  -> predicted values  :  numerical, min =  0.4349866 , mean =  0.6677779 , max =  0.7299615  
-  -> residual function :  difference between y and yhat ( [33m default [39m )
-  -> residuals         :  numerical, min =  -0.7299615 , mean =  -0.3567092 , max =  0.5650134  
- [32m A new explainer has been created! [39m 
-Preparation of a new explainer is initiated
-  -> model label       :  WrappedModel  ( [33m default [39m )
-  -> data              :  524  rows  18  cols 
-  -> target variable   :  524  values 
-  -> model_info        :  package mlr , ver. 2.17.1 , task regression ( [33m default [39m ) 
-  -> predict function  :  predict_function 
-  -> predicted values  :  numerical, min =  12.77413 , mean =  18.00703 , max =  66.75339  
-  -> residual function :  difference between y and yhat ( [33m default [39m )
-  -> residuals         :  numerical, min =  -26.84399 , mean =  2.481275 , max =  458.6342  
- [32m A new explainer has been created! [39m 
-additional arguments ignored in warning()
-══ testthat results  ═══════════════════════════════════════════════════════════
-[ OK: 63 | SKIPPED: 11 | WARNINGS: 2 | FAILED: 0 ]
-> 
-> proc.time()
-   user  system elapsed 
- 21.368   1.588  24.539 
