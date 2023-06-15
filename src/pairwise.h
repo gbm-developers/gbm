@@ -56,6 +56,7 @@
 #define PAIRWISE_H
 
 #include "distribution.h"
+#include <climits>
 #include "buildinfo.h"
 
 // A class to rerank groups based on (intermediate) scores

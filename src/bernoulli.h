@@ -18,6 +18,7 @@
 #define BERNOULLI_H
 
 #include "distribution.h"
+#include <climits>
 #include "buildinfo.h"
 
 class CBernoulli : public CDistribution

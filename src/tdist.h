@@ -14,6 +14,7 @@
 
 #include <algorithm>
 #include "distribution.h"
+#include <climits>
 #include "locationm.h"
 
 

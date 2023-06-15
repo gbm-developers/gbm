@@ -18,11 +18,13 @@
 #include<vector>
 #include "dataset.h"
 #include "distribution.h"
+#include <climits>
 #include "bernoulli.h"
 #include "adaboost.h"
 #include "poisson.h"
 #include "gaussian.h"
 #include "coxph.h"
+#include <climits>
 #include "laplace.h"
 #include "quantile.h"
 #include "tdist.h"

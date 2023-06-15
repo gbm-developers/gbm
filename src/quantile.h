@@ -18,6 +18,7 @@
 
 #include <algorithm>
 #include "distribution.h"
+#include <climits>
 
 
 class CQuantile: public CDistribution

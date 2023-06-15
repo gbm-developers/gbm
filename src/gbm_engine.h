@@ -20,6 +20,7 @@
 #include <vector>
 #include "buildinfo.h"
 #include "distribution.h"
+#include <climits>
 #include "tree.h"
 #include "dataset.h"
 #include "node_factory.h"

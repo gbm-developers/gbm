@@ -18,6 +18,7 @@
 #define ADABOOST_H
 
 #include "distribution.h"
+#include <climits>
 
 class CAdaBoost : public CDistribution
 {

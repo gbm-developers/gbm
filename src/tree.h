@@ -23,6 +23,7 @@
 #include "dataset.h"
 #include "node_factory.h"
 #include "node_search.h"
+#include <climits>
 
 
 class CCARTTree

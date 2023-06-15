@@ -19,6 +19,7 @@
 #define COXPH_H
 
 #include "distribution.h"
+#include <climits>
 #include "matrix.h"
 
 class CCoxPH : public CDistribution

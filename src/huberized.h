@@ -18,6 +18,7 @@
 #define HUBERIZED_H
 
 #include "distribution.h"
+#include <climits>
 #include "buildinfo.h"
 
 class CHuberized : public CDistribution

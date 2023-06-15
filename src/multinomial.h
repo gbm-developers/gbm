@@ -15,6 +15,7 @@
 
 #include <algorithm>
 #include "distribution.h"
+#include <climits>
 #include "locationm.h"
 
 class CMultinomial : public CDistribution

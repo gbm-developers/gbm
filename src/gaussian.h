@@ -18,6 +18,7 @@
 #define GAUSSIAN_H
 
 #include "distribution.h"
+#include <climits>
 
 class CGaussian : public CDistribution
 {

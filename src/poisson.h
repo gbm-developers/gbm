@@ -18,6 +18,7 @@
 
 #include <Rmath.h>
 #include "distribution.h"
+#include <climits>
 
 class CPoisson : public CDistribution
 {
