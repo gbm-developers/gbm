@@ -92,6 +92,7 @@ GBMRESULT CLaplace::InitF
     }
 
     dInitF = mpLocM->Median(nLength, adArr, adWeight);
+    delete[] adArr;
 
 Cleanup:
     return hr;
@@ -190,6 +191,8 @@ GBMRESULT CLaplace::FitBestConstant
         }
     }
 
+    delete[] adW2;
+    delete[] adArr;
     return hr;
 }
 
