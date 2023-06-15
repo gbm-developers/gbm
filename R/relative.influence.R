@@ -72,7 +72,7 @@ relative.influence <- function(object,
       cat( paste( "n.trees not given. Using", n.trees, "trees.\n" ) )
 
    }
-   if (object$distribution == "multinomial") {
+   if (object$distribution$name == "multinomial") {
        n.trees <- n.trees * object$num.classes
    }
    get.rel.inf <- function(obj)
