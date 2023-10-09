@@ -4,7 +4,7 @@ Title: Generalized Boosted Regression Models
 Authors@R: c(
   person("Ridgeway", "Greg",
          email = "gridge@upenn.edu",
-         role = c("aut", "cre"),
+         role = "aut",
          comment = c(ORCID = "0000-0001-6911-0804")),
   person("Brandon", "Greenwell",
          email = "greenwell.brandon@gmail.com",
