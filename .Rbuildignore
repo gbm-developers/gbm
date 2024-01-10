@@ -6,3 +6,4 @@
 ^revdep$
 ^codecov\.yml$
 ^deprecated$
+^cran-comments\.md$
