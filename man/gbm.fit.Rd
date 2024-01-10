@@ -51,7 +51,7 @@ assumed; otherwise, gaussian is assumed.
 Currently available options are \code{"gaussian"} (squared error), 
 \code{"laplace"} (absolute loss), \code{"tdist"} (t-distribution loss), 
 \code{"bernoulli"} (logistic regression for 0-1 outcomes), 
-\code{"huberized"} (huberized hinge loss for 0-1 outcomes), classes), 
+\code{"huberized"} (huberized hinge loss for 0-1 outcomes), 
 \code{"adaboost"} (the AdaBoost exponential loss for 0-1 outcomes),
 \code{"poisson"} (count outcomes), \code{"coxph"} (right censored 
 observations), \code{"quantile"}, or \code{"pairwise"} (ranking measure 
@@ -93,7 +93,7 @@ the IR measure to use, one of
 }
 
 \code{ndcg} and \code{conc} allow arbitrary target values, while binary
-targets {0,1} are expected for \code{map} and \code{mrr}. For \code{ndcg}
+targets \{0,1\} are expected for \code{map} and \code{mrr}. For \code{ndcg}
 and \code{mrr}, a cut-off can be chosen using a positive integer parameter
 \code{max.rank}. If left unspecified, all ranks are taken into account.
 
@@ -212,7 +212,7 @@ J.H. Friedman (2002). \dQuote{Stochastic Gradient Boosting,}
 B. Kriegler (2007). Cost-Sensitive Stochastic Gradient Boosting Within a 
 Quantitative Regression Framework. Ph.D. Dissertation. University of 
 California at Los Angeles, Los Angeles, CA, USA. Advisor(s) Richard A. Berk. 
-url{https://dl.acm.org/citation.cfm?id=1354603}.
+\url{https://dl.acm.org/doi/book/10.5555/1354603}.
 
 C. Burges (2010). \dQuote{From RankNet to LambdaRank to LambdaMART: An
 Overview,} Microsoft Research Technical Report MSR-TR-2010-82.
