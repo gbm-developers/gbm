@@ -1,14 +1,9 @@
 gbm
 ===
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/gbm)](https://cran.r-project.org/package=gbm)
-[![Build
-Status](https://travis-ci.org/gbm-developers/gbm.svg?branch=master)](https://travis-ci.org/gbm-developers/gbm)
-[![Codecov test
-coverage](https://codecov.io/gh/gbm-developers/gbm/branch/master/graph/badge.svg)](https://codecov.io/gh/gbm-developers/gbm?branch=master)
-[![Downloads](http://cranlogs.r-pkg.org/badges/gbm)](http://cranlogs.r-pkg.org/badges/gbm)
-[![Total
-Downloads](http://cranlogs.r-pkg.org/badges/grand-total/gbm)](http://cranlogs.r-pkg.org/badges/grand-total/gbm)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/gbm)](https://cran.r-project.org/package=gbm)
+[![Downloads](https://cranlogs.r-pkg.org:443/badges/gbm)](https://cranlogs.r-pkg.org:443/badges/gbm)
+[![Total Downloads](https://cranlogs.r-pkg.org:443/badges/grand-total/gbm)](https://cranlogs.r-pkg.org:443/badges/grand-total/gbm)
 
 Overview
 --------
@@ -41,7 +36,7 @@ remotes::install_github("gbm-developers/gbm")
 Lifecycle
 ---------
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/#retired)
+[![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#retired)
 
 The [gbm](https://cran.r-project.org/package=gbm) package is retired and
 no longer under active development. We will only make the necessary
