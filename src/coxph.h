@@ -20,6 +20,7 @@
 
 #include "distribution.h"
 #include "matrix.h"
+#include <climits> // for ULONG_MAX
 
 class CCoxPH : public CDistribution
 {

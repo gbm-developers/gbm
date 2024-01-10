@@ -57,6 +57,7 @@
 
 #include "distribution.h"
 #include "buildinfo.h"
+#include <climits> // for UINT_MAX
 
 // A class to rerank groups based on (intermediate) scores
 // Note: Smaller ranks are better, the top rank is 1

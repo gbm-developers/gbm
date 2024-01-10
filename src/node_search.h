@@ -19,6 +19,8 @@
 
 #include "node_factory.h"
 #include "dataset.h"
+#include <climits> // for UINT_MAX
+
 
 using namespace std;
 
