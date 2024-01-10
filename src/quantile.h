@@ -88,7 +88,7 @@ public:
                           unsigned long nTrain);
 
 private:
-    vector<double> vecd;
+    std::vector<double> vecd;
     double dAlpha;
 };
 

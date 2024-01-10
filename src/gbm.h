@@ -32,8 +32,8 @@
 #include "locationm.h"
 #include "huberized.h"
 
-typedef vector<char> VEC_CATEGORIES;
-typedef vector<VEC_CATEGORIES> VEC_VEC_CATEGORIES;
+typedef std::vector<char> VEC_CATEGORIES;
+typedef std::vector<VEC_CATEGORIES> VEC_VEC_CATEGORIES;
 
 GBMRESULT gbm_setup
 (

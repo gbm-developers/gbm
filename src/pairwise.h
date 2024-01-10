@@ -91,12 +91,12 @@ protected:
     unsigned int cNumItems;
 
     // Pairs of (score, rank) for current group
-    vector<CDoubleUintPair> vecdipScoreRank;
+    std::vector<CDoubleUintPair> vecdipScoreRank;
 
     // Array of pointers to elements of vecdipScoreRank, used for sorting
     // Note: We need a separate array for sorting in order to be able to
     // quickly look up the rank for any given item.
-    vector<CDoubleUintPair*> vecpdipScoreRank;
+    std::vector<CDoubleUintPair*> vecpdipScoreRank;
 };
 
 
@@ -179,7 +179,7 @@ protected:
     int  ComputePairCount(const double* const adY, unsigned int cNumItems);
 
     // Caches the number of pairs with different labels, for each group
-    vector<int> veccPairCount;
+    std::vector<int> veccPairCount;
 };
 
 // Class to implement IR Measure 'Normalized Discounted Cumulative Gain'
@@ -201,10 +201,10 @@ public:
 
 protected:
      // Lookup table for rank weight (w(rank) = 1/log2(1+rank))
-    vector<double> vecdRankWeight;
+    std::vector<double> vecdRankWeight;
 
     // Caches the maximum achievable DCG, for each group
-    vector<double> vecdMaxDCG;
+    std::vector<double> vecdMaxDCG;
 };
 
 // Class to implement IR Measure 'Mean Reciprocal Rank'
@@ -235,7 +235,7 @@ public:
 protected:
 
     // Buffer to hold positions of positive examples
-    mutable vector<int> veccRankPos;
+    mutable std::vector<int> veccRankPos;
 };
 
 
@@ -338,12 +338,12 @@ protected:
     CIRMeasure* pirm;                 // The IR measure to use
     CRanker ranker;                   // The ranker
 
-    vector<double> vecdHessian;       // Second derivative of loss function, for each training instance; used for Newton step
+    std::vector<double> vecdHessian;       // Second derivative of loss function, for each training instance; used for Newton step
 
-    vector<double> vecdNum;           // Buffer used for numerator   in FitBestConstant(), for each node
-    vector<double> vecdDenom;         // Buffer used for denominator in FitBestConstant(), for each node
+    std::vector<double> vecdNum;           // Buffer used for numerator   in FitBestConstant(), for each node
+    std::vector<double> vecdDenom;         // Buffer used for denominator in FitBestConstant(), for each node
 
-    vector<double> vecdFPlusOffset;   // Temporary buffer for (adF + adOffset), if the latter is not null
+    std::vector<double> vecdFPlusOffset;   // Temporary buffer for (adF + adOffset), if the latter is not null
 };
 
 #endif // PAIRWISE_H

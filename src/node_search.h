@@ -22,8 +22,6 @@
 #include <climits> // for UINT_MAX
 
 
-using namespace std;
-
 class CNodeSearch
 {
 public:

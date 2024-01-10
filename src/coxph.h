@@ -91,11 +91,11 @@ public:
 
 
 private:
-    vector<double> vecdP;
-    vector<double> vecdRiskTot;
-    vector<double> vecdG;
-    vector<unsigned long> veciK2Node;
-    vector<unsigned long> veciNode2K;
+    std::vector<double> vecdP;
+    std::vector<double> vecdRiskTot;
+    std::vector<double> vecdG;
+    std::vector<unsigned long> veciK2Node;
+    std::vector<unsigned long> veciNode2K;
 
     matrix<double> matH;
     matrix<double> matHinv;

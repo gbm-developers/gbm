@@ -89,8 +89,8 @@ public:
                           unsigned long nTrain);
 
 private:
-    vector<double> vecd;
-    vector<double>::iterator itMedian;
+    std::vector<double> vecd;
+    std::vector<double>::iterator itMedian;
     CLocationM *mpLocM;
 };
 

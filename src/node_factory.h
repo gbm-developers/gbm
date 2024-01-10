@@ -25,8 +25,6 @@
 
 #define NODEFACTORY_NODGBM_RESERVE ((unsigned long)101)
 
-using namespace std;
-
 class CNodeFactory
 {
 public:
@@ -42,9 +40,9 @@ public:
     GBMRESULT RecycleNode(CNodeCategorical *pNode);
 
 private:
-    stack<PCNodeTerminal> TerminalStack;
-    stack<PCNodeContinuous> ContinuousStack;
-    stack<PCNodeCategorical> CategoricalStack;
+    std::stack<PCNodeTerminal> TerminalStack;
+    std::stack<PCNodeContinuous> ContinuousStack;
+    std::stack<PCNodeCategorical> CategoricalStack;
 
     CNodeTerminal* pNodeTerminalTemp;
     CNodeContinuous* pNodeContinuousTemp;

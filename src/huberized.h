@@ -88,8 +88,8 @@ public:
                           unsigned long nTrain);
 
 private:
-    vector<double> vecdNum;
-    vector<double> vecdDen;
+    std::vector<double> vecdNum;
+    std::vector<double> vecdDen;
 };
 
 #endif // HUBERIZED_H
