@@ -354,7 +354,6 @@ SEXP gbm_pred
    SEXP riSingleTree  // boolean whether to return only results for one tree
 )
 {
-   unsigned long hr = 0;
    int iTree = 0;
    int iObs = 0;
    int cRows = INTEGER(rcRows)[0];
@@ -381,7 +380,6 @@ SEXP gbm_pred
    PROTECT(radPredF = allocVector(REALSXP, cRows*cNumClasses*cPredIterations));
    if(radPredF == NULL)
    {
-      hr = GBM_OUTOFMEMORY;
       goto Error;
    }
 
@@ -500,7 +498,6 @@ SEXP gbm_plot
     SEXP raiVarType     // vector of variable types
 )
 {
-    unsigned long hr = 0;
     int i = 0;
     int iTree = 0;
     int iObs = 0;
@@ -532,7 +529,6 @@ SEXP gbm_plot
     PROTECT(radPredF = allocVector(REALSXP, cRows*cNumClasses));
     if(radPredF == NULL)
     {
-        hr = GBM_OUTOFMEMORY;
         goto Error;
     }
     for(iObs=0; iObs<cRows*cNumClasses; iObs++)
