@@ -5,6 +5,8 @@
 #' methods for least squares, absolute loss, logistic, Poisson, Cox
 #' proportional hazards partial likelihood, multinomial, t-distribution,
 #' AdaBoost exponential loss, Learning to Rank, and Huberized hinge loss.
+#' This gbm package is no longer under further development. Consider
+#' https://github.com/gbm-developers/gbm3 for the latest version.
 #' 
 #' Further information is available in vignette: 
 #' \code{browseVignettes(package = "gbm")}
@@ -27,8 +29,9 @@
 #' 
 #' @docType package
 #' 
-#' @author Greg Ridgeway \email{gregridgeway@@gmail.com} with contributions by
-#' Daniel Edwards, Brian Kriegler, Stefan Schroedl and Harry Southworth.
+#' @author Greg Ridgeway \email{gridge@@upenn.edu} with contributions by
+#' Daniel Edwards, Brian Kriegler, Stefan Schroedl, Harry Southworth,
+#' and Brandon Greenwell
 #' 
 #' @references 
 #' Y. Freund and R.E. Schapire (1997) \dQuote{A decision-theoretic
@@ -48,7 +51,7 @@
 #' J.H. Friedman (2002). \dQuote{Stochastic Gradient Boosting,}
 #' \emph{Computational Statistics and Data Analysis} 38(4):367-378.
 #' 
-#' The \url{http://statweb.stanford.edu/~jhf/R-MART} website.
+#' The \url{https://jerryfriedman.su.domains/R-MART.html} website.
 #' 
 #' @keywords package
 NULL
