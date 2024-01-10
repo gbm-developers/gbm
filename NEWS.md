@@ -1,3 +1,7 @@
+# gbm 2.1.9
+
+* Maintenance update to address new R standards
+
 # gbm 2.1.8
 
 * Removed experimental functions `shrink.gbm()` and `shrink.gbm.pred()`; the latter seemed broken anyway. Happy to accept a PR if anyone wants to fix them.
