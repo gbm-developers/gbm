@@ -21,7 +21,7 @@ GBMRESULT CAdaBoost::ComputeWorkingResponse
     double *adWeight,
     bool *afInBag,
     unsigned long nTrain,
-	int cIdxOff
+    int cIdxOff
 )
 {
     unsigned long i = 0;
