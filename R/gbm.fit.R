@@ -219,7 +219,7 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
   cRows <- nrow(x)
   cCols <- ncol(x)
   
-  if(nrow(x) != ifelse("Surv" %in% class(y), nrow(y), length(y))) {
+  if(nrow(x) != ifelse(inherits(y, "Surv"), nrow(y), length(y))) {
     stop("The number of rows in x does not equal the length of y.")
   }
   
@@ -354,7 +354,7 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
     Misc <- c(alpha=distribution$alpha)
   }
   if(distribution$name == "coxph") {
-    if(!("Surv" %in% class(y))) {
+    if(!inherits(y, "Surv")) {
       stop("Outcome must be a survival object Surv(time,failure)")
     }
     if(attr(y,"type")!="right") {

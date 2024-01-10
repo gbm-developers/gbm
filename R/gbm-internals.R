@@ -29,7 +29,7 @@
 guessDist <- function(y){
   # If distribution is not given, try to guess it
   if (length(unique(y)) == 2){ d <- "bernoulli" }
-  else if ("Surv" %in% class(y)){ d <- "coxph" }
+  else if (inherits(y, "Surv")){ d <- "coxph" }
   else if (is.factor(y)){ d <- "multinomial" }
   else{ d <- "gaussian" }
   cat(paste("Distribution not specified, assuming", d, "...\n"))
