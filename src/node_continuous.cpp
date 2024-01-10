@@ -34,13 +34,13 @@ GBMRESULT CNodeContinuous::PrintSubtree
            (pMissingNode == NULL ? 0.0 : pMissingNode->dPrediction));
 
     for(i=0; i< cIndent; i++) Rprintf("  ");
-    Rprintf("V%d < %f\n",
+    Rprintf("V%lu < %f\n",
            iSplitVar,
            dSplitValue);
     hr = pLeftNode->PrintSubtree(cIndent+1);
 
     for(i=0; i< cIndent; i++) Rprintf("  ");
-    Rprintf("V%d > %f\n",
+    Rprintf("V%lu > %f\n",
            iSplitVar,
            dSplitValue);
     hr = pRightNode->PrintSubtree(cIndent+1);
