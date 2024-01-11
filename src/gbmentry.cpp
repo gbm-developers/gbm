@@ -114,7 +114,6 @@ SEXP gbm_fit
                    pData,
                    pDist,
                    cGroups);
-
     if(GBM_FAILED(hr))
     {
         goto Error;
@@ -162,7 +161,11 @@ SEXP gbm_fit
                            pData->adOffset,
                            pData->adWeight,
                            pData->cRows);
-
+    if(GBM_FAILED(hr))
+    {
+      goto Error;
+    }
+    
     if(ISNA(REAL(radFOld)[0])) // check for old predictions
     {
         // set the initial value of F as a constant
@@ -172,7 +175,11 @@ SEXP gbm_fit
                           pData->adWeight,
                           REAL(rdInitF)[0], 
                           cTrain);
-
+        if(GBM_FAILED(hr))
+        {
+          goto Error;
+        }
+      
         for(i=0; i < (pData->cRows) * cNumClasses; i++)
         {
             REAL(radF)[i] = REAL(rdInitF)[0];
@@ -207,12 +214,15 @@ SEXP gbm_fit
     for(iT=0; iT<cTrees; iT++)
     {
         // Update the parameters
-        hr = pDist->UpdateParams(REAL(radF), pData->adOffset, pData->adWeight, cTrain);
-
+        hr = pDist->UpdateParams(REAL(radF), 
+                                 pData->adOffset, 
+                                 pData->adWeight, 
+                                 cTrain);
         if(GBM_FAILED(hr))
         {
            goto Error;
         }
+        
         REAL(radTrainError)[iT] = 0.0;
         REAL(radValidError)[iT] = 0.0;
         REAL(radOOBagImprove)[iT] = 0.0;
