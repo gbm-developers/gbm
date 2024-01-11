@@ -30,7 +30,7 @@ public:
 
 	GBMRESULT UpdateParams(double *adF,
 	                       double *adOffset,
-						   double *adWeight,
+						             double *adWeight,
 	                       unsigned long cLength)
 	{ 
 		return GBM_OK;
@@ -44,7 +44,7 @@ public:
                                      double *adZ,
                                      bool *afInBag,
                                      unsigned long nTrain,
-	                                 int cIdxOff);
+	                                   int cIdxOff);
 
     GBMRESULT InitF(double *adY, 
                     double *adMisc,
@@ -74,7 +74,7 @@ public:
                     double *adWeight,
                     double *adF,
                     unsigned long cLength,
-	                int cIdxOff);
+	                  int cIdxOff);
 
     double BagImprovement(double *adY,
                           double *adMisc,
