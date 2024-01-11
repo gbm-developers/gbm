@@ -56,7 +56,7 @@ best_iter_test <- function(object) {
 best_iter_cv <- function(object) {
   check_if_gbm_fit(object)
   if(!has_cross_validation(object)) {
-    stop('In order to use method="cv" gbm must be called with cv_folds>1.')
+    stop('In order to use method="cv" gbm must be called with cv.folds>1.')
   }
   best_iter_cv <- which.min(object$cv.error)
   return(best_iter_cv)
