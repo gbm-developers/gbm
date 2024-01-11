@@ -761,13 +761,13 @@ void CPairwise::ComputeLambdas(int iGroup, unsigned int cNumItems, const double*
             ranker.SetRank(j, cRankj);
             ranker.SetRank(i, cRanki);
 #endif
-            assert(isfinite(dSwapCost));
+            assert(std::isfinite(dSwapCost));
 
             if (dSwapCost > 0.0)
             {
                 cPairs++;
                 const double dRhoij    = 1.0 / (1.0 + exp(adF[i]- adF[j])) ;
-                assert(isfinite(dRhoij));
+                assert(std::isfinite(dRhoij));
 
                 const double dLambdaij = dSwapCost * dRhoij;
                 adZ[i] += dLambdaij;
@@ -990,9 +990,9 @@ GBMRESULT CPairwise::FitBestConstant
     {
         if (afInBag[iObs])
         {
-            assert(isfinite(adW[iObs]));
-            assert(isfinite(adZ[iObs]));
-            assert(isfinite(vecdHessian[iObs]));
+            assert(std::isfinite(adW[iObs]));
+            assert(std::isfinite(adZ[iObs]));
+            assert(std::isfinite(vecdHessian[iObs]));
 
             vecdNum[aiNodeAssign[iObs]]   += adW[iObs] * adZ[iObs];
             vecdDenom[aiNodeAssign[iObs]] += adW[iObs] * vecdHessian[iObs];
