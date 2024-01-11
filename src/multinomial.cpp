@@ -1,4 +1,4 @@
-//  GBM by Greg Ridgeway  Copyright (C) 2003
+
 
 #include "multinomial.h"
 
@@ -6,8 +6,9 @@ CMultinomial::CMultinomial(int cNumClasses, int cRows)
 {
    mcNumClasses = cNumClasses;
    mcRows = cRows;
-
-   madProb = new double[cNumClasses * cRows];
+   
+   madProb = NULL;
+   adStepProb = NULL;
 }
 
 CMultinomial::~CMultinomial()
@@ -15,6 +16,10 @@ CMultinomial::~CMultinomial()
    if(madProb != NULL)
    {
       delete [] madProb;
+   }
+   if(adStepProb!=NULL)
+   {
+     delete[] adStepProb;
    }
 }
 
@@ -89,8 +94,29 @@ GBMRESULT CMultinomial::InitF
     unsigned long cLength
 )
 {
-    dInitF = 0.0;
-    return GBM_OK;
+  GBMRESULT hr = GBM_OK;
+  
+  dInitF = 0.0;
+  
+  madProb = new double[mcNumClasses * mcRows];
+  if(madProb == NULL)
+  {
+    hr = GBM_OUTOFMEMORY;
+    goto Error;
+  }
+  
+  // Calculate the probabilities after the step
+  adStepProb = new double[mcNumClasses * mcRows];  
+  if(adStepProb == NULL)
+  {
+    hr = GBM_OUTOFMEMORY;
+    goto Error;
+  }
+  
+  Cleanup:
+    return hr;
+  Error:
+    goto Cleanup;
 }
 
 double CMultinomial::Deviance
@@ -181,15 +207,12 @@ double CMultinomial::BagImprovement
     unsigned long nTrain
 )
 {
-    double dReturnValue = 0.0;
-    double dW = 0.0;
+   double dReturnValue = 0.0;
+   double dW = 0.0;
 
    unsigned long ii;
    unsigned long kk;
-
-   // Calculate the probabilities after the step
-   double *adStepProb = new double[mcNumClasses * mcRows];
-
+   
    // Assume that this is last class - calculate new prob as in updateParams but
    // using (F_ik + ss*Fadj_ik) instead of F_ik. Then calculate OOB improve
    for (ii = 0; ii < mcRows; ii++)
@@ -228,7 +251,6 @@ double CMultinomial::BagImprovement
       }
     }
 
-    delete[] adStepProb;
     return dReturnValue/dW;
 }
 

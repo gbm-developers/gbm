@@ -5,6 +5,8 @@
 CLaplace::CLaplace()
 {
    mpLocM = NULL;
+   adArr = NULL;
+   adW2 = NULL;
 }
 
 CLaplace::~CLaplace()
@@ -12,6 +14,14 @@ CLaplace::~CLaplace()
    if(mpLocM != NULL)
    {
       delete mpLocM;
+   }
+   if(adArr!=NULL)
+   {
+     delete[] adArr;
+   }
+   if(adW2!=NULL)
+   {
+     delete[] adW2;
    }
 }
 
@@ -67,10 +77,9 @@ GBMRESULT CLaplace::InitF
     unsigned long ii = 0;
     int nLength = int(cLength);
 
-    double *adArr = NULL;
+    double *pTemp = NULL;
 
     // Create a new LocationM object (for weighted medians)
-    double *pTemp = NULL;
     mpLocM = new CLocationM("Other", 0, pTemp);
     if(mpLocM == NULL)
     {
@@ -84,7 +93,14 @@ GBMRESULT CLaplace::InitF
         hr = GBM_OUTOFMEMORY;
         goto Error;
     }
-
+    
+    adW2 = new double[cLength];
+    if(adW2==NULL)
+    {
+      hr = GBM_OUTOFMEMORY;
+      goto Error;
+    }
+    
     for (ii = 0; ii < cLength; ii++)
     {
         dOffset = (adOffset==NULL) ? 0.0 : adOffset[ii];
@@ -92,7 +108,6 @@ GBMRESULT CLaplace::InitF
     }
 
     dInitF = mpLocM->Median(nLength, adArr, adWeight);
-    delete[] adArr;
 
 Cleanup:
     return hr;
@@ -137,7 +152,6 @@ double CLaplace::Deviance
 }
 
 
-// DEBUG: needs weighted median
 GBMRESULT CLaplace::FitBestConstant
 (
     double *adY,
@@ -156,44 +170,32 @@ GBMRESULT CLaplace::FitBestConstant
    int cIdxOff
 )
 {
-    GBMRESULT hr = GBM_OK;
-
     unsigned long iNode = 0;
     unsigned long iObs = 0;
     unsigned long iVecd = 0;
     double dOffset;
-
+    
 //    vecd.resize(nTrain); // should already be this size from InitF
-  
-   double *adArr = new double[nTrain];
-   double *adW2 = new double[nTrain];
-
-    for(iNode=0; iNode<cTermNodes; iNode++)
-    {
-        if(vecpTermNodes[iNode]->cN >= cMinObsInNode)
-        {
+   for(iNode=0; iNode<cTermNodes; iNode++)
+   {
+      if(vecpTermNodes[iNode]->cN >= cMinObsInNode)
+      {
          iVecd = 0;
-            for(iObs=0; iObs<nTrain; iObs++)
+         for(iObs=0; iObs<nTrain; iObs++)
+         {
+            if(afInBag[iObs] && (aiNodeAssign[iObs] == iNode))
             {
-                if(afInBag[iObs] && (aiNodeAssign[iObs] == iNode))
-                {
-                    dOffset = (adOffset==NULL) ? 0.0 : adOffset[iObs];
-                    adArr[iVecd] = adY[iObs] - dOffset - adF[iObs];
+               dOffset = (adOffset==NULL) ? 0.0 : adOffset[iObs];
+               adArr[iVecd] = adY[iObs] - dOffset - adF[iObs];
                adW2[iVecd] = adW[iObs];
-                iVecd++;
+               iVecd++;
             }
-
-            
-            }
-
+         }
          vecpTermNodes[iNode]->dPrediction = mpLocM->Median(iVecd, adArr, adW2);
+      }
+   }
 
-        }
-    }
-
-    delete[] adW2;
-    delete[] adArr;
-    return hr;
+   return GBM_OK;
 }
 
 

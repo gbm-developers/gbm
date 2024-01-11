@@ -83,7 +83,8 @@ public:
 private:
    unsigned long mcNumClasses;
    unsigned long mcRows;
-   double *madProb; 
+   double *madProb;
+   double *adStepProb; // used in BagImprovement()
 };
 
 #endif // KMULTICGBM_H

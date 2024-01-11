@@ -92,6 +92,9 @@ private:
     std::vector<double> vecd;
     std::vector<double>::iterator itMedian;
     CLocationM *mpLocM;
+    
+    double *adArr; // for temp calculations
+    double *adW2;
 };
 
 #endif // LAPLACGBM_H
