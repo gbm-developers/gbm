@@ -314,31 +314,23 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
   if(!is.element(distribution$name, supported.distributions)) {
     stop("Distribution ",distribution$name," is not supported")
   }
-  if((distribution$name == "bernoulli") && !all(is.element(y, 0:1)) && 
-     !is.numeric(y)) {
-    # NOTE: Including `!is.numeric(y)` will catch cases where y is a 0/1 factor
-    stop("Bernoulli requires the response to be in {0,1}")
-    if (is.factor(y)) {
-      y <- as.integer(y) - 1
-    }
+  if((distribution$name == "bernoulli") && 
+     (!is.numeric(y) || !all(is.element(y, 0:1)))) {
+    stop("Bernoulli requires the response to be numeric in {0,1}")
   }
-  if((distribution$name == "huberized") && !all(is.element(y,0:1))) {
-    stop("Huberized square hinged loss requires the response to be in {0,1}")
-    if (is.factor(y)) {
-      y <- as.integer(y) - 1
-    }
+  if((distribution$name == "huberized") && 
+     (!is.numeric(y) || !all(is.element(y, 0:1)))) {
+    stop("Huberized square hinged loss requires the response to be numeric in {0,1}")
   }
   if((distribution$name == "poisson") && any(y<0)) {
-    stop("Poisson requires the response to be positive")
+    stop("Poisson requires the response to be non-negative")
   }
   if((distribution$name == "poisson") && any(y != trunc(y))) {
-    stop("Poisson requires the response to be a positive integer")
+    stop("Poisson requires the response to be non-negative")
   }
-  if((distribution$name == "adaboost") && !all(is.element(y,0:1))) {
-    stop("This version of AdaBoost requires the response to be in {0,1}")
-    if (is.factor(y)) {
-      y <- as.integer(y) - 1
-    }
+  if((distribution$name == "adaboost") && 
+     (!is.numeric(y) || !all(is.element(y, 0:1)))) {
+    stop("This version of AdaBoost requires the response to be numeric in {0,1}")
   }
   if(distribution$name == "quantile") {
     if(length(unique(w)) > 1) {
