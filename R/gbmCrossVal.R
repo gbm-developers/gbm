@@ -133,7 +133,7 @@ gbmCrossValPredictions <- function(cv.models, cv.folds, cv.group,
     
     # The %in% here is to handle coxph
     # my.data  <- data[flag, !(data.names %in% model$response.name)]
-    my.data  <- data[flag, model$var.names]
+    my.data  <- data[flag, model$var.names, drop=FALSE]
     predictions <- predict(model, newdata = my.data, n.trees = best.iter.cv)  # FIXME
     predictions <- matrix(predictions, ncol = num.cols)
     res[flag, ] <- predictions
@@ -204,7 +204,7 @@ gbmDoFold <- function(X, i.train, x, y, offset, distribution, w, var.monotone,
   # Setup
   set.seed(s[[X]])
   i <- order(cv.group == X)
-  x <- x[i.train, , drop = TRUE][i, , drop = FALSE]
+  x <- x[i.train, , drop = FALSE][i, , drop = FALSE]
   y <- y[i.train][i]
   offset <- offset[i.train][i]
   nTrain <- length(which(cv.group != X))
