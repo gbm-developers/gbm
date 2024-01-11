@@ -247,7 +247,7 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
   # Check size of data
   if(nTrain * bag.fraction <= 2 * n.minobsinnode + 1) {
     stop("The data set is too small or the subsampling rate is too large: ",
-         "`nTrain * bag.fraction <= n.minobsinnode`")
+         "`nTrain * bag.fraction <= 2 * n.minobsinnode + 1`")
   }
   
   if (distribution$name != "pairwise") {
