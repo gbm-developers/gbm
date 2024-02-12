@@ -25,9 +25,6 @@
 #' 
 #' @useDynLib gbm, .registration = TRUE
 #' 
-#' @name gbm-package
-#' 
-#' @docType package
 #' 
 #' @author Greg Ridgeway \email{gridge@@upenn.edu} with contributions by
 #' Daniel Edwards, Brian Kriegler, Stefan Schroedl, Harry Southworth,
@@ -51,7 +48,9 @@
 #' J.H. Friedman (2002). \dQuote{Stochastic Gradient Boosting,}
 #' \emph{Computational Statistics and Data Analysis} 38(4):367-378.
 #' 
-#' The \url{https://jerryfriedman.su.domains/R-MART.html} website.
+#' The \href{https://jerryfriedman.su.domains/R-MART.html}{MART} website.
 #' 
 #' @keywords package
+"_PACKAGE"
+
 NULL
