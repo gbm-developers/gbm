@@ -4,6 +4,7 @@
 
 extern "C" {
 
+#define R_NO_REMAP // https://rstudio.github.io/r-manuals/r-exts/The-R-API.html
 #include <R.h>
 #include <Rinternals.h>
 
@@ -144,15 +145,15 @@ SEXP gbm_fit
     }
 
     // allocate the main return object
-    PROTECT(rAns = allocVector(VECSXP, cResultComponents));
+    PROTECT(rAns = Rf_allocVector(VECSXP, cResultComponents));
 
     // allocate the initial value
-    PROTECT(rdInitF = allocVector(REALSXP, 1));
+    PROTECT(rdInitF = Rf_allocVector(REALSXP, 1));
     SET_VECTOR_ELT(rAns,0,rdInitF);
     UNPROTECT(1); // rdInitF
 
     // allocate the predictions
-    PROTECT(radF = allocVector(REALSXP, (pData->cRows) * cNumClasses));
+    PROTECT(radF = Rf_allocVector(REALSXP, (pData->cRows) * cNumClasses));
     SET_VECTOR_ELT(rAns,1,radF);
     UNPROTECT(1); // radF
 
@@ -194,16 +195,16 @@ SEXP gbm_fit
     }
 
     // allocate space for the performance measures
-    PROTECT(radTrainError = allocVector(REALSXP, cTrees));
-    PROTECT(radValidError = allocVector(REALSXP, cTrees));
-    PROTECT(radOOBagImprove = allocVector(REALSXP, cTrees));
+    PROTECT(radTrainError = Rf_allocVector(REALSXP, cTrees));
+    PROTECT(radValidError = Rf_allocVector(REALSXP, cTrees));
+    PROTECT(radOOBagImprove = Rf_allocVector(REALSXP, cTrees));
     SET_VECTOR_ELT(rAns,2,radTrainError);
     SET_VECTOR_ELT(rAns,3,radValidError);
     SET_VECTOR_ELT(rAns,4,radOOBagImprove);
     UNPROTECT(3); // radTrainError , radValidError, radOOBagImprove
 
     // allocate the component for the tree structures
-    PROTECT(rSetOfTrees = allocVector(VECSXP, cTrees * cNumClasses));
+    PROTECT(rSetOfTrees = Rf_allocVector(VECSXP, cTrees * cNumClasses));
     SET_VECTOR_ELT(rAns,5,rSetOfTrees);
     UNPROTECT(1); // rSetOfTrees
 
@@ -243,17 +244,17 @@ SEXP gbm_fit
             REAL(radOOBagImprove)[iT] += dOOBagImprove;
 
             // allocate the new tree component for the R list structure
-            PROTECT(rNewTree = allocVector(VECSXP, cTreeComponents));
+            PROTECT(rNewTree = Rf_allocVector(VECSXP, cTreeComponents));
             // riNodeID,riSplitVar,rdSplitPoint,riLeftNode,
             // riRightNode,riMissingNode,rdErrorReduction,rdWeight
-            PROTECT(riSplitVar = allocVector(INTSXP, cNodes));
-            PROTECT(rdSplitPoint = allocVector(REALSXP, cNodes));
-            PROTECT(riLeftNode = allocVector(INTSXP, cNodes));
-            PROTECT(riRightNode = allocVector(INTSXP, cNodes));
-            PROTECT(riMissingNode = allocVector(INTSXP, cNodes));
-            PROTECT(rdErrorReduction = allocVector(REALSXP, cNodes));
-            PROTECT(rdWeight = allocVector(REALSXP, cNodes));
-            PROTECT(rdPred = allocVector(REALSXP, cNodes));
+            PROTECT(riSplitVar = Rf_allocVector(INTSXP, cNodes));
+            PROTECT(rdSplitPoint = Rf_allocVector(REALSXP, cNodes));
+            PROTECT(riLeftNode = Rf_allocVector(INTSXP, cNodes));
+            PROTECT(riRightNode = Rf_allocVector(INTSXP, cNodes));
+            PROTECT(riMissingNode = Rf_allocVector(INTSXP, cNodes));
+            PROTECT(rdErrorReduction = Rf_allocVector(REALSXP, cNodes));
+            PROTECT(rdWeight = Rf_allocVector(REALSXP, cNodes));
+            PROTECT(rdPred = Rf_allocVector(REALSXP, cNodes));
             SET_VECTOR_ELT(rNewTree,0,riSplitVar);
             SET_VECTOR_ELT(rNewTree,1,rdSplitPoint);
             SET_VECTOR_ELT(rNewTree,2,riLeftNode);
@@ -301,14 +302,14 @@ SEXP gbm_fit
     if(INTEGER(rfVerbose)[0]) Rprintf("\n");
 
     // transfer categorical splits to R
-    PROTECT(rSetSplitCodes = allocVector(VECSXP, vecSplitCodes.size()));
+    PROTECT(rSetSplitCodes = Rf_allocVector(VECSXP, vecSplitCodes.size()));
     SET_VECTOR_ELT(rAns,6,rSetSplitCodes);
     UNPROTECT(1); // rSetSplitCodes
 
     for(i=0; i<(int)vecSplitCodes.size(); i++)
     {
         PROTECT(rSplitCode = 
-                    allocVector(INTSXP, size_of_vector(vecSplitCodes,i)));
+          Rf_allocVector(INTSXP, size_of_vector(vecSplitCodes,i)));
         SET_VECTOR_ELT(rSetSplitCodes,i,rSplitCode);
         UNPROTECT(1); // rSplitCode
 
@@ -387,7 +388,7 @@ SEXP gbm_pred
    SEXP radPredF = NULL;
 
    // allocate the predictions to return
-   PROTECT(radPredF = allocVector(REALSXP, cRows*cNumClasses*cPredIterations));
+   PROTECT(radPredF = Rf_allocVector(REALSXP, cRows*cNumClasses*cPredIterations));
    if(radPredF == NULL)
    {
       goto Error;
@@ -536,7 +537,7 @@ SEXP gbm_plot
     int iPredVar = 0;
 
     // allocate the predictions to return
-    PROTECT(radPredF = allocVector(REALSXP, cRows*cNumClasses));
+    PROTECT(radPredF = Rf_allocVector(REALSXP, cRows*cNumClasses));
     if(radPredF == NULL)
     {
         goto Error;

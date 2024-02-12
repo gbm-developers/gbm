@@ -5,6 +5,7 @@
 #define BUILDINFO_H
 
     #undef ERROR
+    #define R_NO_REMAP // https://rstudio.github.io/r-manuals/r-exts/The-R-API.html
     #include <R.h>
 
     #define GBM_FAILED(hr) ((unsigned long)hr != 0)

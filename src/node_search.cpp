@@ -146,7 +146,7 @@ GBMRESULT CNodeSearch::IncorporateObs
     {
         if(dLastXValue > dX)
         {
-            error("Observations are not in order. gbm() was unable to build an index for the design matrix. Could be a bug in gbm or an unusual data type in data.\n");
+            Rf_error("Observations are not in order. gbm() was unable to build an index for the design matrix. Could be a bug in gbm or an unusual data type in data.\n");
             hr = GBM_FAIL;
             goto Error;
         }
