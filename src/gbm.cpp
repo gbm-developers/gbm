@@ -5,7 +5,6 @@
 //
 //------------------------------------------------------------------------------
 
-#include<vector>
 #include "gbm.h"
 
 // Count the number of distinct groups in the input data
