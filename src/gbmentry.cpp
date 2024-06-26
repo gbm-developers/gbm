@@ -145,17 +145,17 @@ SEXP gbm_fit
     }
 
     // allocate the main return object
-    PROTECT(rAns = Rf_allocVector(VECSXP, cResultComponents));
+    Rf_protect(rAns = Rf_allocVector(VECSXP, cResultComponents));
 
     // allocate the initial value
-    PROTECT(rdInitF = Rf_allocVector(REALSXP, 1));
+    Rf_protect(rdInitF = Rf_allocVector(REALSXP, 1));
     SET_VECTOR_ELT(rAns,0,rdInitF);
-    UNPROTECT(1); // rdInitF
+    Rf_unprotect(1); // rdInitF
 
     // allocate the predictions
-    PROTECT(radF = Rf_allocVector(REALSXP, (pData->cRows) * cNumClasses));
+    Rf_protect(radF = Rf_allocVector(REALSXP, (pData->cRows) * cNumClasses));
     SET_VECTOR_ELT(rAns,1,radF);
-    UNPROTECT(1); // radF
+    Rf_unprotect(1); // radF
 
     hr = pDist->Initialize(pData->adY,
                            pData->adMisc,
@@ -195,18 +195,18 @@ SEXP gbm_fit
     }
 
     // allocate space for the performance measures
-    PROTECT(radTrainError = Rf_allocVector(REALSXP, cTrees));
-    PROTECT(radValidError = Rf_allocVector(REALSXP, cTrees));
-    PROTECT(radOOBagImprove = Rf_allocVector(REALSXP, cTrees));
+    Rf_protect(radTrainError = Rf_allocVector(REALSXP, cTrees));
+    Rf_protect(radValidError = Rf_allocVector(REALSXP, cTrees));
+    Rf_protect(radOOBagImprove = Rf_allocVector(REALSXP, cTrees));
     SET_VECTOR_ELT(rAns,2,radTrainError);
     SET_VECTOR_ELT(rAns,3,radValidError);
     SET_VECTOR_ELT(rAns,4,radOOBagImprove);
-    UNPROTECT(3); // radTrainError , radValidError, radOOBagImprove
+    Rf_unprotect(3); // radTrainError , radValidError, radOOBagImprove
 
     // allocate the component for the tree structures
-    PROTECT(rSetOfTrees = Rf_allocVector(VECSXP, cTrees * cNumClasses));
+    Rf_protect(rSetOfTrees = Rf_allocVector(VECSXP, cTrees * cNumClasses));
     SET_VECTOR_ELT(rAns,5,rSetOfTrees);
-    UNPROTECT(1); // rSetOfTrees
+    Rf_unprotect(1); // rSetOfTrees
 
     if(INTEGER(rfVerbose)[0])
     {
@@ -244,17 +244,17 @@ SEXP gbm_fit
             REAL(radOOBagImprove)[iT] += dOOBagImprove;
 
             // allocate the new tree component for the R list structure
-            PROTECT(rNewTree = Rf_allocVector(VECSXP, cTreeComponents));
+            Rf_protect(rNewTree = Rf_allocVector(VECSXP, cTreeComponents));
             // riNodeID,riSplitVar,rdSplitPoint,riLeftNode,
             // riRightNode,riMissingNode,rdErrorReduction,rdWeight
-            PROTECT(riSplitVar = Rf_allocVector(INTSXP, cNodes));
-            PROTECT(rdSplitPoint = Rf_allocVector(REALSXP, cNodes));
-            PROTECT(riLeftNode = Rf_allocVector(INTSXP, cNodes));
-            PROTECT(riRightNode = Rf_allocVector(INTSXP, cNodes));
-            PROTECT(riMissingNode = Rf_allocVector(INTSXP, cNodes));
-            PROTECT(rdErrorReduction = Rf_allocVector(REALSXP, cNodes));
-            PROTECT(rdWeight = Rf_allocVector(REALSXP, cNodes));
-            PROTECT(rdPred = Rf_allocVector(REALSXP, cNodes));
+            Rf_protect(riSplitVar = Rf_allocVector(INTSXP, cNodes));
+            Rf_protect(rdSplitPoint = Rf_allocVector(REALSXP, cNodes));
+            Rf_protect(riLeftNode = Rf_allocVector(INTSXP, cNodes));
+            Rf_protect(riRightNode = Rf_allocVector(INTSXP, cNodes));
+            Rf_protect(riMissingNode = Rf_allocVector(INTSXP, cNodes));
+            Rf_protect(rdErrorReduction = Rf_allocVector(REALSXP, cNodes));
+            Rf_protect(rdWeight = Rf_allocVector(REALSXP, cNodes));
+            Rf_protect(rdPred = Rf_allocVector(REALSXP, cNodes));
             SET_VECTOR_ELT(rNewTree,0,riSplitVar);
             SET_VECTOR_ELT(rNewTree,1,rdSplitPoint);
             SET_VECTOR_ELT(rNewTree,2,riLeftNode);
@@ -263,9 +263,9 @@ SEXP gbm_fit
             SET_VECTOR_ELT(rNewTree,5,rdErrorReduction);
             SET_VECTOR_ELT(rNewTree,6,rdWeight);
             SET_VECTOR_ELT(rNewTree,7,rdPred);
-            UNPROTECT(cTreeComponents); 
+            Rf_unprotect(cTreeComponents); 
             SET_VECTOR_ELT(rSetOfTrees,(iK + iT * cNumClasses),rNewTree);
-            UNPROTECT(1); // rNewTree
+            Rf_unprotect(1); // rNewTree
         
             hr = gbm_transfer_to_R(pGBM,
                                    vecSplitCodes,
@@ -302,16 +302,16 @@ SEXP gbm_fit
     if(INTEGER(rfVerbose)[0]) Rprintf("\n");
 
     // transfer categorical splits to R
-    PROTECT(rSetSplitCodes = Rf_allocVector(VECSXP, vecSplitCodes.size()));
+    Rf_protect(rSetSplitCodes = Rf_allocVector(VECSXP, vecSplitCodes.size()));
     SET_VECTOR_ELT(rAns,6,rSetSplitCodes);
-    UNPROTECT(1); // rSetSplitCodes
+    Rf_unprotect(1); // rSetSplitCodes
 
     for(i=0; i<(int)vecSplitCodes.size(); i++)
     {
-        PROTECT(rSplitCode = 
+        Rf_protect(rSplitCode = 
           Rf_allocVector(INTSXP, size_of_vector(vecSplitCodes,i)));
         SET_VECTOR_ELT(rSetSplitCodes,i,rSplitCode);
-        UNPROTECT(1); // rSplitCode
+        Rf_unprotect(1); // rSplitCode
 
         hr = gbm_transfer_catsplits_to_R(i,
                                          vecSplitCodes,
@@ -325,7 +325,7 @@ SEXP gbm_fit
     PutRNGstate();
 
 Cleanup:
-    UNPROTECT(1); // rAns
+    Rf_unprotect(1); // rAns
     #ifdef NOISY_DEBUG
     Rprintf("destructing\n");
     #endif
@@ -388,7 +388,7 @@ SEXP gbm_pred
    SEXP radPredF = NULL;
 
    // allocate the predictions to return
-   PROTECT(radPredF = Rf_allocVector(REALSXP, cRows*cNumClasses*cPredIterations));
+   Rf_protect(radPredF = Rf_allocVector(REALSXP, cRows*cNumClasses*cPredIterations));
    if(radPredF == NULL)
    {
       goto Error;
@@ -488,7 +488,7 @@ SEXP gbm_pred
    }  // iPredIteration
     
 Cleanup:
-    UNPROTECT(1); // radPredF
+    Rf_unprotect(1); // radPredF
     return radPredF;
 Error:
     goto Cleanup;
@@ -537,7 +537,7 @@ SEXP gbm_plot
     int iPredVar = 0;
 
     // allocate the predictions to return
-    PROTECT(radPredF = Rf_allocVector(REALSXP, cRows*cNumClasses));
+    Rf_protect(radPredF = Rf_allocVector(REALSXP, cRows*cNumClasses));
     if(radPredF == NULL)
     {
         goto Error;
@@ -649,7 +649,7 @@ SEXP gbm_plot
     } // iTree
 
 Cleanup:
-    UNPROTECT(1); // radPredF
+    Rf_unprotect(1); // radPredF
     return radPredF;
 Error:
     goto Cleanup;
