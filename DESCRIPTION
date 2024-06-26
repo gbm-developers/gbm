@@ -1,27 +1,23 @@
 Package: gbm
-Version: 2.2.1
+Version: 2.2.2
 Title: Generalized Boosted Regression Models
 Authors@R: c(
-  person("Ridgeway", "Greg",
+  person("Greg", "Ridgeway",
          email = "gridge@upenn.edu",
          role = c("aut", "cre"),
          comment = c(ORCID = "0000-0001-6911-0804")),
   person("Daniel", "Edwards",
          email = "unknown@unknown.com",
-         role = "ctb",
-         comment = c(ORCID = "0000-0002-8120-0084")),
+         role = "ctb"),
   person("Brian", "Kriegler",
          email = "bkriegler@econone.com",
-         role = "ctb",
-         comment = c(ORCID = "0000-0002-8120-0084")),
+         role = "ctb"),
   person("Stefan", "Schroedl",
          email = "stefan@atomwise.com",
-         role = "ctb",
-         comment = c(ORCID = "0000-0002-8120-0084")),
+         role = "ctb"),
   person("Harry", "Southworth",
          email = "harry@dataclarityconsulting.co.uk",
-         role = "ctb",
-         comment = c(ORCID = "0000-0002-8120-0084")),
+         role = "ctb"),
   person("Brandon", "Greenwell",
          email = "greenwell.brandon@gmail.com",
          role = "ctb",
