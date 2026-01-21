@@ -74,7 +74,7 @@
 #' 
 #' @references B. M. Greenwell (2017). "pdp: An R Package for Constructing 
 #' Partial Dependence Plots," The R Journal 9(1), 421--436. 
-#' \url{https://journal.r-project.org/archive/2017/RJ-2017-016/index.html}.
+#' \url{https://journal.r-project.org/articles/RJ-2017-016/index.html}.
 #' 
 #' @export plot.gbm
 #' @export
