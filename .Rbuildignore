@@ -7,3 +7,4 @@
 ^codecov\.yml$
 ^deprecated$
 ^cran-comments\.md$
+^.github
