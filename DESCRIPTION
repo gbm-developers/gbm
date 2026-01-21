@@ -47,7 +47,8 @@ Suggests:
     splines,
     tinytest,
     vip,
-    viridis
+    viridis,
+    MASS
 Description: An implementation of extensions to Freund and Schapire's AdaBoost 
   algorithm and Friedman's gradient boosting machine. Includes regression 
   methods for least squares, absolute loss, t-distribution loss, quantile 
@@ -59,5 +60,5 @@ License: GPL (>= 2) | file LICENSE
 URL: https://github.com/gbm-developers/gbm
 BugReports: https://github.com/gbm-developers/gbm/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 VignetteBuilder: knitr
