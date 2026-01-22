@@ -8,3 +8,4 @@
 ^deprecated$
 ^cran-comments\.md$
 ^.github
+^.*\desktop.ini$

@@ -11,7 +11,7 @@ Overview
 The [gbm](https://cran.r-project.org/package=gbm) package, which stands
 for **g**eneralized **b**oosted **m**odels, provides extensions to
 Freund and Schapire’s AdaBoost algorithm and [Friedman’s gradient
-boosting machine](http://projecteuclid.org/euclid.aos/1013203451). It
+boosting machine](https://doi.org/10.1214/aos/1013203451). It
 includes regression methods for least squares, absolute loss,
 *t*-distribution loss, quantile regression, logistic, multinomial
 logistic, Poisson, Cox proportional hazards partial likelihood, AdaBoost
