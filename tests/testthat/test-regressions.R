@@ -1,0 +1,125 @@
+test_that("gbm.more works for coxph models fit with keep.data = FALSE", {
+  set.seed(10)
+
+  n <- 80
+  cox_data <- data.frame(
+    time = rexp(n),
+    status = rbinom(n, 1, 0.6),
+    x = rnorm(n)
+  )
+  cox_fit <- gbm(
+    survival::Surv(time, status) ~ x,
+    data = cox_data,
+    distribution = "coxph",
+    n.trees = 5,
+    interaction.depth = 1,
+    n.minobsinnode = 5,
+    bag.fraction = 0.8,
+    keep.data = FALSE,
+    verbose = FALSE
+  )
+
+  expect_s3_class(
+    gbm.more(cox_fit, n.new.trees = 1, data = cox_data, verbose = FALSE),
+    "gbm"
+  )
+})
+
+test_that("gbm.more works for pairwise models fit with keep.data = FALSE", {
+  set.seed(10)
+
+  pairwise_data <- data.frame(
+    y = rep(c(0, 1), 20),
+    x = rnorm(40),
+    query = rep(1:20, each = 2)
+  )
+  pairwise_fit <- gbm(
+    y ~ x,
+    data = pairwise_data,
+    distribution = list(name = "pairwise", group = "query", metric = "ndcg"),
+    n.trees = 5,
+    interaction.depth = 1,
+    n.minobsinnode = 1,
+    bag.fraction = 0.8,
+    keep.data = FALSE,
+    verbose = FALSE
+  )
+
+  expect_s3_class(
+    gbm.more(pairwise_fit, n.new.trees = 1, data = pairwise_data, verbose = FALSE),
+    "gbm"
+  )
+})
+
+test_that("gbmDoFold reorders weights to match fold rows", {
+  fold_x <- data.frame(x = seq_len(40))
+  fold_y <- seq_len(40)
+  fold_w <- seq_len(40)
+  fold_group <- rep(1:2, each = 20)
+  cv_group <- rep(1:2, length.out = 40)
+  i <- order(cv_group == 1)
+  fold_model <- gbmDoFold(
+    X = 1,
+    i.train = 1:40,
+    x = fold_x,
+    y = fold_y,
+    offset = NULL,
+    distribution = list(name = "gaussian"),
+    w = fold_w,
+    var.monotone = 0,
+    n.trees = 3,
+    interaction.depth = 1,
+    n.minobsinnode = 2,
+    shrinkage = 0.1,
+    bag.fraction = 0.8,
+    cv.group = cv_group,
+    var.names = "x",
+    response.name = "y",
+    group = fold_group,
+    s = 1L
+  )
+  set.seed(1L)
+  expected_model <- gbm.fit(
+    x = fold_x[i, , drop = FALSE],
+    y = fold_y[i],
+    offset = NULL,
+    distribution = list(name = "gaussian"),
+    w = fold_w[i],
+    var.monotone = 0,
+    n.trees = 3,
+    interaction.depth = 1,
+    n.minobsinnode = 2,
+    shrinkage = 0.1,
+    bag.fraction = 0.8,
+    nTrain = sum(cv_group != 1),
+    keep.data = FALSE,
+    verbose = FALSE,
+    response.name = "y",
+    group = fold_group[i]
+  )
+
+  expect_equal(fold_model$train.error, expected_model$train.error)
+  expect_equal(fold_model$valid.error, expected_model$valid.error)
+})
+
+test_that("plot.gbm default palette works without requiring viridis", {
+  set.seed(10)
+
+  plot_data <- data.frame(
+    y = rnorm(100),
+    x1 = rnorm(100),
+    x2 = rnorm(100)
+  )
+  plot_fit <- gbm(
+    y ~ x1 + x2,
+    data = plot_data,
+    distribution = "gaussian",
+    n.trees = 5,
+    interaction.depth = 1,
+    n.minobsinnode = 5,
+    bag.fraction = 0.8,
+    verbose = FALSE
+  )
+
+  expect_s3_class(plot(plot_fit, i.var = 1:2, n.trees = 1), "trellis")
+})
