@@ -6,8 +6,7 @@
 #' These functions are not intended for end-user direct usage, but are used
 #' internally by \code{gbm}.
 #' 
-#' @aliases gbmCrossVal gbmCrossValModelBuild gbmDoFold gbmCrossValErr
-#' gbmCrossValPredictions
+#' @aliases gbmCrossVal gbmCrossValModelBuild gbmDoFold gbmCrossValErr gbmCrossValPredictions
 #' @param cv.folds The number of cross-validation folds.
 #' @param nTrain The number of training samples.
 #' @param n.cores The number of cores to use.
@@ -207,6 +206,7 @@ gbmDoFold <- function(X, i.train, x, y, offset, distribution, w, var.monotone,
   x <- x[i.train, , drop = FALSE][i, , drop = FALSE]
   y <- y[i.train][i]
   offset <- offset[i.train][i]
+  w <- w[i.train][i]
   nTrain <- length(which(cv.group != X))
   group <- group[i.train][i]
   
