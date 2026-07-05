@@ -1,5 +1,5 @@
 Package: gbm
-Version: 2.2.3
+Version: 2.3.0
 Title: Generalized Boosted Regression Models
 Authors@R: c(
   person("Greg", "Ridgeway",
@@ -33,7 +33,7 @@ Authors@R: c(
          role = "aut", 
          comment = "https://github.com/gbm-developers")
   )
-Depends: R (>= 2.9.0)
+Depends: R (>= 3.5.0)
 Imports: 
     lattice,
     parallel,
@@ -45,8 +45,7 @@ Suggests:
     pdp,
     RUnit,
     splines,
-    tinytest,
-    vip,
+    testthat (>= 3.0.0),
     viridis,
     MASS
 Description: An implementation of extensions to Freund and Schapire's AdaBoost 
@@ -60,5 +59,6 @@ License: GPL (>= 2) | file LICENSE
 URL: https://github.com/gbm-developers/gbm
 BugReports: https://github.com/gbm-developers/gbm/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.3
+RoxygenNote: 8.0.0
 VignetteBuilder: knitr
+Config/testthat/edition: 3
