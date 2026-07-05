@@ -15,7 +15,7 @@
   contour = FALSE,
   number = 4,
   overlap = 0.1,
-  col.regions = viridis::viridis,
+  col.regions = NULL,
   ...
 )
 }
@@ -59,9 +59,8 @@ and \code{\link[lattice:shingles]{equal.count}} for further details.}
 for further details.}
 
 \item{col.regions}{Color vector to be used if \code{level.plot} is
-\code{TRUE}. Defaults to the wonderful Matplotlib 'viridis' color map
-provided by the \code{viridis} package. See \code{\link[viridis:reexports]{viridis}}
-for details.}
+\code{TRUE}. Defaults to the Matplotlib 'viridis' color map when the
+\code{viridis} package is installed, and otherwise uses a built-in palette.}
 
 \item{...}{Additional optional arguments to be passed onto 
 \code{\link[graphics:plot.default]{plot}}.}

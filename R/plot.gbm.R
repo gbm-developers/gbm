@@ -53,9 +53,8 @@
 #' for further details.
 #'
 #' @param col.regions Color vector to be used if \code{level.plot} is
-#' \code{TRUE}. Defaults to the wonderful Matplotlib 'viridis' color map
-#' provided by the \code{viridis} package. See \code{\link[viridis:reexports]{viridis}}
-#' for details.
+#' \code{TRUE}. Defaults to the Matplotlib 'viridis' color map when the
+#' \code{viridis} package is installed, and otherwise uses a built-in palette.
 #' 
 #' @param ... Additional optional arguments to be passed onto 
 #' \code{\link[graphics:plot.default]{plot}}.
@@ -82,7 +81,7 @@ plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees,
                      continuous.resolution = 100, return.grid = FALSE, 
                      type = c("link", "response"), level.plot = TRUE, 
                      contour = FALSE, number = 4, overlap = 0.1,
-                     col.regions = viridis::viridis, ...) {
+                     col.regions = NULL, ...) {
   
   # Match type argument
   type <- match.arg(type)
@@ -183,6 +182,10 @@ plot.gbm <- function(x, i.var = 1, n.trees = x$n.trees,
   # Return grid only (if requested)
   if(return.grid) {
     return(X)
+  }
+
+  if (is.null(col.regions)) {
+    col.regions <- gbmDefaultColRegions()
   }
   
   # Determine number of predictors
@@ -353,4 +356,16 @@ plotThreePredictorPDP <- function(X, nx, level.plot, contour, col.regions,
     
   }
   
+}
+
+
+#' @keywords internal
+gbmDefaultColRegions <- function(n = 256) {
+  if (requireNamespace("viridis", quietly = TRUE)) {
+    viridis::viridis(n)
+  } else {
+    grDevices::colorRampPalette(
+      c("#440154", "#3B528B", "#21908C", "#5DC863", "#FDE725")
+    )(n)
+  }
 }
