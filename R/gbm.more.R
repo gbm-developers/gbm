@@ -176,6 +176,8 @@ gbm.more <- function(object,
          offset <- NA
       }
       Misc <- NA
+      cRows <- nrow(x)
+      cCols <- ncol(x)
 
       if(object$distribution$name == "coxph")
       {
@@ -184,7 +186,13 @@ gbm.more <- function(object,
 
          # reverse sort the failure times to compute risk sets on the fly
          i.train <- order(-y[1:nTrain])
-         i.test <- order(-y[(nTrain+1):cRows]) + nTrain
+         n.test <- cRows - nTrain
+         if(n.test > 0) {
+            i.test <- order(-y[(nTrain+1):cRows]) + nTrain
+         }
+         else {
+            i.test <- NULL
+         }
          i.timeorder <- c(i.train,i.test)
 
          y <- y[i.timeorder]
@@ -236,7 +244,7 @@ gbm.more <- function(object,
          group        <- group[ord.group]
          y            <- y[ord.group]
          x            <- x[ord.group,,drop=FALSE]
-         w            <- x[ord.group]
+         w            <- w[ord.group]
          object$fit   <- object$fit[ord.group] # object$fit is stored in the original order
 
          # Split into train and validation set, at group boundary
@@ -276,8 +284,6 @@ gbm.more <- function(object,
       # create index upfront... subtract one for 0 based order
       x.order <- apply(x[1:nTrain,,drop=FALSE],2,order,na.last=FALSE)-1
       x <- data.matrix(x)
-      cRows <- nrow(x)
-      cCols <- ncol(x)
    }
    else
    {
