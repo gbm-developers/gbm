@@ -37,8 +37,7 @@
 #' \code{gbm.conc} is more general as it allows non-binary targets, but is
 #' significantly slower.
 #' 
-#' @aliases gbm.roc.area gbm.conc ir.measure.conc ir.measure.auc ir.measure.mrr
-#' ir.measure.map ir.measure.ndcg perf.pairwise
+#' @aliases gbm.roc.area gbm.conc ir.measure.conc ir.measure.auc ir.measure.mrr ir.measure.map ir.measure.ndcg perf.pairwise
 #' 
 #' @rdname gbm.roc.area
 #' 
