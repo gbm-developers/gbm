@@ -21,8 +21,7 @@
 #' These are functions used internally by \code{gbm} and not intended for direct 
 #' use by the user.
 #' 
-#' @aliases guessDist getStratify getCVgroup checkMissing checkID checkWeights
-#' checkOffset getVarNames gbmCluster
+#' @aliases guessDist getStratify getCVgroup checkMissing checkID checkWeights checkOffset getVarNames gbmCluster
 #' 
 #' @rdname gbm-internals
 #' @export
@@ -102,6 +101,7 @@ checkMissing <- function(x, y){
 checkWeights <- function(w, n){
   # Logical checks on weights
   if(length(w)==0) { w <- rep(1, n) }
+  else if(length(w) != n) stop("The length of weights does not equal the length of y.")
   else if(any(w < 0)) stop("negative weights not allowed")
   w
 }
