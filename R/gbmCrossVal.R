@@ -33,7 +33,8 @@
 #' @param cv.models A list containing the models for each fold.
 #' @param cv.group A vector indicating the cross-validation fold for each
 #' member of the training set.
-#' @param best.iter.cv The iteration with lowest cross-validation error.
+#' @param n.trees.predict The number of trees to use for cross-validation
+#' predictions.
 #' @param X Index (cross-validation fold) on which to subset.
 #' @param s Random seed.
 #' @return A list containing the cross-validation error and predictions.
@@ -76,8 +77,8 @@ gbmCrossVal <- function(cv.folds, nTrain, n.cores,
 
   ## get the predictions
   predictions <- gbmCrossValPredictions(cv.models, cv.folds, cv.group,
-                                        best.iter.cv, distribution,
-                                        data[i.train, ], y)
+                                        n.trees.predict = best.iter.cv,
+                                        data = data[i.train, ])
   list(error = cv.error, predictions = predictions)
 }
 
@@ -102,44 +103,38 @@ gbmCrossValErr <- function(cv.models, cv.folds, cv.group, nTrain, n.trees) {
 #' @rdname gbmCrossVal
 #' @export
 gbmCrossValPredictions <- function(cv.models, cv.folds, cv.group,
-                                   best.iter.cv, distribution, data, y) {
+                                   n.trees.predict, data) {
   
-  # Get the predictions for GBM cross validation. This function is not as nice 
-  # as it could be (i.e., leakage of y)
+  # Get the predictions for GBM cross validation.
   
   # Test that cv.group and data match
   if (nrow(data) != length(cv.group)) {
     stop("Mismatch between `data` and `cv.group`.")
   }
   
-  # This is a little complicated due to multinomial distribution
-  num.cols <- if (distribution$name == "multinomial") {
-    nlevels(factor(y))
-  } else {
-    1
+  num.cols <- cv.models[[1]]$num.classes
+  if (is.null(num.cols)) {
+    num.cols <- 1
   }
   
   # Initialize results matrix
   res <- matrix(nrow = nrow(data), ncol = num.cols)
   
   # There's no real reason to do this as other than a for loop
-  data.names <- names(data)  # column names
   for (ind in 1:cv.folds) {
     
     # These are the particular elements
     flag <- cv.group == ind
     model <- cv.models[[ind]]
     
-    # The %in% here is to handle coxph
-    # my.data  <- data[flag, !(data.names %in% model$response.name)]
     my.data  <- data[flag, model$var.names, drop=FALSE]
-    predictions <- predict(model, newdata = my.data, n.trees = best.iter.cv)  # FIXME
+    predictions <- predict(model, newdata = my.data, n.trees = n.trees.predict)
     predictions <- matrix(predictions, ncol = num.cols)
     res[flag, ] <- predictions
   }
   
   # Handle multinomial case
-  if (distribution$name != "multinomial") {
+  if (num.cols == 1) {
     res <- as.numeric(res)
   }
   
