@@ -3,9 +3,13 @@
 ^\.travis\.yml$
 ^README\.Rmd$
 ^README\.html$
+^vignettes/gbm\.Rnw$
 ^revdep$
 ^codecov\.yml$
 ^deprecated$
 ^cran-comments\.md$
 ^.github
+^docs$
+^pkgdown$
+^_pkgdown\.yml$
 ^.*\desktop.ini$
