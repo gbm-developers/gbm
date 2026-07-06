@@ -8,6 +8,7 @@ output:
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/gbm)](https://cran.r-project.org/package=gbm)
 [![Build Status](https://travis-ci.org/gbm-developers/gbm.svg?branch=master)](https://travis-ci.org/gbm-developers/gbm)
 [![Codecov test coverage](https://codecov.io/gh/gbm-developers/gbm/branch/master/graph/badge.svg)](https://codecov.io/gh/gbm-developers/gbm?branch=master)
+[![pkgdown](https://github.com/gbm-developers/gbm/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/gbm-developers/gbm/actions/workflows/pkgdown.yaml)
 [![Downloads](http://cranlogs.r-pkg.org/badges/gbm)](http://cranlogs.r-pkg.org/badges/gbm)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/gbm)](http://cranlogs.r-pkg.org/badges/grand-total/gbm)
 
@@ -15,6 +16,9 @@ output:
 ## Overview
 
 The [gbm](https://cran.r-project.org/package=gbm) package, which stands for **g**eneralized **b**oosted **m**odels, provides extensions to Freund and Schapire's AdaBoost algorithm and [Friedman's gradient boosting machine](https://doi.org/10.1214/aos/1013203451). It includes regression methods for least squares, absolute loss, $t$-distribution loss, quantile regression, logistic, multinomial logistic, Poisson, Cox proportional hazards partial likelihood, AdaBoost exponential loss, Huberized hinge loss, and Learning to Rank measures (i.e., [LambdaMart](https://www.microsoft.com/en-us/research/publication/from-ranknet-to-lambdarank-to-lambdamart-an-overview/)).
+
+Documentation and vignettes are available at
+<https://gbm-developers.github.io/gbm/>.
 
 
 ## Installation

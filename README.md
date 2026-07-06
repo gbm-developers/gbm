@@ -2,6 +2,7 @@ gbm
 ===
 
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/gbm)](https://cran.r-project.org/package=gbm)
+[![pkgdown](https://github.com/gbm-developers/gbm/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/gbm-developers/gbm/actions/workflows/pkgdown.yaml)
 [![Downloads](https://cranlogs.r-pkg.org:443/badges/gbm)](https://cranlogs.r-pkg.org:443/badges/gbm)
 [![Total Downloads](https://cranlogs.r-pkg.org:443/badges/grand-total/gbm)](https://cranlogs.r-pkg.org:443/badges/grand-total/gbm)
 
@@ -18,6 +19,9 @@ logistic, Poisson, Cox proportional hazards partial likelihood, AdaBoost
 exponential loss, Huberized hinge loss, and Learning to Rank measures
 (i.e.,
 [LambdaMart](https://www.microsoft.com/en-us/research/publication/from-ranknet-to-lambdarank-to-lambdamart-an-overview/)).
+
+Documentation and vignettes are available at
+<https://gbm-developers.github.io/gbm/>.
 
 Installation
 ------------
