@@ -2,6 +2,10 @@
 
 * Maintenance update to address new R standards
 
+* Fixed `gbm.more()` for multinomial models, corrected multinomial training
+  and validation error reporting, and removed the warning from
+  `gbm(distribution = "multinomial")`.
+
 # gbm 2.1.8
 
 * Removed experimental functions `shrink.gbm()` and `shrink.gbm.pred()`; the latter seemed broken anyway. Happy to accept a PR if anyone wants to fix them.
@@ -22,7 +26,7 @@
 
 * Calling `gbm()` with `distribution = "bernoulli"` will now throw an error whenever the response is non-numeric (e.g., 0/1 factors will throw an error instead of possibly crashing the session.) [(#6)](https://github.com/gbm-developers/gbm/issues/6). (Thanks to @mzoll.)
 
-* Calling `gbm()` with `distribution = "multinomial"` now comes with a warning message; multinomial support has always been problematic and since this package is only being maintained for backwards compatibility, it likely will not be fixed unless someone makes a PR.
+* Multinomial support remains available for backwards compatibility.
 
 * Switched from [RUnit](https://cran.r-project.org/package=RUnit) to [tinytest](https://cran.r-project.org/package=tinytest) framework. The `test.gbm()`, `test.relative.influence()`, and `validate.gbm()` functions will remain for backwards compatability. This is just the start, as more tests will be added in the future [(#51)](https://github.com/gbm-developers/gbm/issues/51).
 
