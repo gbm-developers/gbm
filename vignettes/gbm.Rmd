@@ -22,7 +22,7 @@ schemes. The gbm package takes the approach described in
 mostly due to an effort to cast boosting terms into more standard
 statistical terminology (e.g. deviance). In addition, the gbm package
 implements boosting for models commonly used in statistics but not
-commonly associated with boosting. The Cox proportional hazard model,
+commonly associated with boosting. The Cox proportional hazards model,
 for example, is an incredibly useful model and the boosting framework
 applies quite readily with only slight modification [@Ridgeway:1999].
 Also some algorithms implemented in the gbm package differ from the
@@ -31,7 +31,7 @@ has a particular loss function and a particular optimization algorithm
 associated with it. The gbm implementation of AdaBoost adopts AdaBoost's
 exponential loss function (its bound on misclassification rate) but uses
 Friedman's gradient descent algorithm rather than the original one
-proposed. So the main purposes of this document is to spell out in
+proposed. So the main purpose of this document is to spell out in
 detail what the gbm package implements.
 
 # Gradient boosting
@@ -46,7 +46,7 @@ described in [@Friedman:2002].
 
 
 Friedman (2001) and the companion paper Friedman (2002) extended the
-work of Friedman, Hastie, and Tibshirani (2000) and laid the ground work
+work of Friedman, Hastie, and Tibshirani (2000) and laid the groundwork
 for a new generation of boosting algorithms. Using the connection
 between boosting and optimization, this new work proposes the Gradient
 Boosting Machine.
@@ -113,7 +113,7 @@ determines the direction, the gradient, in which it needs to improve the
 fit to the data and selects a particular model from the allowable class
 of functions that is in most agreement with the direction. In the case
 of squared-error loss,
-$\Psi(y_i,f(\mathbf{x}_i)) = \sum_{i=1}^N (y_i-f(\mathbf{x}_i))^2$, this
+$\Psi(y_i,f(\mathbf{x}_i)) = (y_i-f(\mathbf{x}_i))^2$, this
 algorithm corresponds exactly to residual fitting.
 
 ---
@@ -151,7 +151,7 @@ suggested in Algorithm 1. For example, Friedman (2001) substituted
 several choices in for $\Psi$ to develop new boosting algorithms for
 robust regression with least absolute deviation and Huber loss
 functions. Friedman (2002) showed that a simple subsampling trick can
-greatly improve predictive performance while simultaneously reduce
+greatly improve predictive performance while simultaneously reducing
 computation time. Section \@ref(GBMModifications) discusses some of these modifications.
 
 # Improving boosting methods using control of the learning rate, sub-sampling, and a decomposition for interpretation {#GBMModifications}
@@ -197,7 +197,7 @@ shrinkage.
 The optimal number of iterations, $T$, and the learning rate, $\lambda$,
 depend on each other. In practice I set $\lambda$ to be as small as
 possible and then select $T$ by cross-validation. Performance is best
-when $\lambda$ is as small as possible performance with decreasing
+when $\lambda$ is as small as possible, with decreasing
 marginal utility for smaller and smaller $\lambda$. Slower learning
 rates do not necessarily scale the number of optimal iterations. That
 is, if when $\lambda=1.0$ and the optimal $T$ is 100 iterations, does
@@ -227,7 +227,7 @@ first term of Equation \@ref(eq:ANOVAdecomp). Trees with two splits fall into th
 term of Equation \@ref(eq:ANOVAdecomp) and so on. By restricting the depth of the
 trees produced on each boosting iteration we can control the order of
 approximation. Often additive components are sufficient to approximate a
-multivariate function well, generalized additive models, the naı̈ve Bayes
+multivariate function well, generalized additive models, the naive Bayes
 classifier, and boosted stumps for example. When the approximation is
 restricted to a first order we can also produce plots of $x_j$ versus
 $f_j(x_j)$ to demonstrate how changes in $x_j$ might affect changes in
@@ -256,7 +256,7 @@ Select
 
 - a loss function (`distribution`)
 - the number of iterations, \(T\) (`n.trees`)
-- the depth of each tree, \(K\) (`interaction.depth`)
+- the maximum interaction depth (`interaction.depth`)
 - the shrinkage (or learning rate) parameter, \(\lambda\) (`shrinkage`)
 - the subsampling rate, \(p\) (`bag.fraction`)
 
@@ -272,9 +272,9 @@ For \(t\) in \(1,\ldots,T\) do
 
 2.  Randomly select \(p \times N\) cases from the dataset.
 
-3.  Fit a regression tree with \(K\) terminal nodes,
-    \(g(\mathbf{x}) = E(z|\mathbf{x})\). This tree is fit using only
-    those randomly selected observations.
+3.  Fit a regression tree, \(g(\mathbf{x}) = E(z|\mathbf{x})\). This
+    tree is fit using only those randomly selected observations. Let
+    \(K\) be the number of terminal nodes in the fitted tree.
 
 4.  Compute the optimal terminal node predictions,
     \(\rho_1,\ldots,\rho_K\), as
@@ -380,7 +380,7 @@ Lastly, gbm offers $v$-fold cross validation for estimating the optimal
 number of iterations. If when fitting the gbm model, `cv.folds=5` then
 gbm will do 5-fold cross validation. gbm will fit five gbm models in
 order to compute the cross validation error estimate and then will fit a
-sixth and final gbm model with `n.trees`iterations using all of the
+sixth and final gbm model with `n.trees` iterations using all of the
 data. The returned model object will have a component labeled
 `cv.error`. Note that `gbm.more` will do additional gbm iterations but
 will not add to the `cv.error` component. Use
@@ -395,11 +395,11 @@ knitr::include_graphics(if (knitr::is_latex_output()) {
 ```
 
 Figure \@ref(fig:oobperf) compares the three methods for estimating the optimal number of
-iterations across 13 datasets. The boxplots show the methods performance
+iterations across 13 datasets. The boxplots show the methods' performance
 relative to the best method on that dataset. For most datasets the
-method perform similarly, however, 5-fold cross validation is
-consistently the best of them. OOB, using a 33% test set, and using a
-20% test set all have datasets for which the perform considerably worse
+methods perform similarly. However, 5-fold cross validation is
+consistently the best of them. OOB, using a 33\% test set, and using a
+20\% test set all have datasets for which they perform considerably worse
 than the best method. My recommendation is to use 5- or 10-fold cross
 validation if you can afford the computing time. Otherwise you may
 choose among the other options, knowing that OOB is conservative.
@@ -456,7 +456,7 @@ Notes:
   Deviance                  $\frac{1}{\sum w_i} \sum w_i|y_i-f(\mathbf{x}_i)|$
   Initial value             $\mbox{median}_w(y)$
   Gradient                  $z_i=\mbox{sign}(y_i-f(\mathbf{x}_i))$
-  Terminal node estimates   $\mbox{median}_w(z)$
+  Terminal node estimates   $\mbox{median}_w(y-f(\mathbf{x}))$
   ------------------------- ----------------------------------------------------
 
 Notes:
@@ -483,11 +483,108 @@ Notes:
   weight exceeds $\alpha\sum_i w_i$, with $\alpha=1$ returning the
   maximum.
 
-## Cox Proportional Hazard
+## t-distribution
+
+The `tdist` distribution has a degrees-of-freedom parameter \(\nu\),
+which defaults to 4.
+
+  ------------------------- --------------------------------------------------------------------
+  Deviance                  $\displaystyle \frac{1}{\sum w_i}\sum_i w_i \log(\nu + (y_i-f(\mathbf{x}_i))^2)$
+  Initial value             location M-estimate of $y$
+  Gradient                  $\displaystyle z_i=\frac{2(y_i-f(\mathbf{x}_i))}{\nu + (y_i-f(\mathbf{x}_i))^2}$
+  Terminal node estimates   location M-estimate of $y-f(\mathbf{x})$
+  ------------------------- --------------------------------------------------------------------
+
+Notes:
+
+- The location M-estimate starts from the weighted median. It estimates
+  scale as \(1.4826\) times the weighted median absolute deviation and
+  iterates with weights proportional to
+  \(\psi(|u|/s)/(|u|/s)\), where \(\psi(v)=v/(\nu+v^2)\).
+
+## Huberized hinge loss
+
+Let \(\eta_i=o_i+f(\mathbf{x}_i)\), \(q_i=2y_i-1\), and
+\(u_i=q_i\eta_i\).
+
+  ------------------------- -----------------------------------------------------------------------------------------------
+  Deviance                  $\displaystyle \frac{1}{\sum w_i}\sum_i w_i L(u_i)$
+  Initial value             $\displaystyle \frac{\sum w_i y_i}{\sum w_i(1-y_i)}$
+  Working response          see below
+  Terminal node estimates   see below
+  ------------------------- -----------------------------------------------------------------------------------------------
+
+where
+\[
+L(u)=
+\begin{cases}
+-4u, & u < -1,\\
+(1-u)^2, & -1 \leq u \leq 1,\\
+0, & u > 1.
+\end{cases}
+\]
+
+Equivalently, the working response is
+\[
+z_i =
+\begin{cases}
+-4q_i, & u_i < -1,\\
+-2q_i(1-u_i), & -1 \leq u_i \leq 1,\\
+0, & u_i > 1.
+\end{cases}
+\]
+For a terminal node \(S_k\), the terminal node prediction is
+\[
+\rho_k =
+\frac{\sum_{\mathbf{x}_i\in S_k} w_i a_i}
+{\sum_{\mathbf{x}_i\in S_k} w_i b_i},
+\]
+where
+\[
+a_i =
+\begin{cases}
+4q_i, & u_i < -1,\\
+2q_i(1-u_i), & -1 \leq u_i \leq 1,\\
+0, & u_i > 1,
+\end{cases}
+\qquad
+b_i =
+\begin{cases}
+-4q_i\eta_i, & u_i < -1,\\
+(1-u_i)^2, & -1 \leq u_i \leq 1,\\
+0, & u_i > 1.
+\end{cases}
+\]
+
+Notes:
+
+- This distribution requires \(y_i\in\{0,1\}\).
+
+## Multinomial
+
+Let \(y_{ik}\) be the indicator that observation \(i\) belongs to class
+\(k\), and let
+\[
+p_{ik}=\frac{\exp(f_k(\mathbf{x}_i))}
+{\sum_{\ell=1}^C \exp(f_\ell(\mathbf{x}_i))}.
+\]
+
+  ------------------------- -----------------------------------------------------------------------------------------------
+  Deviance                  $\displaystyle -\frac{1}{\sum_i w_i}\sum_i\sum_{k=1}^C w_i y_{ik}\log p_{ik}$
+  Initial value             0
+  Gradient                  $z_{ik}=y_{ik}-p_{ik}$
+  Terminal node estimates   $\displaystyle \frac{\sum_i w_i(y_{ik}-p_{ik})}{\sum_i w_i |y_{ik}-p_{ik}|(1-|y_{ik}-p_{ik}|)}$
+  ------------------------- -----------------------------------------------------------------------------------------------
+
+The gbm engine fits one tree per class per boosting iteration. The
+multinomial deviance is computed after the last class tree in each
+iteration.
+
+## Cox Proportional Hazards
 
   ------------------------- -----------------------------------------------------------------
-  Deviance                  $-2\sum w_i(\delta_i(f(\mathbf{x}_i)-\log(R_i/w_i)))$
-  Gradient                  $\displaystyle z_i=\delta_i - \sum_j \delta_j                                         \frac{w_jI(t_i\geq t_j)e^{f(\mathbf{x}_i)}} {\sum_k w_kI(t_k\geq t_j)e^{f(\mathbf{x}_k)}}$
+  Deviance                  $\displaystyle -\frac{2}{\sum_i w_i\delta_i}\sum_i w_i\delta_i(f(\mathbf{x}_i)-\log R_i)$
+  Gradient                  $\displaystyle z_i=\delta_i - e^{f(\mathbf{x}_i)}\sum_j \frac{w_j\delta_j I(t_i\geq t_j)}{R_j}$
   Initial value             0
   Terminal node estimates   Newton-Raphson algorithm
   ------------------------- -----------------------------------------------------------------
@@ -495,17 +592,25 @@ Notes:
 1.  Initialize the terminal node predictions to 0,
     $\pmb{\rho}=0$
 
-2.  Let $\displaystyle p_i^{(k)}=\frac{\sum_j I(k(j)=k)I(t_j\geq t_i)e^{f(\mathbf{x}_i)+\rho_k}} {\sum_j I(t_j\geq t_i)e^{f(\mathbf{x}_i)+\rho_k}}$
+2.  Given the current \(\pmb{\rho}\), let
+    \[
+    p_i^{(k)}(\pmb{\rho}) =
+    \frac{\sum_j I(k(j)=k)I(t_j\geq t_i)w_j
+      e^{f(\mathbf{x}_j)+\rho_{k(j)}}}
+    {\sum_j I(t_j\geq t_i)w_j e^{f(\mathbf{x}_j)+\rho_{k(j)}}}.
+    \]
 
-3.  Let $g_k=\sum w_i\delta_i\left(I(k(i)=k)-p_i^{(k)}\right)$
+3.  Let
+    $g_k=\sum_i w_i\delta_i\left(I(k(i)=k)-p_i^{(k)}(\pmb{\rho})\right)$
 
-4.  Let $\mathbf{H}$ be a $k\times k$ matrix with diagonal elements
+4.  For identifiability, fix \(\rho_K=0\). Let \(\mathbf{H}\) be the
+    \((K-1)\times(K-1)\) Hessian matrix with
 
     1.  Set diagonal elements
-        $H_{mm}=\sum w_i\delta_i p_i^{(m)}\left(1-p_i^{(m)}\right)$
+        $H_{mm}=-\sum_i w_i\delta_i p_i^{(m)}(\pmb{\rho})\left(1-p_i^{(m)}(\pmb{\rho})\right)$
 
     2.  Set off diagonal elements
-        $H_{mn}=-\sum w_i\delta_i p_i^{(m)}p_i^{(n)}$
+        $H_{mn}=\sum_i w_i\delta_i p_i^{(m)}(\pmb{\rho})p_i^{(n)}(\pmb{\rho})$
 
 5.  Newton-Raphson update
     $\pmb{\rho} \leftarrow \pmb{\rho} - \mathbf{H}^{-1}\mathbf{g}$
@@ -517,7 +622,7 @@ Notes:
 - $t_i$ is the survival time and $\delta_i$ is the death indicator.
 
 - $R_i$ denotes the hazard for the risk set,
-  $R_i=\sum_{j=1}^N w_jI(t_j\geq t_i)e^{f(\mathbf{x}_i)}$
+  $R_i=\sum_{j=1}^N w_jI(t_j\geq t_i)e^{f(\mathbf{x}_j)}$
 
 - $k(i)$ indexes the terminal node of observation $i$
 
@@ -577,8 +682,9 @@ For consistency with typical usage, our goal is to *maximize* one of the *utilit
         0 & \mbox{otherwise.}\end{array}\right.$$
 
 4.  Normalized discounted cumulative gain:
-    $$\frac{\sum_{1\leq i\leq n} \log_2(i+1) \, y_i}{\sum_{1\leq i\leq n}
-      \log_2(i+1) \, y'_i},$$ where $y'_1, \dots, y'_n$ is a reordering
+    $$\frac{\sum_{1\leq i\leq n} y_i/\log_2(i+1)}{\sum_{1\leq i\leq n}
+      y'_i/\log_2(i+1)},$$ 
+    where $y'_1, \dots, y'_n$ is a reordering
     of $y_1, \dots,y_n$ with $y'_1 \geq y'_2 \geq \dots \geq y'_n$.
 
 The generalization to multiple (possibly weighted) groups is
