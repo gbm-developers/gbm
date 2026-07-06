@@ -314,8 +314,11 @@ GBMRESULT CNodeSearch::WrapUpCurrentVariable()
             dBestMissingTotalW = dCurrentMissingTotalW;
             cBestMissingN      = cCurrentMissingN;
         }
-        else // DEBUG: consider a weighted average with parent node?
+        else
         {
+            // No training observations had missing values for this split 
+            // Seed missing branch with the parent statistics
+            // Adjust() smooths missing branches after the tree is grown
             dBestMissingSumZ   = dInitSumZ;
             dBestMissingTotalW = dInitTotalW;
             cBestMissingN      = 0;
