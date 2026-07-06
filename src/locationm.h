@@ -27,6 +27,8 @@ public:
 
 	double Median(int iN, double *adV, double *adW);
 
+	double Quantile(int iN, double *adV, double *adW, double dAlpha);
+
 	double PsiFun(double dX);
 
 	double LocationM(int iN, double *adX, double *adW);

@@ -18,6 +18,7 @@
 
 #include <algorithm>
 #include "distribution.h"
+#include "locationm.h"
 
 
 class CQuantile: public CDistribution
@@ -89,6 +90,9 @@ public:
 
 private:
     std::vector<double> vecd;
+    CLocationM *mpLocM;
+    double *adArr;
+    double *adW2;
     double dAlpha;
 };
 

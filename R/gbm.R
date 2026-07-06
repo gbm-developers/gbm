@@ -33,8 +33,7 @@
 #' 
 #' If quantile regression is specified, \code{distribution} must be a list of
 #' the form \code{list(name = "quantile", alpha = 0.25)} where \code{alpha} is 
-#' the quantile to estimate. The current version's quantile regression method 
-#' does not handle non-constant weights and will stop.
+#' the quantile to estimate.
 #' 
 #' If \code{"tdist"} is specified, the default degrees of freedom is 4 and 
 #' this can be controlled by specifying 
@@ -131,7 +130,8 @@
 #' @param cv.folds Number of cross-validation folds to perform. If
 #' \code{cv.folds}>1 then \code{gbm}, in addition to the usual fit, will
 #' perform a cross-validation, calculate an estimate of generalization error
-#' returned in \code{cv.error}.
+#' returned in \code{cv.error}. If \code{cv.folds=1}, \code{gbm} warns and
+#' proceeds without cross-validation.
 #' 
 #' @param keep.data a logical variable indicating whether to keep the data and
 #' an index of the data stored with the object. Keeping the data and index
@@ -431,15 +431,21 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
 
   # Set up for k-fold cross-validation
   cv.error <- NULL
-  # FIXME: Is there a better way to handle this?
   if (cv.folds == 1) {
-    cv.folds <- 0  # o/w, an uninformative error is thrown
+    warning("cv.folds = 1 is not meaningful; no cross-validation will be run.")
+    cv.folds <- 0
   }
-  if(cv.folds > 1) {
+  has.cross.validation <- cv.folds > 1
+  if(has.cross.validation) {
+    cv.data <- if (distribution$name == "pairwise") {
+      data[ord.group, , drop = FALSE]
+    } else {
+      data
+    }
     cv.results <- gbmCrossVal(cv.folds = cv.folds, nTrain = nTrain, 
                               n.cores = n.cores, 
                               class.stratify.cv = class.stratify.cv, 
-                              data = data, x = x, y = y, offset = offset, 
+                              data = cv.data, x = x, y = y, offset = offset, 
                               distribution = distribution, w = w, 
                               var.monotone = var.monotone, n.trees = n.trees, 
                               interaction.depth = interaction.depth, 
@@ -450,6 +456,9 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
                               response.name = response.name, group = group)
     cv.error <- cv.results$error
     p <- cv.results$predictions
+    if (distribution$name == "pairwise") {
+      p <- p[order(ord.group[seq_len(nTrain)])]
+    }
   }
   
   # Fit a GBM
@@ -469,7 +478,7 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
   gbm.obj$cv.folds <- cv.folds
   gbm.obj$call <- mcall
   gbm.obj$m <- m
-  if (cv.folds > 1) {  # FIXME: Was previously `cv.folds > 0`?
+  if (has.cross.validation) {
     gbm.obj$cv.fitted <- p 
   }
   if (distribution$name == "pairwise") {

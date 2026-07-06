@@ -173,3 +173,51 @@ test_that("plot.gbm default palette works without requiring viridis", {
 
   expect_s3_class(plot(plot_fit, i.var = 1:2, n.trees = 1), "trellis")
 })
+
+test_that("quantile regression supports non-constant weights", {
+  quantile_data <- data.frame(
+    y = 1:20,
+    x = 1:20,
+    w = c(rep(1, 19), 100)
+  )
+
+  expect_warning(
+    quantile_fit <- gbm(
+      y ~ x,
+      data = quantile_data,
+      weights = w,
+      distribution = list(name = "quantile", alpha = 0.5),
+      n.trees = 1,
+      interaction.depth = 1,
+      n.minobsinnode = 2,
+      bag.fraction = 1,
+      train.fraction = 1,
+      verbose = FALSE
+    ),
+    NA
+  )
+
+  expect_equal(quantile_fit$initF, 20)
+
+  terminal_data <- data.frame(
+    y = c(rep(0, 10), 100, 150, 200),
+    x = c(rep(0, 10), 1, 1, 1),
+    w = c(rep(100, 10), 1, 1, 100)
+  )
+  terminal_fit <- gbm(
+    y ~ x,
+    data = terminal_data,
+    weights = w,
+    distribution = list(name = "quantile", alpha = 0.5),
+    n.trees = 1,
+    interaction.depth = 1,
+    n.minobsinnode = 1,
+    bag.fraction = 1,
+    train.fraction = 1,
+    shrinkage = 1,
+    verbose = FALSE
+  )
+
+  expect_equal(unique(predict(terminal_fit, terminal_data[terminal_data$x == 1, ],
+                              n.trees = 1)), 200)
+})

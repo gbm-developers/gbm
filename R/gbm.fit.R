@@ -38,8 +38,7 @@
 #' 
 #' If quantile regression is specified, \code{distribution} must be a list of
 #' the form \code{list(name = "quantile", alpha = 0.25)} where \code{alpha} is 
-#' the quantile to estimate. The current version's quantile regression method 
-#' does not handle non-constant weights and will stop.
+#' the quantile to estimate.
 #' 
 #' If \code{"tdist"} is specified, the default degrees of freedom is 4 and 
 #' this can be controlled by specifying 
@@ -333,9 +332,6 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
     stop("This version of AdaBoost requires the response to be numeric in {0,1}")
   }
   if(distribution$name == "quantile") {
-    if(length(unique(w)) > 1) {
-      stop("This version of gbm for the quantile regression lacks a weighted quantile. For now the weights must be constant.")
-    }
     if(is.null(distribution$alpha)) {
       stop("For quantile regression, the distribution parameter must be a list with a parameter 'alpha' indicating the quantile, for example list(name=\"quantile\",alpha=0.95).")
     } else {

@@ -129,6 +129,79 @@ double CLocationM::Median(int iN, double *adV, double *adW)
 }
 
 /////////////////////////////////////////////////
+// Quantile
+//
+// Function to return the weighted quantile of
+// a vector of a given length
+//
+// Parameters: iN     - Length of vector
+//             adV    - Vector of doubles
+//             adW    - Array of weights
+//             dAlpha - Quantile to calculate
+//
+// Returns :   Weighted quantile
+/////////////////////////////////////////////////
+double CLocationM::Quantile(int iN, double *adV, double *adW, double dAlpha)
+{
+
+	// Local variables
+	int ii, iQuantIdx;
+	std::vector<double> vecW;
+	std::vector< std::pair<int, double> > vecV;
+	double dCumSum, dWSum;
+
+	// Check the vector size
+	if (iN == 0)
+	{
+		return 0.0;
+	}
+	else if(iN == 1)
+	{
+		return adV[0];
+	}
+
+	if (dAlpha <= 0.0)
+	{
+		return *std::min_element(adV, adV + iN);
+	}
+	else if (dAlpha >= 1.0)
+	{
+		return *std::max_element(adV, adV + iN);
+	}
+
+	// Create vectors containing the values and weights
+	vecV.resize(iN);
+	for (ii = 0; ii < iN; ii++)
+	{
+		vecV[ii] = std::make_pair(ii, adV[ii]);
+	}
+
+	// Sort the vector
+	std::stable_sort(vecV.begin(), vecV.end(), comp());
+
+	// Sort the weights correspondingly and calculate their sum
+	vecW.resize(iN);
+	dWSum = 0.0;
+	for (ii = 0; ii < iN; ii++)
+	{
+		vecW[ii] = adW[vecV[ii].first];
+		dWSum += adW[ii];
+	}
+
+	// Match the historical unweighted quantile convention: first cumulative
+	// weight strictly greater than alpha, with alpha 0 and 1 handled above.
+	iQuantIdx = -1;
+	dCumSum = 0.0;
+	while (dCumSum <= dAlpha * dWSum)
+	{
+		iQuantIdx++;
+		dCumSum += vecW[iQuantIdx];
+	}
+
+	return vecV[iQuantIdx].second;
+}
+
+/////////////////////////////////////////////////
 // PsiFun
 //
 // Function to calculate the psi of the supplied

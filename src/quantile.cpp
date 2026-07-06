@@ -5,11 +5,25 @@
 CQuantile::CQuantile(double dAlpha)
 {
     this->dAlpha = dAlpha;
+    mpLocM = NULL;
+    adArr = NULL;
+    adW2 = NULL;
 }
 
 CQuantile::~CQuantile()
 {
-
+    if(mpLocM != NULL)
+    {
+        delete mpLocM;
+    }
+    if(adArr != NULL)
+    {
+        delete[] adArr;
+    }
+    if(adW2 != NULL)
+    {
+        delete[] adW2;
+    }
 }
 
 
@@ -48,7 +62,6 @@ GBMRESULT CQuantile::ComputeWorkingResponse
 
 
 
-// DEBUG: needs weighted quantile
 GBMRESULT CQuantile::InitF
 (
     double *adY,
@@ -59,26 +72,44 @@ GBMRESULT CQuantile::InitF
     unsigned long cLength
 )
 {
+    GBMRESULT hr = GBM_OK;
     double dOffset=0.0;
     unsigned long i=0;
+    double *pTemp = NULL;
     
-    vecd.resize(cLength);
+    mpLocM = new CLocationM("Other", 0, pTemp);
+    if(mpLocM == NULL)
+    {
+        hr = GBM_OUTOFMEMORY;
+        goto Error;
+    }
+
+    adArr = new double[cLength];
+    if(adArr == NULL)
+    {
+        hr = GBM_OUTOFMEMORY;
+        goto Error;
+    }
+
+    adW2 = new double[cLength];
+    if(adW2 == NULL)
+    {
+        hr = GBM_OUTOFMEMORY;
+        goto Error;
+    }
+
     for(i=0; i<cLength; i++)
     {
         dOffset = (adOffset==NULL) ? 0.0 : adOffset[i];
-        vecd[i] = adY[i] - dOffset;
+        adArr[i] = adY[i] - dOffset;
     }
 
-    if(dAlpha==1.0)
-    {
-        dInitF = *std::max_element(vecd.begin(), vecd.end());
-    } else
-    {
-        nth_element(vecd.begin(), vecd.begin() + int(cLength*dAlpha), vecd.end());
-        dInitF = *(vecd.begin() + int(cLength*dAlpha));
-    }
+    dInitF = mpLocM->Quantile(int(cLength), adArr, adWeight, dAlpha);
     
-    return GBM_OK;
+Cleanup:
+    return hr;
+Error:
+    goto Cleanup;
 }
 
 
@@ -132,7 +163,6 @@ double CQuantile::Deviance
 }
 
 
-// DEBUG: needs weighted quantile
 GBMRESULT CQuantile::FitBestConstant
 (
     double *adY,
@@ -158,7 +188,6 @@ GBMRESULT CQuantile::FitBestConstant
     unsigned long iVecd = 0;
     double dOffset;
     
-    vecd.resize(nTrain); // should already be this size from InitF
     for(iNode=0; iNode<cTermNodes; iNode++)
     {
         if(vecpTermNodes[iNode]->cN >= cMinObsInNode)
@@ -170,23 +199,14 @@ GBMRESULT CQuantile::FitBestConstant
                 {
                     dOffset = (adOffset==NULL) ? 0.0 : adOffset[iObs];
 
-                    vecd[iVecd] = adY[iObs] - dOffset - adF[iObs];
+                    adArr[iVecd] = adY[iObs] - dOffset - adF[iObs];
+                    adW2[iVecd] = adW[iObs];
                     iVecd++;
                 }
             }
 
-            if(dAlpha==1.0)
-            {
-                vecpTermNodes[iNode]->dPrediction = 
-                    *std::max_element(vecd.begin(), vecd.begin()+iVecd);
-            } else
-            {
-                nth_element(vecd.begin(), 
-                            vecd.begin() + int(iVecd*dAlpha), 
-                            vecd.begin() + int(iVecd));
-                vecpTermNodes[iNode]->dPrediction = 
-                    *(vecd.begin() + int(iVecd*dAlpha));
-            }
+            vecpTermNodes[iNode]->dPrediction =
+                mpLocM->Quantile(int(iVecd), adArr, adW2, dAlpha);
          }
     }
 
