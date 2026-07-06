@@ -211,7 +211,7 @@ https://github.com/gbm-developers/gbm3 for the latest version.
 
 # Simulate data
 set.seed(101)  # for reproducibility
-N <- 1000
+N <- 200
 X1 <- runif(N)
 X2 <- 2 * runif(N)
 X3 <- ordered(sample(letters[1:4], N, replace = TRUE), levels = letters[4:1])
@@ -223,16 +223,16 @@ SNR <- 10  # signal-to-noise ratio
 Y <- X1 ^ 1.5 + 2 * (X2 ^ 0.5) + mu
 sigma <- sqrt(var(Y) / SNR)
 Y <- Y + rnorm(N, 0, sigma)
-X1[sample(1:N,size=500)] <- NA  # introduce some missing values
-X4[sample(1:N,size=300)] <- NA  # introduce some missing values
+X1[sample(1:N, size = 100)] <- NA  # introduce some missing values
+X4[sample(1:N, size = 60)] <- NA  # introduce some missing values
 data <- data.frame(Y, X1, X2, X3, X4, X5, X6)
 
 # Fit a GBM
 set.seed(102)  # for reproducibility
 gbm1 <- gbm(Y ~ ., data = data, var.monotone = c(0, 0, 0, 0, 0, 0),
-            distribution = "gaussian", n.trees = 100, shrinkage = 0.1,             
+            distribution = "gaussian", n.trees = 50, shrinkage = 0.1,             
             interaction.depth = 3, bag.fraction = 0.5, train.fraction = 0.5,  
-            n.minobsinnode = 10, cv.folds = 5, keep.data = TRUE, 
+            n.minobsinnode = 5, cv.folds = 2, keep.data = TRUE, 
             verbose = FALSE, n.cores = 1)  
 
 # Check performance using the out-of-bag (OOB) error; the OOB error typically
@@ -244,7 +244,7 @@ print(best.iter)
 best.iter <- gbm.perf(gbm1, method = "test")
 print(best.iter)
 
-# Check performance using 5-fold cross-validation
+# Check performance using 2-fold cross-validation
 best.iter <- gbm.perf(gbm1, method = "cv")
 print(best.iter)
 
@@ -259,7 +259,7 @@ print(pretty.gbm.tree(gbm1, i.tree = gbm1$n.trees))
 
 # Simulate new data
 set.seed(103)  # for reproducibility
-N <- 1000
+N <- 200
 X1 <- runif(N)
 X2 <- 2 * runif(N)
 X3 <- ordered(sample(letters[1:4], N, replace = TRUE))

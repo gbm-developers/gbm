@@ -47,12 +47,12 @@ computed.
 
 data(iris)
 iris.mod <- gbm(Species ~ ., distribution="multinomial", data=iris,
-                 n.trees=2000, shrinkage=0.01, cv.folds=5,
+                 n.trees=100, shrinkage=0.05, cv.folds=3,
                  verbose=FALSE, n.cores=1)
 iris.mod
 #data(lung)
 #lung.mod <- gbm(Surv(time, status) ~ ., distribution="coxph", data=lung,
-#                 n.trees=2000, shrinkage=0.01, cv.folds=5,verbose =FALSE)
+#                 n.trees=100, shrinkage=0.05, cv.folds=3,verbose =FALSE)
 #lung.mod
 }
 \seealso{
