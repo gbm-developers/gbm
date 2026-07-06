@@ -59,8 +59,7 @@ using the LambdaMart algorithm).
 
 If quantile regression is specified, \code{distribution} must be a list of
 the form \code{list(name = "quantile", alpha = 0.25)} where \code{alpha} is 
-the quantile to estimate. The current version's quantile regression method 
-does not handle non-constant weights and will stop.
+the quantile to estimate.
 
 If \code{"tdist"} is specified, the default degrees of freedom is 4 and 
 this can be controlled by specifying 
