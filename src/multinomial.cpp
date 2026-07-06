@@ -130,17 +130,43 @@ double CMultinomial::Deviance
     int cIdxOff
 )
 {
-    unsigned long ii=0;
-    double dL = 0.0;
-    double dW = 0.0;
+   unsigned long ii=0;
+   unsigned long kk=0;
+   unsigned long iRowStart = cIdxOff % mcRows;
+   unsigned long iClass = cIdxOff / mcRows;
+   double dL = 0.0;
+   double dW = 0.0;
 
-    for(ii=cIdxOff; ii<cLength+cIdxOff; ii++)
-    {
-        dL += -adWeight[ii] * adY[ii] * log(madProb[ii]);
-        dW += adWeight[ii];
-    }
+   if(iClass != (unsigned long)(mcNumClasses - 1))
+   {
+      return 0.0;
+   }
 
-    return dL/dW;
+   for(ii=iRowStart; ii<iRowStart+cLength; ii++)
+   {
+      double dClassSum = 0.0;
+      for(kk=0; kk<(unsigned long)mcNumClasses; kk++)
+      {
+         int iIdx = ii + kk * mcRows;
+         double dF = (adOffset == NULL) ? adF[iIdx] : adF[iIdx] + adOffset[iIdx];
+         dClassSum += exp(dF);
+      }
+
+      dClassSum = (dClassSum > 0) ? dClassSum : 1e-8;
+
+      for(kk=0; kk<(unsigned long)mcNumClasses; kk++)
+      {
+         int iIdx = ii + kk * mcRows;
+         if(adY[iIdx] == 1.0)
+         {
+            double dF = (adOffset == NULL) ? adF[iIdx] : adF[iIdx] + adOffset[iIdx];
+            dL += -adWeight[iIdx] * (dF - log(dClassSum));
+         }
+      }
+      dW += adWeight[ii];
+   }
+
+   return dL/dW;
 }
 
 
@@ -222,7 +248,10 @@ double CMultinomial::BagImprovement
       {
          int iIdx = ii + kk * mcRows;
          double dF = (adOffset == NULL) ? adF[iIdx] : adF[iIdx] + adOffset[iIdx];
-         dF += dStepSize * adFadj[iIdx];
+         if(kk == (unsigned long)(mcNumClasses - 1))
+         {
+            dF += dStepSize * adFadj[iIdx];
+         }
          adStepProb[iIdx] = adWeight[iIdx] * exp(dF);
          dClassSum += adWeight[iIdx] * exp(dF);
       }

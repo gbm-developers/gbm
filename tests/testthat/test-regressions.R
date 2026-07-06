@@ -51,6 +51,56 @@ test_that("gbm.more works for pairwise models fit with keep.data = FALSE", {
   )
 })
 
+test_that("gbm.more works for multinomial models with kept data", {
+  set.seed(10)
+
+  expect_warning(multinomial_fit <- gbm(
+    Species ~ .,
+    data = iris,
+    distribution = "multinomial",
+    n.trees = 5,
+    interaction.depth = 1,
+    n.minobsinnode = 5,
+    bag.fraction = 0.8,
+    verbose = FALSE
+  ), NA)
+
+  extended_fit <- gbm.more(multinomial_fit, n.new.trees = 2, verbose = FALSE)
+  predictions <- predict(extended_fit, iris, n.trees = 7, type = "response")
+
+  expect_s3_class(extended_fit, "gbm")
+  expect_equal(extended_fit$n.trees, 7)
+  expect_equal(dim(extended_fit$fit), c(nrow(iris), nlevels(iris$Species)))
+  expect_equal(dim(predictions), c(nrow(iris), nlevels(iris$Species), 1))
+  expect_equal(rowSums(predictions[, , 1]), rep(1, nrow(iris)))
+})
+
+test_that("gbm.more works for multinomial models fit with keep.data = FALSE", {
+  set.seed(10)
+
+  expect_warning(multinomial_fit <- gbm(
+    Species ~ .,
+    data = iris,
+    distribution = "multinomial",
+    n.trees = 5,
+    interaction.depth = 1,
+    n.minobsinnode = 5,
+    bag.fraction = 0.8,
+    keep.data = FALSE,
+    verbose = FALSE
+  ), NA)
+
+  extended_fit <- gbm.more(multinomial_fit, n.new.trees = 2, data = iris,
+                           verbose = FALSE)
+  predictions <- predict(extended_fit, iris, n.trees = 7, type = "response")
+
+  expect_s3_class(extended_fit, "gbm")
+  expect_equal(extended_fit$n.trees, 7)
+  expect_equal(dim(extended_fit$fit), c(nrow(iris), nlevels(iris$Species)))
+  expect_equal(dim(predictions), c(nrow(iris), nlevels(iris$Species), 1))
+  expect_equal(rowSums(predictions[, , 1]), rep(1, nrow(iris)))
+})
+
 test_that("gbmDoFold reorders weights to match fold rows", {
   fold_x <- data.frame(x = seq_len(40))
   fold_y <- seq_len(40)
