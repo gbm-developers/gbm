@@ -39,12 +39,12 @@ jobs:
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)
         shell: Rscript {0}
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: docs
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

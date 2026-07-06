@@ -2,6 +2,7 @@ url: https://gbm-developers.github.io/gbm/
 
 template:
   bootstrap: 5
+  math-rendering: mathjax
 
 navbar:
   structure:
