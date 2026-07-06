@@ -1,0 +1,15 @@
+url: https://gbm-developers.github.io/gbm/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+
+articles:
+  - title: Articles
+    navbar: ~
+    contents:
+      - gbm
