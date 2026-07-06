@@ -167,20 +167,21 @@ SEXP gbm_fit
       goto Error;
     }
     
+    // InitF also lets distributions allocate iteration-specific work buffers.
+    hr = pDist->InitF(pData->adY,
+                      pData->adMisc,
+                      pData->adOffset,
+                      pData->adWeight,
+                      REAL(rdInitF)[0],
+                      cTrain);
+    if(GBM_FAILED(hr))
+    {
+      goto Error;
+    }
+
     if(ISNA(REAL(radFOld)[0])) // check for old predictions
     {
         // set the initial value of F as a constant
-        hr = pDist->InitF(pData->adY,
-                          pData->adMisc,
-                          pData->adOffset,
-                          pData->adWeight,
-                          REAL(rdInitF)[0], 
-                          cTrain);
-        if(GBM_FAILED(hr))
-        {
-          goto Error;
-        }
-      
         for(i=0; i < (pData->cRows) * cNumClasses; i++)
         {
             REAL(radF)[i] = REAL(rdInitF)[0];
