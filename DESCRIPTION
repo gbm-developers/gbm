@@ -39,10 +39,12 @@ Imports:
     parallel,
     survival
 Suggests: 
+    bookdown,
     covr,
     gridExtra,
     knitr,
     pdp,
+    rmarkdown,
     RUnit,
     splines,
     testthat (>= 3.0.0),
@@ -56,7 +58,8 @@ Description: An implementation of extensions to Freund and Schapire's AdaBoost
   Learning to Rank measures (LambdaMart). Originally developed by Greg Ridgeway.
   Newer version available at github.com/gbm-developers/gbm3.
 License: GPL (>= 2) | file LICENSE
-URL: https://github.com/gbm-developers/gbm
+URL: https://gbm-developers.github.io/gbm/,
+    https://github.com/gbm-developers/gbm
 BugReports: https://github.com/gbm-developers/gbm/issues
 Encoding: UTF-8
 RoxygenNote: 8.0.0
