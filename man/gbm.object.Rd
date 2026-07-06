@@ -31,7 +31,8 @@ and 0 indicates that the level was not present in the training data.}
 \item{cv.fitted}{If cross-validation was performed, the cross-validation
 predicted values on the scale of the linear predictor. That is, the fitted
 values from the i-th CV-fold, for the model having been trained on the data
-in all other folds.}
+in all other folds, using the number of trees selected by the
+cross-validation error.}
 }
 \description{
 These are objects representing fitted \code{gbm}s.

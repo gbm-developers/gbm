@@ -48,8 +48,7 @@ using the LambdaMart algorithm).
 
 If quantile regression is specified, \code{distribution} must be a list of
 the form \code{list(name = "quantile", alpha = 0.25)} where \code{alpha} is 
-the quantile to estimate. The current version's quantile regression method 
-does not handle non-constant weights and will stop.
+the quantile to estimate.
 
 If \code{"tdist"} is specified, the default degrees of freedom is 4 and 
 this can be controlled by specifying 
@@ -146,7 +145,8 @@ computing out-of-sample estimates of the loss function.}
 \item{cv.folds}{Number of cross-validation folds to perform. If
 \code{cv.folds}>1 then \code{gbm}, in addition to the usual fit, will
 perform a cross-validation, calculate an estimate of generalization error
-returned in \code{cv.error}.}
+returned in \code{cv.error}. If \code{cv.folds=1}, \code{gbm} warns and
+proceeds without cross-validation.}
 
 \item{keep.data}{a logical variable indicating whether to keep the data and
 an index of the data stored with the object. Keeping the data and index

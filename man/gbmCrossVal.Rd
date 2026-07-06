@@ -32,15 +32,7 @@ gbmCrossVal(
 
 gbmCrossValErr(cv.models, cv.folds, cv.group, nTrain, n.trees)
 
-gbmCrossValPredictions(
-  cv.models,
-  cv.folds,
-  cv.group,
-  best.iter.cv,
-  distribution,
-  data,
-  y
-)
+gbmCrossValPredictions(cv.models, cv.folds, cv.group, n.trees.predict, data)
 
 gbmCrossValModelBuild(
   cv.folds,
@@ -131,7 +123,8 @@ are used.}
 \item{cv.group}{A vector indicating the cross-validation fold for each
 member of the training set.}
 
-\item{best.iter.cv}{The iteration with lowest cross-validation error.}
+\item{n.trees.predict}{The number of trees to use for cross-validation
+predictions.}
 
 \item{i.train}{Items in the training set.}
 
