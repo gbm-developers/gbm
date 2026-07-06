@@ -1,5 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.Rhistory$
+^\.agents$
 ^\.travis\.yml$
 ^README\.Rmd$
 ^README\.html$
@@ -12,3 +14,5 @@
 ^pkgdown$
 ^_pkgdown\.yml$
 ^.*\desktop.ini$
+^gbm\.Rcheck$
+^gbm_.*[.]tar[.]gz$

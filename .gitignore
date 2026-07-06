@@ -18,3 +18,5 @@ vignettes/*.tex
 vignettes/gbm.pdf
 /revdep/.cache.rds
 desktop.ini
+gbm.Rcheck/
+*.tar.gz
