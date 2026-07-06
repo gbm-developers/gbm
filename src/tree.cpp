@@ -216,9 +216,6 @@ GBMRESULT CCARTTree::grow
 
     } // end tree growing
 
-    // DEBUG
-    // Print();
-
 Cleanup:
     return hr;
 Error:
