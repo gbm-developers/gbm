@@ -3,10 +3,10 @@ title: "Generalized Boosted Models: A guide to the gbm package"
 author: "Greg Ridgeway"
 bibliography: gbm.bib
 output:
-  bookdown::pdf_document2:
-    latex_engine: xelatex
   bookdown::html_document2:
     self_contained: true
+  bookdown::pdf_document2:
+    latex_engine: xelatex
 pkgdown:
   as_is: true
 vignette: >
