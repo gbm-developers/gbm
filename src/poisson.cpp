@@ -180,11 +180,9 @@ GBMRESULT CPoisson::FitBestConstant
         {
             if(vecdNum[iNode] == 0.0)
             {
-                // DEBUG: if vecdNum==0 then prediction = -Inf
-                // Not sure what else to do except plug in an arbitrary
-                //   negative number, -1? -10? Let's use -1, then make
-                //   sure |adF| < 19 always.
-                vecpTermNodes[iNode]->dPrediction = -19.0;
+                // if vecdNum==0 then prediction = -Inf
+                // Plug in -1 then make sure |adF| < 19 always.
+                vecpTermNodes[iNode]->dPrediction = -1;
             }
             else if(vecdDen[iNode] == 0.0)
             {
