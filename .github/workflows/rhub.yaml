@@ -7,9 +7,11 @@
 # It is unlikely that you need to modify this file manually.
 
 name: R-hub
-run-name: "${{ github.event.inputs.id }}: ${{ github.event.inputs.name || format('Manually run by {0}', github.triggering_actor) }}"
+run-name: "${{ github.event.inputs.id || github.sha }}: ${{ github.event.inputs.name || format('Run by {0}', github.triggering_actor) }}"
 
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
     inputs:
       config:
@@ -35,7 +37,7 @@ jobs:
     # NO NEED TO CHECKOUT HERE
     - uses: r-hub/actions/setup@v1
       with:
-        config: ${{ github.event.inputs.config }}
+        config: ${{ github.event.inputs.config || 'linux,windows,macos' }}
       id: rhub-setup
 
   linux-containers:
