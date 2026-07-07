@@ -169,10 +169,14 @@ GBMRESULT CPoisson::FitBestConstant
             if(afInBag[iObs])
             {
                 vecdNum[aiNodeAssign[iObs]] += adW[iObs]*adY[iObs];
-                vecdDen[aiNodeAssign[iObs]] += 
+                vecdDen[aiNodeAssign[iObs]] +=
                     adW[iObs]*exp(adOffset[iObs]+adF[iObs]);
             }
-        }        
+            vecdMax[aiNodeAssign[iObs]] =
+               fmax2(adF[iObs],vecdMax[aiNodeAssign[iObs]]);
+            vecdMin[aiNodeAssign[iObs]] =
+               fmin2(adF[iObs],vecdMin[aiNodeAssign[iObs]]);
+        }
     }
     for(iNode=0; iNode<cTermNodes; iNode++)
     {
