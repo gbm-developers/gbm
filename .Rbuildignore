@@ -2,11 +2,9 @@
 ^\.Rproj\.user$
 ^\.Rhistory$
 ^\.agents$
-^\.travis\.yml$
 ^README\.Rmd$
 ^README\.html$
 ^revdep$
-^codecov\.yml$
 ^deprecated$
 ^cran-comments\.md$
 ^.github
@@ -16,3 +14,4 @@
 ^.*\desktop.ini$
 ^gbm\.Rcheck$
 ^gbm_.*[.]tar[.]gz$
+^\.claude$

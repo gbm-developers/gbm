@@ -40,7 +40,6 @@ Imports:
     survival
 Suggests: 
     bookdown,
-    covr,
     gridExtra,
     knitr,
     pdp,
