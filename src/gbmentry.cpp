@@ -532,8 +532,11 @@ SEXP gbm_plot
     int iCatSplitIndicator = 0;
 
     SEXP radPredF = NULL;
-    int aiNodeStack[40];
-    double adWeightStack[40];
+    // Sized dynamically (grown below) rather than fixed, since stack depth
+    // scales with tree depth and a fixed bound can be exceeded by deep,
+    // single-branch-chain trees.
+    std::vector<int> aiNodeStack(64);
+    std::vector<double> adWeightStack(64);
     int cStackNodes = 0;
     int iPredVar = 0;
 
@@ -567,6 +570,13 @@ SEXP gbm_plot
                 {
                     cStackNodes--;
                     iCurrentNode = aiNodeStack[cStackNodes];
+
+                    // at most 2 pushes happen below per iteration; grow if needed
+                    if(cStackNodes + 2 > (int)aiNodeStack.size())
+                    {
+                        aiNodeStack.resize(aiNodeStack.size()*2);
+                        adWeightStack.resize(adWeightStack.size()*2);
+                    }
 
                     if(aiSplitVar[iCurrentNode] == -1) // terminal node
                     {
