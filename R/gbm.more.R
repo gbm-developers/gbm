@@ -176,10 +176,7 @@ gbm.more <- function(object,
          w <- w*length(w)/sum(w) # normalize to N
       }
 
-      if(is.null(offset) || (offset==0))
-      {
-         offset <- NA
-      }
+      offset <- checkOffset(offset, y)
       Misc <- NA
       cRows <- nrow(x)
       cCols <- ncol(x)
@@ -204,7 +201,7 @@ gbm.more <- function(object,
          Misc <- Misc[i.timeorder]
          x <- x[i.timeorder,,drop=FALSE]
          w <- w[i.timeorder]
-         if(!is.na(offset)) offset <- offset[i.timeorder]
+         if(!is.na(offset[1])) offset <- offset[i.timeorder]
          object$fit <- object$fit[i.timeorder]
          fit.old <- object$fit
       }

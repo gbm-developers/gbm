@@ -366,7 +366,7 @@ gbm.fit <- function(x, y, offset = NULL, misc = NULL, distribution = "bernoulli"
     Misc <- Misc[i.timeorder]
     x <- x[i.timeorder,,drop=FALSE]
     w <- w[i.timeorder]
-    if(!is.na(offset)) offset <- offset[i.timeorder]
+    if(!is.na(offset[1])) offset <- offset[i.timeorder]
   }
   if(distribution$name == "tdist") {
     if (is.null(distribution$df) || !is.numeric(distribution$df)){
