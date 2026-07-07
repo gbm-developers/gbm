@@ -30,14 +30,14 @@ GBMRESULT CAdaBoost::ComputeWorkingResponse
     {
         for(i=0; i<nTrain; i++)
         {
-            adZ[i] = -(2*adY[i]-1) * exp(-(2*adY[i]-1)*adF[i]);
+            adZ[i] = (2*adY[i]-1) * exp(-(2*adY[i]-1)*adF[i]);
         }
     }
     else
     {
         for(i=0; i<nTrain; i++)
         {
-            adZ[i] = -(2*adY[i]-1) * exp(-(2*adY[i]-1)*(adOffset[i]+adF[i]));
+            adZ[i] = (2*adY[i]-1) * exp(-(2*adY[i]-1)*(adOffset[i]+adF[i]));
         }
     }
 
