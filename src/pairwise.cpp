@@ -972,14 +972,11 @@ GBMRESULT CPairwise::FitBestConstant
 
     try
     {
-        // Allocate space for numerators and denominators, and set to zero
-        vecdNum.reserve(cTermNodes);
-        vecdDenom.reserve(cTermNodes);
-        for (unsigned int i = 0; i < cTermNodes; i++)
-        {
-            vecdNum[i]   = 0.0;
-            vecdDenom[i] = 0.0;
-        }
+        // Allocate space for numerators and denominators, initialized to zero.
+        // vecdNum/vecdDenom are reused across calls, so assign() (not resize())
+        // is required to reset previously-used elements back to zero.
+        vecdNum.assign(cTermNodes, 0.0);
+        vecdDenom.assign(cTermNodes, 0.0);
     }
     catch (std::bad_alloc&)
     {
