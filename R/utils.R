@@ -114,10 +114,11 @@ get_ylab <- function(object) {
            po = "Poisson deviance", 
            ad = "AdaBoost exponential bound", 
            co = "Cox partial deviance", 
-           la = "Absolute loss", 
-           qu = "Quantile loss", 
-           mu = "Multinomial deviance", 
-           td = "t-distribution deviance")
+           la = "Absolute loss",
+           qu = "Quantile loss",
+           mu = "Multinomial deviance",
+           td = "t-distribution deviance",
+           hu = "Huberized hinge loss")
   } else {
     switch(object$distribution$metric, 
            conc = "Fraction of concordant pairs", 
