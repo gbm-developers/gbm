@@ -24,7 +24,10 @@
 
 class CNodeFactory;
 
-typedef std::vector<char> VEC_CATEGORIES;
+// signed char, NOT plain char: these vectors hold -1/+1 split-direction codes,
+// and plain char is unsigned on the aarch64 Linux ABI, which silently turns -1
+// into 255 and misroutes every left-branch categorical split in prediction
+typedef std::vector<signed char> VEC_CATEGORIES;
 typedef std::vector<VEC_CATEGORIES> VEC_VEC_CATEGORIES;
 
 

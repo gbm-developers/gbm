@@ -32,7 +32,9 @@
 #include "locationm.h"
 #include "huberized.h"
 
-typedef std::vector<char> VEC_CATEGORIES;
+// signed char, NOT plain char — must match node.h; plain char is unsigned on
+// the aarch64 Linux ABI, which turns the -1 split codes into 255
+typedef std::vector<signed char> VEC_CATEGORIES;
 typedef std::vector<VEC_CATEGORIES> VEC_VEC_CATEGORIES;
 
 GBMRESULT gbm_setup
