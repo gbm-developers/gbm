@@ -122,7 +122,9 @@ permutation.test.gbm <- function(object,
     w            <- object$data$w
     x            <- matrix(object$data$x, ncol=length(object$var.names))
     object$Terms <- NULL # this makes predict.gbm take x as it is
-    
+
+    group    <- NULL
+    max.rank <- NULL
     if (object$distribution$name == "pairwise")
     {
       # group and cutoff are only relevant for distribution "pairwise"
