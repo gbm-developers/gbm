@@ -49,6 +49,15 @@ test_that("gaussian predictions recover the signal", {
 
   f.predict <- predict(gbm1, data2, best.iter)
 
+  # TEMPORARY diagnostics for investigating an ARM64-specific divergence
+  # (see https://github.com/gbm-developers/gbm/actions). Remove once resolved.
+  cat(sprintf(
+    "[diag] machine=%s best.iter=%d sigma=%.6f bias=%.6f sd=%.6f sd/sigma=%.4f\n",
+    Sys.info()[["machine"]], best.iter, sigma,
+    mean(data2$Y - f.predict), sd(data2$Y - f.predict),
+    sd(data2$Y - f.predict) / sigma
+  ))
+
   expect_true(abs(mean(data2$Y - f.predict)) < 0.01)
   # Allow headroom above the raw noise level to absorb architecture-dependent
   # floating-point summation differences (e.g. ARM64 vs x86-64) that can shift
