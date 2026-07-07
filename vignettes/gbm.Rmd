@@ -200,7 +200,7 @@ possible and then select $T$ by cross-validation. Performance is best
 when $\lambda$ is as small as possible, with decreasing
 marginal utility for smaller and smaller $\lambda$. Slower learning
 rates do not necessarily scale the number of optimal iterations. That
-is, if when $\lambda=1.0$ and the optimal $T$ is 100 iterations, does
+is, if when $\lambda=1.0$ the optimal $T$ is 100 iterations, this does
 *not* necessarily imply that when $\lambda=0.1$ the optimal $T$ is 1000
 iterations.
 
@@ -386,7 +386,7 @@ data. The returned model object will have a component labeled
 will not add to the `cv.error` component. Use
 `gbm.perf(...,method="cv")` to obtain the cross validation estimate.
 
-```{r oobperf, echo=FALSE, out.width="100%", fig.cap="Out-of-sample predictive performance of four methods of selecting the optimal number of iterations. The vertical axis plots performance relative the best. The boxplots indicate relative performance across thirteen real datasets from the UCI repository. See `demo(OOB-reps)`.", fig.alt="Comparison of methods for estimating the optimal number of boosting iterations."}
+```{r oobperf, echo=FALSE, out.width="100%", fig.cap="Out-of-sample predictive performance of OOB, test set, and CV methods for selecting the optimal number of iterations. The vertical axis plots performance relative to the best. The boxplots indicate relative performance across thirteen real datasets from the UCI repository. See `demo(OOB-reps)`.", fig.alt="Comparison of methods for estimating the optimal number of boosting iterations."}
 knitr::include_graphics(if (knitr::is_latex_output()) {
   "oobperf2.pdf"
 } else {
@@ -429,7 +429,7 @@ $f(\mathbf{x}_i)$ with $o_i + f(\mathbf{x}_i)$.
   ------------------------- -----------------------------------------------------------------------------------
   Deviance                  $\displaystyle \frac{1}{\sum w_i} \sum w_i\exp(-(2y_i-1)f(\mathbf{x}_i))$
   Initial value             $\displaystyle \frac{1}{2}\log\frac{\sum y_iw_ie^{-o_i}}{\sum (1-y_i)w_ie^{o_i}}$
-  Gradient                  $\displaystyle z_i= -(2y_i-1)\exp(-(2y_i-1)f(\mathbf{x}_i))$
+  Gradient                  $\displaystyle z_i= (2y_i-1)\exp(-(2y_i-1)f(\mathbf{x}_i))$
   Terminal node estimates   $\displaystyle \frac{\sum (2y_i-1)w_i\exp(-(2y_i-1)f(\mathbf{x}_i))}{\sum w_i\exp(-(2y_i-1)f(\mathbf{x}_i))}$
   ------------------------- -----------------------------------------------------------------------------------
 
@@ -658,7 +658,7 @@ training. In *Information Retrieval* applications, groups correspond to
 user queries, and items to (feature vectors of) documents in the
 associated match set to be ranked.
 
-For consistency with typical usage, our goal is to *maximize* one of the *utility* functions listed below. Consider a group with instances $x_1, \dots, x_n$, ordered such that $f(x_1) \geq f(x_2) \geq \dots f(x_n)$; i.e., the *rank* of $x_i$ is $i$, where smaller ranks are preferable. Let $P$ be the set of all ordered pairs such that $y_i > y_j$.
+For consistency with typical usage, our goal is to *maximize* one of the *utility* functions listed below. Consider a group with instances $x_1, \dots, x_n$, ordered such that $f(x_1) \geq f(x_2) \geq \dots \geq f(x_n)$; i.e., the *rank* of $x_i$ is $i$, where smaller ranks are preferable. Let $P$ be the set of all ordered pairs such that $y_i > y_j$.
 
 1.  Fraction of concordant (i.e, correctly ordered) pairs. For the
     special case of binary labels, this is equivalent to the Area under
