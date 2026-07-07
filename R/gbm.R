@@ -419,6 +419,7 @@ gbm <- function(formula = formula(data), distribution = "bernoulli",
     y <- y[ord.group]
     x <- x[ord.group, , drop = FALSE]
     w <- w[ord.group]
+    if (!is.null(offset)) offset <- offset[ord.group]
     
     # Split into train and validation sets at group boundary
     num.groups.train <- max(1, round(train.fraction * nlevels(group)))
