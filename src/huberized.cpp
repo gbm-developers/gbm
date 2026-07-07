@@ -122,7 +122,7 @@ double CHuberized::Deviance
       for(i=cIdxOff; i<cLength+cIdxOff; i++)
       {
          dF = adOffset[i]+adF[i];
-         if ( (2*adY[i]-1)*adF[i] < -1 )
+         if ( (2*adY[i]-1)*dF < -1 )
          {
             dL += -adWeight[i]*4*(2*adY[i]-1)*dF;
             dW += adWeight[i];
@@ -178,19 +178,19 @@ GBMRESULT CHuberized::FitBestConstant
         if(afInBag[iObs])
         {
            dF = adF[iObs] + ((adOffset==NULL) ? 0.0 : adOffset[iObs]);
-           if( (2*adY[iObs]-1)*adF[iObs] < -1 ){ 
+           if( (2*adY[iObs]-1)*dF < -1 ){
               vecdNum[aiNodeAssign[iObs]] +=
                 adW[iObs]*4*(2*adY[iObs]-1);
-              vecdDen[aiNodeAssign[iObs]] += 
+              vecdDen[aiNodeAssign[iObs]] +=
                 -adW[iObs]*4*(2*adY[iObs]-1)*dF;
            }
-           else if ( 1 - (2*adY[iObs]-1)*adF[iObs] < 0 ){
+           else if ( 1 - (2*adY[iObs]-1)*dF < 0 ){
               vecdNum[aiNodeAssign[iObs]] += 0;
               vecdDen[aiNodeAssign[iObs]] += 0;
            }
            else{
-              vecdNum[aiNodeAssign[iObs]] += adW[iObs]*2*(2*adY[iObs]-1)*( 1 - (2*adY[iObs]-1)*adF[iObs] );
-              vecdDen[aiNodeAssign[iObs]] += adW[iObs]*( 1 - (2*adY[iObs]-1)*adF[iObs])*( 1 - (2*adY[iObs]-1)*adF[iObs]);
+              vecdNum[aiNodeAssign[iObs]] += adW[iObs]*2*(2*adY[iObs]-1)*( 1 - (2*adY[iObs]-1)*dF );
+              vecdDen[aiNodeAssign[iObs]] += adW[iObs]*( 1 - (2*adY[iObs]-1)*dF)*( 1 - (2*adY[iObs]-1)*dF);
            }
         } // close if(afInBag[iObs
     }
@@ -254,6 +254,7 @@ double CHuberized::BagImprovement
                   ( ( 1 - (2*adY[i]-1)*dF )*( 1 - (2*adY[i]-1)*dF ) -
                     ( 1 - (2*adY[i]-1)*(dF+dStepSize*adFadj[i]) )*( 1 - (2*adY[i]-1)*(dF+dStepSize*adFadj[i]) )
                   );
+               dW += adWeight[i];
             }
         }
     }
