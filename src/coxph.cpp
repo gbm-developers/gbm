@@ -270,6 +270,7 @@ double CCoxPH::BagImprovement
     {
         if(!afInBag[i])
         {
+            dF = adF[i] + ((adOffset==NULL) ? 0.0 : adOffset[i]);
             dNum += adWeight[i]*exp(dF + dStepSize*adFadj[i]);
             dDen += adWeight[i]*exp(dF);
             if(adDelta[i]==1.0)
