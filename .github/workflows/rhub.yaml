@@ -117,22 +117,6 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      # DIAGNOSTIC (temporary): disable FMA (fused multiply-add) instruction
-      # contraction for this runner only, via a user-level Makevars (does not
-      # touch package source). ARM64's baseline ISA includes hardware FMA, so
-      # gcc's default -ffp-contract=fast can fuse a*b+c into a single rounding
-      # step here but not on x86-64 (no FMA without an explicit -mfma target).
-      # gaussian's leaf predictions come directly from node_search.cpp's raw
-      # incremental weighted sums with no independent refitting step, so this
-      # tests whether that single-vs-double rounding difference, compounded
-      # over 2000 iterations x 10 CV folds, explains the test divergence.
-      - name: Disable FMA contraction (diagnostic)
-        run: |
-          mkdir -p ~/.R
-          printf 'CFLAGS += -ffp-contract=off\nCXXFLAGS += -ffp-contract=off\n' >> ~/.R/Makevars
-          cat ~/.R/Makevars
-        shell: bash
-
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
