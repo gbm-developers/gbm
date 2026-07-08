@@ -10,9 +10,31 @@
   predictions from the stored model object were wrong, and only on affected
   platforms.
 
+* Fixed the multinomial deviance calculation, which was one iteration behind
+  because it used cached class probabilities; also fixed the corresponding
+  out-of-bag improvement calculation, which was double-counting updates.
+
+* Fixed `gbm.more()` for `distribution = "multinomial"`: continuing training
+  now correctly reconstructs the class ordering and data for both
+  `keep.data = TRUE` and `keep.data = FALSE`, passes along the prior fit
+  safely, restores the fit as an n x K matrix, and treats `n.trees` as
+  boosting iterations rather than a raw class-tree count.
+
+* Fixed two bugs in `gbm.more()` for `distribution = "coxph"`: observation
+  weights could be silently replaced with the predictor matrix in certain
+  cases, and `cRows`/`cCols` were not available yet when first needed.
+
 * Fixed the out-of-bag improvement estimate for `distribution = "coxph"`,
   which ignored the current model fit; this corrupted
   `gbm.perf(method = "OOB")` for Cox models.
+
+* Fixed observation weights not being reordered along with the data in
+  `gbmCrossVal()`'s per-fold fitting, which corrupted weighted
+  cross-validation.
+
+* `InitF()` is now always called when fitting, including when extending an
+  existing model via `gbm.more()`, so distributions can allocate any
+  iteration-specific internal buffers they need.
 
 * Fixed offset handling in several places: offsets are now correctly reordered
   alongside the data for `distribution = "pairwise"`; `distribution =
@@ -24,11 +46,30 @@
 * `permutation.test.gbm()` now works for all distributions, not just
   `"pairwise"`.
 
+* Fixed undefined behavior in `distribution = "pairwise"` model fitting where
+  internal buffers were reserved but not actually resized before being
+  written to.
+
 * Fixed a potential stack overflow in `plot.gbm()` for very deep trees.
 
 * Fixed `distribution = "quantile"` to handle observation weights.
 
 * Fixed Poisson terminal-node predictions when a node's denominator is zero.
+
+* `gbm()` now raises an informative error when a supplied `weights` vector's
+  length doesn't match the data, instead of failing obscurely later on.
+
+* `plot.gbm()` no longer errors if the `viridis` package isn't installed;
+  it now falls back to a built-in color palette.
+
+* Added the missing y-axis label for `distribution = "huberized"` plots.
+
+#### Behavior changes
+
+* `gbm(distribution = "multinomial")` no longer emits the "ill-advised...
+  currently broken" warning added in 2.1.6. Multinomial support has been
+  fixed and is now tested. Note this removes a warning that some downstream
+  packages' tests may assert on (see `pmml`, below).
 
 #### Other improvements
 
@@ -37,17 +78,16 @@
   makes `var.monotone` constraints act in the intended direction for AdaBoost
   models.
 
-* Improved cross-validation handling and vignette corrections (Cox model
-  formulas, normalized discounted cumulative gain formula, and formulas added
-  for the t-distribution, huberized hinge loss, and multinomial deviance).
+* Switched the test suite from tinytest to testthat.
+
+* Vignette corrections: Cox model formulas, the normalized discounted
+  cumulative gain formula, and formulas added for the t-distribution,
+  huberized hinge loss, and multinomial deviance; converted the vignette
+  build from Sweave to R Markdown and added a pkgdown site.
 
 # gbm 2.1.9
 
 * Maintenance update to address new R standards
-
-* Fixed `gbm.more()` for multinomial models, corrected multinomial training
-  and validation error reporting, and removed the warning from
-  `gbm(distribution = "multinomial")`.
 
 # gbm 2.1.8
 
@@ -69,7 +109,7 @@
 
 * Calling `gbm()` with `distribution = "bernoulli"` will now throw an error whenever the response is non-numeric (e.g., 0/1 factors will throw an error instead of possibly crashing the session.) [(#6)](https://github.com/gbm-developers/gbm/issues/6). (Thanks to @mzoll.)
 
-* Multinomial support remains available for backwards compatibility.
+* Calling `gbm()` with `distribution = "multinomial"` now comes with a warning message; multinomial support has always been problematic and since this package is only being maintained for backwards compatibility, it likely will not be fixed unless someone makes a PR.
 
 * Switched from [RUnit](https://cran.r-project.org/package=RUnit) to [tinytest](https://cran.r-project.org/package=tinytest) framework. The `test.gbm()`, `test.relative.influence()`, and `validate.gbm()` functions will remain for backwards compatability. This is just the start, as more tests will be added in the future [(#51)](https://github.com/gbm-developers/gbm/issues/51).
 
