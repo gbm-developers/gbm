@@ -4,6 +4,7 @@
 ^\.agents$
 ^README\.Rmd$
 ^README\.html$
+^vignettes/.*[.]html$
 ^revdep$
 ^deprecated$
 ^cran-comments\.md$
