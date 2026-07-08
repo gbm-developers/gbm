@@ -42,11 +42,11 @@ Lifecycle
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#retired)
 
-The [gbm](https://cran.r-project.org/package=gbm) package is retired and
-no longer under active development. We will only make the necessary
-changes to ensure that [gbm](https://cran.r-project.org/package=gbm)
-remains on CRAN. For the most part, no new features will be added, and
-only the most critical of bugs will be fixed.
+The [gbm](https://cran.r-project.org/package=gbm) package is no longer under
+active development. We will only make the necessary changes to ensure that
+[gbm](https://cran.r-project.org/package=gbm) remains on CRAN. For the most
+part, no new features will be added, and only the most critical of bugs will be
+fixed.
 
 This is a maintained version of
 [gbm](https://cran.r-project.org/package=gbm) back compatible to CRAN
@@ -56,3 +56,4 @@ performed with the 2.1.x versions of
 [gbm](https://cran.r-project.org/package=gbm). For newer development,
 and a more consistent API, try out the
 [gbm3](https://github.com/gbm-developers/gbm3) package!
+
