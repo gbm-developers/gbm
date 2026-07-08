@@ -1,3 +1,46 @@
+# gbm 2.3.0
+
+#### Bug fixes
+
+* Fixed predictions from models with categorical (factor) splits on platforms
+  where plain `char` is unsigned (notably Linux on ARM64/aarch64). The
+  categorical split-direction codes were stored in `char` and the value `-1`
+  became `255`, silently routing all left-branch observations to the missing
+  branch in `predict()` and `plot()`. Model training was unaffected; only
+  predictions from the stored model object were wrong, and only on affected
+  platforms.
+
+* Fixed the out-of-bag improvement estimate for `distribution = "coxph"`,
+  which ignored the current model fit; this corrupted
+  `gbm.perf(method = "OOB")` for Cox models.
+
+* Fixed offset handling in several places: offsets are now correctly reordered
+  alongside the data for `distribution = "pairwise"`; `distribution =
+  "huberized"` now includes the offset in its terminal-node estimates;
+  `distribution = "poisson"` now applies its prediction clamp when an offset
+  is supplied; and supplying a real offset vector no longer errors in
+  `gbm.fit()` and `gbm.more()` for Cox models.
+
+* `permutation.test.gbm()` now works for all distributions, not just
+  `"pairwise"`.
+
+* Fixed a potential stack overflow in `plot.gbm()` for very deep trees.
+
+* Fixed `distribution = "quantile"` to handle observation weights.
+
+* Fixed Poisson terminal-node predictions when a node's denominator is zero.
+
+#### Other improvements
+
+* `distribution = "adaboost"` now uses the negative gradient as its working
+  response, consistent with the other distributions; among other things this
+  makes `var.monotone` constraints act in the intended direction for AdaBoost
+  models.
+
+* Improved cross-validation handling and vignette corrections (Cox model
+  formulas, normalized discounted cumulative gain formula, and formulas added
+  for the t-distribution, huberized hinge loss, and multinomial deviance).
+
 # gbm 2.1.9
 
 * Maintenance update to address new R standards
