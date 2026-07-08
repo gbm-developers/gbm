@@ -1,0 +1,7 @@
+checks
+checks.noindex
+library
+library.noindex
+cloud.noindex
+data.sqlite
+*.log

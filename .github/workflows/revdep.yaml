@@ -1,0 +1,93 @@
+# Reverse dependency check, run manually before a CRAN submission to catch
+# breakage in downstream packages ahead of time (this is how the pmml/2.3.0
+# multinomial-warning break should have been caught before submitting).
+#
+# Not run on every push: revdepcheck reinstalls every reverse dependency's
+# full dependency tree twice (once against the CRAN version of gbm, once
+# against this branch), which is slow and heavy - gbm has 100+ reverse
+# dependencies across Depends/Imports/Suggests. Trigger it by hand a day or
+# two before submitting.
+
+name: Reverse dependency check
+
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: >
+          Comma-separated reverse dependencies to check, or "all" for the
+          full set (Depends + Imports + LinkingTo + Suggests). Use a short
+          list for a quick pre-submission spot check (e.g. the packages a
+          recent change plausibly affects).
+        type: string
+        default: 'all'
+
+jobs:
+  revdepcheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      # Reverse dependencies span geospatial/bio packages (biomod2, dismo,
+      # ecospat, SDMtune, ...) that need system libraries beyond what
+      # setup-r-dependencies pulls in via sysreqs for gbm itself.
+      - name: Install common system dependencies for heavy reverse deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgdal-dev libgeos-dev libproj-dev libudunits2-dev
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            r-lib/revdepcheck
+            any::pak
+          needs: check
+
+      - name: Run revdepcheck
+        run: |
+          pkgs <- "${{ github.event.inputs.packages }}"
+          if (identical(pkgs, "all") || !nzchar(pkgs)) {
+            revdepcheck::revdep_check(
+              num_workers = 4,
+              dependencies = c("Depends", "Imports", "LinkingTo", "Suggests")
+            )
+          } else {
+            # revdep_check() has no `packages` argument; scoping to specific
+            # packages goes through revdep_add() instead, which needs the
+            # sqlite schema to already exist (db_setup() - internal, not
+            # exported - since revdep_add() won't create it like
+            # revdep_check() does).
+            revdepcheck:::db_setup(".")
+            revdepcheck::revdep_add(packages = trimws(strsplit(pkgs, ",")[[1]]))
+            revdepcheck::revdep_check(num_workers = 4)
+          }
+        shell: Rscript {0}
+
+      - name: Show summary
+        if: always()
+        run: |
+          echo "## Reverse dependency check results" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f revdep/problems.md ]; then
+            cat revdep/problems.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No revdep/problems.md produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload revdep report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: revdep-results
+          path: revdep/
+          retention-days: 30
