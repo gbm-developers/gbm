@@ -121,6 +121,7 @@ GBMRESULT CCARTTree::grow
     pInitialRootNode = pNodeFactory->GetNewNodeTerminal();
     pInitialRootNode->dPrediction = dSumZ/dTotalW;
     pInitialRootNode->dTrainW = dTotalW;
+    pInitialRootNode->cN = nBagged;
     vecpTermNodes.resize(2*cMaxDepth + 1,NULL); // accounts for missing nodes
     vecpTermNodes[0] = pInitialRootNode;
     pRootNode = pInitialRootNode;

@@ -6,6 +6,7 @@ CNode::CNode()
 {
     dPrediction = 0.0;
     dTrainW = 0.0;
+    cN = 0;
     isTerminal = false;
 }
 

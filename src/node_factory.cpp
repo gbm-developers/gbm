@@ -49,6 +49,7 @@ CNodeTerminal* CNodeFactory::GetNewNodeTerminal()
         TerminalStack.pop();
 
         pNodeTerminalTemp->dPrediction = 0.0;
+        pNodeTerminalTemp->cN = 0;
     }
     return pNodeTerminalTemp;
 }
